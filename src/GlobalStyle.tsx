@@ -54,6 +54,7 @@ const GlobalStyle = createGlobalStyle`
     /* font-family: var(--serif); */
 
     font-size: 10px;
+    --title-xl: 5rem;
     --title-l: 3.2rem;
     --title-m: 2.4rem;
     --title-s: 2rem;
