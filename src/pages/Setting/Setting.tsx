@@ -1,37 +1,33 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import StyledInput from '../components/StyledInput';
-import StyledAuth from '../components/StyledAuth';
-import Button from '../components/Button';
-import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
-import EditCircle from '../asset/icon/EditCircle.svg';
-import Logo from '../asset/icon/Logo.svg';
+import { useEffect, useState } from 'react';
+import StyledInput from '../../components/StyledInput';
+import StyledMain from './StyledMain';
+import Button from '../../components/Button';
+import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
+import EditCircle from '../../asset/icon/EditCircle.svg';
+import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 
-export default function Signup() {
+export default function Setting() {
   const [disabled, setDisabled] = useState(true);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth
   );
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
+
   return (
-    <StyledAuth>
+    <StyledMain>
       <div>
-        {clientWitch < 431 && (
-          <>
-            <h1>
-              <img src={Logo} alt='로고' />
-            </h1>
-            <p>
-              안녕하세요.
-              <br />
-              MOMOO 입니다.
-            </p>
-          </>
+        {clientWitch > 431 && (
+          <article>
+            <h2>Setting</h2>
+            <button type='button'>프로필 설정</button>
+            <button type='button'>회원탈퇴</button>
+          </article>
         )}
-        <article>
-          <Link to='/login'>Login</Link>
-          <h2>Signup</h2>
-        </article>
         <form>
           <label htmlFor='profile-inp' className='profile'>
             <img src={ProfileBasicImg} alt='프로필 사진' />
@@ -64,10 +60,16 @@ export default function Signup() {
             type='password'
           />
           <Button size={clientWitch > 1024 ? 'l' : 's'} disabled={disabled}>
-            Signup
+            Save
           </Button>
         </form>
+        {clientWitch <= 430 && (
+          <button type='button' className='delete-btn'>
+            Delete account
+            <img src={DeleteIcon} alt='' />
+          </button>
+        )}
       </div>
-    </StyledAuth>
+    </StyledMain>
   );
 }
