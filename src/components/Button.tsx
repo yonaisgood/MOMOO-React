@@ -1,8 +1,8 @@
-import styled, {css} from "styled-components";
+import styled, { css } from 'styled-components';
 
 interface ButtonProps {
   children: React.ReactNode;
-  size?: "l" | "m" | "s" | "xs";
+  size?: 'l' | 'm' | 's' | 'xs';
   disabled?: boolean;
 }
 
@@ -21,7 +21,7 @@ const sizeStyles = {
     font-size: var(--title-s);
   `,
   s: css`
-    width: 28.8rem;
+    width: 100%;
     padding: 1rem 0;
     line-height: 2.88rem;
     font-size: var(--text-l);
@@ -35,8 +35,8 @@ const sizeStyles = {
   `,
 };
 
-const BtnStyle = styled.button<{size?: "l" | "m" | "s" | "xs"}>`
-  ${({size}) => sizeStyles[size || "l"] || ""}
+const BtnStyle = styled.button<{ size?: 'l' | 'm' | 's' | 'xs' }>`
+  ${({ size }) => sizeStyles[size || 'l'] || ''}
 
   background-color: var(--gray-800);
   color: var(--gray-100);
@@ -54,7 +54,7 @@ const BtnStyle = styled.button<{size?: "l" | "m" | "s" | "xs"}>`
   }
 `;
 
-const Button: React.FC<ButtonProps> = ({children, ...props}) => {
+const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
   return <BtnStyle {...props}>{children}</BtnStyle>;
 };
 
