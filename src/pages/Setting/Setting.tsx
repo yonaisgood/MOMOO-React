@@ -8,6 +8,7 @@ import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 
 export default function Setting() {
   const [disabled, setDisabled] = useState(true);
+  const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth
   );
@@ -24,8 +25,18 @@ export default function Setting() {
         {clientWitch > 431 && (
           <article>
             <h2>Setting</h2>
-            <button type='button'>프로필 설정</button>
-            <button type='button'>회원탈퇴</button>
+            <button
+              type='button'
+              className={selectedBtn === '프로필 설정' ? 'selected' : ''}
+            >
+              프로필 설정
+            </button>
+            <button
+              type='button'
+              className={selectedBtn === '회원탈퇴' ? 'selected' : ''}
+            >
+              회원탈퇴
+            </button>
           </article>
         )}
         <form>

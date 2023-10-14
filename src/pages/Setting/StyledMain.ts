@@ -21,6 +21,11 @@ const StyledMain = styled(StyledAuth)`
     button:hover {
       background: var(--point-color);
     }
+
+    button.selected {
+      background: var(--gray-800);
+      color: var(--gray-100);
+    }
   }
 
   .delete-btn {
