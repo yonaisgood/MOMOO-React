@@ -54,12 +54,24 @@ const GlobalStyle = createGlobalStyle`
     /* font-family: var(--serif); */
 
     font-size: 10px;
+    --title-xl: 5rem;
     --title-l: 3.2rem;
     --title-m: 2.4rem;
     --title-s: 2rem;
     --text-l: 1.6rem;
     --text-m: 1.4rem;
     --text-s: 1.2rem;
+
+    --nav-width-pc: 256px;
+    --right-padding-pc: 190px;
+
+    --column-pc : calc((100vw - var(--nav-width-pc) - 190px - var(--margin-pc) * 2 - var(--gutter-pc) * 11) / 12);
+    --gutter-pc: 16px;
+    --margin-pc: 32px;
+
+    --column-tablet : calc((100vw - var(--margin-tablet) * 2 - var(--gutter-tablet) * 7) / 8);
+    --gutter-tablet: 16px;
+    --margin-tablet: 24px;
   }
 
   a {
