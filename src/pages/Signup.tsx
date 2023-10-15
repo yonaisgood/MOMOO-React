@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
 import Button from '../components/Button';
@@ -19,6 +19,12 @@ export default function Signup() {
     document.documentElement.clientWidth
   );
   const { error, signup } = useSignup();
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
