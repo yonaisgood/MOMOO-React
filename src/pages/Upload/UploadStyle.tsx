@@ -85,7 +85,6 @@ const LocationContents = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1.3rem 1.6rem;
-  /* border-top: 1px solid var(--gray-200); */
   border-bottom: 1px solid var(--gray-200);
   font-size: var(--text-m);
 
