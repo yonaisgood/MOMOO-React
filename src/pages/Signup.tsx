@@ -80,7 +80,7 @@ export default function Signup() {
         {clientWitch < 431 && (
           <>
             <h1>
-              <img src={Logo} alt='로고' />
+              <img src={Logo} alt="로고" />
             </h1>
             <p>
               안녕하세요.
@@ -90,7 +90,7 @@ export default function Signup() {
           </>
         )}
         <article>
-          <Link to='/login'>Login</Link>
+          <Link to="/login">Login</Link>
           <h2>Signup</h2>
         </article>
         <form onSubmit={handleSubmit}>
@@ -104,8 +104,7 @@ export default function Signup() {
             className='a11y-hidden'
             onChange={handleFileInp}
           />
-
-          <label htmlFor='username-inp' className='a11y-hidden'>
+          <label htmlFor="username-inp" className="a11y-hidden">
             사용자 이름
           </label>
           <StyledInput
@@ -135,12 +134,8 @@ export default function Signup() {
           <label htmlFor='password-inp' className='a11y-hidden'>
             비밀번호 재확인
           </label>
-          <StyledInput
-            id='password-inp'
-            placeholder='password confirm'
-            type='password'
-          />
-          <Button size={clientWitch > 1024 ? 'l' : 's'} disabled={disabled}>
+          <StyledInput id="password-inp" placeholder="password confirm" type="password" />
+          <Button size={clientWitch > 1024 ? "l" : "s"} disabled={disabled}>
             Signup
           </Button>
         </form>

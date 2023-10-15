@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
-import Button from '../components/Button';
+import Button from "../components/Button/Button";
 import { useState } from 'react';
 import Logo from '../asset/icon/Logo.svg';
 
