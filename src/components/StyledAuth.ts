@@ -47,8 +47,9 @@ const StyledAuth = styled.main`
     margin: 0 auto 40px;
 
     img:first-child {
+      border-radius: 50%;
       aspect-ratio: 1/1;
-      object-fit: contain;
+      object-fit: cover;
     }
 
     img:last-child {
