@@ -66,16 +66,17 @@ const SelectPart = styled.section`
   .uploadInfo {
     border-bottom: 1px solid var(--gray-200);
     height: 11.4rem;
-    overflow-y: auto;
+    
 
     textarea {
+      width: 100%;
       padding: 1.3rem 1.6rem;
       outline: none;
       border: none;
       font-size: var(--text-m);
       height: auto;
-      max-height: 11.4rem; /* 최대 높이 설정 */
-      overflow-y: auto; /* 내용이 넘칠 때만 스크롤 표시 */
+      max-height: 11.4rem; 
+      overflow-y: auto; 
     }
   }
 `;
