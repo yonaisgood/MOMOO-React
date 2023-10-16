@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   NavTemp,
   DetailWrapper,
@@ -6,10 +6,20 @@ import {
   DetailContents,
   DepthInfo,
 } from './DetailStyle';
-
+import Modal from '../../components/Modal/SelectModal';
 import SeeMore from '../../asset/icon/More.svg';
 
 function Detail() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSeeMoreClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <DetailWrapper>
@@ -27,7 +37,7 @@ function Detail() {
                 <img src="" alt="" />
                 <img src="" alt="" />
               </div>
-              <button>
+              <button onClick={handleSeeMoreClick}>
                 <img className="seeMore" src={SeeMore} alt="더보기 버튼" />
               </button>
             </div>
@@ -45,6 +55,7 @@ function Detail() {
           </DetailContents>
         </DetailLayout>
       </DetailWrapper>
+      {isModalOpen && <Modal onClose={handleCloseModal} />}
     </>
   );
 }
