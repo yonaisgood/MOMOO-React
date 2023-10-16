@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
-import Button from '../components/Button';
+import Button from '../components/Button/Button.tsx';
 import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
@@ -186,7 +186,6 @@ export default function Signup() {
             className='a11y-hidden'
             onChange={handleFileInp}
           />
-
           <label htmlFor='displayName-inp' className='a11y-hidden'>
             사용자 이름
           </label>
@@ -203,7 +202,7 @@ export default function Signup() {
             id='email-inp'
             placeholder='email'
             type='email'
-            maxLength='98'
+            maxLength={98}
             onChange={handleInp}
           />
           <strong role='alert'>
@@ -216,8 +215,8 @@ export default function Signup() {
             id='password-inp'
             placeholder='password'
             type='password'
-            minLength='6'
-            maxLength='20'
+            minLength={6}
+            maxLength={20}
             onChange={handleInp}
           />
           <strong role='alert'>
@@ -230,8 +229,8 @@ export default function Signup() {
             id='passwordConfirm-inp'
             placeholder='password confirm'
             type='password'
-            minLength='6'
-            maxLength='20'
+            minLength={6}
+            maxLength={20}
             onChange={handleInp}
           />
           <strong role='alert'>

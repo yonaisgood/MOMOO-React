@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
-import Button from '../components/Button';
 import { useEffect, useState } from 'react';
+import Button from '../components/Button/Button';
 import Logo from '../asset/icon/Logo.svg';
 
 export default function Login() {
