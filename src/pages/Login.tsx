@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
-import Button from "../components/Button/Button";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Button from '../components/Button/Button';
 import Logo from '../asset/icon/Logo.svg';
 
 export default function Login() {
@@ -10,6 +10,12 @@ export default function Login() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth
   );
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   return (
     <StyledAuth>

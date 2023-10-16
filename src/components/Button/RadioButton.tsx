@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 interface RadioButtonProps {
   label: string;
@@ -7,7 +7,7 @@ interface RadioButtonProps {
 }
 
 const RadioButtonContainer = styled.div`
-  input[type="radio"] {
+  input[type='radio'] {
     display: none;
   }
 
@@ -25,16 +25,16 @@ const RadioButtonContainer = styled.div`
     box-shadow: inset 0 0 10px rgba(149, 149, 149, 0.3);
   }
 
-  input[type="radio"]:checked + label {
+  input[type='radio']:checked + label {
     background-color: var(--point-color);
     color: var(--gray-900);
   }
 `;
 
-const RadioButton: React.FC<RadioButtonProps> = ({label, groupName}) => {
+const RadioButton: React.FC<RadioButtonProps> = ({ label, groupName }) => {
   return (
     <RadioButtonContainer>
-      <input type="radio" id={label} name={groupName} />
+      <input type='radio' id={label} name={groupName} />
       <label htmlFor={label}>{label}</label>
     </RadioButtonContainer>
   );

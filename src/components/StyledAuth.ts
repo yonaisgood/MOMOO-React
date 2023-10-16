@@ -31,8 +31,19 @@ const StyledAuth = styled.main`
       margin-top: 20px;
     }
 
+    strong + label + input {
+      margin-top: 20px;
+    }
+
     input:not(#profile-inp) {
       padding: 20px 30px;
+      font-size: var(--text-m);
+    }
+
+    strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--error-color);
       font-size: var(--text-m);
     }
 
@@ -44,7 +55,7 @@ const StyledAuth = styled.main`
   .profile {
     display: block;
     width: 171px;
-    margin: 0 auto 40px;
+    margin: 0 auto 35px;
 
     img:first-child {
       border-radius: 50%;
@@ -82,12 +93,6 @@ const StyledAuth = styled.main`
         width: 100%;
         height: 2px;
         background: var(--gray-900);
-      }
-    }
-
-    form {
-      input + label + input:not(#profile-inp) {
-        margin-top: 15px;
       }
     }
   }
@@ -158,6 +163,14 @@ const StyledAuth = styled.main`
     }
 
     form {
+      input + label + input:not(#profile-inp) {
+        margin-top: 15px;
+      }
+
+      strong + label + input {
+        margin-top: 15px;
+      }
+
       button {
         position: fixed;
         bottom: 0;

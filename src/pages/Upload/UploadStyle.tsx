@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
   width: 80rem;
@@ -100,4 +100,12 @@ const AccordionContents = styled.div`
   }
 `;
 
-export {UploadWrapper, UploadHeader, UploadContents, PicPart, SelectPart, LocationContents, AccordionContents};
+export {
+  UploadWrapper,
+  UploadHeader,
+  UploadContents,
+  PicPart,
+  SelectPart,
+  LocationContents,
+  AccordionContents,
+};
