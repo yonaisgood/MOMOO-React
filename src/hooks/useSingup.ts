@@ -18,7 +18,7 @@ export default function useSignup() {
   const signup = (
     email: string,
     password: string,
-    displayName: string,
+    displayName: string | null,
     file: File | null
   ) => {
     setError(null);
@@ -31,11 +31,15 @@ export default function useSignup() {
         }
 
         interface Opt {
-          displayName: string;
+          displayName?: string;
           photoURL?: string;
         }
 
-        const opt: Opt = { displayName };
+        const opt: Opt = {};
+
+        if (displayName !== null) {
+          opt.displayName = displayName;
+        }
 
         if (file !== null) {
           const storageRef = ref(storage, `profile/${email}`);
@@ -48,20 +52,26 @@ export default function useSignup() {
           });
         }
 
-        updateProfile(appAuth.currentUser, opt)
-          .then(() => {
-            setError(null);
-            setPending(false);
-            dispatch({ type: 'login', payload: user });
-            console.log(user);
-          })
-          .catch((err) => {
-            setError(err.message);
-            setPending(false);
-          });
+        if (opt.displayName || opt.photoURL) {
+          updateProfile(appAuth.currentUser, opt)
+            .then(() => {
+              setError(null);
+              setPending(false);
+              dispatch({ type: 'login', payload: user });
+            })
+            .catch((err) => {
+              setError(err.code);
+              setPending(false);
+            });
+        }
       })
       .catch((err) => {
-        setError(err.message);
+        if (err.code) {
+          setError(err.code);
+        } else {
+          setError(err.message);
+        }
+
         setPending(false);
       });
   };
