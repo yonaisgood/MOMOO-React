@@ -206,7 +206,9 @@ export default function Signup() {
             maxLength='98'
             onChange={handleInp}
           />
-          {emailErrMessage && <strong>{emailErrMessage}</strong>}
+          <strong role='alert'>
+            {emailErrMessage && `*${emailErrMessage}`}
+          </strong>
           <label htmlFor='password-inp' className='a11y-hidden'>
             비밀번호
           </label>
@@ -218,7 +220,9 @@ export default function Signup() {
             maxLength='20'
             onChange={handleInp}
           />
-          {passwordErrMessage && <strong>{passwordErrMessage}</strong>}
+          <strong role='alert'>
+            {passwordErrMessage && `*${passwordErrMessage}`}
+          </strong>
           <label htmlFor='password-inp' className='a11y-hidden'>
             비밀번호 재확인
           </label>
@@ -230,9 +234,10 @@ export default function Signup() {
             maxLength='20'
             onChange={handleInp}
           />
-          {passwordConfirmErrMessage && (
-            <strong>{passwordConfirmErrMessage}</strong>
-          )}
+          <strong role='alert'>
+            {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
+          </strong>
+
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
             disabled={!emailValid || !passwordValid || !matchPassword}
