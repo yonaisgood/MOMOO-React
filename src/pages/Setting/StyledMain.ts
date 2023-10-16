@@ -48,6 +48,10 @@ const StyledMain = styled(StyledAuth)`
   @media (max-width: 430px) {
     padding: 96px 16px 0;
 
+    .profile {
+      margin: 0 auto 55px;
+    }
+
     form {
       button {
         margin-top: 35px;
