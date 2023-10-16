@@ -13,8 +13,15 @@ export default function Signup() {
   const [src, setSrc] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [disabled, setDisabled] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [displayName, setDisplayName] = useState<null | string>(null);
+  const [emailErrMessage, setEmailErrMessage] = useState('');
+  const [passwordErrMessage, setPasswordErrMessage] = useState('');
+  const [passwordConfirmErrMessage, setPasswordConfirmErrMessage] =
+    useState('');
+  const [emailValid, setEmailValid] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [matchPassword, setMatchPassword] = useState(false);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth
   );
@@ -29,18 +36,87 @@ export default function Signup() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signup(email, password, displayName, file);
-    console.log(error);
+
+    if (error === null) {
+      return;
+    }
+
+    switch (error) {
+      case 'auth/email-already-in-use':
+        setEmailErrMessage('이미 사용 중인 이메일입니다');
+        break;
+      case 'auth/network-request-failed':
+        alert('네트워크 연결에 실패했습니다.');
+        break;
+      case 'auth/invalid-email':
+        setEmailErrMessage('잘못된 이메일 형식입니다');
+        break;
+      case 'auth/internal-error':
+        alert('잘못된 요청입니다');
+        break;
+      case 'auth/weak-password':
+        setPasswordErrMessage('6자 이상 입력해주세요');
+        break;
+      default:
+        alert('회원가입에 실패했습니다');
+    }
+  };
+
+  const handleEmailInp = (target: HTMLInputElement) => {
+    setEmail(target.value);
+
+    if (target.validity.valueMissing) {
+      setEmailErrMessage('필수 항목입니다');
+      setEmailValid(false);
+    } else {
+      setEmailErrMessage('');
+      setEmailValid(true);
+    }
+  };
+
+  const handlePasswordInp = (target: HTMLInputElement) => {
+    setPassword(target.value);
+
+    if (target.validity.tooShort) {
+      setPasswordValid(false);
+      setPasswordErrMessage('6자 이상 입력해주세요');
+    } else {
+      setPasswordValid(true);
+      setPasswordErrMessage('');
+    }
+
+    if (target.value !== passwordConfirm) {
+      setMatchPassword(false);
+    } else {
+      setMatchPassword(true);
+      setPasswordConfirm('');
+    }
+  };
+
+  const handlePasswordConfirmInp = (value: string) => {
+    setPasswordConfirm(value);
+
+    if (value !== password) {
+      setMatchPassword(false);
+      setPasswordConfirmErrMessage('비밀번호가 일치하지 않습니다');
+    } else {
+      setMatchPassword(true);
+      setPasswordConfirmErrMessage('');
+    }
   };
 
   const handleInp = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.id) {
       case 'email-inp':
-        setEmail(e.target.value);
+        handleEmailInp(e.target);
         break;
       case 'password-inp':
-        setPassword(e.target.value);
+        handlePasswordInp(e.target);
         break;
-      case 'username-inp':
+      case 'passwordConfirm-inp':
+        handlePasswordConfirmInp(e.target.value);
+        break;
+      case 'displayName-inp':
         setDisplayName(e.target.value);
     }
   };
@@ -111,11 +187,11 @@ export default function Signup() {
             onChange={handleFileInp}
           />
 
-          <label htmlFor='username-inp' className='a11y-hidden'>
+          <label htmlFor='displayName-inp' className='a11y-hidden'>
             사용자 이름
           </label>
           <StyledInput
-            id='username-inp'
+            id='displayName-inp'
             placeholder='username'
             type='text'
             onChange={handleInp}
@@ -127,8 +203,10 @@ export default function Signup() {
             id='email-inp'
             placeholder='email'
             type='email'
+            maxLength='98'
             onChange={handleInp}
           />
+          {emailErrMessage && <strong>{emailErrMessage}</strong>}
           <label htmlFor='password-inp' className='a11y-hidden'>
             비밀번호
           </label>
@@ -136,17 +214,29 @@ export default function Signup() {
             id='password-inp'
             placeholder='password'
             type='password'
+            minLength='6'
+            maxLength='20'
             onChange={handleInp}
           />
+          {passwordErrMessage && <strong>{passwordErrMessage}</strong>}
           <label htmlFor='password-inp' className='a11y-hidden'>
             비밀번호 재확인
           </label>
           <StyledInput
-            id='password-inp'
+            id='passwordConfirm-inp'
             placeholder='password confirm'
             type='password'
+            minLength='6'
+            maxLength='20'
+            onChange={handleInp}
           />
-          <Button size={clientWitch > 1024 ? 'l' : 's'} disabled={disabled}>
+          {passwordConfirmErrMessage && (
+            <strong>{passwordConfirmErrMessage}</strong>
+          )}
+          <Button
+            size={clientWitch > 1024 ? 'l' : 's'}
+            disabled={!emailValid || !passwordValid || !matchPassword}
+          >
             Signup
           </Button>
         </form>
