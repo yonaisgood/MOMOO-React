@@ -129,14 +129,12 @@ export default function Signup() {
     const file = e.target.files[0];
 
     if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-      alert(
-        '이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.'
-      );
+      alert("이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.");
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
-      alert('이미지 용량은 2MB 이내로 등록 가능합니다.');
+      alert("이미지 용량은 2MB 이내로 등록 가능합니다.");
       return;
     }
 
@@ -145,8 +143,8 @@ export default function Signup() {
     reader.readAsDataURL(file);
     setFile(file);
 
-    reader.addEventListener('load', ({ target }) => {
-      if (typeof target?.result !== 'string') {
+    reader.addEventListener("load", ({target}) => {
+      if (typeof target?.result !== "string") {
         return;
       }
 
@@ -176,9 +174,9 @@ export default function Signup() {
           <h2>Signup</h2>
         </article>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='profile-inp' className='profile'>
-            <img src={src || ProfileBasicImg} alt='프로필 사진' />
-            <img src={EditCircle} alt='변경하기' />
+          <label htmlFor="profile-inp" className="profile">
+            <img src={src || ProfileBasicImg} alt="프로필 사진" />
+            <img src={EditCircle} alt="변경하기" />
           </label>
           <input
             id='profile-inp'
@@ -222,7 +220,7 @@ export default function Signup() {
           <strong role='alert'>
             {passwordErrMessage && `*${passwordErrMessage}`}
           </strong>
-          <label htmlFor='password-inp' className='a11y-hidden'>
+          <label htmlFor='passwordConfirm-inp' className='a11y-hidden'>
             비밀번호 재확인
           </label>
           <StyledInput
@@ -236,7 +234,6 @@ export default function Signup() {
           <strong role='alert'>
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
           </strong>
-
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
             disabled={!emailValid || !passwordValid || !matchPassword}

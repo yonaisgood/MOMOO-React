@@ -9,7 +9,7 @@ const AccordionWrapper = styled.div`
   .que {
     position: relative;
     width: 100%;
-    padding: 0.9rem 0rem;
+    padding: 1.3rem 0rem;
     transition: transform 0.3s ease-in-out;
     font-size: var(--text-m);
     cursor: pointer;
@@ -38,24 +38,24 @@ const AccordionWrapper = styled.div`
 
   .que .arrow-top {
     display: block;
-    transform: rotate(0deg);
+    transform: rotate(180deg);
     transition: transform 0.3s ease;
   }
 
   .que .arrow-bottom {
     display: block;
-    transform: rotate(180deg);
+    transform: rotate(0deg);
     transition: transform 0.3s ease;
   }
 
   .que.on .arrow-bottom {
     display: block;
-    transform: rotate(0deg);
+    transform: rotate(180deg);
   }
 
   .que.on .arrow-top {
     display: block;
-    transform: rotate(0deg);
+    transform: rotate(180deg);
   }
 
   .directionIcon {
