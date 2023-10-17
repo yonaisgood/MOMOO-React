@@ -2,6 +2,7 @@ import React from 'react';
 import Accordion from '../../components/Accordion/Accordion';
 import {
   UploadWrapper,
+  BackButton,
   UploadHeader,
   UploadContents,
   PicPart,
@@ -10,8 +11,8 @@ import {
   AccordionContents,
 } from './UploadStyle';
 
-//image
 import Location from '../../asset/icon/Location.svg';
+import BackIcon from '../../asset/icon/ArrowBack.svg';
 
 const accordionData = [
   {
@@ -31,43 +32,52 @@ const accordionData = [
 ];
 
 function Upload() {
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
   return (
-    <UploadWrapper>
-      <UploadHeader>
-        <h1>새 게시물</h1>
-        <button type='submit'>업로드</button>
-      </UploadHeader>
-      <UploadContents>
-        <PicPart></PicPart>
-        <SelectPart>
-          <div className='inputWrapper'>
-            <input type='text' placeholder='제목을 입력해주세요' />
-          </div>
-          <form className='uploadInfo'>
-            <textarea
-              id='uploadText'
-              maxLength={1000}
-              cols={30}
-              rows={10}
-              placeholder='문구를 입력해주세요...'
-            ></textarea>
-          </form>
-          <LocationContents>
-            <h2>위치</h2>
-            <img src={Location} alt='위치아이콘' />
-          </LocationContents>
-          <AccordionContents>
-            {accordionData.map((data, index) => (
-              <Accordion
-                key={index}
-                question={data.question}
-                answer={data.answer}
-              />
-            ))}
-          </AccordionContents>
-        </SelectPart>
-      </UploadContents>
-    </UploadWrapper>
+    <>
+      <UploadWrapper>
+        <UploadHeader>
+          <BackButton onClick={() => handleGoBack()}>
+            <img src={BackIcon} alt="뒤로가기버튼" />
+          </BackButton>
+          <h1>새 게시물</h1>
+          <button type="submit">업로드</button>
+        </UploadHeader>
+        <UploadContents>
+          <PicPart></PicPart>
+          <SelectPart>
+            <div className="inputWrapper">
+              <input type="text" placeholder="제목을 입력해주세요" />
+            </div>
+            <form className="uploadInfo">
+              <textarea
+                id="uploadText"
+                maxLength={1000}
+                cols={30}
+                rows={10}
+                placeholder="문구를 입력해주세요..."
+              ></textarea>
+            </form>
+            <LocationContents>
+              <h2>위치 추가</h2>
+              <img src={Location} alt="위치아이콘" />
+            </LocationContents>
+            <AccordionContents>
+              {accordionData.map((data, index) => (
+                <Accordion
+                  key={index}
+                  question={data.question}
+                  answer={data.answer}
+                />
+              ))}
+            </AccordionContents>
+          </SelectPart>
+        </UploadContents>
+      </UploadWrapper>
+    </>
   );
 }
 
