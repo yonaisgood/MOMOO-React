@@ -47,7 +47,7 @@ export default function Signup() {
         setEmailErrMessage('이미 사용 중인 이메일입니다');
         break;
       case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다.');
+        alert('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
@@ -67,7 +67,7 @@ export default function Signup() {
     setEmail(target.value);
 
     if (target.validity.valueMissing) {
-      setEmailErrMessage('필수 항목입니다');
+      setEmailErrMessage('이메일을 입력해주세요');
       setEmailValid(false);
     } else {
       setEmailErrMessage('');
@@ -78,7 +78,10 @@ export default function Signup() {
   const handlePasswordInp = (target: HTMLInputElement) => {
     setPassword(target.value);
 
-    if (target.validity.tooShort) {
+    if (target.validity.valueMissing) {
+      setPasswordErrMessage('비밀번호를 입력해주세요');
+      setPasswordValid(false);
+    } else if (target.validity.tooShort) {
       setPasswordValid(false);
       setPasswordErrMessage('6자 이상 입력해주세요');
     } else {
@@ -170,6 +173,7 @@ export default function Signup() {
             type='email'
             maxLength={98}
             onChange={handleInp}
+            required
           />
           <strong role='alert'>
             {emailErrMessage && `*${emailErrMessage}`}
@@ -184,6 +188,7 @@ export default function Signup() {
             minLength={6}
             maxLength={20}
             onChange={handleInp}
+            required
           />
           <strong role='alert'>
             {passwordErrMessage && `*${passwordErrMessage}`}
@@ -198,6 +203,7 @@ export default function Signup() {
             minLength={6}
             maxLength={20}
             onChange={handleInp}
+            required
           />
           <strong role='alert'>
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
