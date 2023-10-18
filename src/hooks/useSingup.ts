@@ -2,16 +2,10 @@ import { useState } from 'react';
 import { appAuth } from '../firebase/config';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import useAuthContext from './useAuthContext';
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from 'firebase/storage';
-import { storage } from '../firebase/config.ts';
+import useUploadImg from './useUploadImg.ts';
 
 export default function useSignup() {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, setPending] = useState(false);
   const { dispatch } = useAuthContext();
 
@@ -26,10 +20,6 @@ export default function useSignup() {
 
     createUserWithEmailAndPassword(appAuth, email, password)
       .then(async ({ user }) => {
-        if (!user || appAuth.currentUser === null) {
-          throw new Error('회원 가입에 실패했습니다');
-        }
-
         interface Opt {
           displayName?: string;
           photoURL?: string;
@@ -42,18 +32,13 @@ export default function useSignup() {
         }
 
         if (file !== null) {
-          const storageRef = ref(storage, `profile/${email}`);
-          const uploadTask = uploadBytesResumable(storageRef, file);
-
-          await uploadBytes(storageRef, file).then(() => {});
-
-          await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            opt.photoURL = downloadURL;
-          });
+          opt.photoURL = await useUploadImg(`profile/${user.uid}`, file);
         }
 
+        dispatch({ type: 'login', payload: user });
+
         if (opt.displayName || opt.photoURL) {
-          updateProfile(appAuth.currentUser, opt)
+          updateProfile(user, opt)
             .then(() => {
               setError(null);
               setPending(false);
