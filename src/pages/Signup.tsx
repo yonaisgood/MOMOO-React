@@ -7,6 +7,7 @@ import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
 import useSignup from '../hooks/useSingup.ts';
+import useFileInp from '../hooks/useHandleFileInp.ts';
 
 export default function Signup() {
   const [file, setFile] = useState<File | null>(null);
@@ -89,7 +90,7 @@ export default function Signup() {
       setMatchPassword(false);
     } else {
       setMatchPassword(true);
-      setPasswordConfirm('');
+      setPasswordConfirmErrMessage('');
     }
   };
 
@@ -121,39 +122,6 @@ export default function Signup() {
     }
   };
 
-  const handleFileInp = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const file = e.target.files[0];
-
-    if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-      alert("이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.");
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      alert("이미지 용량은 2MB 이내로 등록 가능합니다.");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-    setFile(file);
-
-    reader.addEventListener("load", ({target}) => {
-      if (typeof target?.result !== "string") {
-        return;
-      }
-
-      const image = new Image();
-      image.src = target.result;
-      setSrc(target.result);
-    });
-  };
-
   return (
     <StyledAuth>
       <div>
@@ -174,15 +142,15 @@ export default function Signup() {
           <h2>Signup</h2>
         </article>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="profile-inp" className="profile">
-            <img src={src || ProfileBasicImg} alt="프로필 사진" />
-            <img src={EditCircle} alt="변경하기" />
+          <label htmlFor='profile-inp' className='profile'>
+            <img src={src || ProfileBasicImg} alt='프로필 사진' />
+            <img src={EditCircle} alt='변경하기' />
           </label>
           <input
             id='profile-inp'
             type='file'
             className='a11y-hidden'
-            onChange={handleFileInp}
+            onChange={(e) => useFileInp(e, setFile, setSrc)}
           />
           <label htmlFor='displayName-inp' className='a11y-hidden'>
             사용자 이름
