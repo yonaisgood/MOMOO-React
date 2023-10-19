@@ -10,7 +10,7 @@ export default function useReauthenticate() {
 
   const reauthenticate = async (userProvidedPassword: string) => {
     if (user === null || user?.email === null) {
-      return;
+      return false;
     }
 
     const credential = EmailAuthProvider.credential(
@@ -20,10 +20,14 @@ export default function useReauthenticate() {
 
     try {
       await reauthenticateWithCredential(user, credential);
+
+      return true;
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.code);
       }
+
+      return false;
     }
   };
 
