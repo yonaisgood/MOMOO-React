@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Setting from './pages/Setting/Setting';
 import Upload from './pages/Upload/Upload';
+import KakaoMap from './components/Map/KakaoMap';
 import { AuthContextProvider } from './context/AuthContext';
 
 function App() {
@@ -14,10 +15,11 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Splash />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/signup' element={<Signup />}></Route>
-            <Route path='/upload' element={<Upload />}></Route>
+            <Route path="/" element={<Splash />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/upload" element={<Upload />}></Route>
+          <Route path="/kakaoMap" element={<KakaoMap />}></Route>
 
             <Route path='/setting' element={<Setting />}></Route>
           </Routes>
