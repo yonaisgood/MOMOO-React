@@ -9,6 +9,7 @@ import useAuthContext from '../../hooks/useAuthContext';
 import { useUpdateProfile } from '../../hooks/useUpdateProfile';
 import useFileInp from '../../hooks/useHandleFileInp';
 import useReauthenticate from '../../hooks/useReauthenticate';
+import useDeleteId from '../../hooks/useDeleteId';
 
 export default function Setting() {
   const { user } = useAuthContext();
@@ -32,12 +33,24 @@ export default function Setting() {
   );
   const { setProfile, error: updateProfileError } = useUpdateProfile();
   const { reauthenticate, error: reauthenticateError } = useReauthenticate();
+  const { deleteId, error: deleteIdError } = useDeleteId();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
+
+  const handleCurrPasswordInp = async () => {
+    const userPassword = prompt('현재 비밀번호를 입력해주세요');
+
+    if (userPassword === null) {
+      alert('비밀번호가 누락되었습니다');
+      return false;
+    }
+
+    return await reauthenticate(userPassword);
+  };
 
   useEffect(() => {
     const userDisplayName = user?.displayName || '';
@@ -87,12 +100,11 @@ export default function Setting() {
 
     // 현재 비밀번호 입력받은 후, 재인증
     if (email !== user?.email || password) {
-      const userPassword = prompt('현재 비밀번호를 입력해주세요');
-      if (userPassword === null) {
-        alert('비밀번호가 누락되었습니다');
+      const success = await handleCurrPasswordInp();
+
+      if (!success) {
         return;
       }
-      await reauthenticate(userPassword);
     }
 
     type Profile = {
@@ -138,7 +150,6 @@ export default function Setting() {
   }, [reauthenticateError]);
 
   useEffect(() => {
-    console.log(updateProfileError);
     if (!updateProfileError) {
       return;
     }
@@ -208,6 +219,28 @@ export default function Setting() {
     }
   };
 
+  const handleDeleteIdBtn = async () => {
+    setSelectedBtn('회원탈퇴');
+
+    const userConfirm = confirm('MOMOO를 떠나시겠습니까?');
+
+    if (userConfirm) {
+      const success = await handleCurrPasswordInp();
+
+      if (success) {
+        deleteId();
+      }
+    } else {
+      setSelectedBtn('프로필 설정');
+    }
+  };
+
+  useEffect(() => {
+    if (deleteIdError) {
+      alert('회원탈퇴에 실패했습니다');
+    }
+  }, [deleteIdError]);
+
   return (
     <StyledMain>
       <div>
@@ -217,12 +250,14 @@ export default function Setting() {
             <button
               type='button'
               className={selectedBtn === '프로필 설정' ? 'selected' : ''}
+              onClick={() => setSelectedBtn('프로필 설정')}
             >
               프로필 설정
             </button>
             <button
               type='button'
               className={selectedBtn === '회원탈퇴' ? 'selected' : ''}
+              onClick={handleDeleteIdBtn}
             >
               회원탈퇴
             </button>
