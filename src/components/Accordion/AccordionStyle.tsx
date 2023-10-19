@@ -20,6 +20,10 @@ const AccordionWrapper = styled.div`
     gap: 1.4rem;
     padding: 0.9rem 0;
     overflow: hidden;
+
+    @media (max-width: 430px) {
+      gap: 0.8rem;
+    }
   }
 
   .anw img:hover {

@@ -7,6 +7,7 @@ import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
 import useSignup from '../hooks/useSingup.ts';
+import useFileInp from '../hooks/useHandleFileInp.ts';
 
 export default function Signup() {
   const [file, setFile] = useState<File | null>(null);
@@ -46,7 +47,7 @@ export default function Signup() {
         setEmailErrMessage('이미 사용 중인 이메일입니다');
         break;
       case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다.');
+        alert('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
@@ -66,7 +67,7 @@ export default function Signup() {
     setEmail(target.value);
 
     if (target.validity.valueMissing) {
-      setEmailErrMessage('필수 항목입니다');
+      setEmailErrMessage('이메일을 입력해주세요');
       setEmailValid(false);
     } else {
       setEmailErrMessage('');
@@ -77,7 +78,10 @@ export default function Signup() {
   const handlePasswordInp = (target: HTMLInputElement) => {
     setPassword(target.value);
 
-    if (target.validity.tooShort) {
+    if (target.validity.valueMissing) {
+      setPasswordErrMessage('비밀번호를 입력해주세요');
+      setPasswordValid(false);
+    } else if (target.validity.tooShort) {
       setPasswordValid(false);
       setPasswordErrMessage('6자 이상 입력해주세요');
     } else {
@@ -89,7 +93,7 @@ export default function Signup() {
       setMatchPassword(false);
     } else {
       setMatchPassword(true);
-      setPasswordConfirm('');
+      setPasswordConfirmErrMessage('');
     }
   };
 
@@ -121,39 +125,6 @@ export default function Signup() {
     }
   };
 
-  const handleFileInp = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-
-    const file = e.target.files[0];
-
-    if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-      alert("이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.");
-      return;
-    }
-
-    if (file.size > 2 * 1024 * 1024) {
-      alert("이미지 용량은 2MB 이내로 등록 가능합니다.");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-    setFile(file);
-
-    reader.addEventListener("load", ({target}) => {
-      if (typeof target?.result !== "string") {
-        return;
-      }
-
-      const image = new Image();
-      image.src = target.result;
-      setSrc(target.result);
-    });
-  };
-
   return (
     <StyledAuth>
       <div>
@@ -174,15 +145,15 @@ export default function Signup() {
           <h2>Signup</h2>
         </article>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="profile-inp" className="profile">
-            <img src={src || ProfileBasicImg} alt="프로필 사진" />
-            <img src={EditCircle} alt="변경하기" />
+          <label htmlFor='profile-inp' className='profile'>
+            <img src={src || ProfileBasicImg} alt='프로필 사진' />
+            <img src={EditCircle} alt='변경하기' />
           </label>
           <input
             id='profile-inp'
             type='file'
             className='a11y-hidden'
-            onChange={handleFileInp}
+            onChange={(e) => useFileInp(e, setFile, setSrc)}
           />
           <label htmlFor='displayName-inp' className='a11y-hidden'>
             사용자 이름
@@ -202,6 +173,7 @@ export default function Signup() {
             type='email'
             maxLength={98}
             onChange={handleInp}
+            required
           />
           <strong role='alert'>
             {emailErrMessage && `*${emailErrMessage}`}
@@ -216,6 +188,7 @@ export default function Signup() {
             minLength={6}
             maxLength={20}
             onChange={handleInp}
+            required
           />
           <strong role='alert'>
             {passwordErrMessage && `*${passwordErrMessage}`}
@@ -230,6 +203,7 @@ export default function Signup() {
             minLength={6}
             maxLength={20}
             onChange={handleInp}
+            required
           />
           <strong role='alert'>
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
