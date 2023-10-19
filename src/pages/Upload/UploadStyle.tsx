@@ -69,7 +69,6 @@ const PicPart = styled.section`
   @media (max-width: 430px) {
     width: 11.2rem;
     margin-top: 1.2rem;
-    /* height: 11.2rem; */
   }
 `;
 
@@ -127,7 +126,6 @@ const UploadContents = styled.div`
 
   @media (max-width: 1024px) {
     flex-direction: column;
-    /* justify-content: center; */
   }
 
   @media (max-width: 430px) {
@@ -146,7 +144,6 @@ const LocationContents = styled.div`
   border-bottom: 1px solid var(--gray-200);
   font-size: var(--text-m);
   color: var(--gray-600);
-  /* position: relative; */
 
   .locationHead {
     display: flex;
@@ -160,12 +157,9 @@ const LocationContents = styled.div`
 `;
 
 const KakaoMapContainer = styled.div`
-  /* position: absolute;
-  top: 50px;
-  left: 0; */
   width: 100%;
   height: 100%;
-  z-index: 1; /* Adjust z-index to make it appear above other elements */
+  z-index: 1;
 `;
 
 const AccordionContents = styled.div`
