@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { appAuth } from '../firebase/config';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import useAuthContext from './useAuthContext';
-import useUploadImg from './useUploadImg.ts';
+import { useState } from "react";
+import { appAuth } from "../firebase/config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import useAuthContext from "./useAuthContext";
+import useUploadImg from "./useUploadImg.ts";
 
 export default function useSignup() {
   const [error, setError] = useState<string | null>(null);
@@ -35,14 +35,14 @@ export default function useSignup() {
           opt.photoURL = await useUploadImg(`profile/${user.uid}`, file);
         }
 
-        dispatch({ type: 'login', payload: user });
+        dispatch({ type: "login", payload: user });
 
         if (opt.displayName || opt.photoURL) {
           updateProfile(user, opt)
             .then(() => {
               setError(null);
               setPending(false);
-              dispatch({ type: 'login', payload: user });
+              dispatch({ type: "login", payload: user });
             })
             .catch((err) => {
               setError(err.code);
