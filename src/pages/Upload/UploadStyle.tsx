@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
   width: 80rem;
+  max-height: 70rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -58,11 +59,6 @@ const UploadHeader = styled.header`
 
 const BackButton = styled.button`
   cursor: pointer;
-  visibility: hidden;
-
-  @media (max-width: 430px) {
-    visibility: visible;
-  }
 `;
 
 const PicPart = styled.section`
@@ -116,7 +112,8 @@ const SelectPart = styled.section`
 `;
 
 const UploadContents = styled.div`
-  width: 100;
+  width: 100%;
+  max-height: 60rem;
   display: flex;
   justify-content: space-between;
 
@@ -145,16 +142,30 @@ const UploadContents = styled.div`
 `;
 
 const LocationContents = styled.div`
-  display: flex;
-  justify-content: space-between;
   padding: 1.3rem 1.6rem;
   border-bottom: 1px solid var(--gray-200);
   font-size: var(--text-m);
   color: var(--gray-600);
+  /* position: relative; */
+
+  .locationHead {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
 
   img {
     width: 1.6rem;
   }
+`;
+
+const KakaoMapContainer = styled.div`
+  /* position: absolute;
+  top: 50px;
+  left: 0; */
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Adjust z-index to make it appear above other elements */
 `;
 
 const AccordionContents = styled.div`
@@ -178,5 +189,6 @@ export {
   PicPart,
   SelectPart,
   LocationContents,
+  KakaoMapContainer,
   AccordionContents,
 };
