@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Setting from './pages/Setting/Setting';
 import Upload from './pages/Upload/Upload';
+import KakaoMap from './components/Map/KakaoMap';
 import { AuthContextProvider } from './context/AuthContext';
 import My from './pages/My/My';
 import NavRoute from './NavRoute';
@@ -28,6 +29,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Splash />}></Route>
+            <Route path="/kakaoMap" element={<KakaoMap />}></Route>
             {clientWitch <= 430 && (
               <>
                 <Route path='/login' element={<Login />}></Route>
@@ -43,9 +45,7 @@ function App() {
                   <Route path='/upload' element={<Upload />}></Route>
                 </>
               )}
-
               <Route path='/setting' element={<Setting />}></Route>
-
               <Route path='/my' element={<My />}></Route>
             </Route>
           </Routes>

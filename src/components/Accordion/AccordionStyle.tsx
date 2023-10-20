@@ -9,7 +9,7 @@ const AccordionWrapper = styled.div`
   .que {
     position: relative;
     width: 100%;
-    padding: 1.3rem 0rem;
+    padding: 0.9rem 0rem;
     transition: transform 0.3s ease-in-out;
     font-size: var(--text-m);
     cursor: pointer;
@@ -17,20 +17,34 @@ const AccordionWrapper = styled.div`
 
   .anw {
     display: flex;
-    gap: 1.4rem;
-    padding: 0.9rem 0;
     overflow: hidden;
+    gap: 0.5rem;
+
+    button {
+      border-radius: 50%;
+      margin-bottom: 0.3rem;
+      transition: all 0.1s ease-in-out;
+    }
+
+    button:hover {
+      background-color: var(--point-color);
+      border-radius: 50%;
+    }
+
+    button.selected {
+      background-color: var(--point-color);
+    }
+
+    .btnImg {
+      margin: 0 auto;
+    }
 
     @media (max-width: 430px) {
-      gap: 0.8rem;
+      button {
+        width: 3.5rem;
+        height: 3.5rem;
+      }
     }
-  }
-
-  .anw img:hover {
-    width: 3.6rem;
-    height: 3.6rem;
-    border-radius: 50%;
-    box-shadow: 1px 1px 5px var(--gray-200);
   }
 
   .arrow-wrap {

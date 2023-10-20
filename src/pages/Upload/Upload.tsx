@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Accordion from '../../components/Accordion/Accordion';
+import KakaoMap from '../../components/Map/KakaoMap';
+import Preview from '../../components/FileUpload/Preview';
 import {
   UploadWrapper,
   BackButton,
@@ -8,6 +10,7 @@ import {
   PicPart,
   SelectPart,
   LocationContents,
+  KakaoMapContainer,
   AccordionContents,
 } from './UploadStyle';
 
@@ -16,7 +19,7 @@ import BackIcon from '../../asset/icon/ArrowBack.svg';
 
 const accordionData = [
   {
-    question: '앨범선택',
+    question: '앨범 선택',
     answer: '',
   },
   {
@@ -32,6 +35,12 @@ const accordionData = [
 ];
 
 function Upload() {
+  const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
+
+  const toggleKakaoMap = () => {
+    setKakaoMapVisible(!kakaoMapVisible);
+  };
+
   const handleGoBack = () => {
     window.history.back();
   };
@@ -47,7 +56,9 @@ function Upload() {
           <button type="submit">업로드</button>
         </UploadHeader>
         <UploadContents>
-          <PicPart></PicPart>
+          <PicPart>
+            <Preview />
+          </PicPart>
           <SelectPart>
             <div className="inputWrapper">
               <input type="text" placeholder="제목을 입력해주세요" />
@@ -61,10 +72,17 @@ function Upload() {
                 placeholder="문구를 입력해주세요..."
               ></textarea>
             </form>
-            <LocationContents>
-              <h2>위치 추가</h2>
-              <img src={Location} alt="위치아이콘" />
+            <LocationContents onClick={toggleKakaoMap}>
+              <div className="locationHead">
+                <h2>위치 추가</h2>
+                <img src={Location} alt="위치아이콘" />
+              </div>
             </LocationContents>
+            {kakaoMapVisible && (
+              <KakaoMapContainer>
+                <KakaoMap />
+              </KakaoMapContainer>
+            )}
             <AccordionContents>
               {accordionData.map((data, index) => (
                 <Accordion
