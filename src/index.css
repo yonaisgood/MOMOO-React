@@ -18,3 +18,9 @@
 #root {
   background: var(--background-color);
 }
+
+@media (min-width: 1025px) {
+  #root {
+    display: flex;
+  }
+}
