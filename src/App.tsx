@@ -8,8 +8,19 @@ import Upload from './pages/Upload/Upload';
 import { AuthContextProvider } from './context/AuthContext';
 import My from './pages/My/My';
 import NavRoute from './NavRoute';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth
+  );
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
+
   return (
     <>
       <GlobalStyle />
@@ -17,11 +28,21 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Splash />}></Route>
-
+            {clientWitch <= 430 && (
+              <>
+                <Route path='/login' element={<Login />}></Route>
+                <Route path='/signup' element={<Signup />}></Route>
+                <Route path='/upload' element={<Upload />}></Route>
+              </>
+            )}
             <Route element={<NavRoute />}>
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='/signup' element={<Signup />}></Route>
-              <Route path='/upload' element={<Upload />}></Route>
+              {clientWitch > 430 && (
+                <>
+                  <Route path='/login' element={<Login />}></Route>
+                  <Route path='/signup' element={<Signup />}></Route>
+                  <Route path='/upload' element={<Upload />}></Route>
+                </>
+              )}
 
               <Route path='/setting' element={<Setting />}></Route>
 
