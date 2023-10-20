@@ -18,7 +18,6 @@ export default function Login() {
     document.documentElement.clientWidth
   );
   const { login, error } = useLogin();
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -32,7 +31,6 @@ export default function Login() {
     login(email, password);
 
     if (error === null) {
-      // navigate('/home');
       return;
     }
 
