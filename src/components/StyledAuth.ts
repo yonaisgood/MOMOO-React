@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const StyledAuth = styled.main`
   min-height: 100vh;
+  flex-grow: 1;
 
   article {
     display: flex;
@@ -99,7 +100,6 @@ const StyledAuth = styled.main`
 
   @media (min-width: 1025px) {
     div {
-      padding-left: var(--nav-width-pc);
       padding-right: var(--right-padding-pc); // 임시
       justify-content: center;
     }
