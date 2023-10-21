@@ -24,16 +24,33 @@ const StyledBreadcrumb = styled.nav<Container>`
     margin-right: 20px;
     width: 12px;
     aspect-ratio: 1/1;
-    background: ${(props) => `url(${props.$arrow})`};
+    background: ${(props) => `url(${props.$arrow}) no-repeat`};
     transform: rotateZ(-90deg);
   }
 
   li.current::before {
-    background: ${(props) => `url(${props.$arrowGray})`};
+    background: ${(props) => `url(${props.$arrowGray})  no-repeat`};
   }
 
   li + li {
     margin-left: 20px;
+  }
+
+  @media (min-width: 1025px) {
+    position: fixed;
+    top: calc(116px - 21px);
+    right: 48px;
+    transform: rotateZ(90deg);
+    transform-origin: top right;
+
+    ol {
+      position: absolute;
+      display: flex;
+    }
+
+    li {
+      display: flex;
+    }
   }
 `;
 

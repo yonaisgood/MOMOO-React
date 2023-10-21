@@ -11,6 +11,7 @@ import useFileInp from '../../hooks/useHandleFileInp';
 import useReauthenticate from '../../hooks/useReauthenticate';
 import useDeleteId from '../../hooks/useDeleteId';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 export default function Setting() {
   const { user } = useAuthContext();
@@ -244,6 +245,14 @@ export default function Setting() {
 
   return (
     <StyledMain>
+      {clientWitch > 1024 && (
+        <Breadcrumb
+          navList={[
+            { path: 'home', text: 'Home' },
+            { path: 'setting', text: 'Setting' },
+          ]}
+        />
+      )}
       {clientWitch > 430 && clientWitch <= 1024 && (
         <BreadcrumbWrap
           navList={[
