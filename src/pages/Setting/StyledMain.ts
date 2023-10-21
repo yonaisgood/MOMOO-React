@@ -45,6 +45,30 @@ const StyledMain = styled(StyledAuth)`
     }
   }
 
+  @media (min-width: 431px) and (max-width: 1024px) {
+    padding-top: var(--nav-height-tablet);
+    flex-direction: column;
+    align-items: flex-start;
+
+    div:not(.breadcrumb-wrap) {
+      margin: auto;
+
+      article {
+        justify-content: center;
+
+        button + button {
+          margin-top: 0;
+        }
+
+        button {
+          text-align: left;
+          padding: 5px 14px;
+          font-size: var(--title-s);
+        }
+      }
+    }
+  }
+
   @media (max-width: 430px) {
     padding: 96px 16px 0;
 
