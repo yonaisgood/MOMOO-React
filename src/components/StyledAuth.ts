@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const StyledAuth = styled.main`
   min-height: 100vh;
+  flex-grow: 1;
 
   article {
     display: flex;
