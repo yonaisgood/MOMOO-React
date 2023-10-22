@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
