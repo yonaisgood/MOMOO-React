@@ -12,17 +12,8 @@ export default function Nav() {
     document.body.classList.add('modal-open');
   };
 
-  const closeUploadModal = () => {
-    setOpenUploadModal(false);
-    document.body.classList.remove('modal-open');
-  };
-
   const openMyModalFunc = () => {
     setOpenMyModal(true);
-  };
-
-  const closeMyModal = () => {
-    setOpenMyModal(false);
   };
 
   return (
@@ -37,10 +28,10 @@ export default function Nav() {
       </div>
       {openUploadModal && (
         <div className="modal-overlay">
-          <Upload setOpenPopup={closeUploadModal} />
+          <Upload setOpenPopup={setOpenUploadModal} />
         </div>
       )}
-      {openMyModal && <MyPopup setOpenPopup={closeMyModal} />}
+      {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
     </StyledNav>
   );
 }
