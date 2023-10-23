@@ -127,7 +127,7 @@ export default function Signup() {
 
   return (
     <StyledAuth>
-      <div>
+      <div className='container'>
         {clientWitch < 431 && (
           <>
             <h1>

@@ -84,7 +84,7 @@ export default function Login() {
 
   return (
     <StyledAuth>
-      <div>
+      <div className='container'>
         {clientWitch < 431 && (
           <>
             <h1>
