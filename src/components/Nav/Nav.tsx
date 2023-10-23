@@ -3,7 +3,11 @@ import MyPopup from '../MyPopup/MyPopup';
 import { useState } from 'react';
 
 export default function Nav() {
-  const [openPopup, setOpenPopup] = useState(false);
+  const [openPopup, setOpenPopup] = useState(true);
 
-  return <StyledNav>{openPopup && <MyPopup />}</StyledNav>;
+  return (
+    <StyledNav>
+      {openPopup && <MyPopup setOpenPopup={setOpenPopup} />}
+    </StyledNav>
+  );
 }

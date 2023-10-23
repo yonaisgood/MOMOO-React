@@ -8,9 +8,34 @@ import LogoutIcon from '../../asset/icon/Logout.svg';
 import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import XIcon from '../../asset/icon/X.svg';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import useLogout from '../../hooks/useLogout';
 
-export default function MyPopup() {
+interface Props {
+  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function MyPopup({ setOpenPopup }: Props) {
   const { user } = useAuthContext();
+
+  useEffect(() => {
+    const closePopup = (e: KeyboardEvent) => {
+      // esc
+      if (e.keyCode === 27) {
+        setOpenPopup(false);
+      }
+    };
+
+    window.addEventListener('keydown', closePopup);
+  }, []);
+
+  const logout = async () => {
+    try {
+      await useLogout();
+    } catch (error) {
+      alert('로그아웃에 실패했습니다');
+    }
+  };
 
   return (
     <StyledDialog role='dialog'>
@@ -52,7 +77,7 @@ export default function MyPopup() {
                 </a>
               </li>
               <li>
-                <button type='button'>
+                <button type='button' onClick={logout}>
                   <img src={LogoutIcon} alt='' />
                   Logout
                 </button>
@@ -60,7 +85,11 @@ export default function MyPopup() {
             </ul>
           </section>
           <div className='footer'>MOMOO 2023. All Right Reserved.</div>
-          <button className='close' type='button'>
+          <button
+            className='close'
+            type='button'
+            onClick={() => setOpenPopup(false)}
+          >
             <img src={XIcon} alt='닫기' />
           </button>
         </>
