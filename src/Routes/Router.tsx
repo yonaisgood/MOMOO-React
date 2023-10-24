@@ -4,7 +4,7 @@ import Splash from '../pages/splash/Splash';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Setting from '../pages/Setting/Setting';
-import Upload from '../pages/Upload/Upload';
+import Upload from '../components/Upload/Upload';
 import KakaoMap from '../components/Map/KakaoMap';
 import My from '../pages/My/My';
 import NavRoute from './NavRoute';
@@ -47,8 +47,6 @@ export default function Router() {
               <Route path="/setting" element={<Setting />}></Route>
               <Route path="/my" element={<My />}></Route>
             </Route>
-            <Route path="/upload" element={<Upload />}></Route>
-            <Route path="/kakaoMap" element={<KakaoMap />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
