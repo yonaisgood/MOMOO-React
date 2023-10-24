@@ -38,59 +38,59 @@ export default function MyPopup({ setOpenPopup }: Props) {
   };
 
   return (
-    <StyledDialog role='dialog'>
+    <StyledDialog role="dialog">
       {user && (
         <>
-          <section className='profile'>
-            <img src={user.photoURL || BasicProfile} alt='프로필 사진' />
-            <div className='displayName'>{user.displayName}</div>
-            <div className='email'>{user.email}</div>
+          <section className="profile">
+            <img src={user.photoURL || BasicProfile} alt="프로필 사진" />
+            <div className="displayName">{user.displayName}</div>
+            <div className="email">{user.email}</div>
           </section>
-          <section className='menu'>
+          <section className="menu">
             <ul>
               <li>
-                <Link to='/setting'>
-                  <img src={SettingIcon} alt='' />
+                <Link to="/setting">
+                  <img src={SettingIcon} alt="" />
                   Setting
                 </Link>
               </li>
               <li>
-                <Link to='/setting'>
-                  <img src={DocumentIcon} alt='' />
-                  Site Terms
+                <Link to="/terms">
+                  <img src={DocumentIcon} alt="" />
+                  Terms of use
                 </Link>
               </li>
               <li>
-                <Link to='/setting'>
-                  <img src={PolicyIcon} alt='' />
+                <Link to="/policy">
+                  <img src={PolicyIcon} alt="" />
                   Privacy policy
                 </Link>
               </li>
               <li>
                 <a
-                  href='https://github.com/yonainthefish/MoMoo'
-                  rel='noopener'
-                  target='_blank'
+                  href="https://github.com/yonainthefish/MoMoo"
+                  rel="noopener"
+                  target="_blank"
                 >
-                  <img src={Github} alt='' />
+                  <img src={Github} alt="" />
                   GitHub
                 </a>
               </li>
               <li>
-                <button type='button' onClick={logout}>
-                  <img src={LogoutIcon} alt='' />
+                <button type="button" onClick={logout}>
+                  <img src={LogoutIcon} alt="" />
                   Logout
                 </button>
               </li>
             </ul>
           </section>
-          <div className='footer'>MOMOO 2023. All Right Reserved.</div>
+          <div className="footer">MOMOO 2023. All Right Reserved.</div>
           <button
-            className='close'
-            type='button'
+            className="close"
+            type="button"
             onClick={() => setOpenPopup(false)}
           >
-            <img src={XIcon} alt='닫기' />
+            <img src={XIcon} alt="닫기" />
           </button>
         </>
       )}

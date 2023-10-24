@@ -5,7 +5,7 @@ export function AuthRoute() {
   const { user } = useAuthContext();
 
   if (!user) {
-    return <Navigate to='/login' replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
@@ -15,7 +15,7 @@ export function NonAuthRoute() {
   const { user } = useAuthContext();
 
   if (user) {
-    return <Navigate to='/' replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return <Outlet />;

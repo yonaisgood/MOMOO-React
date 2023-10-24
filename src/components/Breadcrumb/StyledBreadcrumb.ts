@@ -6,7 +6,11 @@ type Container = {
 };
 
 const StyledBreadcrumb = styled.nav<Container>`
-  margin-left: auto;
+  display: flex;
+
+  ol {
+    margin-left: auto;
+  }
 
   li {
     display: inline-block;
@@ -49,6 +53,7 @@ const StyledBreadcrumb = styled.nav<Container>`
     }
 
     li {
+      white-space: nowrap;
       display: flex;
     }
   }

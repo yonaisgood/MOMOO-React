@@ -11,6 +11,10 @@ const StyledBreadcrumbWrap = styled.div`
     font-size: var(--title-s);
     color: var(--gray-800);
   }
+
+  nav {
+    margin-left: auto;
+  }
 `;
 
 export default StyledBreadcrumbWrap;

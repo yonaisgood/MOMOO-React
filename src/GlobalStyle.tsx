@@ -65,9 +65,9 @@ const GlobalStyle = createGlobalStyle`
 
     --nav-width-pc: 256px;
     --nav-height-tablet: 80px;
+    --nav-height-mobile: 48px;
+
     --right-padding-pc: 190px;
-    
-    --nav-height-tablet: 80px;
 
     --column-pc : calc((100vw - var(--nav-width-pc) - 190px - var(--margin-pc) * 2 - var(--gutter-pc) * 11) / 12);
     --gutter-pc: 16px;
