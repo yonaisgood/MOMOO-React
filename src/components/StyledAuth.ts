@@ -4,6 +4,10 @@ const StyledAuth = styled.main`
   min-height: 100vh;
   flex-grow: 1;
 
+  button {
+    width: 100%;
+  }
+
   article {
     display: flex;
 
@@ -100,7 +104,6 @@ const StyledAuth = styled.main`
 
   @media (min-width: 1025px) {
     .container {
-      padding-left: var(--nav-width-pc);
       padding-right: var(--right-padding-pc); // 임시
       justify-content: center;
     }
