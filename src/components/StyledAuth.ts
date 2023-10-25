@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 const StyledAuth = styled.main`
   min-height: 100vh;
+  flex-grow: 1;
+
+  button {
+    width: 100%;
+  }
 
   article {
     display: flex;
@@ -76,7 +81,7 @@ const StyledAuth = styled.main`
     display: flex;
     align-items: center;
 
-    div {
+    .container {
       display: flex;
       width: 100%;
     }
@@ -98,8 +103,7 @@ const StyledAuth = styled.main`
   }
 
   @media (min-width: 1025px) {
-    div {
-      padding-left: var(--nav-width-pc);
+    .container {
       padding-right: var(--right-padding-pc); // 임시
       justify-content: center;
     }
@@ -186,9 +190,9 @@ const StyledAuth = styled.main`
   }
 
   @media (min-width: 431px) and (max-width: 1024px) {
-    div {
+    .container {
       margin: 0 var(--margin-tablet);
-      padding: calc(var(--column-tablet) + var(--gutter-tablet));
+      padding: 0 calc(var(--column-tablet) + var(--gutter-tablet));
     }
 
     article {

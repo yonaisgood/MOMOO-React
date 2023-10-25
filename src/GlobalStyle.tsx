@@ -51,6 +51,7 @@ const GlobalStyle = createGlobalStyle`
     --error-color: #DE3F35;
 
     --serif : 'Prata', serif;
+    --title-font-family : 'Prata', 'Noto Sans', sans-serif;
     /* font-family: var(--serif); */
 
     font-size: 10px;
@@ -63,8 +64,11 @@ const GlobalStyle = createGlobalStyle`
     --text-s: 1.2rem;
 
     --nav-width-pc: 256px;
+    --nav-height-tablet: 80px;
+    --nav-height-mobile: 48px;
+
     --right-padding-pc: 190px;
-    
+
     --column-pc : calc((100vw - var(--nav-width-pc) - 190px - var(--margin-pc) * 2 - var(--gutter-pc) * 11) / 12);
     --gutter-pc: 16px;
     --margin-pc: 32px;

@@ -15,12 +15,10 @@ export const useLogin = () => {
     signInWithEmailAndPassword(appAuth, email, password)
       .then(({ user }) => {
         dispatch({ type: 'login', payload: user });
-
         setError(null);
         setPending(false);
       })
       .catch((err) => {
-        console.log(err);
         if (err.code) {
           setError(err.code);
         } else {

@@ -10,6 +10,8 @@ import { useUpdateProfile } from '../../hooks/useUpdateProfile';
 import useFileInp from '../../hooks/useHandleFileInp';
 import useReauthenticate from '../../hooks/useReauthenticate';
 import useDeleteId from '../../hooks/useDeleteId';
+import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
+import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 
 export default function Setting() {
   const { user } = useAuthContext();
@@ -243,10 +245,27 @@ export default function Setting() {
 
   return (
     <StyledMain>
-      <div>
-        {clientWitch > 431 && (
+      {clientWitch > 1024 && (
+        <Breadcrumb
+          navList={[
+            { path: 'home', text: 'Home' },
+            { path: 'setting', text: 'Setting' },
+          ]}
+        />
+      )}
+      {clientWitch > 430 && clientWitch <= 1024 && (
+        <BreadcrumbWrap
+          navList={[
+            { path: 'home', text: 'Home' },
+            { path: 'setting', text: 'Setting' },
+          ]}
+          title='Setting'
+        />
+      )}
+      <div className='container'>
+        {clientWitch > 430 && (
           <article>
-            <h2>Setting</h2>
+            {clientWitch > 1024 && <h2>Setting</h2>}
             <button
               type='button'
               className={selectedBtn === '프로필 설정' ? 'selected' : ''}

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
@@ -18,7 +18,6 @@ export default function Login() {
     document.documentElement.clientWidth
   );
   const { login, error } = useLogin();
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -32,7 +31,6 @@ export default function Login() {
     login(email, password);
 
     if (error === null) {
-      // navigate('/home');
       return;
     }
 
@@ -86,7 +84,7 @@ export default function Login() {
 
   return (
     <StyledAuth>
-      <div>
+      <div className='container'>
         {clientWitch < 431 && (
           <>
             <h1>
