@@ -1,25 +1,34 @@
 import styled from 'styled-components';
 
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+`;
+
 const UploadWrapper = styled.div`
   width: 80rem;
-  max-height: 70rem;
-  position: fixed; 
-  top: 50%; 
-  left: 50%; 
+  max-height: 53rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
+  z-index: 101;
   overflow: hidden;
 
   @media (max-width: 1024px) {
     width: 52rem;
-    transform: translate(-50%, -50%);
   }
 
   @media (max-width: 768px) {
     width: 49rem;
-    transform: translate(-50%, -50%);
   }
 
   @media (max-width: 430px) {
@@ -58,6 +67,11 @@ const UploadHeader = styled.header`
 
 const BackButton = styled.button`
   cursor: pointer;
+  visibility: hidden;
+
+  @media (max-width: 430px) {
+    visibility: visible;
+  }
 `;
 
 const PicPart = styled.section`
@@ -72,7 +86,9 @@ const PicPart = styled.section`
 `;
 
 const SelectPart = styled.section`
+  position: relative;
   width: 100%;
+  aspect-ratio: 2/3;
 
   .inputWrapper {
     padding: 1.3rem 1.6rem;
@@ -111,7 +127,7 @@ const SelectPart = styled.section`
 
 const UploadContents = styled.div`
   width: 100%;
-  max-height: 60rem;
+  height: 48rem;
   display: flex;
   justify-content: space-between;
 
@@ -139,10 +155,10 @@ const UploadContents = styled.div`
 `;
 
 const LocationContents = styled.div`
-  padding: 1.3rem 1.6rem;
+  padding: 0.9rem 1.6rem;
   border-bottom: 1px solid var(--gray-200);
   font-size: var(--text-m);
-  color: var(--gray-600);
+  color: var(--gray-900);
 
   .locationHead {
     display: flex;
@@ -153,12 +169,17 @@ const LocationContents = styled.div`
   img {
     width: 1.6rem;
   }
+
+  .toggle-icon {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
 `;
 
 const KakaoMapContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: inherit;
   z-index: 1;
+  position: absolute;
 `;
 
 const AccordionContents = styled.div`
@@ -174,7 +195,20 @@ const AccordionContents = styled.div`
   }
 `;
 
+const CloseBtn = styled.button`
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background-color: transparent;
+  z-index: 101;
+
+  @media (max-width: 430px) {
+    visibility: hidden;
+  }
+`;
+
 export {
+  Overlay,
   UploadWrapper,
   BackButton,
   UploadHeader,
@@ -184,4 +218,5 @@ export {
   LocationContents,
   KakaoMapContainer,
   AccordionContents,
+  CloseBtn,
 };
