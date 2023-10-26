@@ -9,7 +9,7 @@ const StyledNav = styled.nav`
     padding: 1rem;
   }
 
-  .modal-overlay {
+  /* .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -17,7 +17,7 @@ const StyledNav = styled.nav`
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
-  }
+  } */
 
   @media (min-width: 1025px) {
     flex-shrink: 0;
