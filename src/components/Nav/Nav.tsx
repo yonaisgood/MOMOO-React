@@ -26,11 +26,7 @@ export default function Nav() {
           Upload
         </button>
       </div>
-      {openUploadModal && (
-        // <div className="modal-overlay">
-        <Upload setOpenPopup={setOpenUploadModal} />
-        // </div>
-      )}
+      {openUploadModal && <Upload setOpenPopup={setOpenUploadModal} />}
       {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
     </StyledNav>
   );
