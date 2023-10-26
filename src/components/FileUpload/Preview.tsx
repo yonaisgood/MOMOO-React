@@ -10,7 +10,7 @@ interface IndicatorProps {
 
 const Preview = () => {
   const [imageList, setImageList] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0); // 현재 슬라이드 인덱스
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -23,6 +23,7 @@ const Preview = () => {
     }
   };
 
+  // 슬라이드 인디케이터 관련 
   const nextSlide = () => {
     setCurrentIndex((currentIndex + 1) % imageList.length);
   };
@@ -50,41 +51,48 @@ const Preview = () => {
           id="file"
           onChange={(e) => onUpload(e)}
         />
-
         <PreviewSlider>
           {imageList.length > 0 && (
             <>
-              <img
-                className="ArrowBack"
-                src={ArrowLeft}
-                alt="뒤로가기 버튼"
-                onClick={prevSlide}
-              />
-
+              {imageList.length > 1 && (
+                <button onClick={prevSlide}>
+                  <img
+                    className="ArrowBack"
+                    src={ArrowLeft}
+                    alt="뒤로가기 버튼"
+                  />
+                </button>
+              )}
               <img
                 className="selectImg"
                 src={imageList[currentIndex]}
                 alt="이미지"
               />
-              <button onClick={nextSlide}>
-                <img
-                  className="ArrowRight"
-                  src={ArrowRight}
-                  alt="앞으로가기 버튼"
-                />
-              </button>
+              {imageList.length > 1 && (
+                <button onClick={nextSlide}>
+                  <img
+                    className="ArrowRight"
+                    src={ArrowRight}
+                    alt="앞으로가기 버튼"
+                  />
+                </button>
+              )}
             </>
           )}
         </PreviewSlider>
-        <IndicatorContainer>
-          {imageList.map((_, index) => (
-            <Indicator
-              key={index}
-              active={index === currentIndex}
-              onClick={() => handleIndicatorClick(index)}
-            />
-          ))}
-        </IndicatorContainer>
+        <IndecatorBasicBox>
+          {imageList.length > 1 && (
+            <IndicatorContainer>
+              {imageList.map((_, index) => (
+                <Indicator
+                  key={index}
+                  active={index === currentIndex}
+                  onClick={() => handleIndicatorClick(index)}
+                />
+              ))}
+            </IndicatorContainer>
+          )}
+        </IndecatorBasicBox>
       </PrivewSection>
     </>
   );
@@ -145,6 +153,12 @@ const PreviewSlider = styled.div`
   }
 `;
 
+const IndecatorBasicBox = styled.div`
+  width: 100%;
+  height: 3rem;
+  background-color: var(--background-color);
+`;
+
 const IndicatorContainer = styled.div`
   width: 100%;
   height: 3rem;
@@ -153,7 +167,6 @@ const IndicatorContainer = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  background-color: var(--background-color);
 `;
 
 const Indicator = styled.div<IndicatorProps>`
