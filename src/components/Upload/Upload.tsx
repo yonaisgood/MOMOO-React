@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Accordion from '../Accordion/Accordion';
 import KakaoMap from '../Map/KakaoMap';
 import Preview from '../FileUpload/Preview';
 import {
+  Overlay,
   UploadWrapper,
   BackButton,
   UploadHeader,
@@ -12,10 +13,12 @@ import {
   LocationContents,
   KakaoMapContainer,
   AccordionContents,
+  CloseBtn,
 } from './UploadStyle';
 
-import Location from '../../asset/icon/Location.svg';
+import Location from '../../asset/icon/Arrow.svg';
 import BackIcon from '../../asset/icon/ArrowBack.svg';
+import Close from '../../asset/icon/X-White.svg';
 
 const accordionData = [
   {
@@ -36,17 +39,34 @@ const accordionData = [
 
 function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState('');
+  const [isIconRotated, setIsIconRotated] = useState(false);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
+    setIsIconRotated(!isIconRotated);
+  };
+
+  const handleOverlayClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    if (e.target === overlayRef.current) {
+      closeUploadModal();
+    }
   };
 
   const closeUploadModal = () => {
     setOpenPopup(false);
   };
 
+  const handleAddressSelect = (address: string) => {
+    setSelectedAddress(address);
+  };
+
   return (
     <>
+      <Overlay ref={overlayRef} onClick={handleOverlayClick} />
       <UploadWrapper>
         <UploadHeader>
           <BackButton onClick={() => closeUploadModal()}>
@@ -74,13 +94,21 @@ function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
             </form>
             <LocationContents onClick={toggleKakaoMap}>
               <div className="locationHead">
-                <h2>위치 추가</h2>
-                <img src={Location} alt="위치아이콘" />
+                <h2>{selectedAddress || '위치 추가'}</h2>
+                <img
+                  src={Location}
+                  alt="토글 아이콘"
+                  className={isIconRotated ? 'toggle-icon' : ''}
+                />
               </div>
             </LocationContents>
             {kakaoMapVisible && (
               <KakaoMapContainer>
-                <KakaoMap />
+                <KakaoMap
+                  onAddressSelect={(address: string) =>
+                    setSelectedAddress(address)
+                  }
+                />
               </KakaoMapContainer>
             )}
             <AccordionContents>
@@ -95,6 +123,9 @@ function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
           </SelectPart>
         </UploadContents>
       </UploadWrapper>
+      <CloseBtn onClick={() => closeUploadModal()}>
+        <img src={Close} alt="닫기버튼" />
+      </CloseBtn>
     </>
   );
 }
