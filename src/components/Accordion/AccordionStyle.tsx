@@ -34,17 +34,11 @@ const AccordionWrapper = styled.div`
     button.selected {
       background-color: var(--point-color);
     }
+  }
 
-    .btnImg {
-      margin: 0 auto;
-    }
-
-    @media (max-width: 430px) {
-      button {
-        width: 3.5rem;
-        height: 3.5rem;
-      }
-    }
+  .btnImg {
+    margin: 0 auto;
+    /* border: 2px solid red; */
   }
 
   .arrow-wrap {
@@ -79,6 +73,22 @@ const AccordionWrapper = styled.div`
   .directionIcon {
     width: 1.6rem;
     height: 1.6rem;
+  }
+
+  @media (max-width: 430px) {
+    .que {
+      padding: 1.3rem 0rem;
+    }
+
+    button {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .btnImg {
+      width: 2.6rem;
+      height: 2.6rem;
+    }
   }
 `;
 

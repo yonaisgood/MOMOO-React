@@ -12,7 +12,7 @@ const Overlay = styled.div`
 
 const UploadWrapper = styled.div`
   width: 80rem;
-  max-height: 53rem;
+  height: 53rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -25,6 +25,9 @@ const UploadWrapper = styled.div`
 
   @media (max-width: 1024px) {
     width: 52rem;
+    min-height: 93rem;
+    overflow: scroll;
+    scroll-behavior: hidden;
   }
 
   @media (max-width: 768px) {
@@ -80,8 +83,11 @@ const PicPart = styled.section`
   background-color: var(--gray-900);
 
   @media (max-width: 430px) {
-    width: 11.2rem;
+    width: 100vm;
+    height: 11.2rem;
     margin-top: 1.2rem;
+    margin-left: 1.6rem;
+    background-color: var(--background-color);
   }
 `;
 
@@ -173,6 +179,11 @@ const LocationContents = styled.div`
   .toggle-icon {
     transform: rotate(180deg);
     transition: transform 0.3s ease;
+  }
+
+  @media (max-width: 430px) {
+    padding: 1.3rem 1.6rem;
+    background-color: var(--background-color);
   }
 `;
 
