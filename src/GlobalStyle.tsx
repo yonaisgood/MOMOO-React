@@ -68,14 +68,17 @@ const GlobalStyle = createGlobalStyle`
     --nav-height-mobile: 48px;
 
     --right-padding-pc: 190px;
+    --padding-top-pc: 100px;
 
     --column-pc : calc((100vw - var(--nav-width-pc) - 190px - var(--margin-pc) * 2 - var(--gutter-pc) * 11) / 12);
     --gutter-pc: 16px;
-    --margin-pc: 32px;
+    --margin-pc: 28px;
 
     --column-tablet : calc((100vw - var(--margin-tablet) * 2 - var(--gutter-tablet) * 7) / 8);
     --gutter-tablet: 16px;
     --margin-tablet: 24px;
+
+    --margin-mobile: 16px;
   }
 
   a {

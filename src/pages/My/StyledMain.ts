@@ -4,7 +4,7 @@ const StyledMain = styled.main`
   padding: 48px 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: inherit;
 
   .profile {
     padding: 35px 0 24px;
