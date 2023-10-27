@@ -7,22 +7,27 @@ import ArrowRight from '../../asset/icon/ArrowRight.svg';
 interface IndicatorProps {
   active: boolean;
 }
-
+//
 const Preview = () => {
   const [imageList, setImageList] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0); // 현재 슬라이드 인덱스
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (files) {
-      const newImages = Array.from(files).map((file) =>
-        URL.createObjectURL(file),
-      );
-      setImageList([...imageList, ...newImages]);
+      if (imageList.length + files.length <= 3) {
+        const newImages = Array.from(files).map((file) =>
+          URL.createObjectURL(file),
+        );
+        setImageList([...imageList, ...newImages]);
+      } else {
+        alert('최대 3장의 이미지까지만 선택할 수 있습니다.');
+      }
     }
   };
 
+  // 슬라이드 인디케이터 관련
   const nextSlide = () => {
     setCurrentIndex((currentIndex + 1) % imageList.length);
   };
@@ -37,67 +42,119 @@ const Preview = () => {
 
   return (
     <>
-      <PrivewSection>
-        <label htmlFor="file">
-          <div className="btnUpload">
-            <img src={ImgUpload} alt="사진 업로드 버튼" />
-          </div>
-        </label>
-        <input
-          accept="image/*"
-          multiple
-          type="file"
-          id="file"
-          onChange={(e) => onUpload(e)}
-        />
-
-        <PreviewSlider>
-          {imageList.length > 0 && (
-            <>
-              <img
-                className="ArrowBack"
-                src={ArrowLeft}
-                alt="뒤로가기 버튼"
-                onClick={prevSlide}
-              />
-
-              <img
-                className="selectImg"
-                src={imageList[currentIndex]}
-                alt="이미지"
-              />
-              <button onClick={nextSlide}>
-                <img
-                  className="ArrowRight"
-                  src={ArrowRight}
-                  alt="앞으로가기 버튼"
-                />
-              </button>
-            </>
-          )}
-        </PreviewSlider>
-        <IndicatorContainer>
-          {imageList.map((_, index) => (
-            <Indicator
-              key={index}
-              active={index === currentIndex}
-              onClick={() => handleIndicatorClick(index)}
-            />
-          ))}
-        </IndicatorContainer>
-      </PrivewSection>
+      <PreviewSliderContainer>
+        <PrivewSection>
+          <label htmlFor="file">
+            <div className="btnUpload">
+              <img src={ImgUpload} alt="사진 업로드 버튼" />
+            </div>
+          </label>
+          <input
+            accept="image/*"
+            multiple
+            type="file"
+            id="file"
+            onChange={(e) => onUpload(e)}
+          />
+          <PreviewSlider>
+            {imageList.length > 0 && (
+              <>
+                {/* 모바일 슬라이드 */}
+                <ImageGrid>
+                  {imageList.map((image, index) => (
+                    <img key={index} src={image} alt="이미지" />
+                  ))}
+                </ImageGrid>
+                {/* 모바일 이상 슬라이드 */}
+                <ImgSlidePcSize>
+                  {imageList.length > 1 && (
+                    <button onClick={prevSlide}>
+                      <img
+                        className="ArrowBack"
+                        src={ArrowLeft}
+                        alt="뒤로가기 버튼"
+                      />
+                    </button>
+                  )}
+                  <img
+                    className="selectImg"
+                    src={imageList[currentIndex]}
+                    alt="이미지"
+                  />
+                  {imageList.length > 1 && (
+                    <button onClick={nextSlide}>
+                      <img
+                        className="ArrowRight"
+                        src={ArrowRight}
+                        alt="앞으로가기 버튼"
+                      />
+                    </button>
+                  )}
+                </ImgSlidePcSize>
+              </>
+            )}
+          </PreviewSlider>
+          <IndecatorBasicBox>
+            {imageList.length > 1 && (
+              <IndicatorContainer>
+                {imageList.map((_, index) => (
+                  <Indicator
+                    key={index}
+                    active={index === currentIndex}
+                    onClick={() => handleIndicatorClick(index)}
+                  />
+                ))}
+              </IndicatorContainer>
+            )}
+          </IndecatorBasicBox>
+        </PrivewSection>
+      </PreviewSliderContainer>
     </>
   );
 };
 
+const ImgSlidePcSize = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 430px) {
+    display: none;
+  }
+`;
+
+const ImageGrid = styled.div`
+  display: none;
+  width: 100%;
+  height: 11.2rem;
+  gap: 1rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @media (max-width: 430px) {
+    display: flex;
+
+    img {
+      width: 11.2rem;
+      aspect-ratio: 1/1;
+      background-color: var(--gray-900);
+    }
+  }
+`;
+
 const PrivewSection = styled.section`
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
   position: relative;
 
   .btnUpload {
     width: 3.4rem;
-    aspect-ratio: 1/1;
+    height: 3.4rem;
     position: absolute;
     bottom: 5.4rem;
     right: 2.4rem;
@@ -116,15 +173,35 @@ const PrivewSection = styled.section`
     align-items: center;
     justify-content: center;
   }
+
+  @media (max-width: 1024px) {
+    .btnUpload {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  @media (max-width: 430px) {
+    visibility: visible;
+    width: 100%;
+    height: 11.2rem;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+
+    .btnUpload {
+      left: 0;
+      bottom: 0;
+    }
+  }
 `;
+
+const PreviewSliderContainer = styled.div``;
 
 const PreviewSlider = styled.div`
   width: 100%;
   height: calc(100% - 3rem);
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   .ArrowBack {
     width: 2rem;
@@ -143,6 +220,20 @@ const PreviewSlider = styled.div`
     right: 2rem;
     background-color: rgba(3, 3, 3, 0.2);
   }
+
+  @media (max-width: 430px) {
+    height: calc(100% - 0rem);
+  }
+`;
+
+const IndecatorBasicBox = styled.div`
+  width: 100%;
+  height: 3rem;
+  background-color: var(--background-color);
+
+  @media (max-width: 430px) {
+    display: none;
+  }
 `;
 
 const IndicatorContainer = styled.div`
@@ -153,7 +244,6 @@ const IndicatorContainer = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  background-color: var(--background-color);
 `;
 
 const Indicator = styled.div<IndicatorProps>`
