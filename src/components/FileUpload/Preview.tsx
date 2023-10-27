@@ -16,10 +16,14 @@ const Preview = () => {
     const files = e.target.files;
 
     if (files) {
-      const newImages = Array.from(files).map((file) =>
-        URL.createObjectURL(file),
-      );
-      setImageList([...newImages]);
+      if (imageList.length + files.length <= 3) {
+        const newImages = Array.from(files).map((file) =>
+          URL.createObjectURL(file),
+        );
+        setImageList([...imageList, ...newImages]);
+      } else {
+        alert('최대 3장의 이미지까지만 선택할 수 있습니다.');
+      }
     }
   };
 
@@ -110,7 +114,6 @@ const Preview = () => {
 };
 
 const ImgSlidePcSize = styled.div`
-  border: 5px solid yellow;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -199,7 +202,6 @@ const PreviewSlider = styled.div`
   width: 100%;
   height: calc(100% - 3rem);
   margin: 0 auto;
-  background-color: rgba(3, 3, 3, 0.2);
 
   .ArrowBack {
     width: 2rem;
