@@ -1,46 +1,18 @@
 import styled from 'styled-components';
 
-const DetailWrapper = styled.div`
-  display: flex;
-  color: var();
-`;
-
-const NavTemp = styled.div`
-  position: sticky;
-  width: 25.6rem;
-  height: 100vh;
-  top: 0;
-  background-color: var(--gray-300);
-  font-size: 10rem;
-`;
-
 const DetailLayout = styled.section`
+  /* border: 5px solid green; */
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
-  padding: 11.6rem 0 0;
-`;
-
-const DepthInfo = styled.div`
-  background-color: var(--grey-200);
-  width: 19rem;
-  font-size: var(--text-m);
-
-  p {
-    width: 100%;
-    writing-mode: vertical-rl;
-    text-orientation: sideways;
-    padding-right: 4.8rem;
-    color: var(--gray-600);
-  }
-
-  span {
-    color: var(--gray-900);
-  }
+  padding: 10rem 0 0;
+  margin-left: var(--nav-width-pc);
+  margin-right: var(--right-padding-pc);
 `;
 
 const DetailContents = styled.div`
-  max-width: 45rem;
+  /* border: 5px solid yellow; */
+  max-width: 50rem;
   margin: 0 auto 3rem;
 
   .picSection {
@@ -102,4 +74,4 @@ const DetailContents = styled.div`
   }
 `;
 
-export { DetailWrapper, NavTemp, DetailLayout, DetailContents, DepthInfo };
+export { DetailLayout, DetailContents };
