@@ -1,64 +1,63 @@
-import { useState } from "react";
-import { appAuth } from "../firebase/config";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import useAuthContext from "./useAuthContext";
-import useUploadImg from "./useUploadImg.ts";
+import { useState } from 'react';
+import { appAuth } from '../firebase/config';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import useAuthContext from './useAuthContext';
+import useUploadImg from './useUploadImg.ts';
+import { FirebaseError } from 'firebase/app';
 
 export default function useSignup() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setPending] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const signup = (
+  const signup = async (
     email: string,
     password: string,
     displayName: string | null,
-    file: File | null
+    file: File | null,
   ) => {
     setError(null);
     setPending(true);
 
-    createUserWithEmailAndPassword(appAuth, email, password)
-      .then(async ({ user }) => {
-        interface Opt {
-          displayName?: string;
-          photoURL?: string;
-        }
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        appAuth,
+        email,
+        password,
+      );
 
-        const opt: Opt = {};
+      interface Opt {
+        displayName?: string;
+        photoURL?: string;
+      }
 
-        if (displayName !== null) {
-          opt.displayName = displayName;
-        }
+      const opt: Opt = {};
 
-        if (file !== null) {
-          opt.photoURL = await useUploadImg(`profile/${user.uid}`, file);
-        }
+      if (displayName !== null) {
+        opt.displayName = displayName;
+      }
 
-        dispatch({ type: "login", payload: user });
+      if (file !== null) {
+        opt.photoURL = await useUploadImg(`profile/${user.uid}`, file);
+      }
 
-        if (opt.displayName || opt.photoURL) {
-          updateProfile(user, opt)
-            .then(() => {
-              setError(null);
-              setPending(false);
-              dispatch({ type: "login", payload: user });
-            })
-            .catch((err) => {
-              setError(err.code);
-              setPending(false);
-            });
-        }
-      })
-      .catch((err) => {
-        if (err.code) {
-          setError(err.code);
-        } else {
-          setError(err.message);
-        }
+      dispatch({ type: 'login', payload: user });
 
+      if (opt.displayName || opt.photoURL) {
+        await updateProfile(user, opt);
+        setError(null);
         setPending(false);
-      });
+        dispatch({ type: 'login', payload: user });
+      }
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        setError(err.code);
+      } else if (err instanceof Error) {
+        setError(err.message);
+      }
+
+      setPending(false);
+    }
   };
 
   return { error, isPending, signup };
