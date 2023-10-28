@@ -24,7 +24,7 @@ export default function Signup() {
   const [passwordValid, setPasswordValid] = useState(false);
   const [matchPassword, setMatchPassword] = useState(false);
   const [clientWitch, setClientWitch] = useState(
-    document.documentElement.clientWidth
+    document.documentElement.clientWidth,
   );
   const { error, signup } = useSignup();
 
@@ -37,7 +37,9 @@ export default function Signup() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signup(email, password, displayName, file);
+  };
 
+  useEffect(() => {
     if (error === null) {
       return;
     }
@@ -61,7 +63,7 @@ export default function Signup() {
       default:
         alert('회원가입에 실패했습니다');
     }
-  };
+  }, [error]);
 
   const handleEmailInp = (target: HTMLInputElement) => {
     setEmail(target.value);
@@ -127,11 +129,11 @@ export default function Signup() {
 
   return (
     <StyledAuth>
-      <div className='container'>
+      <div className="container">
         {clientWitch < 431 && (
           <>
             <h1>
-              <img src={Logo} alt='로고' />
+              <img src={Logo} alt="로고" />
             </h1>
             <p>
               안녕하세요.
@@ -141,71 +143,71 @@ export default function Signup() {
           </>
         )}
         <article>
-          <Link to='/login'>Login</Link>
+          <Link to="/login">Login</Link>
           <h2>Signup</h2>
         </article>
         <form onSubmit={handleSubmit}>
-          <label htmlFor='profile-inp' className='profile'>
-            <img src={src || ProfileBasicImg} alt='프로필 사진' />
-            <img src={EditCircle} alt='변경하기' />
+          <label htmlFor="profile-inp" className="profile">
+            <img src={src || ProfileBasicImg} alt="프로필 사진" />
+            <img src={EditCircle} alt="변경하기" />
           </label>
           <input
-            id='profile-inp'
-            type='file'
-            className='a11y-hidden'
+            id="profile-inp"
+            type="file"
+            className="a11y-hidden"
             onChange={(e) => useFileInp(e, setFile, setSrc)}
           />
-          <label htmlFor='displayName-inp' className='a11y-hidden'>
+          <label htmlFor="displayName-inp" className="a11y-hidden">
             사용자 이름
           </label>
           <StyledInput
-            id='displayName-inp'
-            placeholder='username'
-            type='text'
+            id="displayName-inp"
+            placeholder="username"
+            type="text"
             onChange={handleInp}
           />
-          <label htmlFor='email-inp' className='a11y-hidden'>
+          <label htmlFor="email-inp" className="a11y-hidden">
             이메일
           </label>
           <StyledInput
-            id='email-inp'
-            placeholder='email'
-            type='email'
+            id="email-inp"
+            placeholder="email"
+            type="email"
             maxLength={98}
             onChange={handleInp}
             required
           />
-          <strong role='alert'>
+          <strong role="alert">
             {emailErrMessage && `*${emailErrMessage}`}
           </strong>
-          <label htmlFor='password-inp' className='a11y-hidden'>
+          <label htmlFor="password-inp" className="a11y-hidden">
             비밀번호
           </label>
           <StyledInput
-            id='password-inp'
-            placeholder='password'
-            type='password'
+            id="password-inp"
+            placeholder="password"
+            type="password"
             minLength={6}
             maxLength={20}
             onChange={handleInp}
             required
           />
-          <strong role='alert'>
+          <strong role="alert">
             {passwordErrMessage && `*${passwordErrMessage}`}
           </strong>
-          <label htmlFor='passwordConfirm-inp' className='a11y-hidden'>
+          <label htmlFor="passwordConfirm-inp" className="a11y-hidden">
             비밀번호 재확인
           </label>
           <StyledInput
-            id='passwordConfirm-inp'
-            placeholder='password confirm'
-            type='password'
+            id="passwordConfirm-inp"
+            placeholder="password confirm"
+            type="password"
             minLength={6}
             maxLength={20}
             onChange={handleInp}
             required
           />
-          <strong role='alert'>
+          <strong role="alert">
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
           </strong>
           <Button
