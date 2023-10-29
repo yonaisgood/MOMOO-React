@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledNav = styled.nav`
-  overflow: hidden;
+  position: fixed;
   .navBtn button {
     display: flex;
     align-items: center;
@@ -12,6 +12,7 @@ const StyledNav = styled.nav`
     width: 2.4rem;
     height: 2.4rem;
   }
+
   .navBtn button p {
     font-size: var(--text-m);
   }
@@ -25,6 +26,7 @@ const StyledNav = styled.nav`
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
+
   .logoImg {
     width: 37.6rem;
     height: 6.4rem;
@@ -43,6 +45,7 @@ const StyledNav = styled.nav`
       padding: 1.8rem 4.8rem;
       width: 100%;
     }
+
     .navBtn button:first-child {
       margin-top: 10rem;
     }
@@ -53,6 +56,7 @@ const StyledNav = styled.nav`
     width: var(--nav-height-tablet);
     padding: 7.2rem 2.4rem 0 3.2rem;
     height: 100vh;
+
     .navBtn {
       display: flex;
       flex-direction: column;
@@ -72,6 +76,7 @@ const StyledNav = styled.nav`
       right: -6.5rem;
     }
   }
+
   @media (max-width: 744px) {
     position: fixed;
     display: flex;

@@ -15,7 +15,6 @@ import {
   AccordionContents,
   CloseBtn,
 } from './UploadStyle';
-
 import Location from '../../asset/icon/Arrow.svg';
 import BackIcon from '../../asset/icon/ArrowBack.svg';
 import Close from '../../asset/icon/X-White.svg';
@@ -60,9 +59,6 @@ function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
     setOpenPopup(false);
   };
 
-  const handleAddressSelect = (address: string) => {
-    setSelectedAddress(address);
-  };
 
   return (
     <>

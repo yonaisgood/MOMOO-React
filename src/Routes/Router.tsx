@@ -4,14 +4,13 @@ import Splash from '../pages/splash/Splash';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Setting from '../pages/Setting/Setting';
-import Upload from '../components/Upload/Upload';
-import KakaoMap from '../components/Map/KakaoMap';
 import My from '../pages/My/My';
 import NavRoute from './NavRoute';
 import Home from '../pages/Home/Home';
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
 import { AuthRoute, NonAuthRoute } from './AuthRoute';
+import Feed from '../pages/Feed/Feed';
 
 export default function Router() {
   const [clientWitch, setClientWitch] = useState(
@@ -44,8 +43,9 @@ export default function Router() {
           <Route element={<AuthRoute />}>
             <Route element={<NavRoute />}>
               <Route path="/home" element={<Home />}></Route>
-              <Route path="/setting" element={<Setting />}></Route>
+              <Route path="/feed" element={<Feed />}></Route>
               <Route path="/my" element={<My />}></Route>
+              <Route path="/setting" element={<Setting />}></Route>
             </Route>
           </Route>
         </Routes>

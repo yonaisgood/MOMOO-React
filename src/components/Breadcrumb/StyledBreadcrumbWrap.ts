@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledBreadcrumbWrap = styled.div`
   width: 100%;
-  padding: 59px 24px 0;
+  margin: 59px 0 0;
   display: flex;
   align-items: center;
 
