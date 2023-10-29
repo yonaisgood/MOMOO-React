@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const StyledNav = styled.nav`
-  position: relative;
   overflow: hidden;
   .navBtn button {
     display: flex;
@@ -45,7 +44,7 @@ const StyledNav = styled.nav`
       width: 100%;
     }
     .navBtn button:first-child {
-      margin-top: 10.2rem;
+      margin-top: 10rem;
     }
   }
 
