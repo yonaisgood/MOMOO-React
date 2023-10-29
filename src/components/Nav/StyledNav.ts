@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   position: fixed;
-
   .navBtn button {
     display: flex;
     align-items: center;
@@ -48,7 +47,7 @@ const StyledNav = styled.nav`
     }
 
     .navBtn button:first-child {
-      margin-top: 10.2rem;
+      margin-top: 10rem;
     }
   }
 

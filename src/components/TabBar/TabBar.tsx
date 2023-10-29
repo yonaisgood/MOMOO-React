@@ -1,14 +1,15 @@
-import StyledNav from './StyledNav';
+import { useLocation, Link } from 'react-router-dom';
+import StyledNav from './StyledTabBar';
+import { useState } from 'react';
 import MyPopup from '../MyPopup/MyPopup';
 import Upload from '../Upload/Upload';
-import HomeImg from '../../asset/icon/HomePc.svg';
-import LogoImg from '../../asset/icon/Logo.svg';
-import UploadImg from '../../asset/icon/UploadPc.svg';
-import MypageImg from '../../asset/icon/ProfilePc.svg';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import HomeImg from '../../asset/icon/HomeMobile.svg';
+import HomeActiveImg from '../../asset/icon/HomeMobile-Active.svg';
+import UploadImg from '../../asset/icon/UploadMobile.svg';
+import MypageImg from '../../asset/icon/ProfileMobile.svg';
 
-export default function Nav() {
+export default function TabBar() {
+  const location = useLocation();
   const [openUploadModal, setOpenUploadModal] = useState(false);
   const [openMyModal, setOpenMyModal] = useState(false);
 
@@ -24,12 +25,24 @@ export default function Nav() {
   return (
     <StyledNav>
       <div className="navBtn">
-        <Link to="/home">
-          <button className="home">
-            <img src={HomeImg} alt="홈 아이콘" />
-            <p>Home</p>
-          </button>
-        </Link>
+        <button className="home">
+          <Link to="/home" className="homeLink">
+            <img
+              src={location.pathname === '/home' ? HomeActiveImg : HomeImg}
+              alt="홈 아이콘"
+            />
+            <p
+              style={{
+                color:
+                  location.pathname === '/home'
+                    ? 'var(--point-dark-400)'
+                    : 'inherit',
+              }}
+            >
+              Home
+            </p>
+          </Link>
+        </button>
         <button className="upload" onClick={openUploadModalFunc}>
           <img src={UploadImg} alt="업로드 아이콘" />
           <p>Upload</p>
@@ -39,9 +52,7 @@ export default function Nav() {
           <p>Mypage</p>
         </button>
       </div>
-      <Link to="/home">
-        <img className="logoImg" src={LogoImg} alt="로고이미지" />
-      </Link>
+
       {openUploadModal && (
         <div className="modal-overlay">
           <Upload setOpenPopup={setOpenUploadModal} />
