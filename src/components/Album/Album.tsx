@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import More from "../../asset/icon/more-white.svg";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import More from '../../asset/icon/more-white.svg';
 
 const AlbumContainer = styled.article`
   position: relative;
-  width: 33.3rem;
-  height: 44.4rem;
+  width: 100%;
+  height: 100%;
   border-radius: 1rem;
 
   background: var(--gray-200)
@@ -16,7 +16,7 @@ const AlbumContainer = styled.article`
       rgba(225, 225, 225, 0) 105.15%
     );
   .txtWrapper {
-    width: inherit;
+    width: 100%;
     position: absolute;
     bottom: 0;
     padding: 2rem 1.5rem;
@@ -62,7 +62,7 @@ export default function Album() {
               type="button"
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                 event.preventDefault();
-                alert("hey");
+                alert('hey');
               }}
             />
           </div>
