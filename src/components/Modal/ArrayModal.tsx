@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
-import Select from "../../asset/icon/Select.svg";
+import React, { useRef, useEffect } from 'react';
+import styled from 'styled-components';
+import Select from '../../asset/icon/Select.svg';
 
 const SelectModal = styled.div`
   .modal-overlay {
@@ -46,7 +46,7 @@ const SelectModal = styled.div`
       display: block;
     }
   }
-  .modal-list button:visited {
+  .modal-list button:focus {
     img {
       display: block;
     }
@@ -64,9 +64,9 @@ const ArrayModal = ({ onClose }: { onClose: () => void }) => {
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Tab") {
+      if (event.key === 'Tab') {
         const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         );
         if (focusableElements) {
           const firstElement = focusableElements[0] as HTMLElement;
@@ -86,10 +86,10 @@ const ArrayModal = ({ onClose }: { onClose: () => void }) => {
         }
       }
     };
-    document.addEventListener("keydown", handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeydown);
+      document.removeEventListener('keydown', handleKeydown);
     };
   }, []);
 

@@ -8,7 +8,9 @@ const StyledNav = styled.nav`
   display: flex;
   align-items: center;
   flex-grow: 1;
-
+  z-index: 1;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--gray-200);
   .navBtn {
     width: 100%;
     display: flex;

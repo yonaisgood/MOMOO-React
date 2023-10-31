@@ -7,6 +7,7 @@ const StyledH2 = styled.h2`
   align-items: center;
   justify-content: center;
   gap: 24px;
+  margin: auto;
 
   &::before,
   &::after {
@@ -14,6 +15,16 @@ const StyledH2 = styled.h2`
     height: 1px;
     width: 32px;
     background: var(--gray-800);
+  }
+  @media (max-width: 744px) {
+    justify-content: start;
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  @media (max-width: 430px) {
+    display: none;
   }
 `;
 
