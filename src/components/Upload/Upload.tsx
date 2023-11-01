@@ -36,7 +36,15 @@ const accordionData = [
   },
 ];
 
-function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
+interface Props {
+  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  id?: string;
+  album?: string;
+}
+
+// id가 빈문자열이 아니면, 해당 id를 가진 피드 수정(혹은 id 포함 피드 데이터를 아큐먼트로 받아도 좋을 듯)
+// album이 빈문자열이 아니면, 해당 album이 선택되어 있도록 렌더링
+function Upload({ setOpenPopup, id, album }: Props) {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState('');
   const [isIconRotated, setIsIconRotated] = useState(false);
@@ -58,7 +66,6 @@ function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
   const closeUploadModal = () => {
     setOpenPopup(false);
   };
-
 
   return (
     <>
@@ -125,5 +132,10 @@ function Upload({ setOpenPopup }: { setOpenPopup: (open: boolean) => void }) {
     </>
   );
 }
+
+Upload.defaultProps = {
+  id: '',
+  album: '',
+};
 
 export default Upload;
