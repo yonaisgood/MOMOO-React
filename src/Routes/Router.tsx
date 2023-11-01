@@ -10,7 +10,8 @@ import Home from '../pages/Home/Home';
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
 import { AuthRoute, NonAuthRoute } from './AuthRoute';
-import Feed from '../pages/Feed/Feed';
+import Album from '../pages/Album/Album';
+import Detail from '../pages/Detail/Detail';
 
 export default function Router() {
   const [clientWitch, setClientWitch] = useState(
@@ -43,7 +44,8 @@ export default function Router() {
           <Route element={<AuthRoute />}>
             <Route element={<NavRoute />}>
               <Route path="/home" element={<Home />}></Route>
-              <Route path="/feed" element={<Feed />}></Route>
+              <Route path="/album/:id" element={<Album />}></Route>
+              <Route path="/feed/:id" element={<Detail />}></Route>
               <Route path="/my" element={<My />}></Route>
               <Route path="/setting" element={<Setting />}></Route>
             </Route>

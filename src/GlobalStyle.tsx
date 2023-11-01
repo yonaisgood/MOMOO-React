@@ -28,7 +28,6 @@ const GlobalStyle = createGlobalStyle`
     --point-dark-500:#28545B;
     --point-dark-600:#193437;
 
-    /* 미사용 시 제거 */
     --point-desaturate-100:#E3E9EA;
     --point-desaturate-200:#C6D2D4;
     --point-desaturate-300:#A9BBBE;
@@ -52,7 +51,6 @@ const GlobalStyle = createGlobalStyle`
 
     --serif : 'Prata', serif;
     --title-font-family : 'Prata', 'Noto Sans', sans-serif;
-    /* font-family: var(--serif); */
 
     font-size: 10px;
     --title-xl: 5rem;
@@ -67,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
     --nav-height-tablet: 80px;
     --nav-height-mobile: 48px;
 
-    --right-padding-pc: 190px;
+    --right-padding-pc: 216px;
     --padding-top-pc: 100px;
 
     --column-pc : calc((100vw - var(--nav-width-pc) - 190px - var(--margin-pc) * 2 - var(--gutter-pc) * 11) / 12);

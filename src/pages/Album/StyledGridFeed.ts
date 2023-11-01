@@ -1,35 +1,10 @@
 import styled from 'styled-components';
 
-const StyledFeedSection = styled.section`
-  max-width: 976px;
-  margin: auto;
-
-  .btn-wrap {
-    margin-top: 36px;
-    display: flex;
-
-    button {
-      margin-left: 14px;
-      width: 21px;
-      aspect-ratio: 1/1;
-      font-size: 0;
-    }
-
-    button:first-child {
-      margin-left: auto;
-    }
-
-    svg {
-      width: 100%;
-    }
-  }
-
-  ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 8px -8px 0;
-    /* grid-auto-rows: 1px; */
-  }
+const StyledGridFeed = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: -8px -8px;
+  grid-auto-rows: 1px;
 
   li {
     margin: 8px;
@@ -71,20 +46,7 @@ const StyledFeedSection = styled.section`
   }
 
   @media (max-width: 430px) {
-    padding: 36px 0 0;
-
-    .btn-wrap {
-      margin-top: 0;
-
-      button {
-        width: 16px;
-        margin-left: 12px;
-      }
-    }
-
-    ul {
-      margin: 6px -6px 0;
-    }
+    margin: -6px -6px 0;
 
     li {
       margin: 6px;
@@ -107,17 +69,21 @@ const StyledFeedSection = styled.section`
     }
   }
 
-  @media (max-width: 834px) {
-    ul {
-      grid-template-columns: repeat(2, 1fr);
+  .upload {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--gray-100);
+
+    img {
+      width: 24px;
+      aspect-ratio: 1/1;
+      margin: auto;
     }
   }
 
-  @media (min-width: 431px) and(max-width: 1024px) {
-    .btn-wrap {
-      margin-top: 40px;
-    }
+  @media (max-width: 834px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
-export default StyledFeedSection;
+export default StyledGridFeed;
