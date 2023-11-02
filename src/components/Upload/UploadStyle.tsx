@@ -84,9 +84,9 @@ const PicPart = styled.section`
 
   @media (max-width: 430px) {
     width: 100vm;
-    height: 11.2rem;
     margin-top: 1.2rem;
     margin-left: 1.6rem;
+    /* margin-bottom: 1.2rem; */
     background-color: var(--background-color);
   }
 `;
@@ -120,7 +120,7 @@ const SelectPart = styled.section`
       font-size: var(--text-m);
       height: auto;
       max-height: 11.4rem;
-      overflow-y: auto;
+      /* overflow-y: auto; */
     }
   }
 
@@ -170,6 +170,11 @@ const LocationContents = styled.div`
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease-in-out;
   }
 
   img {

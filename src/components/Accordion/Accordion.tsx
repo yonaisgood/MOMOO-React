@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AccordionWrapper from './AccordionStyle';
 import Direction from '../../asset/icon/Arrow.svg';
 
 interface AccordionProps {
   question: string;
   answer: string;
+  selectedImages: string[];
+  setSelectedImages: (images: string[]) => void;
 }
 
-function Accordion({ question, answer }: AccordionProps) {
+function Accordion({
+  question,
+  answer,
+  selectedImages,
+  setSelectedImages,
+}: AccordionProps) {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const answerArray = answer.split(',');
 
   const handleQuestionClick = () => {
     setIsAccordionOpen((prev) => !prev);
   };
 
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-
   const handleAnswerClick = (imagePath: string) => {
-    setSelectedAnswer(imagePath);
+    // 이미지를 선택한 경우, 선택을 해제하고 아무 이미지도 선택하지 않음
+    if (selectedImages.includes(imagePath)) {
+      setSelectedImages([]);
+    } else {
+      // 이미지가 선택되지 않은 경우, 선택한 이미지를 업데이트
+      setSelectedImages([imagePath]);
+    }
   };
 
   return (
@@ -37,15 +49,19 @@ function Accordion({ question, answer }: AccordionProps) {
         </div>
         {isAccordionOpen && (
           <div className="anw">
-            {answer.split(',').map((imagePath, index) => (
+            {answerArray.map((imagePath, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswerClick(imagePath.trim())}
                 className={
-                  selectedAnswer === imagePath.trim() ? 'selected' : ''
+                  selectedImages.includes(imagePath.trim()) ? 'selected' : ''
                 }
               >
-                <img className='btnImg' src={imagePath.trim()} alt={`이미지 ${index}`} />
+                <img
+                  className="btnImg"
+                  src={imagePath.trim()}
+                  alt={`이미지 ${index}`}
+                />
               </button>
             ))}
           </div>
