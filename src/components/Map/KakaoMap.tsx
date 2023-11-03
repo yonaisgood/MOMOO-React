@@ -73,7 +73,7 @@ function KakaoMap({
           className="saveBtn"
           onClick={() =>
             onAddressSelect(
-              searchedLocation?.place_name ? searchedLocation.place_name : ''
+              searchedLocation?.place_name ? searchedLocation.place_name : '',
             )
           }
         >

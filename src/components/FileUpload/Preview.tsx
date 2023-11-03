@@ -42,73 +42,71 @@ const Preview = () => {
 
   return (
     <>
-      <PreviewSliderContainer>
-        <PrivewSection>
-          <label htmlFor="file">
-            <div className="btnUpload">
-              <img src={ImgUpload} alt="사진 업로드 버튼" />
-            </div>
-          </label>
-          <input
-            accept="image/*"
-            multiple
-            type="file"
-            id="file"
-            onChange={(e) => onUpload(e)}
-          />
-          <PreviewSlider>
-            {imageList.length > 0 && (
-              <>
-                {/* 모바일 슬라이드 */}
-                <ImageGrid>
-                  {imageList.map((image, index) => (
-                    <img key={index} src={image} alt="이미지" />
-                  ))}
-                </ImageGrid>
-                {/* 모바일 이상 슬라이드 */}
-                <ImgSlidePcSize>
-                  {imageList.length > 1 && (
-                    <button onClick={prevSlide}>
-                      <img
-                        className="ArrowBack"
-                        src={ArrowLeft}
-                        alt="뒤로가기 버튼"
-                      />
-                    </button>
-                  )}
-                  <img
-                    className="selectImg"
-                    src={imageList[currentIndex]}
-                    alt="이미지"
-                  />
-                  {imageList.length > 1 && (
-                    <button onClick={nextSlide}>
-                      <img
-                        className="ArrowRight"
-                        src={ArrowRight}
-                        alt="앞으로가기 버튼"
-                      />
-                    </button>
-                  )}
-                </ImgSlidePcSize>
-              </>
-            )}
-          </PreviewSlider>
-          <IndecatorBasicBox>
-            {imageList.length > 1 && (
-              <IndicatorContainer>
-                {imageList.map((_, index) => (
-                  <Indicator
-                    key={index}
-                    active={index === currentIndex}
-                    onClick={() => handleIndicatorClick(index)}
-                  />
+      <PrivewSection>
+        <label htmlFor="file">
+          <div className="btnUpload">
+            <img src={ImgUpload} alt="사진 업로드 버튼" />
+          </div>
+        </label>
+        <input
+          accept="image/*"
+          multiple
+          type="file"
+          id="file"
+          onChange={(e) => onUpload(e)}
+        />
+        <PreviewSlider>
+          {imageList.length > 0 && (
+            <>
+              {/* 모바일 슬라이드 */}
+              <ImageGrid>
+                {imageList.map((image, index) => (
+                  <img key={index} src={image} alt="이미지" />
                 ))}
-              </IndicatorContainer>
-            )}
-          </IndecatorBasicBox>
-        </PrivewSection>
-      </PreviewSliderContainer>
+              </ImageGrid>
+              {/* 모바일 이상 슬라이드 */}
+              <ImgSlidePcSize>
+                {imageList.length > 1 && (
+                  <button onClick={prevSlide}>
+                    <img
+                      className="ArrowBack"
+                      src={ArrowLeft}
+                      alt="뒤로가기 버튼"
+                    />
+                  </button>
+                )}
+                <img
+                  className="selectImg"
+                  src={imageList[currentIndex]}
+                  alt="이미지"
+                />
+                {imageList.length > 1 && (
+                  <button onClick={nextSlide}>
+                    <img
+                      className="ArrowRight"
+                      src={ArrowRight}
+                      alt="앞으로가기 버튼"
+                    />
+                  </button>
+                )}
+              </ImgSlidePcSize>
+            </>
+          )}
+        </PreviewSlider>
+        <IndecatorBasicBox>
+          {imageList.length > 1 && (
+            <IndicatorContainer>
+              {imageList.map((_, index) => (
+                <Indicator
+                  key={index}
+                  active={index === currentIndex}
+                  onClick={() => handleIndicatorClick(index)}
+                />
+              ))}
+            </IndicatorContainer>
+          )}
+        </IndecatorBasicBox>
+      </PrivewSection>
     </>
   );
 };
@@ -129,6 +127,13 @@ const ImageGrid = styled.div`
   width: 100%;
   height: 11.2rem;
   gap: 1rem;
+  overflow-x: scroll;
+  &::webkit-scrollbar-thumb {
+    background-color: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: none;
+  }
 
   img {
     width: 100%;
@@ -187,7 +192,6 @@ const PrivewSection = styled.section`
     height: 11.2rem;
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
 
     .btnUpload {
       left: 0;
@@ -195,8 +199,6 @@ const PrivewSection = styled.section`
     }
   }
 `;
-
-const PreviewSliderContainer = styled.div``;
 
 const PreviewSlider = styled.div`
   width: 100%;
@@ -244,6 +246,10 @@ const IndicatorContainer = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
+
+  @media (max-width: 430px) {
+    display: none;
+  }
 `;
 
 const Indicator = styled.div<IndicatorProps>`
