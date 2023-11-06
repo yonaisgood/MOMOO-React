@@ -5,8 +5,8 @@ import Direction from '../../asset/icon/Arrow.svg';
 interface AccordionProps {
   question: string;
   answer: string;
-  selectedImages: string[];
-  setSelectedImages: (images: string[]) => void;
+  selectedImages: string;
+  setSelectedImages: (images: string) => void;
 }
 
 function Accordion({
@@ -25,10 +25,10 @@ function Accordion({
   const handleAnswerClick = (imagePath: string) => {
     // 이미지를 선택한 경우, 선택을 해제하고 아무 이미지도 선택하지 않음
     if (selectedImages.includes(imagePath)) {
-      setSelectedImages([]);
+      setSelectedImages('');
     } else {
       // 이미지가 선택되지 않은 경우, 선택한 이미지를 업데이트
-      setSelectedImages([imagePath]);
+      setSelectedImages(imagePath);
     }
   };
 
