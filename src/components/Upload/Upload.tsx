@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState } from 'react';
 import { appFireStore, Timestamp } from '../../firebase/config';
 import { updateDoc, arrayUnion, doc } from 'firebase/firestore';
+import uploadImageToStorage from './UploadImageToStorage';
 import useAuthContext from '../../hooks/useAuthContext';
 import Accordion from '../../components/Accordion/Accordion';
 import KakaoMap from '../../components/Map/KakaoMap';
@@ -15,7 +16,7 @@ import {
   UploadContents,
   PicPart,
   SelectPart,
-  LocationContents,
+  LocationContents, 
   KakaoMapContainer,
   AccordionContents,
   CloseBtn,
@@ -62,13 +63,13 @@ function Upload({ setOpenPopup, id, album }: Props) {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
-  const [selectedWeatherImages, setSelectedWeatherImages] = useState<string[]>(
-    [],
-  );
-  const [selectedEmotionImages, setSelectedEmotionImages] = useState<string[]>(
-    [],
-  );
-  const { user } = useAuthContext();
+  const [selectedWeatherImages, setSelectedWeatherImages] =
+    useState<string>('');
+  const [selectedEmotionImages, setSelectedEmotionImages] =
+    useState<string>('');
+    const [file, setFile] = useState<File | null>(null);
+    
+    const { user } = useAuthContext();
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
@@ -87,8 +88,17 @@ function Upload({ setOpenPopup, id, album }: Props) {
     console.log('Selected address:', selectedAddress);
   };
 
+  const handleImageUpload = (imageFile: File | null) => {
+    if (imageFile) {
+      setFile(imageFile);
+    } else {
+      alert('이미지 파일을 선택해주세요.');
+    }
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+
     if (title.trim() === '') {
       alert('제목을 입력해 주세요');
       return;
@@ -98,6 +108,12 @@ function Upload({ setOpenPopup, id, album }: Props) {
         // 사용자 UID를 기반으로 Firestore 문서 경로를 생성
         const userDocRef = doc(appFireStore, user.uid, 'feed');
 
+        if(file === null) {
+          return;
+        }
+
+        const downloadURL = await uploadImageToStorage(file, 'feed');
+
         // 업로드할 내용을 객체로 만들기
         const uploadData = {
           title: title,
@@ -106,6 +122,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
           selectedAddress: selectedAddress,
           weatherImages: selectedWeatherImages,
           emotionImages: selectedEmotionImages,
+          imageUrl: downloadURL,
         };
 
         // Firestore에 업로드 데이터를 추가합니다.
@@ -134,7 +151,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
         </UploadHeader>
         <UploadContents>
           <PicPart>
-            <Preview />
+            <Preview onImageUpload={handleImageUpload} />
           </PicPart>
           <SelectPart>
             <div className="inputWrapper">
