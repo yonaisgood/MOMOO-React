@@ -1,43 +1,29 @@
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import ImgUpload from '../../asset/icon/ImgUpload.svg';
 import ArrowLeft from '../../asset/icon/ArrowLeft.svg';
 import ArrowRight from '../../asset/icon/ArrowRight.svg';
-import uploadImageToStorage from '../../components/Upload/UploadImageToStorage';
 
 interface IndicatorProps {
   active: boolean;
 }
-
-interface PreviewProps {
-  onImageUpload: (imageFile: File) => void;
-}
-const Preview: React.FC<PreviewProps> = ({ onImageUpload }) => {
+//
+const Preview = () => {
   const [imageList, setImageList] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const setImages = async (files: FileList) => {
+  const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
     if (files) {
-      if (imageList && imageList.length + files.length <= 3) {
-        const fileArray = Array.from(files);
-        const newImages: string[] = [];
-
-        for (const file of fileArray) {
-          const imageUrl = URL.createObjectURL(file);
-          newImages.push(imageUrl);
-        }
-
-        setImageList(newImages);
+      if (imageList.length + files.length <= 3) {
+        const newImages = Array.from(files).map((file) =>
+          URL.createObjectURL(file),
+        );
+        setImageList([...imageList, ...newImages]);
       } else {
         alert('최대 3장의 이미지까지만 선택할 수 있습니다.');
       }
-    }
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      setImages(files);
     }
   };
 
@@ -67,7 +53,7 @@ const Preview: React.FC<PreviewProps> = ({ onImageUpload }) => {
           multiple
           type="file"
           id="file"
-          onChange={(e) => handleImageUpload(e)}
+          onChange={(e) => onUpload(e)}
         />
         <PreviewSlider>
           {imageList.length > 0 && (
