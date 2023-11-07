@@ -38,6 +38,7 @@ const Preview: React.FC<PreviewProps> = ({ onImageUpload }) => {
     const files = e.target.files;
     if (files) {
       setImages(files);
+      onImageUpload(files[0]);
     }
   };
 
