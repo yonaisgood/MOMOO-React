@@ -5,12 +5,14 @@ import StyledMain from './StyledMain';
 import StyledH2 from '../../components/StyledH2';
 import GridFeed from './GridFeed';
 import ListFeed from '../../components/ListFeed/ListFeed';
+import { useParams } from 'react-router-dom';
 
 export default function Album() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
   const [layoutOpt, setLayoutOpt] = useState('grid');
+  const { id } = useParams();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -23,12 +25,11 @@ export default function Album() {
       <section>
         {clientWitch > 1024 && (
           <>
-            <StyledH2>우정 앨범</StyledH2>
+            <StyledH2>{id}</StyledH2>
             <Breadcrumb
               navList={[
                 { path: 'home', text: 'Home' },
-                { path: 'album', text: 'Album' },
-                { path: 'feed', text: '우정 앨범' },
+                { path: 'feed', text: id || '' },
               ]}
             />
           </>
@@ -37,10 +38,9 @@ export default function Album() {
           <BreadcrumbWrap
             navList={[
               { path: 'home', text: 'Home' },
-              { path: 'album', text: 'Album' },
-              { path: 'feed', text: '우정 앨범' },
+              { path: 'feed', text: id || '' },
             ]}
-            title="우정 앨범"
+            title={id || ''}
           />
         )}
         <h3 className="a11y-hidden">게시글 목록</h3>
