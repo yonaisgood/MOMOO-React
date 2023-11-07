@@ -101,6 +101,23 @@ const StyledNav = styled.nav`
       left: 24px;
     }
   }
+  @media (max-width: 430px) {
+    height: 4.8rem;
+    border-bottom: 1px solid var(--gray-200);
+    .navBtn {
+      display: none;
+    }
+
+    .logoImg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      rotate: 0deg;
+      height: 3rem;
+      width: 11.2rem;
+    }
+  }
 `;
 
 export default StyledNav;

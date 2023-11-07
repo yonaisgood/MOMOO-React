@@ -1,20 +1,21 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import More from '../../asset/icon/more-white.svg';
+import img1 from '../../asset/image/feed-test/1.jpg';
 
 const AlbumContainer = styled.article`
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 1rem;
-
-  background: var(--gray-200)
+  background:
     linear-gradient(
       0deg,
       #343434 5.58%,
       rgba(126, 126, 126, 0) 40.58%,
       rgba(225, 225, 225, 0) 105.15%
-    );
+    ),
+    url(${img1}) no-repeat center / cover;
   .txtWrapper {
     width: 100%;
     position: absolute;

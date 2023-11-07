@@ -5,17 +5,36 @@ import StyledHomeSection from './StyledHomeSection';
 import AddImg from '../../asset/icon/Add.svg';
 import ArrayImg from '../../asset/icon/Array.svg';
 import Album from '../../components/Album/Album';
+import { useState } from 'react';
+import NewAlbumModal from '../../components/Modal/NewAlbumModal';
+import ArrayModal from '../../components/Modal/ArrayModal';
 export default function Home() {
+  const [isArrayModalOpen, setIsArrayModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const HandleArrayModal = () => {
+    setIsArrayModalOpen(true);
+  };
+  const HandleArrayCloseModal = () => {
+    setIsArrayModalOpen(false);
+  };
+
+  const HandleAddModal = () => {
+    setIsAddModalOpen(true);
+  };
+  const HandleAddCloseModal = () => {
+    setIsAddModalOpen(false);
+  };
   return (
     <StyledMain>
       <StyledHomeSection>
         <StyledH2>Album</StyledH2>
         <div className="btn-wrap">
-          <button>
-            <img src={ArrayImg} alt="정렬방식 아이콘" />{' '}
+          <button onClick={HandleArrayModal}>
+            <img src={ArrayImg} alt="정렬방식 아이콘" />
           </button>
-          <button>
-            <img src={AddImg} alt="이미지 추가 아이콘" />{' '}
+          <button onClick={HandleAddModal}>
+            <img src={AddImg} alt="이미지 추가 아이콘" />
           </button>
         </div>
         <ul>
@@ -24,26 +43,10 @@ export default function Home() {
               <Album />
             </Link>
           </li>
-          <li>
-            <Album />
-          </li>
-          <li>
-            <Album />
-          </li>
-          <li>
-            <Album />
-          </li>
-          <li>
-            <Album />
-          </li>
-          <li>
-            <Album />
-          </li>
-          <li>
-            <Album />
-          </li>
         </ul>
       </StyledHomeSection>
+      {isAddModalOpen && <NewAlbumModal onClose={HandleAddCloseModal} />}
+      {isArrayModalOpen && <ArrayModal onClose={HandleArrayCloseModal} />}
     </StyledMain>
   );
 }
