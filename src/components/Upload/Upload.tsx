@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState } from 'react';
 import { appFireStore, Timestamp } from '../../firebase/config';
 import { updateDoc, arrayUnion, doc } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
 import uploadImageToStorage from './UploadImageToStorage';
 import useAuthContext from '../../hooks/useAuthContext';
 import Accordion from '../../components/Accordion/Accordion';
@@ -113,6 +114,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
         }
 
         const downloadURL = await uploadImageToStorage(file, 'feed');
+        const id = uuidv4();
 
         // 업로드할 내용을 객체로 만들기
         const uploadData = {
@@ -123,6 +125,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
           weatherImages: selectedWeatherImages,
           emotionImages: selectedEmotionImages,
           imageUrl: downloadURL,
+          id: id,
         };
 
         // Firestore에 업로드 데이터를 추가합니다.
