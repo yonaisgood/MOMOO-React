@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import useAuthContext from './useAuthContext';
 import useUploadImg from './useUploadImg.ts';
 import { FirebaseError } from 'firebase/app';
-import useSetUserCollection from './useSetUserCollection.ts';
 
 export default function useSignup() {
   const [error, setError] = useState<string | null>(null);
@@ -49,7 +48,6 @@ export default function useSignup() {
       }
 
       dispatch({ type: 'login', payload: user });
-      useSetUserCollection(user);
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.code);
