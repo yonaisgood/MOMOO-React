@@ -1,6 +1,6 @@
 import { SyntheticEvent, useState } from 'react';
 import { appFireStore, Timestamp } from '../../firebase/config';
-import { updateDoc, arrayUnion, doc } from 'firebase/firestore';
+import { doc, arrayUnion, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import uploadImageToStorage from './UploadImageToStorage';
 import useAuthContext from '../../hooks/useAuthContext';
@@ -10,18 +10,7 @@ import Preview from '../../components/FileUpload/Preview';
 import Arrow from '../../asset/icon/Arrow.svg';
 import BackIcon from '../../asset/icon/ArrowBack.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
-import {
-  UploadWrapper,
-  BackButton,
-  UploadHeader,
-  UploadContents,
-  PicPart,
-  SelectPart,
-  LocationContents,
-  KakaoMapContainer,
-  AccordionContents,
-  CloseBtn,
-} from './UploadStyle';
+import * as Styled from './UploadStyle';
 
 const accordionData = [
   {
@@ -68,7 +57,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
     useState<string>('');
   const [selectedEmotionImages, setSelectedEmotionImages] =
     useState<string>('');
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<FileList | null>(null);
 
   const { user } = useAuthContext();
 
@@ -89,14 +78,6 @@ function Upload({ setOpenPopup, id, album }: Props) {
     console.log('Selected address:', selectedAddress);
   };
 
-  const handleImageUpload = (imageFile: File | null) => {
-    if (imageFile) {
-      setFile(imageFile);
-    } else {
-      alert('이미지 파일을 선택해주세요.');
-    }
-  };
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -104,17 +85,18 @@ function Upload({ setOpenPopup, id, album }: Props) {
       alert('제목을 입력해 주세요');
       return;
     }
+
     try {
       if (user) {
         // 사용자 UID를 기반으로 Firestore 문서 경로를 생성
-        const userDocRef = doc(appFireStore, user.uid, 'feed');
+        const id = uuidv4();
+        const userDocRef = doc(appFireStore, user.uid, user.uid, 'feed', id);
 
         if (file === null) {
           return;
         }
 
-        const downloadURL = await uploadImageToStorage(file, 'feed');
-        const id = uuidv4();
+        const downloadURLs = await uploadImageToStorage(file, 'feed');
 
         // 업로드할 내용을 객체로 만들기
         const uploadData = {
@@ -124,12 +106,12 @@ function Upload({ setOpenPopup, id, album }: Props) {
           selectedAddress: selectedAddress,
           weatherImages: selectedWeatherImages,
           emotionImages: selectedEmotionImages,
-          imageUrl: downloadURL,
+          imageUrl: downloadURLs,
           id: id,
         };
 
         // Firestore에 업로드 데이터를 추가합니다.
-        await updateDoc(userDocRef, {
+        await setDoc(userDocRef, {
           feedList: arrayUnion(uploadData),
         });
       } else {
@@ -142,21 +124,21 @@ function Upload({ setOpenPopup, id, album }: Props) {
 
   return (
     <>
-      <UploadWrapper>
-        <UploadHeader>
-          <BackButton onClick={() => handleGoBack()}>
+      <Styled.UploadWrapper>
+        <Styled.UploadHeader>
+          <Styled.BackButton onClick={() => handleGoBack()}>
             <img src={BackIcon} alt="뒤로가기버튼" />
-          </BackButton>
+          </Styled.BackButton>
           <h1>새 게시물</h1>
           <button type="submit" onClick={handleSubmit}>
             업로드
           </button>
-        </UploadHeader>
-        <UploadContents>
-          <PicPart>
-            <Preview onImageUpload={handleImageUpload} />
-          </PicPart>
-          <SelectPart>
+        </Styled.UploadHeader>
+        <Styled.UploadContents>
+          <Styled.PicPart>
+            <Preview setFile={setFile} />
+          </Styled.PicPart>
+          <Styled.SelectPart>
             <div className="inputWrapper">
               <input
                 type="text"
@@ -181,7 +163,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
                 placeholder="문구를 입력해주세요..."
               ></textarea>
             </form>
-            <LocationContents onClick={toggleKakaoMap}>
+            <Styled.LocationContents onClick={toggleKakaoMap}>
               <div className="locationHead">
                 {selectedAddress ? (
                   <p>선택한 주소: {selectedAddress}</p>
@@ -194,16 +176,15 @@ function Upload({ setOpenPopup, id, album }: Props) {
                   alt="위치토글아이콘"
                 />
               </div>
-            </LocationContents>
-
+            </Styled.LocationContents>
             {kakaoMapVisible && (
-              <KakaoMapContainer>
+              <Styled.KakaoMapContainer>
                 <KakaoMap
                   onAddressSelect={(address) => handleAddressSelect(address)}
                 />
-              </KakaoMapContainer>
+              </Styled.KakaoMapContainer>
             )}
-            <AccordionContents>
+            <Styled.AccordionContents>
               {accordionData.map((data, index) => (
                 <Accordion
                   key={index}
@@ -221,13 +202,13 @@ function Upload({ setOpenPopup, id, album }: Props) {
                   }
                 />
               ))}
-            </AccordionContents>
-          </SelectPart>
-        </UploadContents>
-      </UploadWrapper>
-      <CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
+            </Styled.AccordionContents>
+          </Styled.SelectPart>
+        </Styled.UploadContents>
+      </Styled.UploadWrapper>
+      <Styled.CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
         <img src={CloseIcon} alt="닫기버튼" />
-      </CloseBtn>
+      </Styled.CloseBtn>
     </>
   );
 }
