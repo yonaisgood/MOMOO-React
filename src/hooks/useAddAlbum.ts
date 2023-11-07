@@ -1,5 +1,5 @@
 import { appFireStore, Timestamp } from '../firebase/config';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import useAuthContext from '../hooks/useAuthContext';
 
 export default function useAddAlbum(albumName: string) {
@@ -10,17 +10,17 @@ export default function useAddAlbum(albumName: string) {
       return;
     }
 
-    const userAlbumDocRef = doc(
+    const userAlbumDocRef = collection(
       appFireStore,
       user.uid,
       user.uid,
       'album',
-      albumName,
     );
 
-    await setDoc(userAlbumDocRef, {
+    await addDoc(userAlbumDocRef, {
       feedList: [],
       createdTime: Timestamp.now(),
+      name: albumName,
     });
   };
 
