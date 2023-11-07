@@ -46,6 +46,10 @@ const SelectModal = styled.div`
       display: block;
     }
   }
+  .modal-list button:last-child:hover {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
   .modal-list button:focus {
     img {
       display: block;

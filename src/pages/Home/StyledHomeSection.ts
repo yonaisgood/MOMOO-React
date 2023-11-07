@@ -40,7 +40,7 @@ const StyledHomeSection = styled.section`
   }
   li {
     width: 100%;
-    height: 44.4rem;
+    aspect-ratio: 3/4;
   }
 
   @media (max-width: 744px) {
@@ -53,8 +53,6 @@ const StyledHomeSection = styled.section`
     }
     li {
       flex-shrink: 0;
-      width: 100%;
-      height: 44.4rem;
     }
     .btn-wrap button {
       width: 3rem;
