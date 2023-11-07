@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
+import { useRef, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import useAddAlbum from '../../hooks/useAddAlbum';
 
 const SelectModal = styled.div`
   .modal-overlay {
@@ -70,12 +71,14 @@ const Header = styled.header`
 const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [albumName, setAlbumName] = useState('');
+  const addAlbum = useAddAlbum(albumName);
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Tab") {
+      if (event.key === 'Tab') {
         const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         );
         if (focusableElements) {
           const firstElement = focusableElements[0] as HTMLElement;
@@ -95,12 +98,17 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
         }
       }
     };
-    document.addEventListener("keydown", handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeydown);
+      document.removeEventListener('keydown', handleKeydown);
     };
   }, []);
+
+  const handleAlbum = async () => {
+    await addAlbum();
+    onClose();
+  };
 
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
@@ -114,13 +122,17 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
           <Header className="modal-header" id="modal-select">
             <h2 tabIndex={0}>새로운 앨범</h2>
             <p>이 앨범의 이름을 입력해주세요</p>
-            <input type="text" placeholder="이름을 입력해주세요" />
+            <input
+              type="text"
+              placeholder="이름을 입력해주세요"
+              onChange={(e) => setAlbumName(e.target.value)}
+            />
           </Header>
           <div className="modal-list">
             <button type="submit" onClick={onClose} ref={closeButtonRef}>
               취소
             </button>
-            <button type="submit" onClick={onClose} ref={closeButtonRef}>
+            <button type="submit" onClick={handleAlbum} ref={closeButtonRef}>
               저장
             </button>
           </div>
