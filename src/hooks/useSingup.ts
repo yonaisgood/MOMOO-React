@@ -4,11 +4,13 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import useAuthContext from './useAuthContext';
 import useUploadImg from './useUploadImg.ts';
 import { FirebaseError } from 'firebase/app';
+import useAddAlbum from './useAddAlbum.ts';
 
 export default function useSignup() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setPending] = useState(false);
   const { dispatch } = useAuthContext();
+  const addAlbum = useAddAlbum();
 
   const signup = async (
     email: string,
@@ -43,9 +45,11 @@ export default function useSignup() {
 
       if (opt.displayName || opt.photoURL) {
         await updateProfile(user, opt);
-        setError(null);
-        setPending(false);
       }
+
+      await addAlbum({ albumName: '전체 보기', user });
+      setError(null);
+      setPending(false);
 
       dispatch({ type: 'login', payload: user });
     } catch (err) {

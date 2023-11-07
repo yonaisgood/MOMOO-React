@@ -72,7 +72,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [albumName, setAlbumName] = useState('');
-  const addAlbum = useAddAlbum(albumName);
+  const addAlbum = useAddAlbum();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -106,7 +106,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   const handleAlbum = async () => {
-    await addAlbum();
+    await addAlbum({ albumName });
     onClose();
   };
 
