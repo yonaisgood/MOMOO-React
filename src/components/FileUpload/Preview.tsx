@@ -1,18 +1,18 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, SetStateAction, Dispatch } from 'react';
 import styled from 'styled-components';
 import ImgUpload from '../../asset/icon/ImgUpload.svg';
 import ArrowLeft from '../../asset/icon/ArrowLeft.svg';
 import ArrowRight from '../../asset/icon/ArrowRight.svg';
-import uploadImageToStorage from '../../components/Upload/UploadImageToStorage';
 
 interface IndicatorProps {
   active: boolean;
 }
 
-interface PreviewProps {
-  onImageUpload: (imageFile: File) => void;
-}
-const Preview: React.FC<PreviewProps> = ({ onImageUpload }) => {
+const Preview = ({
+  setFile,
+}: {
+  setFile: Dispatch<SetStateAction<FileList | null>>;
+}) => {
   const [imageList, setImageList] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -38,7 +38,9 @@ const Preview: React.FC<PreviewProps> = ({ onImageUpload }) => {
     const files = e.target.files;
     if (files) {
       setImages(files);
-      onImageUpload(files[0]);
+      setFile(files);
+    } else {
+      alert('이미지 파일을 선택해주세요.');
     }
   };
 
