@@ -5,6 +5,7 @@ const StyledGridFeed = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   margin: -8px -8px;
   grid-auto-rows: 1px;
+  margin-top: 56px;
 
   li {
     margin: 8px;
@@ -81,8 +82,13 @@ const StyledGridFeed = styled.ul`
     }
   }
 
-  @media (max-width: 834px) {
+  @media (max-width: 1024px) {
+    margin-top: 12px;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 430px) {
+    margin-top: 0;
   }
 `;
 

@@ -17,7 +17,8 @@
     "react-kakao-maps-sdk": "^1.1.21",
     "react-router-dom": "^6.16.0",
     "styled-components": "^6.0.8",
-    "styled-reset": "^4.5.1"
+    "styled-reset": "^4.5.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
