@@ -50,21 +50,18 @@ const StyledMain = styled(StyledAuth)`
     flex-direction: column;
     align-items: flex-start;
 
-    div:not(.breadcrumb-wrap) {
-      margin: auto;
+    article {
+      justify-content: center;
 
-      article {
-        justify-content: center;
+      button + button {
+        margin-top: 0;
+      }
 
-        button + button {
-          margin-top: 0;
-        }
-
-        button {
-          text-align: left;
-          padding: 5px 14px;
-          font-size: var(--title-s);
-        }
+      button {
+        text-align: left;
+        padding: 5px 14px;
+        white-space: nowrap;
+        font-size: var(--title-s);
       }
     }
   }

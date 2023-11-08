@@ -83,6 +83,7 @@ const StyledAuth = styled.main`
 
     .container {
       display: flex;
+      box-sizing: border-box;
       width: 100%;
     }
 
@@ -103,8 +104,10 @@ const StyledAuth = styled.main`
   }
 
   @media (min-width: 1025px) {
+    margin: 0 var(--right-padding-pc) 0 var(--nav-width-pc);
+    padding: 0 var(--margin-pc);
+
     .container {
-      padding-right: var(--right-padding-pc); // 임시
       justify-content: center;
     }
 
@@ -190,9 +193,12 @@ const StyledAuth = styled.main`
   }
 
   @media (min-width: 431px) and (max-width: 1024px) {
+    padding: 0 var(--margin-tablet);
+
     .container {
-      margin: 0 var(--margin-tablet);
-      padding: 0 calc(var(--column-tablet) + var(--gutter-tablet));
+      padding: 0;
+      margin: auto;
+      max-width: 518px;
     }
 
     article {
@@ -224,9 +230,8 @@ const StyledAuth = styled.main`
     }
 
     form {
-      width: calc(var(--column-tablet) * 4 + var(--gutter-tablet) * 3);
-      padding-left: 24px;
-      margin-left: auto;
+      flex-grow: 1;
+      margin-left: 24px;
     }
   }
 `;
