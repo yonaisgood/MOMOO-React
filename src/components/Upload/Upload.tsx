@@ -1,7 +1,8 @@
 import { SyntheticEvent, useState } from 'react';
 import { appFireStore, Timestamp } from '../../firebase/config';
-import { doc, arrayUnion, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 import uploadImageToStorage from './UploadImageToStorage';
 import useAuthContext from '../../hooks/useAuthContext';
 import Accordion from '../../components/Accordion/Accordion';
@@ -78,6 +79,8 @@ function Upload({ setOpenPopup, id, album }: Props) {
     console.log('Selected address:', selectedAddress);
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -111,9 +114,8 @@ function Upload({ setOpenPopup, id, album }: Props) {
         };
 
         // Firestore에 업로드 데이터를 추가합니다.
-        await setDoc(userDocRef, {
-          feedList: arrayUnion(uploadData),
-        });
+        await setDoc(userDocRef, uploadData);
+        navigate(`/feed/${id}`);
       } else {
         console.error('사용자가 로그인되지 않았습니다.');
       }
@@ -130,7 +132,7 @@ function Upload({ setOpenPopup, id, album }: Props) {
             <img src={BackIcon} alt="뒤로가기버튼" />
           </Styled.BackButton>
           <h1>새 게시물</h1>
-          <button type="submit" onClick={handleSubmit}>
+          <button type="button" onClick={handleSubmit}>
             업로드
           </button>
         </Styled.UploadHeader>
