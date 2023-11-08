@@ -1,11 +1,17 @@
 import { appFireStore, Timestamp } from '../firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 import useAuthContext from '../hooks/useAuthContext';
+import { User } from '@firebase/auth';
 
-export default function useAddAlbum(albumName: string) {
-  const { user } = useAuthContext();
+export default function useAddAlbum() {
+  const { user: contextUser } = useAuthContext();
 
-  const addAlbum = async () => {
+  interface Props {
+    user?: User | null;
+    albumName: string;
+  }
+
+  const addAlbum = async ({ albumName, user = contextUser }: Props) => {
     if (user === null) {
       return;
     }
