@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const StyledH2 = styled.h2`
   font-size: var(--title-s);
+  font-family: var(--title-font-family);
   color: var(--gray-800);
   display: flex;
   align-items: center;
