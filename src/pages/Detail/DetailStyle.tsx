@@ -1,13 +1,28 @@
 import styled from 'styled-components';
 
-const DetailLayout = styled.section`
-  /* border: 5px solid green; */
+const DetailLayout = styled.main`
+  margin: 0 var(--right-padding-pc) 0 var(--nav-width-pc);
+  padding: 10rem var(--margin-pc) 0;
   width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  padding: 10rem 0 0;
-  margin-left: var(--nav-width-pc);
-  margin-right: var(--right-padding-pc);
+
+  section {
+    max-width: 50rem;
+    margin: auto;
+  }
+
+  @media (max-width: 1024px) {
+    padding: calc(var(--nav-height-tablet) + 64px) var(--margin-tablet) 0;
+    margin: 0;
+
+    section {
+      max-width: 100%;
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 430px) {
+    padding: var(--nav-height-mobile) var(--margin-mobile);
+  }
 `;
 
 export { DetailLayout };
