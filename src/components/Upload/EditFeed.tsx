@@ -1,8 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
-import { appFireStore, Timestamp } from '../../firebase/config';
-import { doc, setDoc } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import uploadImageToStorage from './UploadImageToStorage';
 import useAuthContext from '../../hooks/useAuthContext';
 import Accordion from '../../components/Accordion/Accordion';
@@ -13,15 +9,11 @@ import BackIcon from '../../asset/icon/ArrowBack.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import * as Styled from './UploadStyle';
 import accordionData from './accordionData';
+import useEditContext from '../../hooks/useEditContext';
+import useGetFeedData from '../../hooks/useGetFeedData';
+import useEditFeed from '../../hooks/useEditFeed';
 
-interface Props {
-  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
-  id?: string;
-  album?: string;
-}
-
-// album이 빈문자열이 아니면, 해당 album이 선택되어 있도록 렌더링
-function Upload({ setOpenPopup, album }: Props) {
+export default function EditFeed() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -34,24 +26,47 @@ function Upload({ setOpenPopup, album }: Props) {
 
   const { user } = useAuthContext();
 
+  //
+  const editFeed = useEditFeed();
+  const [imgUrlList, setImgUrlList] = useState([]);
+  const getFeedData = useGetFeedData();
+  const { setIsEditModalOpen, feedIdtoEdit, setFeedIdtoEdit } =
+    useEditContext();
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getFeedData(feedIdtoEdit);
+
+      if (data) {
+        setTitle(data.title);
+        setText(data.text);
+        setSelectedAddress(data.selectedAddress);
+        setSelectedWeatherImages(data.weatherImages);
+        setSelectedEmotionImages(data.emotionImages);
+        setImgUrlList(data.imageUrl);
+      }
+    };
+
+    getData();
+  }, []);
+  //
+
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
   };
 
-  const handleGoBack = () => {
+  const goBack = () => {
     window.history.back();
   };
 
-  const closeUploadModal = () => {
-    setOpenPopup(false);
+  const closeEditFeedModal = () => {
+    setIsEditModalOpen(false);
+    setFeedIdtoEdit('');
   };
 
   const handleAddressSelect = (selectedAddress: string) => {
     setSelectedAddress(selectedAddress);
-    console.log('Selected address:', selectedAddress);
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -63,32 +78,21 @@ function Upload({ setOpenPopup, album }: Props) {
 
     try {
       if (user) {
-        // 사용자 UID를 기반으로 Firestore 문서 경로를 생성
-        const id = uuidv4();
-        const userDocRef = doc(appFireStore, user.uid, user.uid, 'feed', id);
-
-        if (file === null) {
-          alert('사진을 선택해주세요');
-          return;
+        let downloadURLs;
+        if (file !== null) {
+          downloadURLs = await uploadImageToStorage(file, 'feed');
         }
 
-        const downloadURLs = await uploadImageToStorage(file, 'feed');
-
-        // 업로드할 내용을 객체로 만들기
-        const uploadData = {
+        const editData = {
           title: title,
           text: text,
-          timestamp: Timestamp.now(),
           selectedAddress: selectedAddress,
           weatherImages: selectedWeatherImages,
           emotionImages: selectedEmotionImages,
           imageUrl: downloadURLs,
-          id: id,
         };
 
-        // Firestore에 업로드 데이터를 추가합니다.
-        await setDoc(userDocRef, uploadData);
-        navigate(`/feed/${id}`);
+        await editFeed(editData);
       } else {
         console.error('사용자가 로그인되지 않았습니다.');
       }
@@ -101,17 +105,17 @@ function Upload({ setOpenPopup, album }: Props) {
     <>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
-          <Styled.BackButton onClick={() => handleGoBack()}>
+          <Styled.BackButton onClick={goBack}>
             <img src={BackIcon} alt="뒤로가기버튼" />
           </Styled.BackButton>
-          <h1>새 게시물</h1>
-          <button type="button" onClick={handleSubmit}>
-            업로드
+          <h1>게시물 수정</h1>
+          <button type="submit" onClick={handleSubmit}>
+            완료
           </button>
         </Styled.UploadHeader>
         <Styled.UploadContents>
           <Styled.PicPart>
-            <Preview setFile={setFile} />
+            <Preview setFile={setFile} imgUrlList={imgUrlList} />
           </Styled.PicPart>
           <Styled.SelectPart>
             <div className="inputWrapper">
@@ -181,16 +185,9 @@ function Upload({ setOpenPopup, album }: Props) {
           </Styled.SelectPart>
         </Styled.UploadContents>
       </Styled.UploadWrapper>
-      <Styled.CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
+      <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
         <img src={CloseIcon} alt="닫기버튼" />
       </Styled.CloseBtn>
     </>
   );
 }
-
-Upload.defaultProps = {
-  id: '',
-  album: '',
-};
-
-export default Upload;

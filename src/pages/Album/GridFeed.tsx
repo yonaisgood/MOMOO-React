@@ -3,21 +3,27 @@ import { Link } from 'react-router-dom';
 import StyledGridFeed from './StyledGridFeed';
 import feedList from './data';
 import EditIcon from '../../asset/icon/Edit.svg';
-import Upload from '../../components/Upload/Upload';
 import AddIcon from '../../asset/icon/Add_L.svg';
+import useEditContext from '../../hooks/useEditContext';
 
 export default function GridFeed() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
   const ul = useRef<null | HTMLUListElement>(null);
-  const [openModal, setOpenModal] = useState(false);
+  const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
+
+  const setEditFeedContext = () => {
+    // 해당 게시물 id 아큐먼트로
+    setFeedIdtoEdit('');
+    setIsEditModalOpen(true);
+  };
 
   const setRowEnd = () => {
     ul.current?.querySelectorAll('li').forEach((item) => {
@@ -53,11 +59,6 @@ export default function GridFeed() {
     }
   };
 
-  const handleEditBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setOpenModal(true);
-  };
-
   const setUlRef = (node: HTMLUListElement) => {
     if (ul.current === null) {
       ul.current = node;
@@ -85,17 +86,18 @@ export default function GridFeed() {
             >
               <div className="a11y-hidden">
                 <strong>{v.title}</strong>
-                <button type="button" onClick={handleEditBtn}>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setEditFeedContext();
+                  }}
+                >
                   <img src={EditIcon} alt="수정하기" />
                 </button>
               </div>
               <img src={v.url} alt="" />
             </Link>
-            {openModal && (
-              <div className="modal-overlay">
-                <Upload setOpenPopup={setOpenModal} id={`${v.id}`} />
-              </div>
-            )}
           </li>
         );
       })}
@@ -104,11 +106,10 @@ export default function GridFeed() {
           className="upload"
           type="button"
           aria-label="새 게시물"
-          onClick={() => setOpenModal(true)}
+          onClick={setEditFeedContext}
         >
           <img src={AddIcon} alt="추가하기" />
         </button>
-        {openModal && <Upload setOpenPopup={setOpenModal} album="우정 앨범" />}
       </li>
     </StyledGridFeed>
   );

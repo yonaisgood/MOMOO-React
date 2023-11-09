@@ -1,4 +1,4 @@
-import { useState, SetStateAction, Dispatch } from 'react';
+import { useState, SetStateAction, Dispatch, useEffect } from 'react';
 import styled from 'styled-components';
 import ImgUpload from '../../asset/icon/ImgUpload.svg';
 import ArrowLeft from '../../asset/icon/ArrowLeft.svg';
@@ -10,11 +10,17 @@ interface IndicatorProps {
 
 const Preview = ({
   setFile,
+  imgUrlList,
 }: {
   setFile: Dispatch<SetStateAction<FileList | null>>;
+  imgUrlList: string[];
 }) => {
   const [imageList, setImageList] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setImageList(imgUrlList);
+  }, [imgUrlList]);
 
   const setImages = async (files: FileList) => {
     if (files) {
@@ -126,6 +132,10 @@ const Preview = ({
       </PrivewSection>
     </>
   );
+};
+
+Preview.defaultProps = {
+  imgUrlList: [],
 };
 
 const ImgSlidePcSize = styled.div`
