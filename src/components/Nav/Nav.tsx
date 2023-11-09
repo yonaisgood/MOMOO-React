@@ -42,11 +42,7 @@ export default function Nav() {
       <Link to="/home">
         <img className="logoImg" src={LogoImg} alt="로고이미지" />
       </Link>
-      {openUploadModal && (
-        <div className="modal-overlay">
-          <Upload setOpenPopup={setOpenUploadModal} />
-        </div>
-      )}
+      {openUploadModal && <Upload setOpenPopup={setOpenUploadModal} />}
       {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
     </StyledNav>
   );

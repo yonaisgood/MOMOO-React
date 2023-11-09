@@ -4,7 +4,7 @@ import ListFeed from '../../components/ListFeed/ListFeed';
 
 function Detail() {
   return (
-    <>
+    <DetailLayout>
       <Breadcrumb
         navList={[
           { path: 'home', text: 'Home' },
@@ -12,10 +12,10 @@ function Detail() {
           { path: 'feed', text: 'feed' },
         ]}
       />
-      <DetailLayout>
+      <section>
         <ListFeed />
-      </DetailLayout>
-    </>
+      </section>
+    </DetailLayout>
   );
 }
 

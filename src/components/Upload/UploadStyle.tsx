@@ -109,6 +109,7 @@ const SelectPart = styled.section`
       font-size: var(--text-m);
       height: auto;
       max-height: 11.4rem;
+      resize: none;
     }
   }
 

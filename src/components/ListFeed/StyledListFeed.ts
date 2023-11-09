@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const StyledListFeed = styled.article`
-  max-width: 50rem;
   margin: 0 auto;
   color: var(--gray-900);
 

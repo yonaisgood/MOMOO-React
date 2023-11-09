@@ -1,8 +1,7 @@
 import { useState, SetStateAction, Dispatch, useEffect } from 'react';
 import styled from 'styled-components';
 import ImgUpload from '../../asset/icon/ImgUpload.svg';
-import ArrowLeft from '../../asset/icon/ArrowLeft.svg';
-import ArrowRight from '../../asset/icon/ArrowRight.svg';
+import ArrowWhite from '../../asset/icon/Arrow-White.svg';
 
 interface IndicatorProps {
   active: boolean;
@@ -90,12 +89,8 @@ const Preview = ({
               {/* 모바일 이상 슬라이드 */}
               <ImgSlidePcSize>
                 {imageList.length > 1 && (
-                  <button onClick={prevSlide}>
-                    <img
-                      className="ArrowBack"
-                      src={ArrowLeft}
-                      alt="뒤로가기 버튼"
-                    />
+                  <button onClick={prevSlide} className="ArrowBack">
+                    <img src={ArrowWhite} alt="뒤로가기 버튼" />
                   </button>
                 )}
                 <img
@@ -104,12 +99,8 @@ const Preview = ({
                   alt="이미지"
                 />
                 {imageList.length > 1 && (
-                  <button onClick={nextSlide}>
-                    <img
-                      className="ArrowRight"
-                      src={ArrowRight}
-                      alt="앞으로가기 버튼"
-                    />
+                  <button onClick={nextSlide} className="ArrowRight">
+                    <img src={ArrowWhite} alt="앞으로가기 버튼" />
                   </button>
                 )}
               </ImgSlidePcSize>
@@ -232,24 +223,29 @@ const PreviewSlider = styled.div`
   height: calc(100% - 3rem);
   margin: 0 auto;
 
-  .ArrowBack {
-    width: 2rem;
-    height: 2rem;
+  button {
     position: absolute;
     top: 50%;
-    left: 2rem;
-    background-color: rgba(3, 3, 3, 0.2);
+    transform: translateY(-50%);
+    box-sizing: content-box;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    padding: 4px 3.5px 4px 4.5px;
+  }
+  .ArrowBack {
+    left: 8px;
+    transform: translateY(-50%) rotate(180deg);
   }
 
   .ArrowRight {
-    width: 2rem;
-    height: 2rem;
-    position: absolute;
-    top: 50%;
-    right: 2rem;
-    background-color: rgba(3, 3, 3, 0.2);
+    right: 8px;
+    padding: 4px 3.5px 4px 4.5px;
   }
 
+  img {
+    width: 16px;
+    aspect-ratio: 1/1;
+  }
   @media (max-width: 430px) {
     height: calc(100% - 0rem);
   }
@@ -280,14 +276,15 @@ const IndicatorContainer = styled.div`
 `;
 
 const Indicator = styled.div<IndicatorProps>`
-  width: 0.7rem;
-  height: 0.7rem;
+  width: 0.6rem;
+  aspect-ratio: 1/1;
   border-radius: 50%;
-  background-color: ${(props) => (props.active ? '#121212' : '#A9D3D9')};
+  background-color: ${(props) =>
+    props.active ? 'var(--gray-900)' : 'var(--gray-300)'};
   cursor: pointer;
   display: flex;
   gap: 2rem;
-  margin-right: 0.5rem;
+  margin-right: 0.6rem;
 `;
 
 export default Preview;
