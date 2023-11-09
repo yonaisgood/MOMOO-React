@@ -12,6 +12,7 @@ import accordionData from './accordionData';
 import useEditContext from '../../hooks/useEditContext';
 import useGetFeedData from '../../hooks/useGetFeedData';
 import useEditFeed from '../../hooks/useEditFeed';
+import StyledOverlay from './StyledOverlay';
 
 export default function EditFeed() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
@@ -102,7 +103,7 @@ export default function EditFeed() {
   };
 
   return (
-    <>
+    <StyledOverlay>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
           <Styled.BackButton onClick={goBack}>
@@ -188,6 +189,6 @@ export default function EditFeed() {
       <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
         <img src={CloseIcon} alt="닫기버튼" />
       </Styled.CloseBtn>
-    </>
+    </StyledOverlay>
   );
 }

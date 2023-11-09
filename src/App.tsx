@@ -7,7 +7,6 @@ import EditFeed from './components/Upload/EditFeed';
 function App() {
   const { isAuthReady } = useAuthContext();
   const { isEditModalOpen } = useEditContext();
-  console.log(isEditModalOpen);
 
   return (
     <>

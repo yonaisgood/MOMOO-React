@@ -13,6 +13,7 @@ import BackIcon from '../../asset/icon/ArrowBack.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import * as Styled from './UploadStyle';
 import accordionData from './accordionData';
+import StyledOverlay from './StyledOverlay';
 
 interface Props {
   setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
@@ -98,7 +99,7 @@ function Upload({ setOpenPopup, album }: Props) {
   };
 
   return (
-    <>
+    <StyledOverlay>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
           <Styled.BackButton onClick={() => handleGoBack()}>
@@ -184,7 +185,7 @@ function Upload({ setOpenPopup, album }: Props) {
       <Styled.CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
         <img src={CloseIcon} alt="닫기버튼" />
       </Styled.CloseBtn>
-    </>
+    </StyledOverlay>
   );
 }
 
