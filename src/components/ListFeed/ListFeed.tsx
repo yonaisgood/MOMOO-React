@@ -34,7 +34,7 @@ export default function ListFeed() {
         <time dateTime="2023-10-03" className="date">
           2023.10.03
         </time>
-        {isModalOpen && <Modal onClose={handleCloseModal} />}
+        {isModalOpen && <Modal feedId="1" onClose={handleCloseModal} />}
       </StyledListFeed>
     </>
   );

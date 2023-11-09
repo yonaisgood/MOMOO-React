@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Close from '../../asset/icon/X-Small.svg';
+import useEditContext from '../../hooks/useEditContext';
 
 const SelectModal = styled.div`
   .modal-overlay {
@@ -50,9 +51,15 @@ const Header = styled.header`
   text-align: center;
 `;
 
-const Modal = ({ onClose }: { onClose: () => void }) => {
+interface Props {
+  onClose: () => void;
+  feedId: string;
+}
+
+const Modal = ({ onClose, feedId }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -85,6 +92,13 @@ const Modal = ({ onClose }: { onClose: () => void }) => {
     };
   }, []);
 
+  const setEditFeedContext = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFeedIdtoEdit(feedId);
+    setIsEditModalOpen(true);
+    onClose();
+  };
+
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
       <div className="modal-overlay">
@@ -98,12 +112,14 @@ const Modal = ({ onClose }: { onClose: () => void }) => {
             <h2 tabIndex={0}>게시글 변경</h2>
           </Header>
           <div className="modal-list">
-            <button type="submit">삭제하기</button>
-            <button type="submit">수정하기</button>
-            <button type="submit">앨범 변경하기</button>
-            <button type="submit">공유하기</button>
+            <button type="button">삭제하기</button>
+            <button type="button" onClick={setEditFeedContext}>
+              수정하기
+            </button>
+            <button type="button">앨범 변경하기</button>
           </div>
           <button
+            type="button"
             className="close-button"
             onClick={onClose}
             tabIndex={0}
