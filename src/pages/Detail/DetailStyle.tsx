@@ -22,6 +22,10 @@ const DetailLayout = styled.main`
 
   @media (max-width: 430px) {
     padding: var(--nav-height-mobile) var(--margin-mobile);
+
+    section {
+      margin-top: 0;
+    }
   }
 `;
 
