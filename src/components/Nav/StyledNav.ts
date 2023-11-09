@@ -45,14 +45,14 @@ const StyledNav = styled.nav`
   }
 
   @media (max-width: 1024px) {
-    position: fixed;
-    width: var(--nav-height-tablet);
-    padding: 7.2rem 2.4rem 0 3.2rem;
-    height: 100vh;
+    display: flex;
+    width: 100%;
+    height: var(--nav-height-tablet);
+    padding: 2.4rem;
 
     .navBtn {
       display: flex;
-      flex-direction: column;
+      justify-content: end;
       align-items: center;
       gap: 2.8rem;
       width: 100%;
@@ -63,27 +63,6 @@ const StyledNav = styled.nav`
     }
 
     .logoImg {
-      width: 20rem;
-      height: 10rem;
-      bottom: 4.9rem;
-      right: -6.5rem;
-    }
-  }
-
-  @media (max-width: 744px) {
-    position: fixed;
-    display: flex;
-    width: 100%;
-    height: var(--nav-height-tablet);
-    padding: 2.4rem;
-
-    .navBtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: end;
-    }
-
-    .logoImg {
       rotate: 0deg;
       width: 19.6rem;
       height: 10rem;
@@ -91,6 +70,7 @@ const StyledNav = styled.nav`
       left: 24px;
     }
   }
+
   @media (max-width: 430px) {
     height: 4.8rem;
     border-bottom: 1px solid var(--gray-200);
