@@ -22,7 +22,7 @@ const AccordionWrapper = styled.div`
 
     button {
       border-radius: 50%;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.9rem;
       transition: all 0.1s ease-in-out;
     }
 
