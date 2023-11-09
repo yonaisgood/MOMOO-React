@@ -1,18 +1,7 @@
 import styled from 'styled-components';
 
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-`;
-
 const UploadWrapper = styled.div`
   width: 80rem;
-  height: 53rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -40,6 +29,7 @@ const UploadWrapper = styled.div`
     top: 0;
     left: 0;
     transform: none;
+    border-radius: 0px;
   }
 `;
 
@@ -86,7 +76,6 @@ const PicPart = styled.section`
     width: 100vm;
     margin-top: 1.2rem;
     margin-left: 1.6rem;
-    /* margin-bottom: 1.2rem; */
     background-color: var(--background-color);
   }
 `;
@@ -120,7 +109,6 @@ const SelectPart = styled.section`
       font-size: var(--text-m);
       height: auto;
       max-height: 11.4rem;
-      /* overflow-y: auto; */
     }
   }
 
@@ -224,7 +212,6 @@ const CloseBtn = styled.button`
 `;
 
 export {
-  Overlay,
   UploadWrapper,
   BackButton,
   UploadHeader,
