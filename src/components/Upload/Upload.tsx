@@ -14,15 +14,10 @@ import CloseMobileIcon from '../../asset/icon/X.svg';
 import * as Styled from './UploadStyle';
 import accordionData from './accordionData';
 import StyledOverlay from './StyledOverlay';
-
-interface Props {
-  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
-  id?: string;
-  album?: string;
-}
+import useUploadContext from '../../hooks/useUploadContext';
 
 // album이 빈문자열이 아니면, 해당 album이 선택되어 있도록 렌더링
-function Upload({ setOpenPopup, album }: Props) {
+function Upload() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -36,6 +31,8 @@ function Upload({ setOpenPopup, album }: Props) {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
+  const { albumNametoAdd, setIsUploadModalOpen, setAlbumNametoAdd } =
+    useUploadContext();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -48,7 +45,7 @@ function Upload({ setOpenPopup, album }: Props) {
   };
 
   const closeUploadModal = () => {
-    setOpenPopup(false);
+    setIsUploadModalOpen(false);
   };
 
   const handleAddressSelect = (selectedAddress: string) => {

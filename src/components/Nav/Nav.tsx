@@ -1,19 +1,19 @@
 import StyledNav from './StyledNav';
 import MyPopup from '../MyPopup/MyPopup';
-import Upload from '../Upload/Upload';
 import HomeImg from '../../asset/icon/HomePc.svg';
 import LogoImg from '../../asset/icon/Logo.svg';
 import UploadImg from '../../asset/icon/UploadPc.svg';
 import MypageImg from '../../asset/icon/ProfilePc.svg';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useUploadContext from '../../hooks/useUploadContext';
 
 export default function Nav() {
-  const [openUploadModal, setOpenUploadModal] = useState(false);
   const [openMyModal, setOpenMyModal] = useState(false);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
+  const { setIsUploadModalOpen } = useUploadContext();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -22,7 +22,7 @@ export default function Nav() {
   }, []);
 
   const openUploadModalFunc = () => {
-    setOpenUploadModal(true);
+    setIsUploadModalOpen(true);
     document.body.classList.add('modal-open');
   };
 
@@ -57,7 +57,6 @@ export default function Nav() {
           <Link to="/home">
             <img className="logoImg" src={LogoImg} alt="로고이미지" />
           </Link>
-          {openUploadModal && <Upload setOpenPopup={setOpenUploadModal} />}
           {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
         </StyledNav>
       )}
