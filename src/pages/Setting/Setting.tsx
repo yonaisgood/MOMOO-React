@@ -361,7 +361,11 @@ export default function Setting() {
             </Button>
           </form>
           {clientWitch <= 430 && (
-            <button type="button" className="delete-btn">
+            <button
+              type="button"
+              className="delete-btn"
+              onClick={handleDeleteIdBtn}
+            >
               Delete account
               <img src={DeleteIcon} alt="" />
             </button>

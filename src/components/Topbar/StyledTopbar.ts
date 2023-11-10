@@ -2,10 +2,12 @@ import styled from 'styled-components';
 
 const StyledTopbar = styled.header`
   position: fixed;
-  padding: 12px 16px;
+  z-index: 100;
+  padding: 12px var(--margin-mobile);
   width: 100%;
   box-sizing: border-box;
   border-bottom: 1px solid var(--gray-200);
+  background: var(--background-color);
 
   h1 {
     font-size: var(--text-l);
