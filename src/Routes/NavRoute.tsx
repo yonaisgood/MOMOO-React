@@ -13,10 +13,11 @@ export default function NavRoute() {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
+
   return (
     <>
       <Nav />
-      {clientWitch < 430 ? <TabBar /> : null}
+      {clientWitch <= 430 ? <TabBar /> : null}
       <Outlet />
     </>
   );

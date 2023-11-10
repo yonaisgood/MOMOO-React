@@ -17,7 +17,7 @@ const StyledNav = styled.nav`
     justify-content: center;
     align-items: center;
     gap: 1.2rem;
-    padding: 0.8rem 1.6rem;
+    padding: 0.7rem 1.6rem;
   }
   .navBtn button,
   .navBtn button .homeLink {
@@ -27,10 +27,15 @@ const StyledNav = styled.nav`
     align-items: center;
     flex-grow: 1;
   }
+  p {
+    margin-top: 3px;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
 
   .navBtn button img {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
   .modal-overlay {

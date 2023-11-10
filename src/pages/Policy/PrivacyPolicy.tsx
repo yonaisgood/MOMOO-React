@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import StyledMain from './StyledMain';
 import privacyPolicy from './privacyText';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import TopBar from '../../components/Topbar/Topbar';
 
 export default function PrivacyPolicy() {
   const [clientWitch, setClientWitch] = useState(
@@ -16,6 +17,7 @@ export default function PrivacyPolicy() {
 
   return (
     <>
+      {clientWitch <= 430 && <TopBar tit="개인정보 처리방침" />}
       <StyledMain>
         {clientWitch > 430 && (
           <Breadcrumb
@@ -26,7 +28,7 @@ export default function PrivacyPolicy() {
           />
         )}
         <section>
-          {clientWitch > 430 && <h2>개인정보처리방침</h2>}
+          {clientWitch > 430 && <h2>개인정보 처리방침</h2>}
           {privacyPolicy.map((v) => {
             if (typeof v.list === 'string') {
               return (

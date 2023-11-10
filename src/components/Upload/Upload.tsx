@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useState, useEffect } from 'react';
 import { appFireStore, Timestamp } from '../../firebase/config';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,8 +9,8 @@ import Accordion from '../../components/Accordion/Accordion';
 import KakaoMap from '../../components/Map/KakaoMap';
 import Preview from '../../components/FileUpload/Preview';
 import Arrow from '../../asset/icon/Arrow.svg';
-import BackIcon from '../../asset/icon/ArrowBack.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
+import CloseMobileIcon from '../../asset/icon/X.svg';
 import * as Styled from './UploadStyle';
 import accordionData from './accordionData';
 import StyledOverlay from './StyledOverlay';
@@ -32,15 +32,19 @@ function Upload({ setOpenPopup, album }: Props) {
   const [selectedEmotionImages, setSelectedEmotionImages] =
     useState<string>('');
   const [file, setFile] = useState<FileList | null>(null);
-
   const { user } = useAuthContext();
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth,
+  );
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
-  };
-
-  const handleGoBack = () => {
-    window.history.back();
   };
 
   const closeUploadModal = () => {
@@ -49,7 +53,6 @@ function Upload({ setOpenPopup, album }: Props) {
 
   const handleAddressSelect = (selectedAddress: string) => {
     setSelectedAddress(selectedAddress);
-    console.log('Selected address:', selectedAddress);
   };
 
   const navigate = useNavigate();
@@ -102,9 +105,11 @@ function Upload({ setOpenPopup, album }: Props) {
     <StyledOverlay>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
-          <Styled.BackButton onClick={() => handleGoBack()}>
-            <img src={BackIcon} alt="뒤로가기버튼" />
-          </Styled.BackButton>
+          {clientWitch <= 430 && (
+            <Styled.BackButton onClick={closeUploadModal}>
+              <img src={CloseMobileIcon} alt="닫기" />
+            </Styled.BackButton>
+          )}
           <h1>새 게시물</h1>
           <button type="button" onClick={handleSubmit}>
             업로드
