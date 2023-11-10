@@ -12,6 +12,7 @@ import useReauthenticate from '../../hooks/useReauthenticate';
 import useDeleteId from '../../hooks/useDeleteId';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import TopBar from '../../components/Topbar/Topbar';
 
 export default function Setting() {
   const { user } = useAuthContext();
@@ -244,126 +245,129 @@ export default function Setting() {
   }, [deleteIdError]);
 
   return (
-    <StyledMain>
-      {clientWitch > 1024 && (
-        <Breadcrumb
-          navList={[
-            { path: 'home', text: 'Home' },
-            { path: 'setting', text: 'Setting' },
-          ]}
-        />
-      )}
-      {clientWitch > 430 && clientWitch <= 1024 && (
-        <BreadcrumbWrap
-          navList={[
-            { path: 'home', text: 'Home' },
-            { path: 'setting', text: 'Setting' },
-          ]}
-          title="Setting"
-        />
-      )}
-      <div className="container">
-        {clientWitch > 430 && (
-          <article>
-            {clientWitch > 1024 && <h2>Setting</h2>}
-            <button
-              type="button"
-              className={selectedBtn === '프로필 설정' ? 'selected' : ''}
-              onClick={() => setSelectedBtn('프로필 설정')}
-            >
-              프로필 설정
-            </button>
-            <button
-              type="button"
-              className={selectedBtn === '회원 탈퇴' ? 'selected' : ''}
-              onClick={handleDeleteIdBtn}
-            >
-              회원 탈퇴
-            </button>
-          </article>
-        )}
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="profile-inp" className="profile">
-            <img src={src || ProfileBasicImg} alt="프로필 사진" />
-            <img src={EditCircle} alt="변경하기" />
-          </label>
-          <input
-            id="profile-inp"
-            type="file"
-            className="a11y-hidden"
-            onChange={(e) => useFileInp(e, setFile, setSrc)}
+    <>
+      {clientWitch <= 430 && <TopBar tit="프로필 수정" />}
+      <StyledMain>
+        {clientWitch > 1024 && (
+          <Breadcrumb
+            navList={[
+              { path: 'home', text: 'Home' },
+              { path: 'setting', text: 'Setting' },
+            ]}
           />
+        )}
+        {clientWitch > 430 && clientWitch <= 1024 && (
+          <BreadcrumbWrap
+            navList={[
+              { path: 'home', text: 'Home' },
+              { path: 'setting', text: 'Setting' },
+            ]}
+            title="Setting"
+          />
+        )}
+        <div className="container">
+          {clientWitch > 430 && (
+            <article>
+              {clientWitch > 1024 && <h2>Setting</h2>}
+              <button
+                type="button"
+                className={selectedBtn === '프로필 설정' ? 'selected' : ''}
+                onClick={() => setSelectedBtn('프로필 설정')}
+              >
+                프로필 설정
+              </button>
+              <button
+                type="button"
+                className={selectedBtn === '회원 탈퇴' ? 'selected' : ''}
+                onClick={handleDeleteIdBtn}
+              >
+                회원 탈퇴
+              </button>
+            </article>
+          )}
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="profile-inp" className="profile">
+              <img src={src || ProfileBasicImg} alt="프로필 사진" />
+              <img src={EditCircle} alt="변경하기" />
+            </label>
+            <input
+              id="profile-inp"
+              type="file"
+              className="a11y-hidden"
+              onChange={(e) => useFileInp(e, setFile, setSrc)}
+            />
 
-          <label htmlFor="username-inp" className="a11y-hidden">
-            사용자 이름
-          </label>
-          <StyledInput
-            id="username-inp"
-            placeholder="username"
-            type="text"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-          />
-          <label htmlFor="email-inp" className="a11y-hidden">
-            이메일
-          </label>
-          <StyledInput
-            id="email-inp"
-            placeholder="email"
-            type="email"
-            value={email}
-            maxLength={98}
-            onChange={handleEmailInp}
-          />
-          <strong role="alert">
-            {emailErrMessage && `*${emailErrMessage}`}
-          </strong>
-          <label htmlFor="password-inp" className="a11y-hidden">
-            비밀번호
-          </label>
-          <StyledInput
-            id="password-inp"
-            placeholder="password"
-            type="password"
-            minLength={6}
-            maxLength={20}
-            value={password}
-            onChange={handlePasswordInp}
-          />
-          <strong role="alert">
-            {passwordErrMessage && `*${passwordErrMessage}`}
-          </strong>
-          <label htmlFor="password-inp" className="a11y-hidden">
-            비밀번호 재확인
-          </label>
-          <StyledInput
-            id="password-inp"
-            placeholder="password confirm"
-            type="password"
-            minLength={6}
-            maxLength={20}
-            value={passwordConfirm}
-            onChange={handlePasswordConfirmInp}
-          />
-          <strong role="alert">
-            {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
-          </strong>
-          <Button
-            size={clientWitch > 1024 ? 'l' : 's'}
-            disabled={
-              !emailValid || !passwordValid || !matchPassword || !changed
-            }
-          >
-            Save
-          </Button>
-        </form>
-        {clientWitch <= 430 && (
-          <button type="button" className="delete-btn">
-            Delete account
-            <img src={DeleteIcon} alt="" />
-          </button>
-        )}
-      </div>
-    </StyledMain>
+            <label htmlFor="username-inp" className="a11y-hidden">
+              사용자 이름
+            </label>
+            <StyledInput
+              id="username-inp"
+              placeholder="username"
+              type="text"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
+            <label htmlFor="email-inp" className="a11y-hidden">
+              이메일
+            </label>
+            <StyledInput
+              id="email-inp"
+              placeholder="email"
+              type="email"
+              value={email}
+              maxLength={98}
+              onChange={handleEmailInp}
+            />
+            <strong role="alert">
+              {emailErrMessage && `*${emailErrMessage}`}
+            </strong>
+            <label htmlFor="password-inp" className="a11y-hidden">
+              비밀번호
+            </label>
+            <StyledInput
+              id="password-inp"
+              placeholder="password"
+              type="password"
+              minLength={6}
+              maxLength={20}
+              value={password}
+              onChange={handlePasswordInp}
+            />
+            <strong role="alert">
+              {passwordErrMessage && `*${passwordErrMessage}`}
+            </strong>
+            <label htmlFor="password-inp" className="a11y-hidden">
+              비밀번호 재확인
+            </label>
+            <StyledInput
+              id="password-inp"
+              placeholder="password confirm"
+              type="password"
+              minLength={6}
+              maxLength={20}
+              value={passwordConfirm}
+              onChange={handlePasswordConfirmInp}
+            />
+            <strong role="alert">
+              {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
+            </strong>
+            <Button
+              size={clientWitch > 1024 ? 'l' : 's'}
+              disabled={
+                !emailValid || !passwordValid || !matchPassword || !changed
+              }
+            >
+              Save
+            </Button>
+          </form>
+          {clientWitch <= 430 && (
+            <button type="button" className="delete-btn">
+              Delete account
+              <img src={DeleteIcon} alt="" />
+            </button>
+          )}
+        </div>
+      </StyledMain>
+    </>
   );
 }

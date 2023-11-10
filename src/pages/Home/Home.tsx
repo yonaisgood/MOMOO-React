@@ -5,7 +5,7 @@ import StyledHomeSection from './StyledHomeSection';
 import AddImg from '../../asset/icon/Add.svg';
 import ArrayImg from '../../asset/icon/Array.svg';
 import Album from '../../components/Album/Album';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NewAlbumModal from '../../components/Modal/NewAlbumModal';
 import ArrayModal from '../../components/Modal/ArrayModal';
 import MobileHeader from './MobileHeader';
@@ -13,6 +13,15 @@ import MobileHeader from './MobileHeader';
 export default function Home() {
   const [isArrayModalOpen, setIsArrayModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth,
+  );
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   const HandleArrayModal = () => {
     setIsArrayModalOpen(true);
@@ -29,7 +38,7 @@ export default function Home() {
   };
   return (
     <>
-      <MobileHeader />
+      {clientWitch <= 430 && <MobileHeader />}
       <StyledMain>
         <StyledHomeSection>
           <StyledH2>Album</StyledH2>

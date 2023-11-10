@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import StyledMain from './StyledMain';
 import terms from './termsText';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import TopBar from '../../components/Topbar/Topbar';
 
 export default function Terms() {
   const [clientWitch, setClientWitch] = useState(
@@ -16,6 +17,7 @@ export default function Terms() {
 
   return (
     <>
+      {clientWitch <= 430 && <TopBar tit="MOMOO 이용약관" />}
       <StyledMain>
         {clientWitch > 430 && (
           <Breadcrumb
@@ -26,7 +28,7 @@ export default function Terms() {
           />
         )}
         <section>
-          {clientWitch > 430 && <h2>이용약관</h2>}
+          {clientWitch > 430 && <h2>MOMOO 이용약관</h2>}
           {terms.map((v) => {
             if (v.list.length === 1 && typeof v.list[0] === 'string') {
               return (

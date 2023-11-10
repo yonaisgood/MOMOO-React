@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledMain = styled.main`
-  padding: 48px 0;
+  padding: 0 0 48px;
   display: flex;
   flex-direction: column;
   min-height: inherit;
