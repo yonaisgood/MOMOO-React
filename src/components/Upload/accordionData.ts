@@ -36,11 +36,19 @@ const GetAccordionData = async (user: User) => {
 
   // 해당 문서의 데이터 가져오기
   const querySnapshot = await getDocs(orderedAlbums);
+
+  interface AlbumIdData {
+    albumName: string;
+    docId: string;
+  }
+
+  const albumIdData: AlbumIdData[] = [];
   querySnapshot.forEach((doc) => {
     accordionData[0].answer.push(doc.data().name);
+    albumIdData.push({ albumName: doc.data().name, docId: doc.id });
   });
 
-  return accordionData;
+  return { accordionData, albumIdData };
 };
 
 export default GetAccordionData;

@@ -1,6 +1,7 @@
 import { SyntheticEvent, useState, useEffect } from 'react';
 import { appFireStore, Timestamp } from '../../firebase/config';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, arrayUnion, updateDoc } from 'firebase/firestore';
+import * as Styled from './UploadStyle';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import uploadImageToStorage from './UploadImageToStorage';
@@ -10,7 +11,6 @@ import Preview from '../../components/FileUpload/Preview';
 import Arrow from '../../asset/icon/Arrow.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import CloseMobileIcon from '../../asset/icon/X-Small.svg';
-import * as Styled from './UploadStyle';
 import Accordion from '../../components/Accordion/Accordion';
 import GetAccordionData from './accordionData';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
@@ -27,7 +27,7 @@ function Upload() {
     useState<string>('');
   const [selectedEmotionImages, setSelectedEmotionImages] =
     useState<string>('');
-  const [selectedAlbum, setSelectedAlbum] = useState<string>('');
+  const [selectedAlbum, setSelectedAlbum] = useState<string[]>([]);
   const [file, setFile] = useState<FileList | null>(null);
   const { user } = useAuthContext();
   const [clientWitch, setClientWitch] = useState(
@@ -46,20 +46,21 @@ function Upload() {
     question: string;
     answer: string[];
   }
+  interface AlbumIdData {
+    albumName: string;
+    docId: string;
+  }
 
   const [accordionData, setAccordionData] = useState<Object[]>([]);
-
-  interface Object {
-    question: string;
-    answer: string[];
-  }
+  const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
         const result = await GetAccordionData(user);
         console.log(result);
-        setAccordionData(result);
+        setAccordionData(result.accordionData);
+        setAlbumIdData(result.albumIdData);
       }
     };
     fetchData();
@@ -116,6 +117,42 @@ function Upload() {
         // Firestore에 업로드 데이터를 추가합니다.
         await setDoc(userDocRef, uploadData);
         navigate(`/feed/${id}`);
+        setIsUploadModalOpen(false);
+        
+        if (selectedAlbum.length > 0) {
+          try {
+            selectedAlbum.forEach(async (album) => {
+              console.log(album);
+              let docId = '';
+              for (const iterator of albumIdData) {
+                if (album === iterator.albumName) {
+                  docId = iterator.docId;
+                }
+              }
+              // 앨범 이름을 기반으로 해당 앨범을 찾습니다.
+
+              const albumRefQuery = doc(
+                appFireStore,
+                user.uid,
+                user.uid,
+                'album',
+                docId,
+              );
+
+              // 앨범 문서의 feedList를 업데이트합니다.
+              await updateDoc(albumRefQuery, {
+                feedList: arrayUnion(id),
+              });
+            });
+          } catch (error) {
+            console.error(
+              '앨범 데이터를 업데이트하는 중 오류가 발생했습니다.',
+              error,
+            );
+          }
+        } else {
+          console.error('앨범을 선택하지 않았습니다.');
+        }
       } else {
         console.error('사용자가 로그인되지 않았습니다.');
       }
