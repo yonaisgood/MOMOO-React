@@ -1,20 +1,19 @@
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import StyledNav from './StyledTabBar';
-import { useState } from 'react';
-import Upload from '../Upload/Upload';
 import HomeImg from '../../asset/icon/HomeMobile.svg';
 import HomeActiveImg from '../../asset/icon/HomeMobile-Active.svg';
 import UploadImg from '../../asset/icon/UploadMobile.svg';
 import MypageImg from '../../asset/icon/ProfileMobile.svg';
 import MypageActiveImg from '../../asset/icon/ProfileMobile-Active.svg';
+import useUploadContext from '../../hooks/useUploadContext';
 
 export default function TabBar() {
   const location = useLocation();
-  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const { setIsUploadModalOpen } = useUploadContext();
   const navigate = useNavigate();
 
   const openUploadModalFunc = () => {
-    setOpenUploadModal(true);
+    setIsUploadModalOpen(true);
     document.body.classList.add('modal-open');
   };
 
@@ -60,12 +59,6 @@ export default function TabBar() {
           </p>
         </button>
       </div>
-
-      {openUploadModal && (
-        <div className="modal-overlay">
-          <Upload setOpenPopup={setOpenUploadModal} />
-        </div>
-      )}
     </StyledNav>
   );
 }
