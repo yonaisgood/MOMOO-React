@@ -8,7 +8,7 @@ import useGetAlbumFeedList from '../../hooks/useGetAlbumFeedList';
 import useGetFeedListData from '../../hooks/useGetFeedListData';
 import { DocumentData } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import StyledGridFeed from './StyledGridFeed';
+import StyledGridFeed, { StyledFeedItem } from './StyledGridFeed';
 import EditIcon from '../../asset/icon/Edit.svg';
 import AddIcon from '../../asset/icon/Add_L.svg';
 import useEditContext from '../../hooks/useEditContext';
@@ -17,10 +17,11 @@ export default function Album() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const ul = useRef<null | HTMLUListElement>(null);
+  const ulRef = useRef<null | HTMLUListElement>(null);
   const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
   const [feedList, setFeedList] = useState<DocumentData[]>([]);
   const { id } = useParams();
+  const albumName = id?.replace('-', ' ');
   const getAlbumFeedList = useGetAlbumFeedList();
   const getFeedListData = useGetFeedListData();
 
@@ -30,30 +31,40 @@ export default function Album() {
     });
 
     (async () => {
-      const feedList = await getAlbumFeedList('전체 보기');
+      if (!albumName) {
+        setFeedList([{}]);
+        return;
+      }
 
-      if (!feedList) {
+      const feedList = await getAlbumFeedList(albumName);
+
+      if (!feedList?.length) {
+        setFeedList([{}]);
         return;
       }
 
       const feedListData = await getFeedListData(feedList);
 
       if (!feedListData) {
+        setFeedList([{}]);
         return;
       }
 
-      setFeedList(feedListData);
+      setFeedList([...feedListData, {}]);
     })();
   }, []);
 
-  const setEditFeedContext = () => {
-    // 해당 게시물 id 아큐먼트로
-    setFeedIdtoEdit('');
+  const setEditFeedContext = (feedId: string) => {
+    setFeedIdtoEdit(feedId);
     setIsEditModalOpen(true);
   };
 
   const setRowEnd = () => {
-    ul.current?.querySelectorAll('li').forEach((item) => {
+    if (!ulRef.current) {
+      return;
+    }
+
+    [...ulRef.current?.querySelectorAll('li')].forEach((item) => {
       if (clientWitch > 430) {
         item.style.gridRowEnd = `span ${item.clientHeight + 16}`;
       } else {
@@ -87,20 +98,21 @@ export default function Album() {
   };
 
   const setUlRef = (node: HTMLUListElement) => {
-    if (ul.current === null) {
-      ul.current = node;
+    if (ulRef.current === null && node.children.length === feedList.length) {
+      ulRef.current = node;
       setRowEnd();
     }
   };
+
   return (
     <StyledMain>
       {clientWitch > 1024 && (
         <>
-          <StyledH2>{id}</StyledH2>
+          <StyledH2>{albumName}</StyledH2>
           <Breadcrumb
             navList={[
               { path: 'home', text: 'Home' },
-              { path: 'feed', text: id || '' },
+              { path: 'feed', text: albumName || '' },
             ]}
           />
         </>
@@ -109,59 +121,80 @@ export default function Album() {
         <BreadcrumbWrap
           navList={[
             { path: 'home', text: 'Home' },
-            { path: 'feed', text: id || '' },
+            { path: 'feed', text: albumName || '' },
           ]}
-          title={id || ''}
+          title={albumName || ''}
         />
       )}
       <section>
         <h3 className="a11y-hidden">게시글 목록</h3>
+        {feedList.length > 0 && (
+          <StyledGridFeed
+            ref={(node) => {
+              if (node) {
+                setUlRef(node);
+              }
+            }}
+          >
+            {feedList.map((v, i) => {
+              if (i === feedList.length - 1) {
+                let aspectRatio;
 
-        <StyledGridFeed
-          ref={(node) => {
-            if (node) {
-              setUlRef(node);
-            }
-          }}
-        >
-          {feedList.map((v) => {
-            return (
-              <li key={v.id}>
-                <Link
-                  to={`/feed/${v.id}`}
-                  onMouseOver={showHoverStyle}
-                  onFocus={showHoverStyle}
-                  onMouseLeave={hiddenHoverStyle}
-                  onBlur={hiddenHoverStyle}
-                >
-                  <div className="a11y-hidden">
-                    <strong>{v.title}</strong>
+                if (i === 0) {
+                  aspectRatio = '3/4';
+                } else {
+                  const img = new Image();
+                  img.src = feedList[i - 1].imageUrl[0];
+                  aspectRatio = img.width + '/' + img.height;
+                }
+
+                return (
+                  <StyledFeedItem $aspectRatio={aspectRatio}>
                     <button
+                      className="upload"
                       type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setEditFeedContext();
-                      }}
+                      aria-label="새 게시물"
                     >
-                      <img src={EditIcon} alt="수정하기" />
+                      <img src={AddIcon} alt="추가하기" />
                     </button>
-                  </div>
-                  <img src={v.imageUrl[0]} alt="" />
-                </Link>
-              </li>
-            );
-          })}
-          <li>
-            <button
-              className="upload"
-              type="button"
-              aria-label="새 게시물"
-              onClick={setEditFeedContext}
-            >
-              <img src={AddIcon} alt="추가하기" />
-            </button>
-          </li>
-        </StyledGridFeed>
+                  </StyledFeedItem>
+                );
+              } else {
+                const img = new Image();
+                img.src = v.imageUrl[0];
+
+                return (
+                  <StyledFeedItem
+                    key={v.id}
+                    $aspectRatio={img.width + '/' + img.height}
+                  >
+                    <Link
+                      to={`/feed/${v.id}`}
+                      onMouseOver={showHoverStyle}
+                      onFocus={showHoverStyle}
+                      onMouseLeave={hiddenHoverStyle}
+                      onBlur={hiddenHoverStyle}
+                    >
+                      <div className="a11y-hidden">
+                        <strong>{v.title}</strong>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setEditFeedContext(v.id);
+                          }}
+                        >
+                          <img src={EditIcon} alt="수정하기" />
+                        </button>
+                      </div>
+                      <img src={v.imageUrl[0]} alt="" />
+                    </Link>
+                  </StyledFeedItem>
+                );
+              }
+            })}
+          </StyledGridFeed>
+        )}
       </section>
     </StyledMain>
   );

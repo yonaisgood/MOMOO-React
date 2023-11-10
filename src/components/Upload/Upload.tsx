@@ -5,14 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import uploadImageToStorage from './UploadImageToStorage';
 import useAuthContext from '../../hooks/useAuthContext';
-import Accordion from '../../components/Accordion/Accordion';
 import KakaoMap from '../../components/Map/KakaoMap';
 import Preview from '../../components/FileUpload/Preview';
 import Arrow from '../../asset/icon/Arrow.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import CloseMobileIcon from '../../asset/icon/X.svg';
 import * as Styled from './UploadStyle';
-import accordionData from './accordionData';
+import Accordion from '../../components/Accordion/Accordion';
+import GetAccordionData from './accordionData';
+import MultipleAccordion from '../Accordion/MultipleAccordion';
 import StyledOverlay from './StyledOverlay';
 
 interface Props {
@@ -31,6 +32,7 @@ function Upload({ setOpenPopup, album }: Props) {
     useState<string>('');
   const [selectedEmotionImages, setSelectedEmotionImages] =
     useState<string>('');
+  const [selectedAlbum, setSelectedAlbum] = useState<string>('');
   const [file, setFile] = useState<FileList | null>(null);
   const { user } = useAuthContext();
   const [clientWitch, setClientWitch] = useState(
@@ -41,6 +43,29 @@ function Upload({ setOpenPopup, album }: Props) {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
+  }, []);
+
+  interface Object {
+    question: string;
+    answer: string[];
+  }
+
+  const [accordionData, setAccordionData] = useState<Object[]>([]);
+
+  interface Object {
+    question: string;
+    answer: string[];
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        const result = await GetAccordionData(user);
+        console.log(result);
+        setAccordionData(result);
+      }
+    };
+    fetchData();
   }, []);
 
   const toggleKakaoMap = () => {
@@ -86,6 +111,7 @@ function Upload({ setOpenPopup, album }: Props) {
           selectedAddress: selectedAddress,
           weatherImages: selectedWeatherImages,
           emotionImages: selectedEmotionImages,
+          album: selectedAlbum,
           imageUrl: downloadURLs,
           id: id,
         };
@@ -166,7 +192,16 @@ function Upload({ setOpenPopup, album }: Props) {
               </Styled.KakaoMapContainer>
             )}
             <Styled.AccordionContents>
-              {accordionData.map((data, index) => (
+              {accordionData.slice(1, 2).map((data, index) => (
+                <MultipleAccordion
+                  key={0}
+                  question={accordionData[0].question}
+                  answer={accordionData[0].answer.join(',')}
+                  selectedAlbum={selectedAlbum || ''}
+                  setSelectedAlbum={setSelectedAlbum}
+                />
+              ))}
+              {accordionData.slice(1, 3).map((data, index) => (
                 <Accordion
                   key={index}
                   question={data.question}

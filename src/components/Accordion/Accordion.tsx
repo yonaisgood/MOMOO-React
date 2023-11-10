@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AccordionWrapper from './AccordionStyle';
+import { AccordionWrapper } from './AccordionStyle';
 import Direction from '../../asset/icon/Arrow.svg';
 
 interface AccordionProps {
@@ -48,7 +48,7 @@ function Accordion({
           </div>
         </div>
         {isAccordionOpen && (
-          <div className="anw">
+          <div className="anw" id="answer">
             {answerArray.map((imagePath, index) => (
               <button
                 key={index}

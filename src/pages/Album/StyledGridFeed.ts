@@ -7,14 +7,28 @@ const StyledGridFeed = styled.ul`
   grid-auto-rows: 1px;
   margin-top: 56px;
 
-  li {
-    margin: 8px;
-    height: fit-content;
-    position: relative;
+  @media (max-width: 430px) {
+    margin: -6px -6px 0;
+  }
 
-    img {
-      height: auto;
-    }
+  @media (max-width: 1024px) {
+    margin-top: 12px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 430px) {
+    margin-top: 0;
+  }
+`;
+
+export const StyledFeedItem = styled.li<{ $aspectRatio: string }>`
+  margin: 8px;
+  height: fit-content;
+  position: relative;
+  aspect-ratio: ${({ $aspectRatio }) => $aspectRatio};
+
+  img {
+    height: auto;
   }
 
   .hover-wrap {
@@ -47,11 +61,7 @@ const StyledGridFeed = styled.ul`
   }
 
   @media (max-width: 430px) {
-    margin: -6px -6px 0;
-
-    li {
-      margin: 6px;
-    }
+    margin: 6px;
 
     .hover-wrap {
       strong {
@@ -72,23 +82,14 @@ const StyledGridFeed = styled.ul`
 
   .upload {
     width: 100%;
-    aspect-ratio: 3/4;
     background: var(--gray-100);
+    height: 100%;
 
     img {
       width: 24px;
       aspect-ratio: 1/1;
       margin: auto;
     }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 12px;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 430px) {
-    margin-top: 0;
   }
 `;
 
