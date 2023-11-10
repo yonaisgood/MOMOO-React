@@ -12,6 +12,7 @@ import StyledGridFeed, { StyledFeedItem } from './StyledGridFeed';
 import EditIcon from '../../asset/icon/Edit.svg';
 import AddIcon from '../../asset/icon/Add_L.svg';
 import useEditContext from '../../hooks/useEditContext';
+import useUploadContext from '../../hooks/useUploadContext';
 
 export default function Album() {
   const [clientWitch, setClientWitch] = useState(
@@ -24,6 +25,7 @@ export default function Album() {
   const albumName = id?.replace('-', ' ');
   const getAlbumFeedList = useGetAlbumFeedList();
   const getFeedListData = useGetFeedListData();
+  const { setAlbumNametoAdd, setIsUploadModalOpen } = useUploadContext();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -104,6 +106,14 @@ export default function Album() {
     }
   };
 
+  const setUploadContext = () => {
+    if (albumName) {
+      setAlbumNametoAdd(albumName);
+    }
+
+    setIsUploadModalOpen(true);
+  };
+
   return (
     <StyledMain>
       {clientWitch > 1024 && (
@@ -154,6 +164,7 @@ export default function Album() {
                       className="upload"
                       type="button"
                       aria-label="새 게시물"
+                      onClick={setUploadContext}
                     >
                       <img src={AddIcon} alt="추가하기" />
                     </button>

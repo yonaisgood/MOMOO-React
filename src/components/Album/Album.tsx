@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import More from '../../asset/icon/more-white.svg';
 import img1 from '../../asset/image/feed-test/1.jpg';
 import { DocumentData } from 'firebase/firestore';
+
 import useGetFeedData from '../../hooks/useGetFeedData';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 
 interface Props {
   imageUrl?: string[];
@@ -58,6 +60,7 @@ interface AlbumProps {
 }
 
 const Album: React.FC<AlbumProps> = ({ albumData }) => {
+
   const [imgUrl, setImgUrl] = useState([]);
   const getFeedData = useGetFeedData();
   useEffect(() => {

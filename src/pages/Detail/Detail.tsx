@@ -17,7 +17,7 @@ function Detail() {
 
   return (
     <>
-      <TopBar tit="게시물" />
+      {clientWitch <= 430 && <TopBar tit="게시물" />}
       <DetailLayout>
         {clientWitch > 430 && (
           <Breadcrumb
