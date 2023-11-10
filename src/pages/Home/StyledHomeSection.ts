@@ -42,6 +42,10 @@ const StyledHomeSection = styled.section`
     width: 100%;
     aspect-ratio: 3/4;
   }
+  .array-modal {
+    position: absolute;
+    top: 22%;
+  }
 
   @media (max-width: 744px) {
     max-width: 100%;

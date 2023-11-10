@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import More from '../../asset/icon/more-white.svg';
 import img1 from '../../asset/image/feed-test/1.jpg';
+import { DocumentData } from 'firebase/firestore';
 
 const AlbumContainer = styled.article`
   position: relative;
@@ -51,14 +52,19 @@ const AlbumLink = styled(Link)`
   width: inherit;
   height: inherit;
 `;
-export default function Album() {
+interface AlbumProps {
+  albumData: DocumentData;
+}
+
+const Album: React.FC<AlbumProps> = ({ albumData }) => {
+  console.log('hey');
   return (
     <AlbumContainer>
-      <AlbumLink to="/login">
+      <AlbumLink to={`/feed/${albumData.name.replace(/\s+/g, '-')}`}>
         <div className="txtWrapper">
-          <p className="albumTitle">전체보기</p>
+          <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
-            <p className="albumCount">1923</p>
+            <p className="albumCount">{albumData.feedList.length}</p>
             <button
               type="button"
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,4 +77,5 @@ export default function Album() {
       </AlbumLink>
     </AlbumContainer>
   );
-}
+};
+export default Album;
