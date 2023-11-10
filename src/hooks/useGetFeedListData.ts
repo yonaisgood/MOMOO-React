@@ -5,8 +5,8 @@ import {
   query,
   where,
   or,
-  Timestamp,
   DocumentData,
+  orderBy,
 } from 'firebase/firestore';
 import useAuthContext from '../hooks/useAuthContext';
 
@@ -21,7 +21,7 @@ export default function useGetFeedListData() {
     try {
       const feedRef = collection(appFireStore, user.uid, user.uid, 'feed');
       const searchList = feedList.map((feedId) => where('id', '==', feedId));
-      const q = query(feedRef, or(...searchList));
+      const q = query(feedRef, or(...searchList), orderBy('timestamp', 'desc'));
       const querySnapshot = await getDocs(q);
       const feedListData: DocumentData[] = [];
 
