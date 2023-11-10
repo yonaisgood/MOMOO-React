@@ -15,7 +15,7 @@ const AccordionWrapper = styled.div`
     cursor: pointer;
   }
 
-  .anw {
+  #answer {
     display: flex;
     overflow: hidden;
     gap: 0.5rem;
@@ -92,4 +92,32 @@ const AccordionWrapper = styled.div`
   }
 `;
 
-export default AccordionWrapper;
+const MultiAccordionWrapper = styled.div`
+  #multiAnswer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    max-height: 10rem;
+    overflow-y: scroll;
+    padding: 1rem 0;
+
+    button {
+      min-width: 8.8rem;
+      background-color: var(--gray-100);
+      padding: 0.7rem 0.1rem;
+      font-size: var(-text-m);
+      color: var(--gray-900);
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: var(--point-color);
+    }
+
+    button.selected {
+      background-color: var(--point-color);
+    }
+  }
+`;
+
+export { AccordionWrapper, MultiAccordionWrapper };
