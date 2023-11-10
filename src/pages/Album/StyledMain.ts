@@ -7,8 +7,7 @@ const StyledMain = styled.main`
 
   section {
     margin: auto;
-    max-width: 976px;
-    width: fit-content;
+    width: min(976px, 100%);
   }
 
   @media (max-width: 1024px) {
