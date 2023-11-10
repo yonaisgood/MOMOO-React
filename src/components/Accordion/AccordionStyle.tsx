@@ -97,7 +97,7 @@ const MultiAccordionWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 1.2rem;
-    max-height: 10rem;
+    max-height: 7rem;
     overflow-y: scroll;
     padding: 1rem 0;
 

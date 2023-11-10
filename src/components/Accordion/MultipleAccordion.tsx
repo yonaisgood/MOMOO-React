@@ -5,9 +5,16 @@ import Direction from '../../asset/icon/Arrow.svg';
 interface AccordionProps {
   question: string;
   answer: string;
+  selectedAlbum: string;
+  setSelectedAlbum: (album: string) => void;
 }
 
-function MultipleAccordion({ question, answer }: AccordionProps) {
+function MultipleAccordion({
+  question,
+  answer,
+  selectedAlbum,
+  setSelectedAlbum,
+}: AccordionProps) {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const answerArray = answer.split(',');
   const [selectedTexts, setSelectedTexts] = useState<string[]>([
@@ -35,6 +42,9 @@ function MultipleAccordion({ question, answer }: AccordionProps) {
       // 선택되지 않은 텍스트일 경우 선택 상태로 업데이트
       setSelectedTexts([...selectedTexts, text]);
     }
+    // 여기에서 selectedAlbum을 업데이트합니다.
+    const updatedAlbum = selectedTexts.join(','); // 선택된 텍스트를 쉼표로 연결
+    setSelectedAlbum(updatedAlbum);
   };
 
   return (
