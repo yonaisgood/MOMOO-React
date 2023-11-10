@@ -9,7 +9,7 @@ import KakaoMap from '../../components/Map/KakaoMap';
 import Preview from '../../components/FileUpload/Preview';
 import Arrow from '../../asset/icon/Arrow.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
-import CloseMobileIcon from '../../asset/icon/X.svg';
+import CloseMobileIcon from '../../asset/icon/X-Small.svg';
 import * as Styled from './UploadStyle';
 import Accordion from '../../components/Accordion/Accordion';
 import GetAccordionData from './accordionData';
@@ -129,12 +129,12 @@ function Upload() {
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
           {clientWitch <= 430 && (
-            <Styled.BackButton onClick={closeUploadModal}>
+            <Styled.MobileCloseBtn onClick={closeUploadModal}>
               <img src={CloseMobileIcon} alt="닫기" />
-            </Styled.BackButton>
+            </Styled.MobileCloseBtn>
           )}
           <h1>새 게시물</h1>
-          <button type="button" onClick={handleSubmit}>
+          <button className="uploadBtn" type="button" onClick={handleSubmit}>
             업로드
           </button>
         </Styled.UploadHeader>

@@ -34,22 +34,25 @@ const UploadWrapper = styled.div`
 `;
 
 const UploadHeader = styled.header`
+  position: relative;
   height: 4.8rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1.2rem 1.6rem;
 
   h1 {
+    margin: auto;
     font-size: var(--text-l);
   }
 
-  button {
+  .uploadBtn {
+    position: absolute;
+    right: 1.6rem;
     color: var(--point-dark-400);
     font-size: var(--text-m);
   }
 
-  button:hover {
+  .uploadBtn:hover {
     color: var(--point-dark-600);
   }
 
@@ -58,13 +61,10 @@ const UploadHeader = styled.header`
   }
 `;
 
-const BackButton = styled.button`
-  cursor: pointer;
-  visibility: hidden;
-
-  @media (max-width: 430px) {
-    visibility: visible;
-  }
+const MobileCloseBtn = styled.button`
+  position: absolute;
+  width: 1.6rem;
+  aspect-ratio: 1/1;
 `;
 
 const PicPart = styled.section`
@@ -214,7 +214,7 @@ const CloseBtn = styled.button`
 
 export {
   UploadWrapper,
-  BackButton,
+  MobileCloseBtn,
   UploadHeader,
   UploadContents,
   PicPart,
