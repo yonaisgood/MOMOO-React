@@ -67,7 +67,11 @@ const StyledMain = styled(StyledAuth)`
   }
 
   @media (max-width: 430px) {
-    padding: 96px 16px 0;
+    padding: var(--nav-height-mobile) var(--margin-mobile);
+
+    .container {
+      padding: 48px 0 20px;
+    }
 
     .profile {
       margin: 0 auto 55px;
