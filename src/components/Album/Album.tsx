@@ -1,22 +1,23 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import More from '../../asset/icon/more-white.svg';
 import img1 from '../../asset/image/feed-test/1.jpg';
 import { DocumentData } from 'firebase/firestore';
+import useGetFeedData from '../../hooks/useGetFeedData';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-const AlbumContainer = styled.article`
+interface Props {
+  imageUrl?: string[];
+}
+const AlbumContainer = styled.article<Props>`
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 1rem;
-  background:
-    linear-gradient(
-      0deg,
-      #343434 5.58%,
-      rgba(126, 126, 126, 0) 40.58%,
-      rgba(225, 225, 225, 0) 105.15%
-    ),
-    url(${img1}) no-repeat center / cover;
+  background: ${(props) =>
+    props.imageUrl
+      ? `linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), url(${props.imageUrl[0]}) no-repeat center / cover`
+      : 'linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), gray'};
   .txtWrapper {
     width: 100%;
     position: absolute;
@@ -57,9 +58,22 @@ interface AlbumProps {
 }
 
 const Album: React.FC<AlbumProps> = ({ albumData }) => {
-  console.log('hey');
+  const [imgUrl, setImgUrl] = useState([]);
+  const getFeedData = useGetFeedData();
+  useEffect(() => {
+    const lastFeedId = albumData.feedList[albumData.feedList.length - 1];
+    console.log(lastFeedId);
+    const getData = async () => {
+      const data = await getFeedData(lastFeedId);
+      setImgUrl(data?.imageUrl);
+      console.log(imgUrl);
+    };
+
+    getData();
+  }, []);
+
   return (
-    <AlbumContainer>
+    <AlbumContainer imageUrl={imgUrl}>
       <AlbumLink to={`/feed/${albumData.name.replace(/\s+/g, '-')}`}>
         <div className="txtWrapper">
           <p className="albumTitle">{albumData.name}</p>
