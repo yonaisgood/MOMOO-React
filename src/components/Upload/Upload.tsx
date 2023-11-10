@@ -32,6 +32,7 @@ function Upload({ setOpenPopup, album }: Props) {
     useState<string>('');
   const [selectedEmotionImages, setSelectedEmotionImages] =
     useState<string>('');
+  const [selectedAlbum, setSelectedAlbum] = useState<string>('');
   const [file, setFile] = useState<FileList | null>(null);
   const { user } = useAuthContext();
   const [clientWitch, setClientWitch] = useState(
@@ -50,17 +51,6 @@ function Upload({ setOpenPopup, album }: Props) {
   }
 
   const [accordionData, setAccordionData] = useState<Object[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user) {
-        const result = await GetAccordionData(user);
-        console.log(result);
-        setAccordionData(result);
-      }
-    };
-    fetchData();
-  }, []);
 
   interface Object {
     question: string;
@@ -121,6 +111,7 @@ function Upload({ setOpenPopup, album }: Props) {
           selectedAddress: selectedAddress,
           weatherImages: selectedWeatherImages,
           emotionImages: selectedEmotionImages,
+          album: selectedAlbum,
           imageUrl: downloadURLs,
           id: id,
         };
@@ -206,6 +197,8 @@ function Upload({ setOpenPopup, album }: Props) {
                   key={0}
                   question={accordionData[0].question}
                   answer={accordionData[0].answer.join(',')}
+                  selectedAlbum={selectedAlbum || ''}
+                  setSelectedAlbum={setSelectedAlbum}
                 />
               ))}
               {accordionData.slice(1, 3).map((data, index) => (
