@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AccordionWrapper, MultiAccordionWrapper } from './AccordionStyle';
 import Direction from '../../asset/icon/Arrow.svg';
 
 interface AccordionProps {
   question: string;
   answer: string;
-  selectedAlbum: string;
-  setSelectedAlbum: (album: string) => void;
+  selectedAlbum: string[];
+  setSelectedAlbum: (album: string[]) => void;
 }
 
 function MultipleAccordion({
@@ -17,34 +17,24 @@ function MultipleAccordion({
 }: AccordionProps) {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const answerArray = answer.split(',');
-  const [selectedTexts, setSelectedTexts] = useState<string[]>([
-    answerArray[0],
-  ]);
 
   const handleQuestionClick = () => {
     setIsAccordionOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    setSelectedAlbum([answerArray[0]]);
+  }, []);
+
   const MultiAnswerClick = (text: string) => {
     // 이미 선택된 텍스트인지 확인
-    const isSelected = selectedTexts.includes(text);
-
-    if (text === answerArray[0]) {
-      return;
-    }
+    const isSelected = selectedAlbum.includes(text);
 
     if (isSelected) {
-      const updatedSelection = selectedTexts.filter(
-        (selected) => selected !== text,
-      );
-      setSelectedTexts(updatedSelection);
+      setSelectedAlbum(selectedAlbum.filter((album) => album !== text));
     } else {
-      // 선택되지 않은 텍스트일 경우 선택 상태로 업데이트
-      setSelectedTexts([...selectedTexts, text]);
+      setSelectedAlbum([...selectedAlbum, text]);
     }
-    // 여기에서 selectedAlbum을 업데이트합니다.
-    const updatedAlbum = selectedTexts.join(','); // 선택된 텍스트를 쉼표로 연결
-    setSelectedAlbum(updatedAlbum);
   };
 
   return (
@@ -68,9 +58,10 @@ function MultipleAccordion({
             <div className="anw" id="multiAnswer">
               {answerArray.map((item, index) => (
                 <button
+                  disabled={item === '전체보기' ? true : false}
                   key={index}
-                  onClick={() => MultiAnswerClick(item.trim())}
-                  className={selectedTexts.includes(item) ? 'selected' : ''}
+                  onClick={() => MultiAnswerClick(item)}
+                  className={selectedAlbum.includes(item) ? 'selected' : ''}
                 >
                   {item}
                 </button>
