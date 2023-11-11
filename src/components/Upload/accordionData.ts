@@ -1,9 +1,6 @@
-import { getDocs, collection, query, orderBy } from 'firebase/firestore';
-import { appFireStore } from '../../firebase/config';
-import { User } from 'firebase/auth';
 import useGetAlbumList from '../../hooks/useGetAlbumList';
 
-const GetAccordionData = async (user: User) => {
+const GetAccordionData = async () => {
   const getAlbumList = useGetAlbumList();
 
   const accordionData = [
@@ -40,15 +37,11 @@ const GetAccordionData = async (user: User) => {
   }
 
   const albumIdData: AlbumIdData[] = [];
-  const albumsQuerySnapshot = await getAlbumList();
+  const { albumDataList, albumIdList } = await getAlbumList();
 
-  if (!albumsQuerySnapshot) {
-    return;
-  }
-
-  albumsQuerySnapshot.forEach((doc) => {
-    accordionData[0].answer.push(doc.data().name);
-    albumIdData.push({ albumName: doc.data().name, docId: doc.id });
+  albumDataList.forEach((albumData, i) => {
+    accordionData[0].answer.push(albumData.name);
+    albumIdData.push({ albumName: albumData.name, docId: albumIdList[i] });
   });
 
   return { accordionData, albumIdData };

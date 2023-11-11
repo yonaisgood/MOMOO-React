@@ -1,6 +1,6 @@
 import { DetailLayout } from './DetailStyle';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
-import ListFeed from '../../components/ListFeed/ListFeed';
+import FeedItem from '../../components/FeedItem/FeedItem';
 import { useEffect, useState } from 'react';
 import TopBar from '../../components/Topbar/Topbar';
 
@@ -29,7 +29,7 @@ function Detail() {
           />
         )}
         <section>
-          <ListFeed />
+          <FeedItem />
         </section>
       </DetailLayout>
     </>
