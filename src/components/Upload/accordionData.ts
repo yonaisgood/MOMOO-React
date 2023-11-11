@@ -40,10 +40,13 @@ const GetAccordionData = () => {
     const albumIdData: AlbumIdData[] = [];
     const { albumDataList, albumIdList } = await getAlbumList();
 
-    albumDataList.forEach((albumData, i) => {
-      accordionData[0].answer.push(albumData.name);
-      albumIdData.push({ albumName: albumData.name, docId: albumIdList[i] });
-    });
+    for (let i = albumDataList.length - 1; i >= 0; i--) {
+      accordionData[0].answer.push(albumDataList[i].name);
+      albumIdData.push({
+        albumName: albumDataList[i].name,
+        docId: albumIdList[i],
+      });
+    }
 
     return { accordionData, albumIdData };
   };
