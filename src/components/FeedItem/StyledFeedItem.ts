@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledListFeed = styled.article`
+const StyledFeedItem = styled.article`
   margin: 0 auto;
   color: var(--gray-900);
 
@@ -99,4 +99,4 @@ const StyledListFeed = styled.article`
   }
 `;
 
-export default StyledListFeed;
+export default StyledFeedItem;

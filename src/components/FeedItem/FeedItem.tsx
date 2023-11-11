@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import StyledListFeed from './StyledListFeed';
+import StyledFeedItem from './StyledFeedItem';
 import Modal from '../Modal/SelectModal';
 import SeeMore from '../../asset/icon/More.svg';
 
-export default function ListFeed() {
+export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSeeMoreClick = () => {
@@ -16,7 +16,7 @@ export default function ListFeed() {
 
   return (
     <>
-      <StyledListFeed>
+      <StyledFeedItem>
         <div className="picSection"></div>
         <div className="iconSection">
           <img src="" alt="" />
@@ -35,7 +35,7 @@ export default function ListFeed() {
           2023.10.03
         </time>
         {isModalOpen && <Modal feedId="1" onClose={handleCloseModal} />}
-      </StyledListFeed>
+      </StyledFeedItem>
     </>
   );
 }
