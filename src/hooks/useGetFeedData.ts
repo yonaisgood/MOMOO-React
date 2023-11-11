@@ -11,11 +11,11 @@ export default function useGetFeedData() {
     }
 
     try {
-      const data = await getDoc(
+      const docSnap = await getDoc(
         doc(appFireStore, user.uid, user.uid, 'feed', feedId),
       );
 
-      return data.data();
+      return docSnap.data();
     } catch (error) {
       console.log(error);
     }
