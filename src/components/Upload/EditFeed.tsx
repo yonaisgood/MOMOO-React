@@ -54,6 +54,7 @@ export default function EditFeed() {
   const { setIsEditModalOpen, feedIdtoEdit, setFeedIdtoEdit } =
     useEditContext();
 
+  const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
   const getSavedAlbumList = useGetSavedAlbumList();
   const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
@@ -88,7 +89,7 @@ export default function EditFeed() {
 
     const SetAcoordionData = async () => {
       if (user) {
-        const result = await GetAccordionData(user);
+        const result = await getAccordionData();
         setAccordionData(result.accordionData);
         setAlbumIdData(result.albumIdData);
       }

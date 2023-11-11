@@ -38,6 +38,7 @@ function Upload() {
   const { albumNametoAdd, setIsUploadModalOpen, setAlbumNametoAdd } =
     useUploadContext();
 
+  const getAccordionData = GetAccordionData();
   const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
 
   useEffect(() => {
@@ -61,7 +62,7 @@ function Upload() {
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        const result = await GetAccordionData(user);
+        const result = await getAccordionData();
         console.log(result);
         setAccordionData(result.accordionData);
         setAlbumIdData(result.albumIdData);
