@@ -2,9 +2,11 @@ import { useState } from 'react';
 import StyledFeedItem from './StyledFeedItem';
 import Modal from '../Modal/SelectModal';
 import SeeMore from '../../asset/icon/More.svg';
+import { useParams } from 'react-router-dom';
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { id } = useParams();
 
   const handleSeeMoreClick = () => {
     setIsModalOpen(true);
@@ -34,7 +36,7 @@ export default function FeedItem() {
         <time dateTime="2023-10-03" className="date">
           2023.10.03
         </time>
-        {isModalOpen && <Modal feedId="1" onClose={handleCloseModal} />}
+        {isModalOpen && <Modal feedId={id || ''} onClose={handleCloseModal} />}
       </StyledFeedItem>
     </>
   );
