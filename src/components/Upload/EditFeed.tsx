@@ -37,10 +37,8 @@ export default function EditFeed() {
   const [selectedAlbumList, setSelectedAlbumList] = useState<string[]>([]);
   const [savedAlbumList, setSavedAlbumList] = useState<string[]>([]);
   const [selectedAddress, setSelectedAddress] = useState('');
-  const [selectedWeatherImages, setSelectedWeatherImages] =
-    useState<string>('');
-  const [selectedEmotionImages, setSelectedEmotionImages] =
-    useState<string>('');
+  const [selectedWeatherImage, setSelectedWeatherImage] = useState<string>('');
+  const [selectedEmotionImage, setSelectedEmotionImage] = useState<string>('');
   const [file, setFile] = useState<FileList | null>(null);
   const [imgUrlList, setImgUrlList] = useState([]);
   const getFeedData = useGetFeedData();
@@ -72,8 +70,8 @@ export default function EditFeed() {
         setTitle(data.title);
         setText(data.text);
         setSelectedAddress(data.selectedAddress);
-        setSelectedWeatherImages(data.weatherImages);
-        setSelectedEmotionImages(data.emotionImages);
+        setSelectedWeatherImage(data.weatherImage);
+        setSelectedEmotionImage(data.emotionImage);
         setImgUrlList(data.imageUrl);
       }
     };
@@ -132,8 +130,8 @@ export default function EditFeed() {
         title: title,
         text: text,
         selectedAddress: selectedAddress,
-        weatherImages: selectedWeatherImages,
-        emotionImages: selectedEmotionImages,
+        weatherImage: selectedWeatherImage,
+        emotionImage: selectedEmotionImage,
         imageUrl: downloadURLs,
       };
 
@@ -245,13 +243,13 @@ export default function EditFeed() {
                   answer={data.answer.join(',')}
                   selectedImages={
                     data.question === '오늘의 날씨'
-                      ? selectedWeatherImages
-                      : selectedEmotionImages
+                      ? selectedWeatherImage
+                      : selectedEmotionImage
                   }
                   setSelectedImages={
                     data.question === '오늘의 날씨'
-                      ? setSelectedWeatherImages
-                      : setSelectedEmotionImages
+                      ? setSelectedWeatherImage
+                      : setSelectedEmotionImage
                   }
                 />
               ))}
