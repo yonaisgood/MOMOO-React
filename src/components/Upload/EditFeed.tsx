@@ -1,41 +1,70 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-import uploadImageToStorage from './UploadImageToStorage';
-import useAuthContext from '../../hooks/useAuthContext';
-import Accordion from '../../components/Accordion/Accordion';
-import KakaoMap from '../../components/Map/KakaoMap';
-import Preview from '../../components/FileUpload/Preview';
+import KakaoMap from '../Map/KakaoMap';
+import Preview from '../FileUpload/Preview';
+import Accordion from '../Accordion/Accordion';
+import MultipleAccordion from '../Accordion/MultipleAccordion';
 import Arrow from '../../asset/icon/Arrow.svg';
-import BackIcon from '../../asset/icon/ArrowBack.svg';
+import CloseMobileIcon from '../../asset/icon/X-Small.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import * as Styled from './UploadStyle';
-import accordionData from './accordionData';
+import StyledOverlay from './StyledOverlay';
+import GetAccordionData from './accordionData';
+import uploadImageToStorage from './UploadImageToStorage';
+import useAuthContext from '../../hooks/useAuthContext';
 import useEditContext from '../../hooks/useEditContext';
 import useGetFeedData from '../../hooks/useGetFeedData';
 import useEditFeed from '../../hooks/useEditFeed';
-import StyledOverlay from './StyledOverlay';
+import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
+import {
+  useAddFeedIdfromFeedList,
+  useRemoveFeedIdfromFeedList,
+} from '../../hooks/useUpdateFeedList';
 
 export default function EditFeed() {
+  interface AccordionData {
+    question: string;
+    answer: string[];
+  }
+
+  interface AlbumIdData {
+    albumName: string;
+    docId: string;
+  }
+
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  const [selectedAlbumList, setSelectedAlbumList] = useState<string[]>([]);
+  const [savedAlbumList, setSavedAlbumList] = useState<string[]>([]);
   const [selectedAddress, setSelectedAddress] = useState('');
   const [selectedWeatherImages, setSelectedWeatherImages] =
     useState<string>('');
   const [selectedEmotionImages, setSelectedEmotionImages] =
     useState<string>('');
   const [file, setFile] = useState<FileList | null>(null);
-
-  const { user } = useAuthContext();
-
-  //
-  const editFeed = useEditFeed();
   const [imgUrlList, setImgUrlList] = useState([]);
   const getFeedData = useGetFeedData();
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth,
+  );
+  const [accordionData, setAccordionData] = useState<AccordionData[]>([]);
+  const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
+
+  const { user } = useAuthContext();
   const { setIsEditModalOpen, feedIdtoEdit, setFeedIdtoEdit } =
     useEditContext();
 
+  const editFeed = useEditFeed();
+  const getSavedAlbumList = useGetSavedAlbumList();
+  const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
+  const removeFeedIdfromFeedList = useRemoveFeedIdfromFeedList();
+
   useEffect(() => {
-    const getData = async () => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+
+    const setFeedData = async () => {
       const data = await getFeedData(feedIdtoEdit);
 
       if (data) {
@@ -48,16 +77,30 @@ export default function EditFeed() {
       }
     };
 
-    getData();
+    const setSavedAlbumData = async () => {
+      const data = await getSavedAlbumList(feedIdtoEdit);
+
+      if (data) {
+        setSelectedAlbumList(data);
+        setSavedAlbumList(data);
+      }
+    };
+
+    const SetAcoordionData = async () => {
+      if (user) {
+        const result = await GetAccordionData(user);
+        setAccordionData(result.accordionData);
+        setAlbumIdData(result.albumIdData);
+      }
+    };
+
+    setFeedData();
+    setSavedAlbumData();
+    SetAcoordionData();
   }, []);
-  //
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
-  };
-
-  const goBack = () => {
-    window.history.back();
   };
 
   const closeEditFeedModal = () => {
@@ -78,25 +121,43 @@ export default function EditFeed() {
     }
 
     try {
-      if (user) {
-        let downloadURLs;
-        if (file !== null) {
-          downloadURLs = await uploadImageToStorage(file, 'feed');
+      let downloadURLs: string[] = imgUrlList;
+
+      if (file !== null) {
+        downloadURLs = await uploadImageToStorage(file, 'feed');
+      }
+
+      const editData = {
+        title: title,
+        text: text,
+        selectedAddress: selectedAddress,
+        weatherImages: selectedWeatherImages,
+        emotionImages: selectedEmotionImages,
+        imageUrl: downloadURLs,
+      };
+
+      await editFeed(editData);
+
+      // update feedList
+      selectedAlbumList.forEach(async (selectedAlbumName) => {
+        let selectedAlbumId = '';
+
+        for (const iterator of albumIdData) {
+          if (selectedAlbumName === iterator.albumName) {
+            selectedAlbumId = iterator.docId;
+          }
         }
 
-        const editData = {
-          title: title,
-          text: text,
-          selectedAddress: selectedAddress,
-          weatherImages: selectedWeatherImages,
-          emotionImages: selectedEmotionImages,
-          imageUrl: downloadURLs,
-        };
+        if (!savedAlbumList.includes(selectedAlbumId)) {
+          await addFeedIdfromFeedList(feedIdtoEdit, selectedAlbumId);
+        }
+      });
 
-        await editFeed(editData);
-      } else {
-        console.error('사용자가 로그인되지 않았습니다.');
-      }
+      savedAlbumList.forEach(async (savedAlbumId) => {
+        if (!selectedAlbumList.includes(savedAlbumId)) {
+          await removeFeedIdfromFeedList(feedIdtoEdit, savedAlbumId);
+        }
+      });
     } catch (error) {
       console.error(error);
     }
@@ -106,11 +167,13 @@ export default function EditFeed() {
     <StyledOverlay>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
-          <Styled.BackButton onClick={goBack}>
-            <img src={BackIcon} alt="뒤로가기버튼" />
-          </Styled.BackButton>
+          {clientWitch <= 430 && (
+            <Styled.MobileCloseBtn onClick={closeEditFeedModal}>
+              <img src={CloseMobileIcon} alt="닫기" />
+            </Styled.MobileCloseBtn>
+          )}
           <h1>게시물 수정</h1>
-          <button type="submit" onClick={handleSubmit}>
+          <button className="uploadBtn" type="submit" onClick={handleSubmit}>
             완료
           </button>
         </Styled.UploadHeader>
@@ -165,7 +228,16 @@ export default function EditFeed() {
               </Styled.KakaoMapContainer>
             )}
             <Styled.AccordionContents>
-              {accordionData.map((data, index) => (
+              {accordionData.slice(1, 2).map((data, index) => (
+                <MultipleAccordion
+                  key={0}
+                  question={accordionData[0].question}
+                  answer={accordionData[0].answer.join(',')}
+                  selectedAlbum={selectedAlbumList}
+                  setSelectedAlbum={setSelectedAlbumList}
+                />
+              ))}
+              {accordionData.slice(1, 3).map((data, index) => (
                 <Accordion
                   key={index}
                   question={data.question}
