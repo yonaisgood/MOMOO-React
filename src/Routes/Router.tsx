@@ -50,6 +50,11 @@ export default function Router() {
               <Route path="/setting" element={<Setting />}></Route>
             </Route>
           </Route>
+
+          <Route
+            path="/404"
+            element={<div>존재하지 않는 페이지입니다</div>}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>
