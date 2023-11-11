@@ -58,7 +58,8 @@ function MultipleAccordion({
             <div className="anw" id="multiAnswer">
               {answerArray.map((item, index) => (
                 <button
-                  disabled={item === '전체보기' ? true : false}
+                  type="button"
+                  disabled={item === '전체 보기' ? true : false}
                   key={index}
                   onClick={() => MultiAnswerClick(item)}
                   className={selectedAlbum.includes(item) ? 'selected' : ''}

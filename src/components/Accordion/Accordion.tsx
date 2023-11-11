@@ -51,6 +51,7 @@ function Accordion({
           <div className="anw" id="answer">
             {answerArray.map((imagePath, index) => (
               <button
+                type="button"
                 key={index}
                 onClick={() => handleAnswerClick(imagePath.trim())}
                 className={
