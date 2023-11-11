@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const DetailLayout = styled.main`
   margin: 0 var(--right-padding-pc) 0 var(--nav-width-pc);
-  padding: 10rem var(--margin-pc) 0;
+  padding: 10rem var(--margin-pc) 20px;
   width: 100%;
 
   section {

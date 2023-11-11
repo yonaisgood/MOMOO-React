@@ -19,13 +19,16 @@ const StyledFeedItem = styled.article`
     align-items: flex-start;
     margin: 2rem 0 1.2rem;
 
-    img {
+    .emotion,
+    .weather {
+      align-self: center;
       display: inline-block;
       width: 3.2rem;
       aspect-ratio: 1/1;
     }
 
-    img + img {
+    .weather {
+      width: 3.6rem;
       margin-left: 1.6rem;
     }
 
@@ -34,10 +37,6 @@ const StyledFeedItem = styled.article`
       width: 2rem;
       aspect-ratio: 1/1;
       font-size: 0;
-
-      img {
-        width: 100%;
-      }
     }
   }
 
@@ -72,11 +71,12 @@ const StyledFeedItem = styled.article`
     .iconSection {
       margin: 1.6rem 0 1.2rem;
 
-      img {
-        width: 2.6rem;
+      .emotion {
+        width: 2.4rem;
       }
 
-      img + img {
+      .weather {
+        width: 2.6rem;
         margin-left: 1.2rem;
       }
 

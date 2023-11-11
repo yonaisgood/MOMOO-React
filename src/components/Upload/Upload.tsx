@@ -24,10 +24,8 @@ function Upload() {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
-  const [selectedWeatherImages, setSelectedWeatherImages] =
-    useState<string>('');
-  const [selectedEmotionImages, setSelectedEmotionImages] =
-    useState<string>('');
+  const [selectedWeatherImage, setSelectedWeatherImage] = useState<string>('');
+  const [selectedEmotionImage, setSelectedEmotionImage] = useState<string>('');
   const [selectedAlbum, setSelectedAlbum] = useState<string[]>([]);
   const [file, setFile] = useState<FileList | null>(null);
   const [clientWitch, setClientWitch] = useState(
@@ -38,6 +36,7 @@ function Upload() {
   const { albumNametoAdd, setIsUploadModalOpen, setAlbumNametoAdd } =
     useUploadContext();
 
+  const getAccordionData = GetAccordionData();
   const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
 
   useEffect(() => {
@@ -61,7 +60,7 @@ function Upload() {
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        const result = await GetAccordionData(user);
+        const result = await getAccordionData();
         console.log(result);
         setAccordionData(result.accordionData);
         setAlbumIdData(result.albumIdData);
@@ -111,8 +110,8 @@ function Upload() {
           text: text,
           timestamp: Timestamp.now(),
           selectedAddress: selectedAddress,
-          weatherImages: selectedWeatherImages,
-          emotionImages: selectedEmotionImages,
+          weatherImage: selectedWeatherImage,
+          emotionImage: selectedEmotionImage,
           album: selectedAlbum,
           imageUrl: downloadURLs,
           id: id,
@@ -229,13 +228,13 @@ function Upload() {
                   answer={data.answer.join(',')}
                   selectedImages={
                     data.question === '오늘의 날씨'
-                      ? selectedWeatherImages
-                      : selectedEmotionImages
+                      ? selectedWeatherImage
+                      : selectedEmotionImage
                   }
                   setSelectedImages={
                     data.question === '오늘의 날씨'
-                      ? setSelectedWeatherImages
-                      : setSelectedEmotionImages
+                      ? setSelectedWeatherImage
+                      : setSelectedEmotionImage
                   }
                 />
               ))}
