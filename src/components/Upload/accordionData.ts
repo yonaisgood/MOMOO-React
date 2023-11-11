@@ -1,8 +1,11 @@
 import { getDocs, collection, query, orderBy } from 'firebase/firestore';
 import { appFireStore } from '../../firebase/config';
 import { User } from 'firebase/auth';
+import useGetAlbumList from '../../hooks/useGetAlbumList';
 
 const GetAccordionData = async (user: User) => {
+  const getAlbumList = useGetAlbumList();
+
   const accordionData = [
     {
       question: '앨범 선택',
@@ -31,19 +34,19 @@ const GetAccordionData = async (user: User) => {
     },
   ];
 
-  const albumDocRef = collection(appFireStore, user.uid, user.uid, 'album');
-  const orderedAlbums = query(albumDocRef, orderBy('createdTime'));
-
-  // 해당 문서의 데이터 가져오기
-  const querySnapshot = await getDocs(orderedAlbums);
-
   interface AlbumIdData {
     albumName: string;
     docId: string;
   }
 
   const albumIdData: AlbumIdData[] = [];
-  querySnapshot.forEach((doc) => {
+  const albumsQuerySnapshot = await getAlbumList();
+
+  if (!albumsQuerySnapshot) {
+    return;
+  }
+
+  albumsQuerySnapshot.forEach((doc) => {
     accordionData[0].answer.push(doc.data().name);
     albumIdData.push({ albumName: doc.data().name, docId: doc.id });
   });

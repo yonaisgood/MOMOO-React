@@ -12,8 +12,11 @@ export default function useGetAlbumList() {
   const { user } = useAuthContext();
 
   const getAlbumList = async () => {
+    const albumDataList: DocumentData[] = [];
+    const albumIdList: string[] = [];
+
     if (user === null) {
-      return;
+      return { albumDataList, albumIdList };
     }
 
     try {
@@ -23,16 +26,16 @@ export default function useGetAlbumList() {
       );
       const querySnapshot = await getDocs(q);
 
-      const albumList: DocumentData[] = [];
-
       querySnapshot.forEach((doc) => {
-        albumList.push(doc.data());
+        albumDataList.push(doc.data());
+        albumIdList.push(doc.id);
       });
-
-      return albumList;
     } catch (error) {
       console.log(error);
     }
+
+    return { albumDataList, albumIdList };
   };
+
   return getAlbumList;
 }

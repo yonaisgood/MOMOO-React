@@ -27,16 +27,16 @@ export default function Home() {
       setClientWitch(document.documentElement.clientWidth);
     });
     (async () => {
-      const albumListData = await getAlbumList();
+      const { albumDataList } = await getAlbumList();
 
       if (!albumList) {
         return;
       }
-      if (albumListData) {
+      if (albumDataList) {
         setAlbumList(
           selectedOption === 'oldest'
-            ? [...albumListData].reverse() || []
-            : albumListData || [],
+            ? [...albumDataList].reverse() || []
+            : albumDataList || [],
         );
       } else {
         setAlbumList([]);
