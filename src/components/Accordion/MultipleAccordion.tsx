@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AccordionWrapper, MultiAccordionWrapper } from './AccordionStyle';
 import Direction from '../../asset/icon/Arrow.svg';
 
@@ -21,10 +21,6 @@ function MultipleAccordion({
   const handleQuestionClick = () => {
     setIsAccordionOpen((prev) => !prev);
   };
-
-  useEffect(() => {
-    setSelectedAlbum([answerArray[0]]);
-  }, []);
 
   const MultiAnswerClick = (text: string) => {
     // 이미 선택된 텍스트인지 확인

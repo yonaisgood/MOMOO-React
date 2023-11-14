@@ -80,8 +80,8 @@ export default function EditFeed() {
       const data = await getSavedAlbumList(feedIdtoEdit);
 
       if (data) {
-        setSelectedAlbumList(data);
-        setSavedAlbumList(data);
+        setSelectedAlbumList(data.map((v) => v.data().name));
+        setSavedAlbumList(data.map((v) => v.id));
       }
     };
 
