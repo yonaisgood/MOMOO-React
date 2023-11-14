@@ -22,7 +22,7 @@ export default function useGetAlbumList() {
     try {
       const q = query(
         collection(appFireStore, user.uid, user.uid, 'album'),
-        orderBy('createdTime', 'desc'),
+        orderBy('createdTime'),
       );
       const querySnapshot = await getDocs(q);
 
