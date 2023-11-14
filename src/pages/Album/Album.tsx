@@ -25,7 +25,7 @@ export default function Album() {
   const albumName = id?.replace('-', ' ');
   const getAlbumFeedList = useGetAlbumFeedList();
   const getFeedListData = useGetFeedListData();
-  const { setAlbumNametoAdd, setIsUploadModalOpen } = useUploadContext();
+  const { setAlbumNameListToAdd, setIsUploadModalOpen } = useUploadContext();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -108,7 +108,7 @@ export default function Album() {
 
   const setUploadContext = () => {
     if (albumName) {
-      setAlbumNametoAdd(albumName);
+      setAlbumNameListToAdd(['전체 보기', albumName]);
     }
 
     setIsUploadModalOpen(true);

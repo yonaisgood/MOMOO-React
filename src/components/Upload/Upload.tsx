@@ -18,23 +18,23 @@ import StyledOverlay from './StyledOverlay';
 import useUploadContext from '../../hooks/useUploadContext';
 import { useAddFeedIdfromFeedList } from '../../hooks/useUpdateFeedList';
 
-// album이 빈문자열이 아니면, 해당 album이 선택되어 있도록 렌더링
 function Upload() {
+  const { user } = useAuthContext();
+  const { albumNameListToAdd, setIsUploadModalOpen, setAlbumNameListToAdd } =
+    useUploadContext();
+
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [selectedAddress, setSelectedAddress] = useState('');
   const [selectedWeatherImage, setSelectedWeatherImage] = useState<string>('');
   const [selectedEmotionImage, setSelectedEmotionImage] = useState<string>('');
-  const [selectedAlbum, setSelectedAlbum] = useState<string[]>([]);
+  const [selectedAlbum, setSelectedAlbum] =
+    useState<string[]>(albumNameListToAdd);
   const [file, setFile] = useState<FileList | null>(null);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-
-  const { user } = useAuthContext();
-  const { albumNametoAdd, setIsUploadModalOpen, setAlbumNametoAdd } =
-    useUploadContext();
 
   const getAccordionData = GetAccordionData();
   const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
@@ -74,7 +74,9 @@ function Upload() {
   };
 
   const closeUploadModal = () => {
+    // context 초기화
     setIsUploadModalOpen(false);
+    setAlbumNameListToAdd(albumNameListToAdd.slice(0, 1));
   };
 
   const handleAddressSelect = (selectedAddress: string) => {
@@ -119,8 +121,8 @@ function Upload() {
 
         // Firestore에 업로드 데이터를 추가합니다.
         await setDoc(userDocRef, uploadData);
-        navigate(`/feed/${id}`);
-        setIsUploadModalOpen(false);
+        navigate(`/feed/${user.uid}/${id}`);
+        closeUploadModal();
 
         try {
           selectedAlbum.forEach(async (album) => {
@@ -217,7 +219,7 @@ function Upload() {
                   key={0}
                   question={accordionData[0].question}
                   answer={accordionData[0].answer.join(',')}
-                  selectedAlbum={selectedAlbum || ''}
+                  selectedAlbum={selectedAlbum}
                   setSelectedAlbum={setSelectedAlbum}
                 />
               ))}

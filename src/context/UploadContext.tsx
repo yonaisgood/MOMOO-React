@@ -3,15 +3,15 @@ import { createContext, useState } from 'react';
 interface ContextType {
   isUploadModalOpen: boolean;
   setIsUploadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  albumNametoAdd: string;
-  setAlbumNametoAdd: React.Dispatch<React.SetStateAction<string>>;
+  albumNameListToAdd: string[];
+  setAlbumNameListToAdd: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const UploadContext = createContext<ContextType>({
   isUploadModalOpen: false,
   setIsUploadModalOpen: () => {},
-  albumNametoAdd: '',
-  setAlbumNametoAdd: () => {},
+  albumNameListToAdd: ['전체 보기'],
+  setAlbumNameListToAdd: () => {},
 });
 
 export default function UploadContextProvider({
@@ -20,15 +20,15 @@ export default function UploadContextProvider({
   children: React.ReactNode;
 }) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-  const [albumNametoAdd, setAlbumNametoAdd] = useState('');
+  const [albumNameListToAdd, setAlbumNameListToAdd] = useState(['전체 보기']);
 
   return (
     <UploadContext.Provider
       value={{
         isUploadModalOpen,
         setIsUploadModalOpen,
-        albumNametoAdd,
-        setAlbumNametoAdd,
+        albumNameListToAdd,
+        setAlbumNameListToAdd,
       }}
     >
       {children}
