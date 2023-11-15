@@ -5,9 +5,11 @@ import SeeMore from '../../asset/icon/More.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetFeedData from '../../hooks/useGetFeedData';
 import { DocumentData } from '@firebase/firestore';
+import AlertModal from '../Modal/AlertModal';
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
@@ -48,6 +50,11 @@ export default function FeedItem() {
     setIsModalOpen(false);
   };
 
+  const handleDeleteCloseModal = () => {
+    setDeleteModalOpen(false);
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       {InvalidId ? (
@@ -83,7 +90,18 @@ export default function FeedItem() {
             <time dateTime={time} className="date">
               {time.replace(/-/gi, '.')}
             </time>
-            {isModalOpen && <Modal feedId={id} onClose={handleCloseModal} />}
+            {isModalOpen && (
+              <Modal
+                setDeleteModalOpen={setDeleteModalOpen}
+                feedId={id}
+                onClose={handleCloseModal}
+              />
+            )}
+            {deleteModalOpen && (
+              <AlertModal 
+              
+              onClose={handleDeleteCloseModal} />
+            )}
           </StyledFeedItem>
         )
       )}

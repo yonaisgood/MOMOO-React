@@ -16,7 +16,7 @@ import GetAccordionData from './accordionData';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import StyledOverlay from './StyledOverlay';
 import useUploadContext from '../../hooks/useUploadContext';
-import { useAddFeedIdfromFeedList } from '../../hooks/useUpdateFeedList';
+import { useaddFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
 
 // album이 빈문자열이 아니면, 해당 album이 선택되어 있도록 렌더링
 function Upload() {
@@ -37,7 +37,7 @@ function Upload() {
     useUploadContext();
 
   const getAccordionData = GetAccordionData();
-  const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
+  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -131,7 +131,7 @@ function Upload() {
               }
             }
 
-            await addFeedIdfromFeedList(id, selectedAlbumId);
+            await addFeedIdFromFeedList(id, selectedAlbumId);
           });
         } catch (error) {
           console.error(
