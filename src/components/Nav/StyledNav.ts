@@ -21,12 +21,11 @@ const StyledNav = styled.nav`
   }
 
   .logoImg {
-    width: 37.6rem;
-    height: 6.4rem;
-    rotate: 90deg;
+    width: 6.4rem;
+    height: 37.6rem;
     position: absolute;
-    bottom: 10.9rem;
-    right: -2rem;
+    bottom: 0rem;
+    left: 4.8rem;
   }
 
   @media (min-width: 1025px) {
