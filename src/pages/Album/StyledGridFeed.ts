@@ -13,6 +13,9 @@ const StyledGridFeed = styled.ul`
 
   @media (max-width: 1024px) {
     margin-top: 12px;
+  }
+
+  @media (max-width: 800px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -21,15 +24,9 @@ const StyledGridFeed = styled.ul`
   }
 `;
 
-export const StyledFeedItem = styled.li<{ $aspectRatio: string }>`
+const StyledFeedItem = styled.li`
   margin: 8px;
-  height: fit-content;
   position: relative;
-  aspect-ratio: ${({ $aspectRatio }) => $aspectRatio};
-
-  img {
-    height: auto;
-  }
 
   .hover-wrap {
     position: absolute;
@@ -53,11 +50,6 @@ export const StyledFeedItem = styled.li<{ $aspectRatio: string }>`
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.8);
     }
-
-    img {
-      width: 20px;
-      aspect-ratio: 1/1;
-    }
   }
 
   @media (max-width: 430px) {
@@ -79,11 +71,20 @@ export const StyledFeedItem = styled.li<{ $aspectRatio: string }>`
       }
     }
   }
+`;
 
-  .upload {
+const StyledAddFeedItem = styled.li<{ $ratio: number }>`
+  margin: 8px;
+  aspect-ratio: ${({ $ratio }) => $ratio};
+
+  @media (max-width: 430px) {
+    margin: 6px;
+  }
+
+  button {
     width: 100%;
-    background: var(--gray-100);
     height: 100%;
+    background: var(--gray-100);
 
     img {
       width: 24px;
@@ -94,3 +95,4 @@ export const StyledFeedItem = styled.li<{ $aspectRatio: string }>`
 `;
 
 export default StyledGridFeed;
+export { StyledAddFeedItem, StyledFeedItem };

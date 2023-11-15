@@ -1,5 +1,12 @@
 import { appFireStore } from '../firebase/config';
-import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  DocumentData,
+} from 'firebase/firestore';
 import useAuthContext from './useAuthContext';
 
 export default function useGetSavedAlbumList() {
@@ -18,10 +25,10 @@ export default function useGetSavedAlbumList() {
       );
 
       const querySnapshot = await getDocs(q);
-      const albumList: string[] = [];
+      const albumList: DocumentData[] = [];
 
       querySnapshot.forEach((doc) => {
-        albumList.push(doc.id);
+        albumList.push(doc);
       });
 
       return albumList;

@@ -19,6 +19,7 @@ import {
   useaddFeedIdFromFeedList,
   useremoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditFeed() {
   interface AccordionData {
@@ -51,6 +52,7 @@ export default function EditFeed() {
   const { user } = useAuthContext();
   const { setIsEditModalOpen, feedIdtoEdit, setFeedIdtoEdit } =
     useEditContext();
+  const navigate = useNavigate();
 
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
@@ -80,8 +82,8 @@ export default function EditFeed() {
       const data = await getSavedAlbumList(feedIdtoEdit);
 
       if (data) {
-        setSelectedAlbumList(data);
-        setSavedAlbumList(data);
+        setSelectedAlbumList(data.map((v) => v.data().name));
+        setSavedAlbumList(data.map((v) => v.id));
       }
     };
 
@@ -136,6 +138,8 @@ export default function EditFeed() {
       };
 
       await editFeed(editData);
+      navigate(`/feed/${feedIdtoEdit}`);
+      closeEditFeedModal();
 
       // update feedList
       selectedAlbumList.forEach(async (selectedAlbumName) => {

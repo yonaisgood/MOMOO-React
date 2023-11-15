@@ -8,16 +8,27 @@ const StyledFeedItem = styled.article`
     margin-top: 4rem;
   }
 
-  .picSection {
-    aspect-ratio: 1/1;
-    background-color: var(--gray-900);
+  .imgSection {
+    position: relative;
+  }
+
+  ul + .contentsSection {
+    margin-top: 12px;
+  }
+
+  div + .contentsSection {
+    margin-top: 20px;
+  }
+
+  .contentsSection {
+    position: relative;
   }
 
   .iconSection {
     width: 100%;
     display: flex;
     align-items: flex-start;
-    margin: 2rem 0 1.2rem;
+    margin: 0 0 1.2rem;
 
     .emotion,
     .weather {
@@ -31,13 +42,14 @@ const StyledFeedItem = styled.article`
       width: 3.6rem;
       margin-left: 1.6rem;
     }
+  }
 
-    button {
-      margin-left: auto;
-      width: 2rem;
-      aspect-ratio: 1/1;
-      font-size: 0;
-    }
+  .more {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2rem;
+    aspect-ratio: 1/1;
   }
 
   h3 {
@@ -64,7 +76,7 @@ const StyledFeedItem = styled.article`
   }
 
   @media (max-width: 430px) {
-    .picSection {
+    .imgSection {
       margin: 0 -16px;
     }
 
