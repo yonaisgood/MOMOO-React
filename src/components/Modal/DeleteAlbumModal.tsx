@@ -1,8 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Close from '../../asset/icon/X.svg';
 import DeleteRedImg from '../../asset/icon/DeleteRed.svg';
 import SelectImg from '../../asset/icon/Select.svg';
+import useEditAlbum from '../../hooks/useEditAlbum';
+import useDeleteAlbum from '../../hooks/useDeleteAlbum';
+
 const SelectModal = styled.div`
   position: absolute;
   z-index: 10000;
@@ -41,6 +44,7 @@ const SelectModal = styled.div`
     margin-bottom: 0.5rem;
   }
   .modal-list input {
+    color: var(--gray-600);
     border: 1px solid var(--gray-300);
     width: 100%;
     height: 4rem;
@@ -94,9 +98,21 @@ const Header = styled.header`
   }
 `;
 
-const DeleteAlbumModal = ({ onClose }: { onClose: () => void }) => {
+type DeleteAlbumModalProps = {
+  onClose: () => void;
+  albumName: string;
+  albumId: string;
+};
+const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
+  onClose,
+  albumName,
+  albumId,
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [editAlbumName, setEditAlbumName] = useState(albumName);
+  const editAlbum = useEditAlbum();
+  const deleteAlbum = useDeleteAlbum();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -129,6 +145,14 @@ const DeleteAlbumModal = ({ onClose }: { onClose: () => void }) => {
     };
   }, []);
 
+  const handleEditAlbum = async () => {
+    await editAlbum({ editAlbumName, albumId });
+    onClose();
+  };
+  const handleDeleteAlbum = async () => {
+    await deleteAlbum({ albumId });
+    onClose();
+  };
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
       <div className="modal-overlay">
@@ -143,13 +167,20 @@ const DeleteAlbumModal = ({ onClose }: { onClose: () => void }) => {
           </Header>
           <div className="modal-list">
             <p>이름</p>
-            <input type="text" placeholder="새로운 앨범명을 입력해주세요" />
-            <button type="submit">
+            <input
+              type="text"
+              value={editAlbumName}
+              onChange={(e) => {
+                setEditAlbumName(e.target.value);
+              }}
+              placeholder="새로운 앨범명을 입력해주세요"
+            />
+            <button type="submit" onClick={handleDeleteAlbum}>
               Delete
               <img src={DeleteRedImg} alt="휴지통 아이콘" />
             </button>
           </div>
-          <button className="slect-btn" type="submit">
+          <button onClick={handleEditAlbum} className="slect-btn" type="submit">
             <img src={SelectImg} alt="선택 아이콘" />
           </button>
           <button

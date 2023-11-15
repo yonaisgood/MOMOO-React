@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import More from '../../asset/icon/more-white.svg';
 import { DocumentData } from 'firebase/firestore';
-
 import useGetFeedData from '../../hooks/useGetFeedData';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import DeleteAlbumModal from '../Modal/DeleteAlbumModal';
 
 interface Props {
   imageUrl?: string[];
@@ -15,9 +15,9 @@ const AlbumContainer = styled.article<Props>`
   height: 100%;
   border-radius: 1rem;
   background: ${(props) =>
-    props.imageUrl
+    props.imageUrl && props.imageUrl.length > 0
       ? `linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), url(${props.imageUrl[0]}) no-repeat center / cover`
-      : 'linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), gray'};
+      : 'linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), var(--gray-200)'};
   .txtWrapper {
     width: 100%;
     position: absolute;
@@ -58,20 +58,32 @@ interface AlbumProps {
 }
 
 const Album: React.FC<AlbumProps> = ({ albumData }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState([]);
   const getFeedData = useGetFeedData();
   useEffect(() => {
     const lastFeedId = albumData.feedList[albumData.feedList.length - 1];
     console.log(lastFeedId);
+
     const getData = async () => {
-      const data = await getFeedData(lastFeedId);
-      setImgUrl(data?.imageUrl);
-      console.log(imgUrl);
+      if (lastFeedId !== undefined) {
+        const data = await getFeedData(lastFeedId);
+        setImgUrl(data?.imageUrl);
+      } else {
+        return;
+      }
     };
 
+    console.log(imgUrl);
     getData();
   }, []);
-
+  const HandleModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsModalOpen(true);
+  };
+  const HandleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <AlbumContainer imageUrl={imgUrl}>
       <AlbumLink to={`/album/${albumData.name.replace(/\s+/g, '-')}`}>
@@ -79,16 +91,17 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
             <p className="albumCount">{albumData.feedList.length}</p>
-            <button
-              type="button"
-              onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-                event.preventDefault();
-                alert('hey');
-              }}
-            />
+            <button type="button" onClick={HandleModal} />
           </div>
         </div>
       </AlbumLink>
+      {isModalOpen && (
+        <DeleteAlbumModal
+          albumId={albumData.id}
+          albumName={albumData.name}
+          onClose={HandleCloseModal}
+        />
+      )}
     </AlbumContainer>
   );
 };
