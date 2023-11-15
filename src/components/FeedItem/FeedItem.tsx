@@ -92,7 +92,7 @@ export default function FeedItem() {
               >
                 <img src={SeeMore} alt="더보기 버튼" />
               </button>
-            </div>
+            </section>
             <h3>{feedData.title}</h3>
             {feedData.text && <p className="detailText">{feedData.text}</p>}
             {feedData.selectedAddress && (
@@ -108,11 +108,7 @@ export default function FeedItem() {
                 onClose={handleCloseModal}
               />
             )}
-            {deleteModalOpen && (
-              <AlertModal 
-              
-              onClose={handleDeleteCloseModal} />
-            )}
+            {deleteModalOpen && <AlertModal onClose={handleDeleteCloseModal} />}
           </StyledFeedItem>
         )
       )}
