@@ -5,12 +5,15 @@ import SeeMore from '../../asset/icon/More.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetFeedData from '../../hooks/useGetFeedData';
 import { DocumentData } from '@firebase/firestore';
+import Carousel from '../carousel/Carousel';
+import useEditContext from '../../hooks/useEditContext';
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
+  const { isEditModalOpen } = useEditContext();
 
   const { id } = useParams();
   const getFeedData = useGetFeedData();
@@ -38,7 +41,7 @@ export default function FeedItem() {
         setInvalidId(true);
       }
     })();
-  }, []);
+  }, [, isEditModalOpen]);
 
   const handleSeeMoreClick = () => {
     setIsModalOpen(true);
@@ -55,35 +58,43 @@ export default function FeedItem() {
       ) : (
         feedData && (
           <StyledFeedItem>
-            <div className="picSection"></div>
-            <div className="iconSection">
-              {feedData.emotionImage && (
-                <img
-                  className="emotion"
-                  src={feedData.emotionImage}
-                  alt="오늘의 기분"
-                />
+            <Carousel imgUrlList={feedData.imageUrl}></Carousel>
+            <section className="contentsSection">
+              {feedData.emotionImage && feedData.weatherImage && (
+                <div className="iconSection">
+                  {feedData.emotionImage && (
+                    <img
+                      className="emotion"
+                      src={feedData.emotionImage}
+                      alt="오늘의 기분"
+                    />
+                  )}
+                  {feedData.weatherImage && (
+                    <img
+                      className="weather"
+                      src={feedData.weatherImage}
+                      alt="오늘의 날씨"
+                    />
+                  )}
+                </div>
               )}
-              {feedData.weatherImage && (
-                <img
-                  className="weather"
-                  src={feedData.weatherImage}
-                  alt="오늘의 날씨"
-                />
-              )}
-              <button type="button" onClick={handleSeeMoreClick}>
-                <img className="seeMore" src={SeeMore} alt="더보기 버튼" />
+              <button
+                className="more"
+                type="button"
+                onClick={handleSeeMoreClick}
+              >
+                <img src={SeeMore} alt="더보기 버튼" />
               </button>
-            </div>
-            <h3>{feedData.title}</h3>
-            {feedData.text && <p className="detailText">{feedData.text}</p>}
-            {feedData.selectedAddress && (
-              <p className="locaSection">{feedData.selectedAddress}</p>
-            )}
-            <time dateTime={time} className="date">
-              {time.replace(/-/gi, '.')}
-            </time>
-            {isModalOpen && <Modal feedId={id} onClose={handleCloseModal} />}
+              <h3>{feedData.title}</h3>
+              {feedData.text && <p className="detailText">{feedData.text}</p>}
+              {feedData.selectedAddress && (
+                <p className="locaSection">{feedData.selectedAddress}</p>
+              )}
+              <time dateTime={time} className="date">
+                {time.replace(/-/gi, '.')}
+              </time>
+              {isModalOpen && <Modal feedId={id} onClose={handleCloseModal} />}
+            </section>
           </StyledFeedItem>
         )
       )}
