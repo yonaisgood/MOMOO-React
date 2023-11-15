@@ -16,8 +16,8 @@ import useGetFeedData from '../../hooks/useGetFeedData';
 import useEditFeed from '../../hooks/useEditFeed';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import {
-  useAddFeedIdfromFeedList,
-  useRemoveFeedIdfromFeedList,
+  useaddFeedIdFromFeedList,
+  useremoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
 
 export default function EditFeed() {
@@ -55,8 +55,8 @@ export default function EditFeed() {
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
   const getSavedAlbumList = useGetSavedAlbumList();
-  const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
-  const removeFeedIdfromFeedList = useRemoveFeedIdfromFeedList();
+  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
+  const removeFeedIdFromFeedList = useremoveFeedIdFromFeedList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -148,13 +148,13 @@ export default function EditFeed() {
         }
 
         if (!savedAlbumList.includes(selectedAlbumId)) {
-          await addFeedIdfromFeedList(feedIdtoEdit, selectedAlbumId);
+          await addFeedIdFromFeedList(feedIdtoEdit, selectedAlbumId);
         }
       });
 
       savedAlbumList.forEach(async (savedAlbumId) => {
         if (!selectedAlbumList.includes(savedAlbumId)) {
-          await removeFeedIdfromFeedList(feedIdtoEdit, savedAlbumId);
+          await removeFeedIdFromFeedList(feedIdtoEdit, savedAlbumId);
         }
       });
     } catch (error) {
