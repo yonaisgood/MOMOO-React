@@ -5,7 +5,7 @@ const uploadImageToStorage = async (files: FileList, folderName: string) => {
   const storage = getStorage();
   const downloadURLs: string[] = [];
   const uploadPromises = Array.from(files).map((file) => {
-    const storageRef = ref(storage, `${folderName}/${file}`);
+    const storageRef = ref(storage, `${folderName}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     return new Promise((resolve, reject) => {

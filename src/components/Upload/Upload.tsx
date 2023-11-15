@@ -104,7 +104,10 @@ function Upload() {
           return;
         }
 
-        const downloadURLs = await uploadImageToStorage(file, 'feed');
+        const downloadURLs = await uploadImageToStorage(
+          file,
+          `feed/${user.uid}`,
+        );
 
         // 업로드할 내용을 객체로 만들기
         const uploadData = {
@@ -121,7 +124,7 @@ function Upload() {
 
         // Firestore에 업로드 데이터를 추가합니다.
         await setDoc(userDocRef, uploadData);
-        navigate(`/feed/${user.uid}/${id}`);
+        navigate(`/feed/${id}`);
         closeUploadModal();
 
         try {
