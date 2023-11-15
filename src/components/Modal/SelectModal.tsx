@@ -54,12 +54,18 @@ const Header = styled.header`
 interface Props {
   onClose: () => void;
   feedId: string;
+  setDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal = ({ onClose, feedId }: Props) => {
+const Modal = ({ onClose, feedId, setDeleteModalOpen }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
+
+  const handleDeleteFeed = () => {
+    setDeleteModalOpen(true);
+    onClose();
+  };
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -112,7 +118,9 @@ const Modal = ({ onClose, feedId }: Props) => {
             <h2 tabIndex={0}>게시글 변경</h2>
           </Header>
           <div className="modal-list">
-            <button type="button">삭제하기</button>
+            <button type="button" onClick={handleDeleteFeed}>
+              삭제하기
+            </button>
             <button type="button" onClick={setEditFeedContext}>
               수정하기
             </button>

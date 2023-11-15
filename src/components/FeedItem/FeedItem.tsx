@@ -7,9 +7,11 @@ import useGetFeedData from '../../hooks/useGetFeedData';
 import { DocumentData } from '@firebase/firestore';
 import Carousel from '../carousel/Carousel';
 import useEditContext from '../../hooks/useEditContext';
+import AlertModal from '../Modal/AlertModal';
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
@@ -51,6 +53,11 @@ export default function FeedItem() {
     setIsModalOpen(false);
   };
 
+  const handleDeleteCloseModal = () => {
+    setDeleteModalOpen(false);
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       {InvalidId ? (
@@ -85,16 +92,27 @@ export default function FeedItem() {
               >
                 <img src={SeeMore} alt="더보기 버튼" />
               </button>
-              <h3>{feedData.title}</h3>
-              {feedData.text && <p className="detailText">{feedData.text}</p>}
-              {feedData.selectedAddress && (
-                <p className="locaSection">{feedData.selectedAddress}</p>
-              )}
-              <time dateTime={time} className="date">
-                {time.replace(/-/gi, '.')}
-              </time>
-              {isModalOpen && <Modal feedId={id} onClose={handleCloseModal} />}
-            </section>
+            </div>
+            <h3>{feedData.title}</h3>
+            {feedData.text && <p className="detailText">{feedData.text}</p>}
+            {feedData.selectedAddress && (
+              <p className="locaSection">{feedData.selectedAddress}</p>
+            )}
+            <time dateTime={time} className="date">
+              {time.replace(/-/gi, '.')}
+            </time>
+            {isModalOpen && (
+              <Modal
+                setDeleteModalOpen={setDeleteModalOpen}
+                feedId={id}
+                onClose={handleCloseModal}
+              />
+            )}
+            {deleteModalOpen && (
+              <AlertModal 
+              
+              onClose={handleDeleteCloseModal} />
+            )}
           </StyledFeedItem>
         )
       )}

@@ -16,7 +16,7 @@ import GetAccordionData from './accordionData';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import StyledOverlay from './StyledOverlay';
 import useUploadContext from '../../hooks/useUploadContext';
-import { useAddFeedIdfromFeedList } from '../../hooks/useUpdateFeedList';
+import { useaddFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
 
 function Upload() {
   const { user } = useAuthContext();
@@ -37,7 +37,7 @@ function Upload() {
   );
 
   const getAccordionData = GetAccordionData();
-  const addFeedIdfromFeedList = useAddFeedIdfromFeedList();
+  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -136,7 +136,7 @@ function Upload() {
               }
             }
 
-            await addFeedIdfromFeedList(id, selectedAlbumId);
+            await addFeedIdFromFeedList(id, selectedAlbumId);
           });
         } catch (error) {
           console.error(

@@ -74,7 +74,7 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
 
   return (
     <AlbumContainer imageUrl={imgUrl}>
-      <AlbumLink to={`/feed/${albumData.name.replace(/\s+/g, '-')}`}>
+      <AlbumLink to={`/album/${albumData.name.replace(/\s+/g, '-')}`}>
         <div className="txtWrapper">
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
