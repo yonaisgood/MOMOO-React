@@ -157,7 +157,15 @@ export default function EditFeed() {
       });
 
       savedAlbumList.forEach(async (savedAlbumId) => {
-        if (!selectedAlbumList.includes(savedAlbumId)) {
+        let savedAlbumName = '';
+
+        for (const iterator of albumIdData) {
+          if (savedAlbumId === iterator.docId) {
+            savedAlbumName = iterator.albumName;
+          }
+        }
+
+        if (!selectedAlbumList.includes(savedAlbumName)) {
           await removeFeedIdFromFeedList(feedIdtoEdit, savedAlbumId);
         }
       });
