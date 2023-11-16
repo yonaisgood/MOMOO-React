@@ -12,15 +12,13 @@ import AddIcon from '../../asset/icon/Add_L.svg';
 import useUploadContext from '../../hooks/useUploadContext';
 import FeedItem from './FeedItem';
 import useSetFeedItemLayout from './useSetFeedItemLayout';
-
 export default function Album() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const ulRef = useRef<null | HTMLUListElement>(null);
   const [feedList, setFeedList] = useState<DocumentData[]>([]);
   const { id } = useParams();
-  const albumName = id?.replace('-', ' ');
+  const albumName = id?.replace(/-/gi, ' ');
   const getAlbumFeedList = useGetAlbumFeedList();
   const getFeedListData = useGetFeedListData();
   const { setAlbumNameListToAdd, setIsUploadModalOpen } = useUploadContext();
@@ -75,7 +73,7 @@ export default function Album() {
           <Breadcrumb
             navList={[
               { path: 'home', text: 'Home' },
-              { path: 'feed', text: albumName || '' },
+              { path: `album/${albumName}`, text: albumName || '/' },
             ]}
           />
         </>
@@ -84,7 +82,7 @@ export default function Album() {
         <BreadcrumbWrap
           navList={[
             { path: 'home', text: 'Home' },
-            { path: 'feed', text: albumName || '' },
+            { path: `album/${albumName}`, text: albumName || '/' },
           ]}
           title={albumName || ''}
         />
