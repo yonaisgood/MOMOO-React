@@ -63,7 +63,6 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
   const getFeedData = useGetFeedData();
   useEffect(() => {
     const lastFeedId = albumData.feedList[albumData.feedList.length - 1];
-    console.log(lastFeedId);
 
     const getData = async () => {
       if (lastFeedId !== undefined) {
@@ -74,7 +73,6 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
       }
     };
 
-    console.log(imgUrl);
     getData();
   }, []);
   const HandleModal = (event: React.MouseEvent<HTMLButtonElement>) => {

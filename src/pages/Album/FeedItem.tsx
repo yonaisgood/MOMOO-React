@@ -1,14 +1,17 @@
 import { useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { StyledFeedItem } from './StyledGridFeed';
 import EditIcon from '../../asset/icon/Edit.svg';
 import useEditContext from '../../hooks/useEditContext';
 import useSetFeedItemLayout from './useSetFeedItemLayout';
+import usePageContext from '../../hooks/usePageContext';
 
 export default function FeedItem({ feedData }: { feedData: DocumentData }) {
   const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
+  const { setPrevPath, prevPath } = usePageContext();
+  const { id } = useParams();
 
   useEffect(() => {
     setRatio(feedData.imageUrl[0]);
@@ -56,6 +59,7 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
             onFocus={showHoverStyle}
             onMouseLeave={hiddenHoverStyle}
             onBlur={hiddenHoverStyle}
+            onClick={() => setPrevPath(id || null)}
           >
             <div className="a11y-hidden">
               <strong>{feedData.title}</strong>
