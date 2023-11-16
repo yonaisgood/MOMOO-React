@@ -2,6 +2,7 @@ import StyledNav from './StyledNav';
 import MyPopup from '../MyPopup/MyPopup';
 import HomeImg from '../../asset/icon/HomePc.svg';
 import LogoImg from '../../asset/icon/Logo.svg';
+import LogoColImg from '../../asset/icon/Logo-col.svg';
 import UploadImg from '../../asset/icon/UploadPc.svg';
 import MypageImg from '../../asset/icon/ProfilePc.svg';
 import { useEffect, useState } from 'react';
@@ -55,7 +56,11 @@ export default function Nav() {
             </button>
           </div>
           <Link to="/home">
-            <img className="logoImg" src={LogoImg} alt="로고이미지" />
+            <img
+              className="logoImg"
+              src={clientWitch > 1007 ? LogoColImg : LogoImg}
+              alt="로고이미지"
+            />
           </Link>
           {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
         </StyledNav>
