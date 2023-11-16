@@ -1,41 +1,61 @@
 import { appFireStore } from '../firebase/config';
 import {
   collection,
-  getDocs,
-  DocumentData,
+  onSnapshot,
   query,
   orderBy,
+  DocumentData,
 } from 'firebase/firestore';
 import useAuthContext from './useAuthContext';
+import { useState, useEffect } from 'react';
 
 export default function useGetAlbumList() {
   const { user } = useAuthContext();
+  const [albumDataList, setAlbumDataList] = useState<DocumentData[]>([]);
+  const [albumIdList, setAlbumIdList] = useState<string[]>([]);
+  const [oldestAlbumList, setOldestAlbumList] = useState<DocumentData[]>([]);
 
-  const getAlbumList = async () => {
-    const albumDataList: DocumentData[] = [];
-    const albumIdList: string[] = [];
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user === null) {
+        setAlbumDataList([]);
+        setAlbumIdList([]);
+        return;
+      }
 
-    if (user === null) {
-      return { albumDataList, albumIdList };
-    }
-
-    try {
       const q = query(
         collection(appFireStore, user.uid, user.uid, 'album'),
         orderBy('createdTime'),
       );
-      const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        albumDataList.push({ ...doc.data(), id: doc.id });
-        albumIdList.push(doc.id);
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const updatedAlbumDataList: DocumentData[] = [];
+        const updatedAlbumIdList: string[] = [];
+
+        querySnapshot.forEach((doc) => {
+          updatedAlbumDataList.push({ ...doc.data(), id: doc.id });
+          updatedAlbumIdList.push(doc.id);
+        });
+
+        const oldestAlbumListtoSet = [...updatedAlbumDataList].reverse();
+        const allFeedsAlbumData = oldestAlbumListtoSet.pop();
+
+        if (allFeedsAlbumData) {
+          oldestAlbumListtoSet.unshift(allFeedsAlbumData);
+        }
+
+        setOldestAlbumList(oldestAlbumListtoSet);
+        setAlbumDataList(updatedAlbumDataList);
+        setAlbumIdList(updatedAlbumIdList);
       });
-    } catch (error) {
-      console.log(error);
-    }
 
-    return { albumDataList, albumIdList };
-  };
+      return () => {
+        unsubscribe();
+      };
+    };
 
-  return getAlbumList;
+    fetchData();
+  }, [collection]);
+
+  return { albumDataList, albumIdList, oldestAlbumList };
 }

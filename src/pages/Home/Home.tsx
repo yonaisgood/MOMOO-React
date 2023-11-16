@@ -19,28 +19,12 @@ export default function Home() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const [albumList, setAlbumList] = useState<DocumentData[]>([]);
-  const [oldestAlbumList, setOldestAlbumList] = useState<DocumentData[]>([]);
-  const getAlbumList = useGetAlbumList();
+  const { albumDataList, oldestAlbumList } = useGetAlbumList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
-
-    (async () => {
-      const { albumDataList } = await getAlbumList();
-      setAlbumList(albumDataList);
-
-      const oldestAlbumListtoSet = [...albumDataList].reverse();
-      const allFeedsAlbumData = oldestAlbumListtoSet.pop();
-
-      if (allFeedsAlbumData) {
-        oldestAlbumListtoSet.unshift(allFeedsAlbumData);
-      }
-
-      setOldestAlbumList(oldestAlbumListtoSet);
-    })();
   }, []);
 
   const HandleArrayModal = () => {
@@ -75,15 +59,16 @@ export default function Home() {
             </button>
           </div>
           <ul>
-            {(selectedOption === 'oldest' ? oldestAlbumList : albumList).map(
-              (v) => {
-                return (
-                  <li key={v.createdTime}>
-                    <Album albumData={v} />
-                  </li>
-                );
-              },
-            )}
+            {(selectedOption === 'oldest'
+              ? oldestAlbumList
+              : albumDataList
+            ).map((v) => {
+              return (
+                <li key={v.createdTime}>
+                  <Album albumData={v} />
+                </li>
+              );
+            })}
           </ul>
           {isAddModalOpen && <NewAlbumModal onClose={HandleAddCloseModal} />}
           {isArrayModalOpen && (
