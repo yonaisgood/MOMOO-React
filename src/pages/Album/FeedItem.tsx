@@ -10,7 +10,7 @@ import usePageContext from '../../hooks/usePageContext';
 export default function FeedItem({ feedData }: { feedData: DocumentData }) {
   const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
-  const { setPrevPath, prevPath } = usePageContext();
+  const { setPrevPath } = usePageContext();
   const { id } = useParams();
 
   useEffect(() => {

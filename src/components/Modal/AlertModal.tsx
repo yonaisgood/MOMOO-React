@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { appFireStore } from '../../firebase/config';
 import styled from 'styled-components';
 import useAuthContext from '../../hooks/useAuthContext';
-import { doc, deleteDoc } from 'firebase/firestore';
+import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import { useremoveFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
 
@@ -108,8 +108,8 @@ const AlertModal = ({ onClose }: { onClose: () => void }) => {
         const getAlbumList = await getSavedAlbumList(id);
 
         if (getAlbumList !== undefined) {
-          getAlbumList.forEach((albumId: string) => {
-            removeFeedIdFromFeedList(id, albumId);
+          getAlbumList.forEach((albumDoc: DocumentData) => {
+            removeFeedIdFromFeedList(id, albumDoc.id);
           });
         }
         onClose();

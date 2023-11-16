@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Select from '../../asset/icon/Select.svg';
 
-type KakaoMapProps = {
-  onAddressSelect: (address: string | null) => void;
-};
-
 function KakaoMap({
   onAddressSelect,
 }: {
@@ -18,7 +14,6 @@ function KakaoMap({
   });
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchedKeyword, setSearchedKeyword] = useState('');
   const [searchedLocation, setSearchedLocation] = useState<{
     place_name: string | null;
   } | null>(null);
@@ -43,7 +38,6 @@ function KakaoMap({
         ...prevState,
         center: newPosition,
       }));
-      setSearchedKeyword(searchQuery);
       setSearchedLocation(newSearch);
       console.log('검색된 위치 정보:', newPosition);
     }

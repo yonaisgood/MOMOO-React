@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import StyledMain from './StyledMain';

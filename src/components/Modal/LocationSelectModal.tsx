@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
+import { useRef, useEffect } from 'react';
+import styled from 'styled-components';
 
 const SelectModal = styled.div`
   .modal-overlay {
@@ -47,9 +47,9 @@ const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Tab") {
+      if (event.key === 'Tab') {
         const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         );
         if (focusableElements) {
           const firstElement = focusableElements[0] as HTMLElement;
@@ -69,10 +69,10 @@ const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
         }
       }
     };
-    document.addEventListener("keydown", handleKeydown);
+    document.addEventListener('keydown', handleKeydown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeydown);
+      document.removeEventListener('keydown', handleKeydown);
     };
   }, []);
 

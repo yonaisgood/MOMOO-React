@@ -10,7 +10,6 @@ import NewAlbumModal from '../../components/Modal/NewAlbumModal';
 import ArrayModal from '../../components/Modal/ArrayModal';
 import MobileHeader from './MobileHeader';
 import useGetAlbumList from '../../hooks/useGetAlbumList';
-import { DocumentData } from 'firebase/firestore';
 
 export default function Home() {
   const [isArrayModalOpen, setIsArrayModalOpen] = useState(false);

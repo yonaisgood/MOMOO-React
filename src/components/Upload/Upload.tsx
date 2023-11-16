@@ -217,7 +217,7 @@ function Upload() {
               </Styled.KakaoMapContainer>
             )}
             <Styled.AccordionContents>
-              {accordionData.slice(1, 2).map((data, index) => (
+              {accordionData.slice(1, 2).map(() => (
                 <MultipleAccordion
                   key={0}
                   question={accordionData[0].question}
