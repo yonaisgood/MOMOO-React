@@ -8,23 +8,54 @@ import { DocumentData } from '@firebase/firestore';
 import Carousel from '../carousel/Carousel';
 import useEditContext from '../../hooks/useEditContext';
 import AlertModal from '../Modal/AlertModal';
+import ChangeAlbumModal from '../Modal/ChangeAlbumModal';
+import GetAccordionData from '../Upload/accordionData';
+import useAuthContext from '../../hooks/useAuthContext';
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [changeModalOpen, setChangeModalOpen] = useState(false);
+  const [changeAlbumModalOpen, setChangeAlbumModalOpen] = useState(false);
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
   const { isEditModalOpen } = useEditContext();
-
+  const { user } = useAuthContext();
   const { id } = useParams();
   const getFeedData = useGetFeedData();
   const navigate = useNavigate();
+  const getAccordionData = GetAccordionData();
+
+  interface AlbumIdData {
+    albumName: string;
+    docId: string;
+  }
+
+  interface Object {
+    question: string;
+    answer: string[];
+  }
+
+  const [accordionData, setAccordionData] = useState<Object[]>([]);
+  const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   if (!id) {
     navigate('/404');
     return;
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        const result = await getAccordionData();
+        console.log(result);
+        setAccordionData(result.accordionData);
+        setAlbumIdData(result.albumIdData);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -55,6 +86,11 @@ export default function FeedItem() {
 
   const handleDeleteCloseModal = () => {
     setDeleteModalOpen(false);
+    setIsModalOpen(false);
+  };
+
+  const handleChangeAlbumModal = () => {
+    setChangeAlbumModalOpen(false);
     setIsModalOpen(false);
   };
 
@@ -104,11 +140,18 @@ export default function FeedItem() {
             {isModalOpen && (
               <Modal
                 setDeleteModalOpen={setDeleteModalOpen}
+                setChangeAlbumModalOpen={setChangeAlbumModalOpen}
                 feedId={id}
                 onClose={handleCloseModal}
               />
             )}
             {deleteModalOpen && <AlertModal onClose={handleDeleteCloseModal} />}
+            {changeAlbumModalOpen && (
+              <ChangeAlbumModal
+                answer={accordionData[0].answer.join(',')}
+                onClose={handleChangeAlbumModal}
+              />
+            )}
           </StyledFeedItem>
         )
       )}
