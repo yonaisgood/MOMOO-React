@@ -1,7 +1,7 @@
 import useGetAlbumList from '../../hooks/useGetAlbumList';
 
 const GetAccordionData = () => {
-  const getAlbumList = useGetAlbumList();
+  const { albumDataList, albumIdList } = useGetAlbumList();
 
   const getAccordionData = async () => {
     const accordionData = [
@@ -38,7 +38,6 @@ const GetAccordionData = () => {
     }
 
     const albumIdData: AlbumIdData[] = [];
-    const { albumDataList, albumIdList } = await getAlbumList();
 
     albumDataList.forEach((albumData, i) => {
       accordionData[0].answer.push(albumData.name);
