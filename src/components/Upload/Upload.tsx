@@ -16,7 +16,7 @@ import GetAccordionData from './accordionData';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import StyledOverlay from './StyledOverlay';
 import useUploadContext from '../../hooks/useUploadContext';
-import { useaddFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
+import { useAddFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
 
 function Upload() {
   const { user } = useAuthContext();
@@ -37,7 +37,7 @@ function Upload() {
   );
 
   const getAccordionData = GetAccordionData();
-  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
+  const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -95,7 +95,6 @@ function Upload() {
 
     try {
       if (user) {
-        // 사용자 UID를 기반으로 Firestore 문서 경로를 생성
         const id = uuidv4();
         const userDocRef = doc(appFireStore, user.uid, user.uid, 'feed', id);
 
@@ -109,7 +108,6 @@ function Upload() {
           `feed/${user.uid}`,
         );
 
-        // 업로드할 내용을 객체로 만들기
         const uploadData = {
           title: title,
           text: text,
@@ -122,7 +120,6 @@ function Upload() {
           id: id,
         };
 
-        // Firestore에 업로드 데이터를 추가합니다.
         await setDoc(userDocRef, uploadData);
         navigate(`/feed/${id}`);
         closeUploadModal();

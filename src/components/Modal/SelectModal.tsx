@@ -60,7 +60,7 @@ interface Props {
 const Modal = ({ onClose, feedId, setDeleteModalOpen }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
+  const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
 
   const handleDeleteFeed = () => {
     setDeleteModalOpen(true);
@@ -100,7 +100,7 @@ const Modal = ({ onClose, feedId, setDeleteModalOpen }: Props) => {
 
   const setEditFeedContext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setFeedIdtoEdit(feedId);
+    setFeedIdToEdit(feedId);
     setIsEditModalOpen(true);
     onClose();
   };

@@ -23,7 +23,6 @@ function MultipleAccordion({
   };
 
   const MultiAnswerClick = (text: string) => {
-    // 이미 선택된 텍스트인지 확인
     const isSelected = selectedAlbum.includes(text);
 
     if (isSelected) {

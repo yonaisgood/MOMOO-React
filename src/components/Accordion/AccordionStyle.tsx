@@ -38,7 +38,6 @@ const AccordionWrapper = styled.div`
 
   .btnImg {
     margin: 0 auto;
-    /* border: 2px solid red; */
   }
 
   .arrow-wrap {

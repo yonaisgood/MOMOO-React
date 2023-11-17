@@ -5,7 +5,7 @@ import useEditContext from './useEditContext';
 
 export default function useEditFeed() {
   const { user } = useAuthContext();
-  const { feedIdtoEdit } = useEditContext();
+  const { feedIdToEdit } = useEditContext();
 
   const editFeed = async (updateData: {}) => {
     if (user === null) {
@@ -17,7 +17,7 @@ export default function useEditFeed() {
       user.uid,
       user.uid,
       'feed',
-      feedIdtoEdit,
+      feedIdToEdit,
     );
 
     await updateDoc(feedDocRef, updateData);

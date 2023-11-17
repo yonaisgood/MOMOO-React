@@ -2,7 +2,7 @@ import { appFireStore } from '../firebase/config';
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import useAuthContext from '../hooks/useAuthContext';
 
-export function useremoveFeedIdFromFeedList() {
+export function useRemoveFeedIdFromFeedList() {
   const { user } = useAuthContext();
 
   const removeFeedIdFromFeedList = async (
@@ -29,7 +29,7 @@ export function useremoveFeedIdFromFeedList() {
   return removeFeedIdFromFeedList;
 }
 
-export function useaddFeedIdFromFeedList() {
+export function useAddFeedIdFromFeedList() {
   const { user } = useAuthContext();
 
   const addFeedIdFromFeedList = async (

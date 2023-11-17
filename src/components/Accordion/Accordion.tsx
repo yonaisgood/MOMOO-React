@@ -23,11 +23,9 @@ function Accordion({
   };
 
   const handleAnswerClick = (imagePath: string) => {
-    // 이미지를 선택한 경우, 선택을 해제하고 아무 이미지도 선택하지 않음
     if (selectedImages.includes(imagePath)) {
       setSelectedImages('');
     } else {
-      // 이미지가 선택되지 않은 경우, 선택한 이미지를 업데이트
       setSelectedImages(imagePath);
     }
   };

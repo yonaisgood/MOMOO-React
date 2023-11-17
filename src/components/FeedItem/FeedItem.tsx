@@ -96,7 +96,7 @@ export default function FeedItem() {
             <h3>{feedData.title}</h3>
             {feedData.text && <p className="detailText">{feedData.text}</p>}
             {feedData.selectedAddress && (
-              <p className="locaSection">{feedData.selectedAddress}</p>
+              <p className="locationSection">{feedData.selectedAddress}</p>
             )}
             <time dateTime={time} className="date">
               {time.replace(/-/gi, '.')}

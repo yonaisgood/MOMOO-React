@@ -16,8 +16,8 @@ import useGetFeedData from '../../hooks/useGetFeedData';
 import useEditFeed from '../../hooks/useEditFeed';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import {
-  useaddFeedIdFromFeedList,
-  useremoveFeedIdFromFeedList,
+  useAddFeedIdFromFeedList,
+  useRemoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,15 +50,15 @@ export default function EditFeed() {
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   const { user } = useAuthContext();
-  const { setIsEditModalOpen, feedIdtoEdit, setFeedIdtoEdit } =
+  const { setIsEditModalOpen, feedIdToEdit, setFeedIdToEdit } =
     useEditContext();
   const navigate = useNavigate();
 
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
   const getSavedAlbumList = useGetSavedAlbumList();
-  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
-  const removeFeedIdFromFeedList = useremoveFeedIdFromFeedList();
+  const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
+  const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -66,7 +66,7 @@ export default function EditFeed() {
     });
 
     const setFeedData = async () => {
-      const data = await getFeedData(feedIdtoEdit);
+      const data = await getFeedData(feedIdToEdit);
 
       if (data) {
         setTitle(data.title);
@@ -79,7 +79,7 @@ export default function EditFeed() {
     };
 
     const setSavedAlbumData = async () => {
-      const data = await getSavedAlbumList(feedIdtoEdit);
+      const data = await getSavedAlbumList(feedIdToEdit);
 
       if (data) {
         setSelectedAlbumList(data.map((v) => v.data().name));
@@ -87,7 +87,7 @@ export default function EditFeed() {
       }
     };
 
-    const SetAcoordionData = async () => {
+    const SetAccordionData = async () => {
       if (user) {
         const result = await getAccordionData();
         setAccordionData(result.accordionData);
@@ -97,7 +97,7 @@ export default function EditFeed() {
 
     setFeedData();
     setSavedAlbumData();
-    SetAcoordionData();
+    SetAccordionData();
   }, []);
 
   const toggleKakaoMap = () => {
@@ -106,7 +106,7 @@ export default function EditFeed() {
 
   const closeEditFeedModal = () => {
     setIsEditModalOpen(false);
-    setFeedIdtoEdit('');
+    setFeedIdToEdit('');
   };
 
   const handleAddressSelect = (selectedAddress: string) => {
@@ -138,7 +138,7 @@ export default function EditFeed() {
       };
 
       await editFeed(editData);
-      navigate(`/feed/${feedIdtoEdit}`);
+      navigate(`/feed/${feedIdToEdit}`);
       closeEditFeedModal();
 
       // update feedList
@@ -152,7 +152,7 @@ export default function EditFeed() {
         }
 
         if (!savedAlbumList.includes(selectedAlbumId)) {
-          await addFeedIdFromFeedList(feedIdtoEdit, selectedAlbumId);
+          await addFeedIdFromFeedList(feedIdToEdit, selectedAlbumId);
         }
       });
 
@@ -166,7 +166,7 @@ export default function EditFeed() {
         }
 
         if (!selectedAlbumList.includes(savedAlbumName)) {
-          await removeFeedIdFromFeedList(feedIdtoEdit, savedAlbumId);
+          await removeFeedIdFromFeedList(feedIdToEdit, savedAlbumId);
         }
       });
     } catch (error) {

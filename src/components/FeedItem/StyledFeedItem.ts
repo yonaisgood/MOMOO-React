@@ -66,7 +66,7 @@ const StyledFeedItem = styled.article`
     margin-bottom: 4rem;
   }
 
-  .locaSection {
+  .locationSection {
     display: inline-block;
     margin-right: 4.8rem;
   }
@@ -105,7 +105,7 @@ const StyledFeedItem = styled.article`
       margin-bottom: 2.4rem;
     }
 
-    .locaSection {
+    .locationSection {
       margin-right: 2rem;
     }
   }

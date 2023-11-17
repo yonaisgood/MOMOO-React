@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useAuthContext from '../../hooks/useAuthContext';
 import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
-import { useremoveFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
+import { useRemoveFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
 
 const AlertModalWrap = styled.div`
   .modal-overlay {
@@ -59,7 +59,7 @@ const AlertModal = ({ onClose }: { onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const getSavedAlbumList = useGetSavedAlbumList();
-  const removeFeedIdFromFeedList = useremoveFeedIdFromFeedList();
+  const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
