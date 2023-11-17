@@ -11,6 +11,7 @@ const StyledNav = styled.nav`
   z-index: 1;
   background-color: var(--background-color);
   border-top: 1px solid var(--gray-200);
+
   .navBtn {
     width: 100%;
     display: flex;
@@ -19,6 +20,7 @@ const StyledNav = styled.nav`
     gap: 1.2rem;
     padding: 0.7rem 1.6rem;
   }
+
   .navBtn button,
   .navBtn button .homeLink {
     display: flex;
@@ -27,6 +29,7 @@ const StyledNav = styled.nav`
     align-items: center;
     flex-grow: 1;
   }
+  
   p {
     margin-top: 3px;
     font-size: 0.8rem;

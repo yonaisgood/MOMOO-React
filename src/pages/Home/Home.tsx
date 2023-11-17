@@ -1,4 +1,3 @@
-// import { Link } from 'react-router-dom';
 import StyledMain from './StyledMain';
 import StyledH2 from '../../components/StyledH2';
 import StyledHomeSection from './StyledHomeSection';

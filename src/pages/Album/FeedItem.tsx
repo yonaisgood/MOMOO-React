@@ -8,7 +8,7 @@ import useSetFeedItemLayout from './useSetFeedItemLayout';
 import usePageContext from '../../hooks/usePageContext';
 
 export default function FeedItem({ feedData }: { feedData: DocumentData }) {
-  const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
+  const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
   const { setPrevPath } = usePageContext();
   const { id } = useParams();
@@ -18,7 +18,7 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
   }, []);
 
   const setEditFeedContext = (feedId: string) => {
-    setFeedIdtoEdit(feedId);
+    setFeedIdToEdit(feedId);
     setIsEditModalOpen(true);
   };
 

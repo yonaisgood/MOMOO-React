@@ -49,7 +49,6 @@ const Preview = ({
     }
   };
 
-  // 슬라이드 인디케이터 관련
   const nextSlide = () => {
     setCurrentIndex((currentIndex + 1) % imageList.length);
   };
@@ -64,7 +63,7 @@ const Preview = ({
 
   return (
     <>
-      <PrivewSection>
+      <PreviewSection>
         <label htmlFor="file">
           <div className="btnUpload">
             <img src={ImgUpload} alt="사진 업로드 버튼" />
@@ -107,7 +106,7 @@ const Preview = ({
             </>
           )}
         </PreviewSlider>
-        <IndecatorBasicBox>
+        <IndicatorBasicBox>
           {imageList.length > 1 && (
             <IndicatorContainer>
               {imageList.map((_, index) => (
@@ -119,8 +118,8 @@ const Preview = ({
               ))}
             </IndicatorContainer>
           )}
-        </IndecatorBasicBox>
-      </PrivewSection>
+        </IndicatorBasicBox>
+      </PreviewSection>
     </>
   );
 };
@@ -170,7 +169,7 @@ const ImageGrid = styled.div`
   }
 `;
 
-const PrivewSection = styled.section`
+const PreviewSection = styled.section`
   width: 100%;
   aspect-ratio: 1/1;
   position: relative;
@@ -251,7 +250,7 @@ const PreviewSlider = styled.div`
   }
 `;
 
-const IndecatorBasicBox = styled.div`
+const IndicatorBasicBox = styled.div`
   width: 100%;
   height: 3rem;
   background-color: var(--background-color);

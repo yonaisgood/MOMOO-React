@@ -54,7 +54,6 @@ const ArrayModal: React.FC<ArrayModalProps> = ({
   onOptionClick,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  // const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (selectedOption === null) {

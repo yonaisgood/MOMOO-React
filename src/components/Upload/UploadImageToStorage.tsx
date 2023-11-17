@@ -30,7 +30,6 @@ const uploadImageToStorage = async (files: FileList, folderName: string) => {
         },
         async () => {
           try {
-            // 업로드가 성공하면 다운로드 URL을 가져오고, resolve로 반환
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             downloadURLs.push(downloadURL);
 
@@ -44,7 +43,6 @@ const uploadImageToStorage = async (files: FileList, folderName: string) => {
     });
   });
 
-  // 모든 Promise를 기다림
   await Promise.all(uploadPromises);
 
   return downloadURLs;

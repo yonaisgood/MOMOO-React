@@ -66,7 +66,7 @@ const Modal = ({
 }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
+  const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
 
   const handleDeleteFeed = () => {
     setDeleteModalOpen(true);
@@ -111,7 +111,7 @@ const Modal = ({
 
   const setEditFeedContext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setFeedIdtoEdit(feedId);
+    setFeedIdToEdit(feedId);
     setIsEditModalOpen(true);
     onClose();
   };

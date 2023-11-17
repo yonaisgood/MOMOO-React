@@ -3,15 +3,15 @@ import { createContext, useState } from 'react';
 interface ContextType {
   isEditModalOpen: boolean;
   setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  feedIdtoEdit: string;
-  setFeedIdtoEdit: React.Dispatch<React.SetStateAction<string>>;
+  feedIdToEdit: string;
+  setFeedIdToEdit: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const EditContext = createContext<ContextType>({
   isEditModalOpen: false,
   setIsEditModalOpen: () => {},
-  feedIdtoEdit: '',
-  setFeedIdtoEdit: () => {},
+  feedIdToEdit: '',
+  setFeedIdToEdit: () => {},
 });
 
 export default function EditContextProvider({
@@ -20,15 +20,15 @@ export default function EditContextProvider({
   children: React.ReactNode;
 }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [feedIdtoEdit, setFeedIdtoEdit] = useState('');
+  const [feedIdToEdit, setFeedIdToEdit] = useState('');
 
   return (
     <EditContext.Provider
       value={{
         isEditModalOpen,
         setIsEditModalOpen,
-        feedIdtoEdit,
-        setFeedIdtoEdit,
+        feedIdToEdit,
+        setFeedIdToEdit,
       }}
     >
       {children}
