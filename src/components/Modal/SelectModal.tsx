@@ -55,15 +55,26 @@ interface Props {
   onClose: () => void;
   feedId: string;
   setDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setChangeAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal = ({ onClose, feedId, setDeleteModalOpen }: Props) => {
+const Modal = ({
+  onClose,
+  feedId,
+  setDeleteModalOpen,
+  setChangeAlbumModalOpen,
+}: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { setFeedIdtoEdit, setIsEditModalOpen } = useEditContext();
 
   const handleDeleteFeed = () => {
     setDeleteModalOpen(true);
+    onClose();
+  };
+
+  const handleChangeAlbumModal = () => {
+    setChangeAlbumModalOpen(true);
     onClose();
   };
 
@@ -124,7 +135,9 @@ const Modal = ({ onClose, feedId, setDeleteModalOpen }: Props) => {
             <button type="button" onClick={setEditFeedContext}>
               수정하기
             </button>
-            <button type="button">앨범 변경하기</button>
+            <button type="button" onClick={handleChangeAlbumModal}>
+              앨범 변경하기
+            </button>
           </div>
           <button
             type="button"
