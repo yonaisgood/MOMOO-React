@@ -4,8 +4,8 @@ import useAuthContext from '../../hooks/useAuthContext';
 import GetAccordionData from '../../components/Upload/accordionData';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import {
-  useaddFeedIdFromFeedList,
-  useremoveFeedIdFromFeedList,
+  useAddFeedIdFromFeedList,
+  useRemoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
 import { useParams } from 'react-router-dom';
 
@@ -104,10 +104,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     docId: string;
   }
 
-  interface AccordionData {
-    question: string;
-    answer: string[];
-  }
   const { user } = useAuthContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -115,14 +111,10 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [savedAlbumList, setSavedAlbumList] = useState<string[]>([]);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const [accordionData, setAccordionData] = useState<AccordionData[]>([]);
-  const [clientWitch, setClientWitch] = useState(
-    document.documentElement.clientWidth,
-  );
   const getAccordionData = GetAccordionData();
   const getSavedAlbumList = useGetSavedAlbumList();
-  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
-  const removeFeedIdFromFeedList = useremoveFeedIdFromFeedList();
+  const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
+  const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
   const answerArray = answer.split(',');
 
   const { id } = useParams();
@@ -131,13 +123,9 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   }
   // 앨범데이터를 저장한 후 선택된 앨범을 보여주기
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      setClientWitch(document.documentElement.clientWidth);
-    });
-
     const setSavedAlbumData = async () => {
       const data = await getSavedAlbumList(id);
-      console.log(id);
+
       if (data) {
         setSelectedAlbumList(data.map((v) => v.data().name));
         setSavedAlbumList(data.map((v) => v.id));
@@ -149,7 +137,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     const SetAcoordionData = async () => {
       if (user) {
         const result = await getAccordionData();
-        setAccordionData(result.accordionData);
         setAlbumIdData(result.albumIdData);
       }
     };
@@ -162,8 +149,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     const fetchData = async () => {
       if (user) {
         const result = await getAccordionData();
-        console.log(result);
-        setAccordionData(result.accordionData);
         setAlbumIdData(result.albumIdData);
       }
     };
@@ -233,7 +218,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
           await removeFeedIdFromFeedList(id, savedAlbumId);
         }
       });
-      
+
       onClose();
     } catch (error) {
       console.error(error);
