@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
-import StyledFeedItem from './StyledFeedItem';
-import Modal from '../Modal/SelectModal';
-import SeeMore from '../../asset/icon/More.svg';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetFeedData from '../../hooks/useGetFeedData';
 import { DocumentData } from '@firebase/firestore';
-import Carousel from '../carousel/Carousel';
+
+import useGetFeedData from '../../hooks/useGetFeedData';
 import useEditContext from '../../hooks/useEditContext';
-import AlertModal from '../Modal/AlertModal';
+import useAuthContext from '../../hooks/useAuthContext';
+
 import ChangeAlbumModal from '../Modal/ChangeAlbumModal';
 import GetAccordionData from '../Upload/AccordionData';
-import useAuthContext from '../../hooks/useAuthContext';
+import AlertModal from '../Modal/AlertModal';
+import Modal from '../Modal/SelectModal';
+import Carousel from '../carousel/Carousel';
+import StyledFeedItem from './StyledFeedItem';
+
+import SeeMore from '../../asset/icon/More.svg';
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);

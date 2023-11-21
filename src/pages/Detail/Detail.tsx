@@ -5,7 +5,7 @@ import usePageContext from '../../hooks/usePageContext';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import FeedItem from '../../components/FeedItem/FeedItem';
 import TopBar from '../../components/Topbar/Topbar';
-import DetailLayout  from './StyledDetail';
+import DetailLayout from './StyledDetail';
 
 function Detail() {
   const [clientWitch, setClientWitch] = useState(
@@ -30,6 +30,7 @@ function Detail() {
     });
   }
   navList.push({ path: '/', text: 'feed' });
+
   return (
     <>
       {clientWitch <= 430 && <TopBar tit="게시물" />}

@@ -77,7 +77,6 @@ function Upload() {
   };
 
   const closeUploadModal = () => {
-    // context 초기화
     setIsUploadModalOpen(false);
     setAlbumNameListToAdd(albumNameListToAdd.slice(0, 1));
   };
@@ -155,13 +154,14 @@ function Upload() {
   return (
     <StyledOverlay>
       <Styled.UploadWrapper>
+        <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
           {clientWitch <= 430 && (
             <Styled.MobileCloseBtn onClick={closeUploadModal}>
               <img src={CloseMobileIcon} alt="닫기" />
             </Styled.MobileCloseBtn>
           )}
-          <h1>새 게시물</h1>
+          <h2>새 게시물</h2>
           <button className="uploadBtn" type="button" onClick={handleSubmit}>
             업로드
           </button>
