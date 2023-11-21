@@ -9,7 +9,7 @@ import Carousel from '../carousel/Carousel';
 import useEditContext from '../../hooks/useEditContext';
 import AlertModal from '../Modal/AlertModal';
 import ChangeAlbumModal from '../Modal/ChangeAlbumModal';
-import GetAccordionData from '../Upload/accordionData';
+import GetAccordionData from '../Upload/AccordionData';
 import useAuthContext from '../../hooks/useAuthContext';
 
 export default function FeedItem() {

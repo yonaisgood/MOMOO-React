@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import StyledInput from '../../components/StyledInput';
 import StyledMain from './StyledMain';
-import Button from '../../components/Button/Button';
+import Button from '../../components/Button/Button/Button';
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';

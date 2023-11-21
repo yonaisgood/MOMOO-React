@@ -1,12 +1,5 @@
 import styled, { css } from 'styled-components';
 
-interface ButtonProps {
-  children: React.ReactNode;
-  size?: 'l' | 'm' | 's' | 'xs';
-  disabled?: boolean;
-}
-
-// 버튼 크기에 따른 스타일 정의
 const sizeStyles = {
   l: css`
     width: 48rem;
@@ -54,8 +47,4 @@ const BtnStyle = styled.button<{ size?: 'l' | 'm' | 's' | 'xs' }>`
   }
 `;
 
-const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
-  return <BtnStyle {...props}>{children}</BtnStyle>;
-};
-
-export default Button;
+export { sizeStyles, BtnStyle };

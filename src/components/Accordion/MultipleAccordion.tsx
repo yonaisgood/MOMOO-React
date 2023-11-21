@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { AccordionWrapper, MultiAccordionWrapper } from './AccordionStyle';
+
+import { AccordionWrapper, MultiAccordionWrapper } from './StyledAccordion';
+
 import Direction from '../../asset/icon/Arrow.svg';
 
 interface AccordionProps {

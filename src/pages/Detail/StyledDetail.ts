@@ -29,4 +29,4 @@ const DetailLayout = styled.main`
   }
 `;
 
-export { DetailLayout };
+export default DetailLayout;

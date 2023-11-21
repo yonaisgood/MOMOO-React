@@ -1,25 +1,28 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-import KakaoMap from '../Map/KakaoMap';
-import Preview from '../FileUpload/Preview';
-import Accordion from '../Accordion/Accordion';
-import MultipleAccordion from '../Accordion/MultipleAccordion';
-import Arrow from '../../asset/icon/Arrow.svg';
-import CloseMobileIcon from '../../asset/icon/X-Small.svg';
-import CloseIcon from '../../asset/icon/X-White.svg';
-import * as Styled from './UploadStyle';
-import StyledOverlay from './StyledOverlay';
-import GetAccordionData from './accordionData';
-import uploadImageToStorage from './UploadImageToStorage';
-import useAuthContext from '../../hooks/useAuthContext';
-import useEditContext from '../../hooks/useEditContext';
-import useGetFeedData from '../../hooks/useGetFeedData';
-import useEditFeed from '../../hooks/useEditFeed';
+import { useNavigate } from 'react-router-dom';
+
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import {
   useAddFeedIdFromFeedList,
   useRemoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
-import { useNavigate } from 'react-router-dom';
+import useAuthContext from '../../hooks/useAuthContext';
+import useEditContext from '../../hooks/useEditContext';
+import useGetFeedData from '../../hooks/useGetFeedData';
+import useEditFeed from '../../hooks/useEditFeed';
+
+import KakaoMap from '../Map/KakaoMap';
+import Preview from '../FileUpload/Preview';
+import Accordion from '../Accordion/Accordion';
+import MultipleAccordion from '../Accordion/MultipleAccordion';
+import uploadImageToStorage from './UploadImageToStorage';
+import StyledOverlay from './StyledOverlay';
+import GetAccordionData from './AccordionData';
+import * as Styled from './Upload/StyledUpload';
+
+import Arrow from '../../asset/icon/Arrow.svg';
+import CloseMobileIcon from '../../asset/icon/X-Small.svg';
+import CloseIcon from '../../asset/icon/X-White.svg';
 
 export default function EditFeed() {
   interface AccordionData {
@@ -50,9 +53,9 @@ export default function EditFeed() {
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   const { user } = useAuthContext();
+  const navigate = useNavigate();
   const { setIsEditModalOpen, feedIdToEdit, setFeedIdToEdit } =
     useEditContext();
-  const navigate = useNavigate();
 
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
@@ -141,7 +144,6 @@ export default function EditFeed() {
       navigate(`/feed/${feedIdToEdit}`);
       closeEditFeedModal();
 
-      // update feedList
       selectedAlbumList.forEach(async (selectedAlbumName) => {
         let selectedAlbumId = '';
 

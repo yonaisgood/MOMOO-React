@@ -1,11 +1,11 @@
 import { SyntheticEvent, useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useAuthContext from '../../hooks/useAuthContext';
-import GetAccordionData from '../../components/Upload/accordionData';
+import GetAccordionData from '../Upload/AccordionData';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import {
-  useaddFeedIdFromFeedList,
-  useremoveFeedIdFromFeedList,
+  useAddFeedIdFromFeedList,
+  useRemoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
 import { useParams } from 'react-router-dom';
 
@@ -121,15 +121,15 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   );
   const getAccordionData = GetAccordionData();
   const getSavedAlbumList = useGetSavedAlbumList();
-  const addFeedIdFromFeedList = useaddFeedIdFromFeedList();
-  const removeFeedIdFromFeedList = useremoveFeedIdFromFeedList();
+  const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
+  const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
   const answerArray = answer.split(',');
 
   const { id } = useParams();
   if (!id) {
     return;
   }
-  // 앨범데이터를 저장한 후 선택된 앨범을 보여주기
+
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
@@ -205,7 +205,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     e.preventDefault();
 
     try {
-      // update feedList
       selectedAlbumList.forEach(async (selectedAlbumName) => {
         let selectedAlbumId = '';
 
@@ -233,7 +232,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
           await removeFeedIdFromFeedList(id, savedAlbumId);
         }
       });
-      
+
       onClose();
     } catch (error) {
       console.error(error);
@@ -241,7 +240,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   };
 
   const MultiAnswerClick = (text: string) => {
-    // 이미 선택된 텍스트인지 확인
     const isSelected = selectedAlbumList.includes(text);
 
     if (isSelected) {

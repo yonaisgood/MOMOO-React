@@ -1,22 +1,25 @@
 import { SyntheticEvent, useState, useEffect } from 'react';
-import { appFireStore, Timestamp } from '../../firebase/config';
-import { doc, setDoc } from 'firebase/firestore';
-import * as Styled from './UploadStyle';
-import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
-import uploadImageToStorage from './UploadImageToStorage';
-import useAuthContext from '../../hooks/useAuthContext';
-import KakaoMap from '../../components/Map/KakaoMap';
-import Preview from '../../components/FileUpload/Preview';
-import Arrow from '../../asset/icon/Arrow.svg';
-import CloseIcon from '../../asset/icon/X-White.svg';
-import CloseMobileIcon from '../../asset/icon/X-Small.svg';
-import Accordion from '../../components/Accordion/Accordion';
-import GetAccordionData from './accordionData';
-import MultipleAccordion from '../Accordion/MultipleAccordion';
-import StyledOverlay from './StyledOverlay';
-import useUploadContext from '../../hooks/useUploadContext';
-import { useAddFeedIdFromFeedList } from '../../hooks/useUpdateFeedList';
+import { v4 as uuidv4 } from 'uuid';
+import { appFireStore, Timestamp } from '../../../firebase/config';
+import { doc, setDoc } from 'firebase/firestore';
+
+import { useAddFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
+import useUploadContext from '../../../hooks/useUploadContext';
+import useAuthContext from '../../../hooks/useAuthContext';
+
+import Accordion from '../../Accordion/Accordion';
+import GetAccordionData from '../AccordionData';
+import MultipleAccordion from '../../Accordion/MultipleAccordion';
+import StyledOverlay from '../StyledOverlay';
+import Preview from '../../FileUpload/Preview';
+import uploadImageToStorage from '../UploadImageToStorage';
+import KakaoMap from '../../Map/KakaoMap';
+import * as Styled from './StyledUpload';
+
+import Arrow from '../../../asset/icon/Arrow.svg';
+import CloseIcon from '../../../asset/icon/X-White.svg';
+import CloseMobileIcon from '../../../asset/icon/X-Small.svg';
 
 function Upload() {
   const { user } = useAuthContext();

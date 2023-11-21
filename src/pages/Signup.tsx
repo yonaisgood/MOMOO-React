@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import StyledInput from '../components/StyledInput';
 import StyledAuth from '../components/StyledAuth';
-import Button from '../components/Button/Button.tsx';
+import Button from '../components/Button/Button/Button.tsx';
 import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
