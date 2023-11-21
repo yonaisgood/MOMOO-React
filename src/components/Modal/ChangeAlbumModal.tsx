@@ -1,7 +1,7 @@
 import { SyntheticEvent, useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useAuthContext from '../../hooks/useAuthContext';
-import GetAccordionData from '../Upload/AccordionData';
+import GetAccordionData from '../Upload/GetAccordionData';
 import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
 import {
   useAddFeedIdFromFeedList,

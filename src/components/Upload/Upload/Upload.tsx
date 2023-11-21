@@ -9,7 +9,7 @@ import useUploadContext from '../../../hooks/useUploadContext';
 import useAuthContext from '../../../hooks/useAuthContext';
 
 import Accordion from '../../Accordion/Accordion';
-import GetAccordionData from '../AccordionData';
+import GetAccordionData from '../GetAccordionData';
 import MultipleAccordion from '../../Accordion/MultipleAccordion';
 import StyledOverlay from '../StyledOverlay';
 import Preview from '../../FileUpload/Preview';

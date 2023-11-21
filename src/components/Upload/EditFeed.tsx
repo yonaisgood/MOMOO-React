@@ -17,7 +17,7 @@ import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import uploadImageToStorage from './UploadImageToStorage';
 import StyledOverlay from './StyledOverlay';
-import GetAccordionData from './AccordionData';
+import GetAccordionData from './GetAccordionData';
 import * as Styled from './Upload/StyledUpload';
 
 import Arrow from '../../asset/icon/Arrow.svg';
