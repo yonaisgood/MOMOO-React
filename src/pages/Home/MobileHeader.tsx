@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+
 import LogoImg from '../../asset/icon/Logo.svg';
 
 export default function MobileHeader() {
   return (
     <StyledH1>
+      <h1 className="a11y-hidden">MoMoo</h1>
       <img src={LogoImg} alt="모무" />
     </StyledH1>
   );

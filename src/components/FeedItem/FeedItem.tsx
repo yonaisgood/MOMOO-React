@@ -6,10 +6,10 @@ import useGetFeedData from '../../hooks/useGetFeedData';
 import useEditContext from '../../hooks/useEditContext';
 import useAuthContext from '../../hooks/useAuthContext';
 
-import ChangeAlbumModal from '../Modal/ChangeAlbumModal';
+import ChangeAlbumModal from '../Modal/ChangeAlbumModal/ChangeAlbumModal';
 import GetAccordionData from '../Upload/GetAccordionData';
-import AlertModal from '../Modal/AlertModal';
-import Modal from '../Modal/SelectModal';
+import AlertModal from '../Modal/AlertModal/AlertModal';
+import Modal from '../Modal/SelectModal/SelectModal';
 import Carousel from '../carousel/Carousel';
 import StyledFeedItem from './StyledFeedItem';
 

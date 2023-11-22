@@ -1,14 +1,16 @@
-import StyledMain from './StyledMain';
+import { useState, useEffect } from 'react';
+
+import useGetAlbumList from '../../hooks/useGetAlbumList';
+
 import StyledH2 from '../../components/StyledH2';
-import StyledHomeSection from './StyledHomeSection';
+import Album from '../../components/Album/Album';
+import NewAlbumModal from '../../components/Modal/NewAlbumModal/NewAlbumModal';
+import ArrayModal from '../../components/Modal/ArrayModal/ArrayModal';
+import MobileHeader from './MobileHeader';
+import { StyledMain, StyledHomeSection } from './StyledHome';
+
 import AddImg from '../../asset/icon/Add.svg';
 import ArrayImg from '../../asset/icon/Array.svg';
-import Album from '../../components/Album/Album';
-import { useState, useEffect } from 'react';
-import NewAlbumModal from '../../components/Modal/NewAlbumModal';
-import ArrayModal from '../../components/Modal/ArrayModal';
-import MobileHeader from './MobileHeader';
-import useGetAlbumList from '../../hooks/useGetAlbumList';
 
 export default function Home() {
   const [isArrayModalOpen, setIsArrayModalOpen] = useState(false);
