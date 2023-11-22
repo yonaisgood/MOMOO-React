@@ -7,7 +7,7 @@ import useEditContext from '../../hooks/useEditContext';
 import useAuthContext from '../../hooks/useAuthContext';
 
 import ChangeAlbumModal from '../Modal/ChangeAlbumModal';
-import GetAccordionData from '../Upload/AccordionData';
+import GetAccordionData from '../Upload/GetAccordionData';
 import AlertModal from '../Modal/AlertModal';
 import Modal from '../Modal/SelectModal';
 import Carousel from '../carousel/Carousel';
