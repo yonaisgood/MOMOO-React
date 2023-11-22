@@ -1,7 +1,8 @@
 import { appFireStore } from '../firebase/config';
 import { doc, deleteDoc, getDoc } from 'firebase/firestore';
-import useAuthContext from '../hooks/useAuthContext';
 import { User } from '@firebase/auth';
+
+import useAuthContext from '../hooks/useAuthContext';
 
 export default function useDeleteAlbum() {
   const { user: contextUser } = useAuthContext();
