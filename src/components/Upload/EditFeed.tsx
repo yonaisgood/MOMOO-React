@@ -15,11 +15,11 @@ import KakaoMap from '../Map/KakaoMap';
 import Preview from '../FileUpload/Preview';
 import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
-import * as Styled from './UploadStyle';
+import * as Styled from './Upload/StyledUpload';
 import StyledOverlay from './StyledOverlay';
 
 import { deleteImg } from '../../SDKUtiles';
-import GetAccordionData from './accordionData';
+import GetAccordionData from './GetAccordionData';
 import uploadImageToStorage from './UploadImageToStorage';
 
 import Arrow from '../../asset/icon/Arrow.svg';

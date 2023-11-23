@@ -1,13 +1,16 @@
-import StyledNav from './StyledNav';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import useUploadContext from '../../hooks/useUploadContext';
+
 import MyPopup from '../MyPopup/MyPopup';
+import StyledNav from './StyledNav';
+
 import HomeImg from '../../asset/icon/HomePc.svg';
 import LogoImg from '../../asset/icon/Logo.svg';
 import LogoColImg from '../../asset/icon/Logo-col.svg';
 import UploadImg from '../../asset/icon/UploadPc.svg';
 import MypageImg from '../../asset/icon/ProfilePc.svg';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import useUploadContext from '../../hooks/useUploadContext';
 
 export default function Nav() {
   const [openMyModal, setOpenMyModal] = useState(false);
@@ -56,6 +59,7 @@ export default function Nav() {
             </button>
           </div>
           <Link to="/home">
+            <h1 className="a11y-hidden">MoMoo</h1>
             <img
               className="logoImg"
               src={clientWitch > 1007 ? LogoColImg : LogoImg}

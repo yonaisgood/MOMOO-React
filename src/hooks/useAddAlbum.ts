@@ -1,7 +1,8 @@
 import { appFireStore, Timestamp } from '../firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
-import useAuthContext from '../hooks/useAuthContext';
 import { User } from '@firebase/auth';
+
+import useAuthContext from '../hooks/useAuthContext';
 
 export default function useAddAlbum() {
   const { user: contextUser } = useAuthContext();

@@ -1,49 +1,37 @@
 import { useRef, useEffect } from 'react';
-import styled from 'styled-components';
 
-const SelectModal = styled.div`
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+import useEditContext from '../../../hooks/useEditContext';
 
-  .modal-content {
-    background-color: var(--background-color);
-    border-radius: 1rem;
-    width: 32rem;
-    height: 17.2rem;
-    font-size: var(--text-s);
-  }
+import { SelectModal, Header } from './StyledSelectModal';
 
-  .modal-list button {
-    width: 100%;
-    padding: 0.9rem 1.6rem;
-    text-align: start;
-    font-size: var(--text-s);
-    transition: all 0.2s ease-in-out;
-  }
-  .modal-list button p:last-child {
-    color: var(--gray-700);
-  }
-  .modal-list button:hover {
-    background-color: var(--point-color);
-  }
-`;
+import Close from '../../../asset/icon/X-Small.svg';
 
-const Header = styled.header`
-  padding: 1.8rem 1.6rem;
-`;
+interface Props {
+  onClose: () => void;
+  feedId: string;
+  setDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setChangeAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
+const Modal = ({
+  onClose,
+  feedId,
+  setDeleteModalOpen,
+  setChangeAlbumModalOpen,
+}: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
+
+  const handleDeleteFeed = () => {
+    setDeleteModalOpen(true);
+    onClose();
+  };
+
+  const handleChangeAlbumModal = () => {
+    setChangeAlbumModalOpen(true);
+    onClose();
+  };
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -76,6 +64,13 @@ const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
     };
   }, []);
 
+  const setEditFeedContext = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFeedIdToEdit(feedId);
+    setIsEditModalOpen(true);
+    onClose();
+  };
+
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
       <div className="modal-overlay">
@@ -86,21 +81,31 @@ const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
           ref={modalRef}
         >
           <Header className="modal-header" id="modal-select">
-            <h2 tabIndex={0}>서울</h2>
+            <h2 tabIndex={0}>게시글 변경</h2>
           </Header>
           <div className="modal-list">
-            <button type="submit" onClick={onClose} ref={closeButtonRef}>
-              <p>서울랜드</p>
-              <p>경기 과천시 광명로 181</p>
+            <button type="button" onClick={handleDeleteFeed}>
+              삭제하기
             </button>
-            <button type="submit" onClick={onClose} ref={closeButtonRef}>
-              <p>서울랜드</p>
-              <p>경기 과천시 광명로 181</p>
+            <button type="button" onClick={setEditFeedContext}>
+              수정하기
+            </button>
+            <button type="button" onClick={handleChangeAlbumModal}>
+              앨범 변경하기
             </button>
           </div>
+          <button
+            type="button"
+            className="close-button"
+            onClick={onClose}
+            tabIndex={0}
+            ref={closeButtonRef}
+          >
+            <img src={Close} alt="모달 닫기 버튼" />
+          </button>
         </div>
       </div>
     </SelectModal>
   );
 };
-export default LocationSelectModal;
+export default Modal;

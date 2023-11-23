@@ -42,7 +42,7 @@ const UploadHeader = styled.header`
   padding: 1.2rem 1.6rem;
   border-bottom: 1px solid var(--gray-200);
 
-  h1 {
+  h2 {
     margin: auto;
     font-size: var(--text-l);
   }

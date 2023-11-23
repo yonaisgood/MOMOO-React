@@ -1,97 +1,18 @@
 import { SyntheticEvent, useRef, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import useAuthContext from '../../hooks/useAuthContext';
-import GetAccordionData from '../../components/Upload/accordionData';
-import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
+import { useParams } from 'react-router-dom';
+
+import useAuthContext from '../../../hooks/useAuthContext';
 import {
   useAddFeedIdFromFeedList,
   useRemoveFeedIdFromFeedList,
-} from '../../hooks/useUpdateFeedList';
-import { useParams } from 'react-router-dom';
+} from '../../../hooks/useUpdateFeedList';
+import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
 
-const ChangeModalWrap = styled.div`
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-  }
-
-  header {
-    padding: 2rem 0 1.8rem;
-    text-align: center;
-    font-size: var(--text-l);
-
-    p {
-      font-size: var(--text-s);
-      color: var(--gray-600);
-    }
-  }
-
-  .modalContent {
-    overflow: hidden;
-    background: var(--background-color);
-    border-radius: 10px;
-    width: 32rem;
-    font-size: var(--text-l);
-    position: relative;
-  }
-
-  .modalList {
-    button {
-      width: 50%;
-      text-align: center;
-      padding: 1.2rem 0;
-      font-size: var(--text-m);
-      transition: all 0.2s ease-in-out;
-      border-top: 1px solid var(--gray-200);
-    }
-
-    button:first-child {
-      border-right: 1px solid var(--gray-200);
-    }
-
-    button:hover {
-      background-color: var(--point-color);
-    }
-  }
-`;
-
-const MultiAccordionWrapper = styled.div`
-  min-height: 12rem;
-  margin: 0 0 1.2rem 1.6rem;
-  overflow: hidden;
-
-  #multiAnswer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    overflow-y: scroll;
-
-    button {
-      min-width: 8.8rem;
-      background-color: var(--gray-100);
-      padding: 0.7rem 1.6rem;
-      font-size: var(--text-s);
-      color: var(--gray-900);
-      border-radius: 4px;
-    }
-
-    button:hover {
-      background-color: var(--point-color);
-    }
-
-    button.selected {
-      background-color: var(--point-color);
-    }
-  }
-`;
+import GetAccordionData from '../../Upload/GetAccordionData';
+import {
+  ChangeModalWrap,
+  MultiAccordionWrapper,
+} from './StyledChangeAlbumModal';
 
 interface AccordionProps {
   answer: string;
@@ -121,7 +42,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   if (!id) {
     return;
   }
-  // 앨범데이터를 저장한 후 선택된 앨범을 보여주기
+
   useEffect(() => {
     const setSavedAlbumData = async () => {
       const data = await getSavedAlbumList(id);
@@ -190,7 +111,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     e.preventDefault();
 
     try {
-      // update feedList
       selectedAlbumList.forEach(async (selectedAlbumName) => {
         let selectedAlbumId = '';
 
@@ -226,7 +146,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   };
 
   const MultiAnswerClick = (text: string) => {
-    // 이미 선택된 텍스트인지 확인
     const isSelected = selectedAlbumList.includes(text);
 
     if (isSelected) {

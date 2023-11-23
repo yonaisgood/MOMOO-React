@@ -1,9 +1,11 @@
-import { DetailLayout } from './DetailStyle';
+import { useEffect, useState } from 'react';
+
+import usePageContext from '../../hooks/usePageContext';
+
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import FeedItem from '../../components/FeedItem/FeedItem';
-import { useEffect, useState } from 'react';
 import TopBar from '../../components/Topbar/Topbar';
-import usePageContext from '../../hooks/usePageContext';
+import DetailLayout from './StyledDetail';
 
 function Detail() {
   const [clientWitch, setClientWitch] = useState(
@@ -28,6 +30,7 @@ function Detail() {
     });
   }
   navList.push({ path: '/', text: 'feed' });
+
   return (
     <>
       {clientWitch <= 430 && <TopBar tit="게시물" />}

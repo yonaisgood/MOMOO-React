@@ -1,10 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-
-interface RadioButtonProps {
-  label: string;
-  groupName: string;
-}
 
 const RadioButtonContainer = styled.div`
   input[type='radio'] {
@@ -31,13 +25,4 @@ const RadioButtonContainer = styled.div`
   }
 `;
 
-const RadioButton: React.FC<RadioButtonProps> = ({ label, groupName }) => {
-  return (
-    <RadioButtonContainer>
-      <input type='radio' id={label} name={groupName} />
-      <label htmlFor={label}>{label}</label>
-    </RadioButtonContainer>
-  );
-};
-
-export default RadioButton;
+export default RadioButtonContainer;

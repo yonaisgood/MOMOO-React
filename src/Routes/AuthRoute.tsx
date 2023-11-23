@@ -3,7 +3,7 @@ import useAuthContext from '../hooks/useAuthContext';
 import useEditContext from '../hooks/useEditContext';
 import EditFeed from '../components/Upload/EditFeed';
 import useUploadContext from '../hooks/useUploadContext';
-import Upload from '../components/Upload/Upload';
+import Upload from '../components/Upload/Upload/Upload';
 
 export function AuthRoute() {
   const { user } = useAuthContext();

@@ -1,5 +1,9 @@
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { getStorage } from 'firebase/storage';
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+} from 'firebase/storage';
 
 const uploadImageToStorage = async (files: FileList, folderName: string) => {
   const storage = getStorage();

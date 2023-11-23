@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import StyledInput from '../components/CommonStyled/StyledInput';
 import StyledAuth from '../components/CommonStyled/StyledAuth';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import Button from '../components/Button/Button';
+import Button from '../components/Button/Button/Button';
 import Logo from '../asset/icon/Logo.svg';
 import { useLogin } from '../hooks/useLogin';
 
