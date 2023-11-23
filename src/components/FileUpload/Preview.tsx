@@ -219,7 +219,6 @@ const PreviewSection = styled.section`
 
 const PreviewSlider = styled.div`
   width: 100%;
-  height: calc(100% - 3rem);
   margin: 0 auto;
 
   button {

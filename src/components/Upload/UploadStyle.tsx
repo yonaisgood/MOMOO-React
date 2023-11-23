@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
-  width: 80rem;
+  width: max-content;
+  min-width: 480px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -14,7 +15,7 @@ const UploadWrapper = styled.div`
 
   @media (max-width: 1024px) {
     width: 52rem;
-    min-height: 93rem;
+    max-height: 93rem;
     overflow: scroll;
     scroll-behavior: hidden;
   }
@@ -39,6 +40,7 @@ const UploadHeader = styled.header`
   display: flex;
   align-items: center;
   padding: 1.2rem 1.6rem;
+  border-bottom: 1px solid var(--gray-200);
 
   h1 {
     margin: auto;
@@ -69,8 +71,11 @@ const MobileCloseBtn = styled.button`
 
 const PicPart = styled.section`
   width: 100%;
-  aspect-ratio: 1/1;
   background-color: var(--gray-900);
+
+  @media (min-width: 431px) {
+    min-width: 480px;
+  }
 
   @media (max-width: 430px) {
     width: 100vm;
@@ -83,11 +88,9 @@ const PicPart = styled.section`
 const SelectPart = styled.section`
   position: relative;
   width: 100%;
-  aspect-ratio: 2/3;
 
   .inputWrapper {
     padding: 1.3rem 1.6rem;
-    border-top: 1px solid var(--gray-200);
     border-bottom: 1px solid var(--gray-200);
     font-size: var(--text-m);
   }
@@ -112,17 +115,11 @@ const SelectPart = styled.section`
       resize: none;
     }
   }
-
-  @media (max-width: 430px) {
-    .inputWrapper {
-      border-top: none;
-    }
-  }
 `;
 
 const UploadContents = styled.div`
   width: 100%;
-  height: 48rem;
+  min-height: 48rem;
   display: flex;
   justify-content: space-between;
 

@@ -25,6 +25,8 @@ import uploadImageToStorage from './UploadImageToStorage';
 import Arrow from '../../asset/icon/Arrow.svg';
 import CloseMobileIcon from '../../asset/icon/X-Small.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
+import LoadingIcon from '../../asset/icon/Loading.svg';
+import StyledLoadingImg from '../CommonStyled/StyledLodingImg';
 
 export default function EditFeed() {
   interface AccordionData {
@@ -53,6 +55,7 @@ export default function EditFeed() {
   );
   const [accordionData, setAccordionData] = useState<AccordionData[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
+  const [isPending, setIsPending] = useState(false);
 
   const { user } = useAuthContext();
   const { setIsEditModalOpen, feedIdToEdit, setFeedIdToEdit } =
@@ -127,6 +130,8 @@ export default function EditFeed() {
     }
 
     try {
+      setIsPending(true);
+
       let downloadURLs: string[] = imgUrlList;
 
       if (file !== null) {
@@ -143,8 +148,6 @@ export default function EditFeed() {
       };
 
       await editFeed(editData);
-      navigate(`/feed/${feedIdToEdit}`);
-      closeEditFeedModal();
 
       // update feedList
       selectedAlbumList.forEach(async (selectedAlbumName) => {
@@ -176,12 +179,16 @@ export default function EditFeed() {
       });
 
       // 이미지 삭제 실패 시, 게시글 수정이 중단되지 않도록 try 마지막에 위치
-      if (file === null) {
+      if (file !== null) {
         imgUrlList.forEach(async (url) => await deleteImg(url));
       }
     } catch (error) {
       console.error(error);
     }
+
+    setIsPending(false);
+    navigate(`/feed/${feedIdToEdit}`);
+    closeEditFeedModal();
   };
 
   return (
@@ -199,84 +206,92 @@ export default function EditFeed() {
           </button>
         </Styled.UploadHeader>
         <Styled.UploadContents>
-          <Styled.PicPart>
-            <Preview setFile={setFile} imgUrlList={imgUrlList} />
-          </Styled.PicPart>
-          <Styled.SelectPart>
-            <div className="inputWrapper">
-              <input
-                type="text"
-                placeholder="제목을 입력해주세요"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                required
-              />
-            </div>
-            <form className="uploadInfo">
-              <textarea
-                id="uploadText"
-                maxLength={1000}
-                cols={30}
-                rows={10}
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value);
-                }}
-                placeholder="문구를 입력해주세요..."
-              ></textarea>
-            </form>
-            <Styled.LocationContents onClick={toggleKakaoMap}>
-              <div className="locationHead">
-                {selectedAddress ? (
-                  <p>선택한 주소: {selectedAddress}</p>
-                ) : (
-                  <h2>위치 추가</h2>
+          {isPending ? (
+            <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
+          ) : (
+            <>
+              <Styled.PicPart>
+                <Preview setFile={setFile} imgUrlList={imgUrlList} />
+              </Styled.PicPart>
+              <Styled.SelectPart>
+                <div className="inputWrapper">
+                  <input
+                    type="text"
+                    placeholder="제목을 입력해주세요"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                    required
+                  />
+                </div>
+                <form className="uploadInfo">
+                  <textarea
+                    id="uploadText"
+                    maxLength={1000}
+                    cols={30}
+                    rows={10}
+                    value={text}
+                    onChange={(e) => {
+                      setText(e.target.value);
+                    }}
+                    placeholder="문구를 입력해주세요..."
+                  ></textarea>
+                </form>
+                <Styled.LocationContents onClick={toggleKakaoMap}>
+                  <div className="locationHead">
+                    {selectedAddress ? (
+                      <p>선택한 주소: {selectedAddress}</p>
+                    ) : (
+                      <h2>위치 추가</h2>
+                    )}
+                    <img
+                      className={kakaoMapVisible ? 'rotate' : ''}
+                      src={Arrow}
+                      alt="위치토글아이콘"
+                    />
+                  </div>
+                </Styled.LocationContents>
+                {kakaoMapVisible && (
+                  <Styled.KakaoMapContainer>
+                    <KakaoMap
+                      onAddressSelect={(address) =>
+                        handleAddressSelect(address)
+                      }
+                    />
+                  </Styled.KakaoMapContainer>
                 )}
-                <img
-                  className={kakaoMapVisible ? 'rotate' : ''}
-                  src={Arrow}
-                  alt="위치토글아이콘"
-                />
-              </div>
-            </Styled.LocationContents>
-            {kakaoMapVisible && (
-              <Styled.KakaoMapContainer>
-                <KakaoMap
-                  onAddressSelect={(address) => handleAddressSelect(address)}
-                />
-              </Styled.KakaoMapContainer>
-            )}
-            <Styled.AccordionContents>
-              {accordionData.slice(1, 2).map(() => (
-                <MultipleAccordion
-                  key={0}
-                  question={accordionData[0].question}
-                  answer={accordionData[0].answer.join(',')}
-                  selectedAlbum={selectedAlbumList}
-                  setSelectedAlbum={setSelectedAlbumList}
-                />
-              ))}
-              {accordionData.slice(1, 3).map((data, index) => (
-                <Accordion
-                  key={index}
-                  question={data.question}
-                  answer={data.answer.join(',')}
-                  selectedImages={
-                    data.question === '오늘의 날씨'
-                      ? selectedWeatherImage
-                      : selectedEmotionImage
-                  }
-                  setSelectedImages={
-                    data.question === '오늘의 날씨'
-                      ? setSelectedWeatherImage
-                      : setSelectedEmotionImage
-                  }
-                />
-              ))}
-            </Styled.AccordionContents>
-          </Styled.SelectPart>
+                <Styled.AccordionContents>
+                  {accordionData.slice(1, 2).map(() => (
+                    <MultipleAccordion
+                      key={0}
+                      question={accordionData[0].question}
+                      answer={accordionData[0].answer.join(',')}
+                      selectedAlbum={selectedAlbumList}
+                      setSelectedAlbum={setSelectedAlbumList}
+                    />
+                  ))}
+                  {accordionData.slice(1, 3).map((data, index) => (
+                    <Accordion
+                      key={index}
+                      question={data.question}
+                      answer={data.answer.join(',')}
+                      selectedImages={
+                        data.question === '오늘의 날씨'
+                          ? selectedWeatherImage
+                          : selectedEmotionImage
+                      }
+                      setSelectedImages={
+                        data.question === '오늘의 날씨'
+                          ? setSelectedWeatherImage
+                          : setSelectedEmotionImage
+                      }
+                    />
+                  ))}
+                </Styled.AccordionContents>
+              </Styled.SelectPart>
+            </>
+          )}
         </Styled.UploadContents>
       </Styled.UploadWrapper>
       <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
