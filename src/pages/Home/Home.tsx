@@ -1,5 +1,5 @@
 import StyledMain from './StyledMain';
-import StyledH2 from '../../components/StyledH2';
+import StyledH2 from '../../components/CommonStyled/StyledH2';
 import StyledHomeSection from './StyledHomeSection';
 import AddImg from '../../asset/icon/Add.svg';
 import ArrayImg from '../../asset/icon/Array.svg';
