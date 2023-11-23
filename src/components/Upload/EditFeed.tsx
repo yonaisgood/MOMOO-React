@@ -1,15 +1,6 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-import KakaoMap from '../Map/KakaoMap';
-import Preview from '../FileUpload/Preview';
-import Accordion from '../Accordion/Accordion';
-import MultipleAccordion from '../Accordion/MultipleAccordion';
-import Arrow from '../../asset/icon/Arrow.svg';
-import CloseMobileIcon from '../../asset/icon/X-Small.svg';
-import CloseIcon from '../../asset/icon/X-White.svg';
-import * as Styled from './UploadStyle';
-import StyledOverlay from './StyledOverlay';
-import GetAccordionData from './accordionData';
-import uploadImageToStorage from './UploadImageToStorage';
+import { useNavigate } from 'react-router-dom';
+
 import useAuthContext from '../../hooks/useAuthContext';
 import useEditContext from '../../hooks/useEditContext';
 import useGetFeedData from '../../hooks/useGetFeedData';
@@ -19,7 +10,21 @@ import {
   useAddFeedIdFromFeedList,
   useRemoveFeedIdFromFeedList,
 } from '../../hooks/useUpdateFeedList';
-import { useNavigate } from 'react-router-dom';
+
+import KakaoMap from '../Map/KakaoMap';
+import Preview from '../FileUpload/Preview';
+import Accordion from '../Accordion/Accordion';
+import MultipleAccordion from '../Accordion/MultipleAccordion';
+import * as Styled from './UploadStyle';
+import StyledOverlay from './StyledOverlay';
+
+import { deleteImg } from '../../SDKUtiles';
+import GetAccordionData from './accordionData';
+import uploadImageToStorage from './UploadImageToStorage';
+
+import Arrow from '../../asset/icon/Arrow.svg';
+import CloseMobileIcon from '../../asset/icon/X-Small.svg';
+import CloseIcon from '../../asset/icon/X-White.svg';
 
 export default function EditFeed() {
   interface AccordionData {
@@ -169,6 +174,11 @@ export default function EditFeed() {
           await removeFeedIdFromFeedList(feedIdToEdit, savedAlbumId);
         }
       });
+
+      // 이미지 삭제 실패 시, 게시글 수정이 중단되지 않도록 try 마지막에 위치
+      if (file === null) {
+        imgUrlList.forEach(async (url) => await deleteImg(url));
+      }
     } catch (error) {
       console.error(error);
     }
