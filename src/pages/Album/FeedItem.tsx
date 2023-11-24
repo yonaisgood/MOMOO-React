@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
 import { Link, useParams } from 'react-router-dom';
-import { StyledFeedItem } from './StyledGridFeed';
+import { StyledFeedItem } from './StyledAlbum';
 import EditIcon from '../../asset/icon/Edit.svg';
 import useEditContext from '../../hooks/useEditContext';
 import useSetFeedItemLayout from './useSetFeedItemLayout';

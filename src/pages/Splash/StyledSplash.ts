@@ -20,7 +20,7 @@ const sliceCircle = keyframes`
   }
 `;
 
-const StyledMain = styled.main`
+const StyledSplash = styled.main`
   position: relative;
   display: flex;
   align-items: center;
@@ -77,4 +77,4 @@ const StyledMain = styled.main`
   }
 `;
 
-export default StyledMain;
+export default StyledSplash;

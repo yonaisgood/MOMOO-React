@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import StyledMain from './StyledMain';
+import StyledPolicy from './StyledPolicy';
 import privacyPolicy from './privacyText';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
   return (
     <>
       {clientWitch <= 430 && <TopBar tit="개인정보 처리방침" />}
-      <StyledMain>
+      <StyledPolicy>
         {clientWitch > 430 && (
           <Breadcrumb
             navList={[
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
             );
           })}
         </section>
-      </StyledMain>
+      </StyledPolicy>
     </>
   );
 }

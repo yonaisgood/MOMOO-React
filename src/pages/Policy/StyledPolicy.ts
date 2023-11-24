@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledMain = styled.main`
+const StyledPolicy = styled.main`
   max-width: 1024px;
   margin: auto;
   box-sizing: content-box;
@@ -51,4 +51,4 @@ const StyledMain = styled.main`
   }
 `;
 
-export default StyledMain;
+export default StyledPolicy;

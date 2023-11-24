@@ -1,6 +1,6 @@
 import useAuthContext from '../../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
-import StyledMain from './StyledMain';
+import StyledMy from './StyledMy';
 import SettingIcon from '../../asset/icon/Setting.svg';
 import DocumentIcon from '../../asset/icon/Document.svg';
 import PolicyIcon from '../../asset/icon/Policy.svg';
@@ -23,7 +23,7 @@ export default function My() {
   return (
     <>
       {user && (
-        <StyledMain>
+        <StyledMy>
           <section className="profile">
             <img src={user?.photoURL || BasicProfile} alt="프로필 사진" />
             <div className="displayName">{user?.displayName}</div>
@@ -68,7 +68,7 @@ export default function My() {
             </ul>
           </section>
           <div className="footer">MOMOO 2023. All Right Reserved.</div>
-        </StyledMain>
+        </StyledMy>
       )}
     </>
   );

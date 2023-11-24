@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
-import StyledMain from './StyledMain';
+import StyledAlbum, { StyledFeedList, StyledAddFeedItem } from './StyledAlbum';
 import StyledH2 from '../../components/CommonStyled/StyledH2';
 import { useParams } from 'react-router-dom';
 import useGetAlbumFeedList from '../../hooks/useGetAlbumFeedList';
 import useGetFeedListData from '../../hooks/useGetFeedListData';
 import { DocumentData } from 'firebase/firestore';
-import StyledGridFeed, { StyledAddFeedItem } from './StyledGridFeed';
 import AddIcon from '../../asset/icon/Add_L.svg';
 import useUploadContext from '../../hooks/useUploadContext';
 import FeedItem from './FeedItem';
@@ -67,7 +66,7 @@ export default function Album() {
   };
 
   return (
-    <StyledMain>
+    <StyledAlbum>
       {clientWitch > 1024 && (
         <>
           <StyledH2>{albumName}</StyledH2>
@@ -91,7 +90,7 @@ export default function Album() {
       <section>
         <h3 className="a11y-hidden">게시글 목록</h3>
         {feedList.length > 0 && (
-          <StyledGridFeed>
+          <StyledFeedList>
             {feedList.map((v) => {
               return <FeedItem key={v.id} feedData={v}></FeedItem>;
             })}
@@ -113,9 +112,9 @@ export default function Album() {
                 </button>
               </StyledAddFeedItem>
             )}
-          </StyledGridFeed>
+          </StyledFeedList>
         )}
       </section>
-    </StyledMain>
+    </StyledAlbum>
   );
 }
