@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import useGetAlbumList from '../../hooks/useGetAlbumList';
 
-import StyledH2 from '../../components/StyledH2';
+import StyledH2 from '../../components/CommonStyled/StyledH2';
 import Album from '../../components/Album/Album';
 import NewAlbumModal from '../../components/Modal/NewAlbumModal/NewAlbumModal';
 import ArrayModal from '../../components/Modal/ArrayModal/ArrayModal';

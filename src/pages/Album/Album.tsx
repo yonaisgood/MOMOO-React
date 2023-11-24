@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import StyledAlbum, { StyledFeedList, StyledAddFeedItem } from './StyledAlbum';
-import StyledH2 from '../../components/StyledH2';
+import StyledH2 from '../../components/CommonStyled/StyledH2';
 import { useParams } from 'react-router-dom';
 import useGetAlbumFeedList from '../../hooks/useGetAlbumFeedList';
 import useGetFeedListData from '../../hooks/useGetFeedListData';
@@ -40,6 +40,7 @@ export default function Album() {
       }
 
       const feedListData = await getFeedListData(feedList);
+      console.log(feedList);
 
       if (!feedListData) {
         setFeedList([{}]);

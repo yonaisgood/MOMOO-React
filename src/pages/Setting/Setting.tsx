@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import StyledInput from '../../components/StyledInput';
+import StyledInput from '../../components/CommonStyled/StyledInput';
 import StyledSetting from './StyledSetting';
 import Button from '../../components/Button/Button/Button';
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
