@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import StyledMain from './StyledMain';
+import StyledPolicy from './StyledPolicy';
 import terms from './termsText';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
@@ -18,7 +18,7 @@ export default function Terms() {
   return (
     <>
       {clientWitch <= 430 && <TopBar tit="MOMOO 이용약관" />}
-      <StyledMain>
+      <StyledPolicy>
         {clientWitch > 430 && (
           <Breadcrumb
             navList={[
@@ -64,7 +64,7 @@ export default function Terms() {
             );
           })}
         </section>
-      </StyledMain>
+      </StyledPolicy>
     </>
   );
 }

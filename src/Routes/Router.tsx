@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Splash from '../pages/splash/Splash';
+import Splash from '../pages/Splash/Splash';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Setting from '../pages/Setting/Setting';

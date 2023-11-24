@@ -1,5 +1,5 @@
 import useAuthContext from '../../hooks/useAuthContext';
-import StyledDialog from './StyledDialog';
+import StyledMyPopup from './StyledMyPopup';
 import SettingIcon from '../../asset/icon/Setting.svg';
 import DocumentIcon from '../../asset/icon/Document.svg';
 import PolicyIcon from '../../asset/icon/Policy.svg';
@@ -38,7 +38,7 @@ export default function MyPopup({ setOpenPopup }: Props) {
   };
 
   return (
-    <StyledDialog role="dialog">
+    <StyledMyPopup role="dialog">
       {user && (
         <>
           <section className="profile">
@@ -94,6 +94,6 @@ export default function MyPopup({ setOpenPopup }: Props) {
           </button>
         </>
       )}
-    </StyledDialog>
+    </StyledMyPopup>
   );
 }

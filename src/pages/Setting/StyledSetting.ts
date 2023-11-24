@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import StyledAuth from '../../components/StyledAuth';
 
-const StyledMain = styled(StyledAuth)`
+const StyledSetting = styled(StyledAuth)`
   article {
     justify-content: flex-start;
 
@@ -87,4 +87,4 @@ const StyledMain = styled(StyledAuth)`
   }
 `;
 
-export default StyledMain;
+export default StyledSetting;

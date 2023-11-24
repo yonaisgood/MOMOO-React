@@ -1,19 +1,16 @@
 import styled from 'styled-components';
 
-const StyledMain = styled.main`
-  padding: 0 0 48px;
-  display: flex;
-  flex-direction: column;
-  min-height: inherit;
+const StyledMyPopup = styled.div`
+  background: var(--gray-100);
 
   .profile {
-    padding: 35px 0 24px;
+    padding: 20px 0;
     text-align: center;
 
     img {
-      margin: 0 auto 8px;
-      width: 70px;
+      width: 60px;
       aspect-ratio: 1/1;
+      margin: 0 auto 8px;
     }
 
     .displayName {
@@ -29,12 +26,12 @@ const StyledMain = styled.main`
   }
 
   .menu {
-    padding: 15px 0;
+    padding: 20px 0 15px;
     border-top: 1px solid var(--gray-300);
 
     button,
     a {
-      padding: 10px 30px;
+      padding: 5px 15px;
       display: flex;
       align-items: center;
       width: 100%;
@@ -48,20 +45,49 @@ const StyledMain = styled.main`
     }
 
     img {
-      margin-right: 20px;
+      margin-right: 10px;
       width: 24px;
     }
   }
 
   .footer {
-    margin-top: auto;
-    padding: 22px 16px;
+    padding: 16px;
     text-align: center;
     border-top: 1px solid var(--gray-300);
     font-family: var(--serif);
-    font-size: var(--text-l);
+    font-size: var(--text-s);
     color: var(--gray-700);
+  }
+
+  .close {
+    position: absolute;
+    width: 20px;
+    aspect-ratio: 1/1;
+    top: 20px;
+    right: 20px;
+  }
+
+  @media (min-width: 1025px) {
+    position: absolute;
+    top: 218px;
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    position: fixed;
+    top: var(--nav-height-tablet);
+    right: 0;
+    width: 252px;
+
+    .profile {
+      padding: 15px 0;
+    }
+
+    .close {
+      top: 15px;
+      right: 15px;
+    }
   }
 `;
 
-export default StyledMain;
+export default StyledMyPopup;

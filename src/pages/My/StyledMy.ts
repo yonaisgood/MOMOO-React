@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
-const StyledDialog = styled.div`
-  background: var(--gray-100);
+const StyledMy = styled.main`
+  padding: 0 0 48px;
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
 
   .profile {
-    padding: 20px 0;
+    padding: 35px 0 24px;
     text-align: center;
 
     img {
-      width: 60px;
-      aspect-ratio: 1/1;
       margin: 0 auto 8px;
+      width: 70px;
+      aspect-ratio: 1/1;
     }
 
     .displayName {
@@ -26,12 +29,12 @@ const StyledDialog = styled.div`
   }
 
   .menu {
-    padding: 20px 0 15px;
+    padding: 15px 0;
     border-top: 1px solid var(--gray-300);
 
     button,
     a {
-      padding: 5px 15px;
+      padding: 10px 30px;
       display: flex;
       align-items: center;
       width: 100%;
@@ -45,49 +48,20 @@ const StyledDialog = styled.div`
     }
 
     img {
-      margin-right: 10px;
+      margin-right: 20px;
       width: 24px;
     }
   }
 
   .footer {
-    padding: 16px;
+    margin-top: auto;
+    padding: 22px 16px;
     text-align: center;
     border-top: 1px solid var(--gray-300);
     font-family: var(--serif);
-    font-size: var(--text-s);
+    font-size: var(--text-l);
     color: var(--gray-700);
-  }
-
-  .close {
-    position: absolute;
-    width: 20px;
-    aspect-ratio: 1/1;
-    top: 20px;
-    right: 20px;
-  }
-
-  @media (min-width: 1025px) {
-    position: absolute;
-    top: 218px;
-    width: 100%;
-  }
-
-  @media (max-width: 1024px) {
-    position: fixed;
-    top: var(--nav-height-tablet);
-    right: 0;
-    width: 252px;
-
-    .profile {
-      padding: 15px 0;
-    }
-
-    .close {
-      top: 15px;
-      right: 15px;
-    }
   }
 `;
 
-export default StyledDialog;
+export default StyledMy;

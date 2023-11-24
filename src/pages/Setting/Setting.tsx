@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import StyledInput from '../../components/StyledInput';
-import StyledMain from './StyledMain';
+import StyledSetting from './StyledSetting';
 import Button from '../../components/Button/Button/Button';
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
@@ -247,7 +247,7 @@ export default function Setting() {
   return (
     <>
       {clientWitch <= 430 && <TopBar tit="프로필 수정" />}
-      <StyledMain>
+      <StyledSetting>
         {clientWitch > 1024 && (
           <Breadcrumb
             navList={[
@@ -371,7 +371,7 @@ export default function Setting() {
             </button>
           )}
         </div>
-      </StyledMain>
+      </StyledSetting>
     </>
   );
 }
