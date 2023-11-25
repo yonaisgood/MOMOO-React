@@ -28,11 +28,6 @@ export default function Login() {
     });
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login(email, password);
-  };
-
   useEffect(() => {
     if (error === null) {
       return;
@@ -57,6 +52,11 @@ export default function Login() {
         alert('로그인에 실패했습니다');
     }
   }, [error]);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    login(email, password);
+  };
 
   const handleEmailInp = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);

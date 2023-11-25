@@ -44,7 +44,6 @@ export default function Album() {
       }
 
       const feedListData = await getFeedListData(feedList);
-      console.log(feedList);
 
       if (!feedListData) {
         setFeedList([{}]);

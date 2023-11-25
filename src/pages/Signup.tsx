@@ -37,11 +37,6 @@ export default function Signup() {
     });
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    signup(email, password, displayName, file);
-  };
-
   useEffect(() => {
     if (error === null) {
       return;
@@ -67,6 +62,11 @@ export default function Signup() {
         alert('회원가입에 실패했습니다');
     }
   }, [error]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signup({ email, password, displayName, file });
+  };
 
   const handleEmailInp = (target: HTMLInputElement) => {
     setEmail(target.value);

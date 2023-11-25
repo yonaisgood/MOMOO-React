@@ -8,18 +8,20 @@ import useAddAlbum from './useAddAlbum.ts';
 
 import { appAuth } from '../firebase/config';
 
+interface Props {
+  email: string;
+  password: string;
+  displayName: string | null;
+  file: File | null;
+}
+
 export default function useSignup() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setPending] = useState(false);
   const { dispatch } = useAuthContext();
   const addAlbum = useAddAlbum();
 
-  const signup = async (
-    email: string,
-    password: string,
-    displayName: string | null,
-    file: File | null,
-  ) => {
+  const signup = async ({ email, password, displayName, file }: Props) => {
     setError(null);
     setPending(true);
 

@@ -8,14 +8,10 @@ import SplashIcon from '../../asset/icon/SplashLogo.svg';
 export default function Splash() {
   const navigate = useNavigate();
 
-  const timeout = () => {
+  useEffect(() => {
     setTimeout(() => {
       navigate('/login');
     }, 2000);
-  };
-
-  useEffect(() => {
-    timeout();
   }, []);
 
   return (

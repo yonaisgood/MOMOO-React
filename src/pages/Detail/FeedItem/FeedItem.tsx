@@ -2,46 +2,38 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DocumentData } from '@firebase/firestore';
 
-import useGetFeedData from '../../hooks/useGetFeedData';
-import useEditContext from '../../hooks/useEditContext';
-import useAuthContext from '../../hooks/useAuthContext';
+import useGetFeedData from '../../../hooks/useGetFeedData';
+import useEditContext from '../../../hooks/useEditContext';
+import useAuthContext from '../../../hooks/useAuthContext';
 
-import ChangeAlbumModal from '../Modal/ChangeAlbumModal/ChangeAlbumModal';
-import GetAccordionData from '../Upload/GetAccordionData';
-import AlertModal from '../Modal/AlertModal/AlertModal';
-import Modal from '../Modal/SelectModal/SelectModal';
-import Carousel from '../Carousel/Carousel';
+import ChangeAlbumModal from '../../../components/Modal/ChangeAlbumModal/ChangeAlbumModal';
+import GetAccordionData from '../../../components/Upload/GetAccordionData';
+import AlertModal from '../../../components/Modal/AlertModal/AlertModal';
+import Modal from '../../../components/Modal/SelectModal/SelectModal';
+import Carousel from '../../../components/Carousel/Carousel';
 import StyledFeedItem from './StyledFeedItem';
 
-import SeeMore from '../../asset/icon/More.svg';
+import SeeMore from '../../../asset/icon/More.svg';
+
+interface AccordionItemData {
+  question: string;
+  answer: string[];
+}
 
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [changeModalOpen, setChangeModalOpen] = useState(false);
   const [changeAlbumModalOpen, setChangeAlbumModalOpen] = useState(false);
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
+  const [accordionData, setAccordionData] = useState<AccordionItemData[]>([]);
   const { isEditModalOpen } = useEditContext();
   const { user } = useAuthContext();
   const { id } = useParams();
   const getFeedData = useGetFeedData();
   const navigate = useNavigate();
   const getAccordionData = GetAccordionData();
-
-  interface AlbumIdData {
-    albumName: string;
-    docId: string;
-  }
-
-  interface Object {
-    question: string;
-    answer: string[];
-  }
-
-  const [accordionData, setAccordionData] = useState<Object[]>([]);
-  const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   if (!id) {
     navigate('/404');
@@ -52,9 +44,7 @@ export default function FeedItem() {
     const fetchData = async () => {
       if (user) {
         const result = await getAccordionData();
-        console.log(result);
         setAccordionData(result.accordionData);
-        setAlbumIdData(result.albumIdData);
       }
     };
     fetchData();
@@ -77,7 +67,7 @@ export default function FeedItem() {
         setInvalidId(true);
       }
     })();
-  }, [, isEditModalOpen]);
+  }, [isEditModalOpen]);
 
   const handleSeeMoreClick = () => {
     setIsModalOpen(true);
