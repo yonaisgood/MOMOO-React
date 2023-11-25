@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import StyledPolicy from './StyledPolicy';
-import terms from './termsText';
+
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import StyledPolicy from './StyledPolicy';
+
+import terms from './termsText';
 
 export default function Terms() {
   const [clientWitch, setClientWitch] = useState(

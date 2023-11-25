@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import StyledAuth from '../../components/CommonStyled/StyledAuth';
 
 const StyledSetting = styled(StyledAuth)`

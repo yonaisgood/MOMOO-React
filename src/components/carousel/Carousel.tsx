@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
-import ArrowWhite from '../../asset/icon/Arrow-White.svg';
+
 import * as Styled from './StyledCarousel';
+
+import ArrowWhite from '../../asset/icon/Arrow-White.svg';
 
 const Carousel = ({ imgUrlList }: { imgUrlList: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

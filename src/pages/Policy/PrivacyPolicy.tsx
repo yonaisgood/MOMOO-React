@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import StyledPolicy from './StyledPolicy';
-import privacyPolicy from './privacyText';
+
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import StyledPolicy from './StyledPolicy';
+
+import privacyPolicy from './privacyText';
 
 export default function PrivacyPolicy() {
   const [clientWitch, setClientWitch] = useState(

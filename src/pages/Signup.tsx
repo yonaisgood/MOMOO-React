@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import useSignup from '../hooks/useSingup.ts';
+import useFileInp from '../hooks/useHandleFileInp.ts';
+
+import Button from '../components/Button/Button/Button.tsx';
 import StyledInput from '../components/CommonStyled/StyledInput.ts';
 import StyledAuth from '../components/CommonStyled/StyledAuth.ts';
-import Button from '../components/Button/Button/Button.tsx';
+
 import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
-import useSignup from '../hooks/useSingup.ts';
-import useFileInp from '../hooks/useHandleFileInp.ts';
 
 export default function Signup() {
   const [file, setFile] = useState<File | null>(null);

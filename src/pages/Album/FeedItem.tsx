@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
-import { DocumentData } from 'firebase/firestore';
 import { Link, useParams } from 'react-router-dom';
-import { StyledFeedItem } from './StyledAlbum';
-import EditIcon from '../../asset/icon/Edit.svg';
+import { DocumentData } from 'firebase/firestore';
+
 import useEditContext from '../../hooks/useEditContext';
-import useSetFeedItemLayout from './useSetFeedItemLayout';
 import usePageContext from '../../hooks/usePageContext';
+import useSetFeedItemLayout from './useSetFeedItemLayout';
+
+import { StyledFeedItem } from './StyledAlbum';
+
+import EditIcon from '../../asset/icon/Edit.svg';
 
 export default function FeedItem({ feedData }: { feedData: DocumentData }) {
   const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();

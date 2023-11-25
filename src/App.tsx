@@ -1,7 +1,8 @@
-import GlobalStyle from './GlobalStyle';
 import useAuthContext from './hooks/useAuthContext';
+
 import Router from './Routes/Router';
-import PageContextProvider from './context/PageContext';
+
+import GlobalStyle from './GlobalStyle';
 
 function App() {
   const { isAuthReady } = useAuthContext();
@@ -9,10 +10,10 @@ function App() {
   return (
     <>
       {isAuthReady ? (
-        <PageContextProvider>
+        <>
           <GlobalStyle />
           <Router />
-        </PageContextProvider>
+        </>
       ) : (
         <div>로딩중</div>
       )}

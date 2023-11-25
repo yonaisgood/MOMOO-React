@@ -1,6 +1,8 @@
-import backIcon from '../../asset/icon/ArrowBack.svg';
 import { useNavigate } from 'react-router-dom';
+
 import StyledTopbar from './StyledTopbar';
+
+import backIcon from '../../asset/icon/ArrowBack.svg';
 
 const TopBar = ({ tit }: { tit: string }) => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
-import StyledBreadcrumbWrap from './StyledBreadcrumbWrap';
 import Breadcrumb from './Breadcrumb';
+import StyledBreadcrumbWrap from './StyledBreadcrumbWrap';
 
 type NavItem = {
   path: string;

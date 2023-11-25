@@ -1,18 +1,21 @@
 import { FormEvent, useEffect, useState } from 'react';
-import StyledInput from '../../components/CommonStyled/StyledInput';
-import StyledSetting from './StyledSetting';
-import Button from '../../components/Button/Button/Button';
-import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
-import EditCircle from '../../asset/icon/EditCircle.svg';
-import DeleteIcon from '../../asset/icon/DeleteRed.svg';
+
 import useAuthContext from '../../hooks/useAuthContext';
-import { useUpdateProfile } from '../../hooks/useUpdateProfile';
 import useFileInp from '../../hooks/useHandleFileInp';
 import useReauthenticate from '../../hooks/useReauthenticate';
 import useDeleteId from '../../hooks/useDeleteId';
+import { useUpdateProfile } from '../../hooks/useUpdateProfile';
+
+import StyledInput from '../../components/CommonStyled/StyledInput';
+import Button from '../../components/Button/Button/Button';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import StyledSetting from './StyledSetting';
+
+import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
+import EditCircle from '../../asset/icon/EditCircle.svg';
+import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 
 export default function Setting() {
   const { user } = useAuthContext();
