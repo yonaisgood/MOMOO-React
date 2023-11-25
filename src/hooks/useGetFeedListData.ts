@@ -1,4 +1,3 @@
-import { appFireStore } from '../firebase/config';
 import {
   getDocs,
   collection,
@@ -8,7 +7,10 @@ import {
   DocumentData,
   orderBy,
 } from 'firebase/firestore';
-import useAuthContext from '../hooks/useAuthContext';
+
+import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
 
 export default function useGetFeedListData() {
   const { user } = useAuthContext();

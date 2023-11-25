@@ -1,6 +1,8 @@
-import { appFireStore } from '../firebase/config';
 import { getDoc, doc } from 'firebase/firestore';
-import useAuthContext from '../hooks/useAuthContext';
+
+import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
 
 export default function useGetFeedData() {
   const { user } = useAuthContext();

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { appAuth } from '../firebase/config';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
+
 import useAuthContext from './useAuthContext';
 import useUploadImg from './useUploadImg.ts';
-import { FirebaseError } from 'firebase/app';
 import useAddAlbum from './useAddAlbum.ts';
+
+import { appAuth } from '../firebase/config';
 
 export default function useSignup() {
   const [error, setError] = useState<string | null>(null);

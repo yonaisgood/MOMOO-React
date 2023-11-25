@@ -1,8 +1,9 @@
-import { appFireStore } from '../firebase/config';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { User } from '@firebase/auth';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
-import useAuthContext from '../hooks/useAuthContext';
+import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
 
 export default function useEditAlbum() {
   const { user: contextUser } = useAuthContext();

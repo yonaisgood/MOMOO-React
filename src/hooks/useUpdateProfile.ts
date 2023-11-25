@@ -1,7 +1,8 @@
-import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 import { useState } from 'react';
-import useAuthContext from './useAuthContext';
+import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+
+import useAuthContext from './useAuthContext';
 import useUploadImg from './useUploadImg';
 
 type Profile = {

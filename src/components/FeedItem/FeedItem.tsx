@@ -10,7 +10,7 @@ import ChangeAlbumModal from '../Modal/ChangeAlbumModal/ChangeAlbumModal';
 import GetAccordionData from '../Upload/GetAccordionData';
 import AlertModal from '../Modal/AlertModal/AlertModal';
 import Modal from '../Modal/SelectModal/SelectModal';
-import Carousel from '../carousel/Carousel';
+import Carousel from '../Carousel/Carousel';
 import StyledFeedItem from './StyledFeedItem';
 
 import SeeMore from '../../asset/icon/More.svg';

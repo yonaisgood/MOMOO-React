@@ -1,7 +1,9 @@
-import { appFireStore } from '../firebase/config';
 import { doc, updateDoc } from 'firebase/firestore';
-import useAuthContext from '../hooks/useAuthContext';
+
 import useEditContext from './useEditContext';
+import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
 
 export default function useEditFeed() {
   const { user } = useAuthContext();
