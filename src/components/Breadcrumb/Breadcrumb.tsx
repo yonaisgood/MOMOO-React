@@ -5,10 +5,10 @@ import StyledBreadcrumb from './StyledBreadcrumb';
 import Arrow from '../../asset/icon/Arrow-S.svg';
 import ArrowGray from '../../asset/icon/Arrow-S-Gray.svg';
 
-type NavItem = {
+interface NavItem {
   path: string;
   text: string;
-};
+}
 
 interface Props {
   navList: NavItem[];

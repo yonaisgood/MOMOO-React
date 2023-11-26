@@ -5,14 +5,14 @@ import useAuthContext from './useAuthContext';
 
 import { appFireStore } from '../firebase/config';
 
+interface Props {
+  user?: User | null;
+  editAlbumName: string;
+  albumId: string;
+}
+
 export default function useEditAlbum() {
   const { user: contextUser } = useAuthContext();
-
-  interface Props {
-    user?: User | null;
-    editAlbumName: string;
-    albumId: string;
-  }
 
   const editAlbum = async ({
     editAlbumName,

@@ -5,13 +5,13 @@ import { appFireStore, Timestamp } from '../firebase/config';
 
 import useAuthContext from './useAuthContext';
 
+interface Props {
+  user?: User | null;
+  albumName: string;
+}
+
 export default function useAddAlbum() {
   const { user: contextUser } = useAuthContext();
-
-  interface Props {
-    user?: User | null;
-    albumName: string;
-  }
 
   const addAlbum = async ({ albumName, user = contextUser }: Props) => {
     if (user === null) {
