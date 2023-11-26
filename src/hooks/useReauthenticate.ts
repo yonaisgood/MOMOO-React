@@ -1,8 +1,8 @@
-import { reauthenticateWithCredential } from 'firebase/auth';
-import { appAuth } from '../firebase/config';
-import { EmailAuthProvider } from 'firebase/auth';
 import { useState } from 'react';
+import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+
+import { appAuth } from '../firebase/config';
 
 export default function useReauthenticate() {
   const [error, setError] = useState<null | string>(null);
@@ -15,7 +15,7 @@ export default function useReauthenticate() {
 
     const credential = EmailAuthProvider.credential(
       user.email,
-      userProvidedPassword
+      userProvidedPassword,
     );
 
     try {

@@ -1,10 +1,10 @@
-import StyledBreadcrumbWrap from './StyledBreadcrumbWrap';
 import Breadcrumb from './Breadcrumb';
+import StyledBreadcrumbWrap from './StyledBreadcrumbWrap';
 
-type NavItem = {
+interface NavItem {
   path: string;
   text: string;
-};
+}
 
 interface Props {
   navList: NavItem[];

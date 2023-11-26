@@ -1,16 +1,17 @@
-import { appFireStore } from '../firebase/config';
-import { doc, deleteDoc, getDoc } from 'firebase/firestore';
 import { User } from '@firebase/auth';
+import { doc, deleteDoc, getDoc } from 'firebase/firestore';
 
-import useAuthContext from '../hooks/useAuthContext';
+import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
+
+interface Props {
+  user?: User | null;
+  albumId: string;
+}
 
 export default function useDeleteAlbum() {
   const { user: contextUser } = useAuthContext();
-
-  interface Props {
-    user?: User | null;
-    albumId: string;
-  }
 
   const deleteAlbum = async ({ albumId, user = contextUser }: Props) => {
     if (user === null) {

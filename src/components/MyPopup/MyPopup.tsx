@@ -1,15 +1,18 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import useAuthContext from '../../hooks/useAuthContext';
+import useLogout from '../../hooks/useLogout';
+
 import StyledMyPopup from './StyledMyPopup';
+
+import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import SettingIcon from '../../asset/icon/Setting.svg';
 import DocumentIcon from '../../asset/icon/Document.svg';
 import PolicyIcon from '../../asset/icon/Policy.svg';
 import Github from '../../asset/icon/Github.svg';
 import LogoutIcon from '../../asset/icon/Logout.svg';
-import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import XIcon from '../../asset/icon/X.svg';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import useLogout from '../../hooks/useLogout';
 
 interface Props {
   setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;

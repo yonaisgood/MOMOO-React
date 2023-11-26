@@ -1,10 +1,13 @@
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import { useLogin } from '../hooks/useLogin';
+
+import Button from '../components/Button/Button/Button';
 import StyledInput from '../components/CommonStyled/StyledInput';
 import StyledAuth from '../components/CommonStyled/StyledAuth';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import Button from '../components/Button/Button/Button';
+
 import Logo from '../asset/icon/Logo.svg';
-import { useLogin } from '../hooks/useLogin';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -24,11 +27,6 @@ export default function Login() {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login(email, password);
-  };
 
   useEffect(() => {
     if (error === null) {
@@ -54,6 +52,11 @@ export default function Login() {
         alert('로그인에 실패했습니다');
     }
   }, [error]);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    login(email, password);
+  };
 
   const handleEmailInp = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);

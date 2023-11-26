@@ -1,15 +1,16 @@
-import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 import { useState } from 'react';
-import useAuthContext from './useAuthContext';
+import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+
+import useAuthContext from './useAuthContext';
 import useUploadImg from './useUploadImg';
 
-type Profile = {
-  file: File | null;
-  displayName: string | null;
+interface Profile {
   email: string | null;
   password: string | null;
-};
+  displayName: string | null;
+  file: File | null;
+}
 
 export const useUpdateProfile = () => {
   const [error, setError] = useState<null | string>(null);
@@ -18,10 +19,10 @@ export const useUpdateProfile = () => {
   const { user } = useAuthContext();
 
   const setProfile = async ({
-    file,
-    displayName,
     email,
     password,
+    displayName,
+    file,
   }: Profile) => {
     setError(null);
     setPending(true);

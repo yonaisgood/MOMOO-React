@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { appAuth } from '../firebase/config';
 import { deleteUser } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+
+import { appAuth } from '../firebase/config';
 
 export default function useDeleteId() {
   const [error, setError] = useState<null | string>(null);

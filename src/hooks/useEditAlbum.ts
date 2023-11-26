@@ -1,17 +1,18 @@
-import { appFireStore } from '../firebase/config';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { User } from '@firebase/auth';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
-import useAuthContext from '../hooks/useAuthContext';
+import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
+
+interface Props {
+  user?: User | null;
+  editAlbumName: string;
+  albumId: string;
+}
 
 export default function useEditAlbum() {
   const { user: contextUser } = useAuthContext();
-
-  interface Props {
-    user?: User | null;
-    editAlbumName: string;
-    albumId: string;
-  }
 
   const editAlbum = async ({
     editAlbumName,

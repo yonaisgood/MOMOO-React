@@ -1,17 +1,18 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+
 import Splash from '../pages/Splash/Splash';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import Setting from '../pages/Setting/Setting';
-import My from '../pages/My/My';
-import NavRoute from './NavRoute';
-import Home from '../pages/Home/Home';
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
-import { AuthRoute, NonAuthRoute } from './AuthRoute';
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
+import Home from '../pages/Home/Home';
 import Album from '../pages/Album/Album';
 import Detail from '../pages/Detail/Detail';
+import My from '../pages/My/My';
+import Setting from '../pages/Setting/Setting';
+import NavRoute from './NavRoute';
+import { AuthRoute, NonAuthRoute } from './AuthRoute';
 
 export default function Router() {
   const [clientWitch, setClientWitch] = useState(

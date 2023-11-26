@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { appFireStore } from '../firebase/config';
 import {
   collection,
   onSnapshot,
@@ -9,6 +8,8 @@ import {
 } from 'firebase/firestore';
 
 import useAuthContext from './useAuthContext';
+
+import { appFireStore } from '../firebase/config';
 
 export default function useGetAlbumList() {
   const { user } = useAuthContext();

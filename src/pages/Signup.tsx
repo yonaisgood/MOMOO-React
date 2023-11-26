@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import useSignup from '../hooks/useSingup.ts';
+import useFileInp from '../hooks/useHandleFileInp.ts';
+
+import Button from '../components/Button/Button/Button.tsx';
 import StyledInput from '../components/CommonStyled/StyledInput.ts';
 import StyledAuth from '../components/CommonStyled/StyledAuth.ts';
-import Button from '../components/Button/Button/Button.tsx';
+
 import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
-import useSignup from '../hooks/useSingup.ts';
-import useFileInp from '../hooks/useHandleFileInp.ts';
 
 export default function Signup() {
   const [file, setFile] = useState<File | null>(null);
@@ -34,11 +37,6 @@ export default function Signup() {
     });
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    signup(email, password, displayName, file);
-  };
-
   useEffect(() => {
     if (error === null) {
       return;
@@ -64,6 +62,11 @@ export default function Signup() {
         alert('회원가입에 실패했습니다');
     }
   }, [error]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signup({ email, password, displayName, file });
+  };
 
   const handleEmailInp = (target: HTMLInputElement) => {
     setEmail(target.value);

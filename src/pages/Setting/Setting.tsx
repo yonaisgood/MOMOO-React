@@ -1,21 +1,30 @@
 import { FormEvent, useEffect, useState } from 'react';
-import StyledInput from '../../components/CommonStyled/StyledInput';
-import StyledSetting from './StyledSetting';
-import Button from '../../components/Button/Button/Button';
-import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
-import EditCircle from '../../asset/icon/EditCircle.svg';
-import DeleteIcon from '../../asset/icon/DeleteRed.svg';
+
 import useAuthContext from '../../hooks/useAuthContext';
-import { useUpdateProfile } from '../../hooks/useUpdateProfile';
 import useFileInp from '../../hooks/useHandleFileInp';
 import useReauthenticate from '../../hooks/useReauthenticate';
 import useDeleteId from '../../hooks/useDeleteId';
+import { useUpdateProfile } from '../../hooks/useUpdateProfile';
+
+import StyledInput from '../../components/CommonStyled/StyledInput';
+import Button from '../../components/Button/Button/Button';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import StyledSetting from './StyledSetting';
+
+import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
+import EditCircle from '../../asset/icon/EditCircle.svg';
+import DeleteIcon from '../../asset/icon/DeleteRed.svg';
+
+interface Profile {
+  file: File | null;
+  displayName: string | null;
+  email: string | null;
+  password: string | null;
+}
 
 export default function Setting() {
-  const { user } = useAuthContext();
   const [file, setFile] = useState<File | null>(null);
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -34,6 +43,7 @@ export default function Setting() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
+  const { user } = useAuthContext();
   const { setProfile, error: updateProfileError } = useUpdateProfile();
   const { reauthenticate, error: reauthenticateError } = useReauthenticate();
   const { deleteId, error: deleteIdError } = useDeleteId();
@@ -43,17 +53,6 @@ export default function Setting() {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
-
-  const handleCurrPasswordInp = async () => {
-    const userPassword = prompt('현재 비밀번호를 입력해주세요');
-
-    if (userPassword === null) {
-      alert('비밀번호가 누락되었습니다');
-      return false;
-    }
-
-    return await reauthenticate(userPassword);
-  };
 
   useEffect(() => {
     const userDisplayName = user?.displayName || '';
@@ -96,39 +95,6 @@ export default function Setting() {
     setPassword('');
     setPasswordConfirm('');
   }, [user]);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setChanged(false);
-
-    // 현재 비밀번호 입력받은 후, 재인증
-    if (email !== user?.email || password) {
-      const success = await handleCurrPasswordInp();
-
-      if (!success) {
-        return;
-      }
-    }
-
-    type Profile = {
-      file: File | null;
-      displayName: string | null;
-      email: string | null;
-      password: string | null;
-    };
-
-    const profile: Profile = { file, displayName: null, email: null, password };
-
-    if (displayName !== user?.displayName) {
-      profile.displayName = displayName;
-    }
-
-    if (email !== user?.email) {
-      profile.email = email;
-    }
-
-    await setProfile(profile);
-  };
 
   useEffect(() => {
     if (!reauthenticateError) {
@@ -178,6 +144,49 @@ export default function Setting() {
 
     setChanged(true);
   }, [updateProfileError]);
+
+  useEffect(() => {
+    if (deleteIdError) {
+      alert('회원 탈퇴에 실패했습니다');
+    }
+  }, [deleteIdError]);
+
+  const handleCurrPasswordInp = async () => {
+    const userPassword = prompt('현재 비밀번호를 입력해주세요');
+
+    if (userPassword === null) {
+      alert('비밀번호가 누락되었습니다');
+      return false;
+    }
+
+    return await reauthenticate(userPassword);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setChanged(false);
+
+    // 현재 비밀번호 입력받은 후, 재인증
+    if (email !== user?.email || password) {
+      const success = await handleCurrPasswordInp();
+
+      if (!success) {
+        return;
+      }
+    }
+
+    const profile: Profile = { file, displayName: null, email: null, password };
+
+    if (displayName !== user?.displayName) {
+      profile.displayName = displayName;
+    }
+
+    if (email !== user?.email) {
+      profile.email = email;
+    }
+
+    await setProfile(profile);
+  };
 
   const handlePasswordInp = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
@@ -237,12 +246,6 @@ export default function Setting() {
       setSelectedBtn('프로필 설정');
     }
   };
-
-  useEffect(() => {
-    if (deleteIdError) {
-      alert('회원 탈퇴에 실패했습니다');
-    }
-  }, [deleteIdError]);
 
   return (
     <>

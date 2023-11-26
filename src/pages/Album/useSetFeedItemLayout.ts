@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-export default function useSetFeedItemLayout() {
-  type ImgRatioType = {
-    width: number | null;
-    height: number | null;
-  };
+interface ImgRatio {
+  width: number | null;
+  height: number | null;
+}
 
-  const [imgRatio, setImgRatio] = useState<ImgRatioType>({
+export default function useSetFeedItemLayout() {
+  const [imgRatio, setImgRatio] = useState<ImgRatio>({
     width: null,
     height: null,
   });
