@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { appFireStore } from '../../../firebase/config';
 import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
 
@@ -21,6 +21,7 @@ const AlertModal = ({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const getSavedAlbumList = useGetSavedAlbumList();
   const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -73,7 +74,8 @@ const AlertModal = ({
             removeFeedIdFromFeedList(id, albumDoc.id);
           });
         }
-        onClose();
+
+        navigate(-1);
 
         imgUrlList.forEach(async (url) => await deleteImg(url));
       } catch (error) {
