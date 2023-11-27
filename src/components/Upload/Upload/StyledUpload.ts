@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
   width: max-content;
-  min-width: 480px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -78,7 +77,7 @@ const PicPart = styled.section`
   }
 
   @media (max-width: 430px) {
-    width: 100vm;
+    width: calc(100% - 16px);
     margin-top: 1.2rem;
     margin-left: 1.6rem;
     background-color: var(--background-color);
