@@ -13,6 +13,7 @@ import {
   ChangeModalWrap,
   MultiAccordionWrapper,
 } from './StyledChangeAlbumModal';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 interface AccordionProps {
   answer: string;
@@ -70,8 +71,8 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     const SetAcoordionData = async () => {
       if (user) {
         const result = await getAccordionData();
-        setAccordionData(result.accordionData);
-        setAlbumIdData(result.albumIdData);
+        setAccordionData(result.accordionData || []);
+        setAlbumIdData(result.albumIdData || []);
       }
     };
 
@@ -84,8 +85,8 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
       if (user) {
         const result = await getAccordionData();
         console.log(result);
-        setAccordionData(result.accordionData);
-        setAlbumIdData(result.albumIdData);
+        setAccordionData(result.accordionData || []);
+        setAlbumIdData(result.albumIdData || []);
       }
     };
     fetchData();
@@ -172,7 +173,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
 
   return (
     <ChangeModalWrap role="dialog" aria-labelledby="modal-select">
-      <div className="modal-overlay">
+      <ModalOverlay>
         <div
           className="modalContent"
           role="document"
@@ -212,7 +213,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
             </button>
           </div>
         </div>
-      </div>
+      </ModalOverlay>
     </ChangeModalWrap>
   );
 }

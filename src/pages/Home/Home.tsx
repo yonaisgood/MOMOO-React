@@ -49,7 +49,7 @@ export default function Home() {
       {clientWitch <= 430 && <MobileHeader />}
       <StyledMain>
         <StyledHomeSection>
-          <StyledH2>Album</StyledH2>
+          <StyledH2 className="album-title">Album</StyledH2>
           <div className="btn-wrap">
             <button type="button" onClick={HandleArrayModal}>
               <img src={ArrayImg} alt="정렬방식 아이콘" />

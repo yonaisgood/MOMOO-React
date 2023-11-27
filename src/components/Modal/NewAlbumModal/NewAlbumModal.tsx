@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import useAddAlbum from '../../../hooks/useAddAlbum';
 
 import { SelectModal, Header } from './StyledNewAlbumModal';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -48,7 +49,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
-      <div className="modal-overlay">
+      <ModalOverlay>
         <div
           className="modal-content"
           role="document"
@@ -73,7 +74,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
             </button>
           </div>
         </div>
-      </div>
+      </ModalOverlay>
     </SelectModal>
   );
 };

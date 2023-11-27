@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react';
 import useEditContext from '../../../hooks/useEditContext';
 
 import { SelectModal, Header } from './StyledSelectModal';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 import Close from '../../../asset/icon/X-Small.svg';
 
@@ -73,7 +74,7 @@ const Modal = ({
 
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
-      <div className="modal-overlay">
+      <ModalOverlay>
         <div
           className="modal-content"
           role="document"
@@ -104,7 +105,7 @@ const Modal = ({
             <img src={Close} alt="모달 닫기 버튼" />
           </button>
         </div>
-      </div>
+      </ModalOverlay>
     </SelectModal>
   );
 };

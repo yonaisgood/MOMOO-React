@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 import { SelectModal, Header } from './StyledLocationSelectModal';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,7 @@ const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
-      <div className="modal-overlay">
+      <ModalOverlay>
         <div
           className="modal-content"
           role="document"
@@ -60,7 +61,7 @@ const LocationSelectModal = ({ onClose }: { onClose: () => void }) => {
             </button>
           </div>
         </div>
-      </div>
+      </ModalOverlay>
     </SelectModal>
   );
 };

@@ -16,7 +16,7 @@ import Preview from '../FileUpload/Preview';
 import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
-import StyledOverlay from './StyledOverlay';
+import ModalOverlay from '../CommonStyled/StyledModalOverlay';
 
 import { deleteImg } from '../../SDKUtiles';
 import GetAccordionData from './GetAccordionData';
@@ -98,8 +98,8 @@ export default function EditFeed() {
     const SetAccordionData = async () => {
       if (user) {
         const result = await getAccordionData();
-        setAccordionData(result.accordionData);
-        setAlbumIdData(result.albumIdData);
+        setAccordionData(result.accordionData || []);
+        setAlbumIdData(result.albumIdData || []);
       }
     };
 
@@ -201,7 +201,7 @@ export default function EditFeed() {
   };
 
   return (
-    <StyledOverlay>
+    <ModalOverlay>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
           {clientWitch <= 430 && (
@@ -306,6 +306,6 @@ export default function EditFeed() {
       <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
         <img src={CloseIcon} alt="닫기버튼" />
       </Styled.CloseBtn>
-    </StyledOverlay>
+    </ModalOverlay>
   );
 }

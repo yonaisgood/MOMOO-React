@@ -4,16 +4,17 @@ import useEditAlbum from '../../../hooks/useEditAlbum';
 import useDeleteAlbum from '../../../hooks/useDeleteAlbum';
 
 import { SelectModal, Header } from './StyledDeleteAlbumModal';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 import Close from '../../../asset/icon/X.svg';
 import SelectImg from '../../../asset/icon/Select.svg';
 import DeleteRedImg from '../../../asset/icon/DeleteRed.svg';
 
-type DeleteAlbumModalProps = {
+interface DeleteAlbumModalProps {
   onClose: () => void;
   albumName: string;
   albumId: string;
-};
+}
 const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
   onClose,
   albumName,
@@ -66,7 +67,7 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
   };
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
-      <div className="modal-overlay">
+      <ModalOverlay>
         <div
           className="modal-content"
           role="document"
@@ -103,7 +104,7 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
             <img src={Close} alt="모달 닫기 버튼" />
           </button>
         </div>
-      </div>
+      </ModalOverlay>
     </SelectModal>
   );
 };
