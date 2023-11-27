@@ -16,6 +16,7 @@ import StyledSetting from './StyledSetting';
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface Profile {
   file: File | null;
@@ -47,6 +48,8 @@ export default function Setting() {
   const { setProfile, error: updateProfileError } = useUpdateProfile();
   const { reauthenticate, error: reauthenticateError } = useReauthenticate();
   const { deleteId, error: deleteIdError } = useDeleteId();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -231,7 +234,9 @@ export default function Setting() {
     }
   };
 
-  const handleDeleteIdBtn = async () => {
+  const handleDeleteIdBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.disabled = true;
+    console.log('test');
     setSelectedBtn('회원 탈퇴');
 
     const userConfirm = confirm('MOMOO를 떠나시겠습니까?');
@@ -240,7 +245,8 @@ export default function Setting() {
       const success = await handleCurrPasswordInp();
 
       if (success) {
-        deleteId();
+        await deleteId();
+        navigate('/');
       }
     } else {
       setSelectedBtn('프로필 설정');
