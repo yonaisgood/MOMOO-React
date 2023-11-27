@@ -11,6 +11,7 @@ const StyledMyPopup = styled.div`
       width: 60px;
       aspect-ratio: 1/1;
       margin: 0 auto 8px;
+      border-radius: 50%;
     }
 
     .displayName {

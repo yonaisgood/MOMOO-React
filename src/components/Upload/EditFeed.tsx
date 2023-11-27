@@ -200,7 +200,7 @@ export default function EditFeed() {
               <img src={CloseMobileIcon} alt="닫기" />
             </Styled.MobileCloseBtn>
           )}
-          <h1>게시물 수정</h1>
+          <h2>게시물 수정</h2>
           <button className="uploadBtn" type="submit" onClick={handleSubmit}>
             완료
           </button>

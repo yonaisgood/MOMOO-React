@@ -19,8 +19,9 @@ const ImageGrid = styled.div`
   display: none;
   width: 100%;
   height: 11.2rem;
-  gap: 1rem;
-  overflow-x: scroll;
+  gap: 1px;
+  overflow-x: auto;
+
   &::webkit-scrollbar-thumb {
     background-color: none;
   }
@@ -118,9 +119,9 @@ const PreviewSlider = styled.div`
   }
 
   img {
-    width: 16px;
     aspect-ratio: 1/1;
   }
+
   @media (max-width: 430px) {
     height: calc(100% - 0rem);
   }

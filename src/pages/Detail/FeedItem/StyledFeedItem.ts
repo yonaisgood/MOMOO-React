@@ -8,10 +8,6 @@ const StyledFeedItem = styled.article`
     margin-top: 4rem;
   }
 
-  .imgSection {
-    position: relative;
-  }
-
   ul + .contentsSection {
     margin-top: 12px;
   }
@@ -76,10 +72,6 @@ const StyledFeedItem = styled.article`
   }
 
   @media (max-width: 430px) {
-    .imgSection {
-      margin: 0 -16px;
-    }
-
     .iconSection {
       margin: 1.6rem 0 1.2rem;
 
