@@ -19,7 +19,7 @@ export default function Album() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const [feedList, setFeedList] = useState<DocumentData[]>([]);
+  const [feedList, setFeedList] = useState<DocumentData[] | null>(null);
   const { id } = useParams();
   const albumName = id?.replace(/-/gi, ' ');
   const getAlbumFeedList = useGetAlbumFeedList();
@@ -37,26 +37,23 @@ export default function Album() {
         return;
       }
 
-      const feedList = await getAlbumFeedList(albumName);
+      const albumFeedList = await getAlbumFeedList(albumName);
 
-      if (!feedList?.length) {
+      if (!albumFeedList?.length) {
+        setFeedList([]);
+        setRatio(null);
         return;
       }
 
-      const feedListData = await getFeedListData(feedList);
-
-      if (!feedListData) {
-        setFeedList([{}]);
+      const feedListData = await getFeedListData(albumFeedList);
+      if (!feedListData?.length) {
+        setFeedList([]);
+        setRatio(null);
         return;
       }
 
       setFeedList(feedListData);
-
-      if (feedListData.length === 0) {
-        setRatio(null);
-      } else {
-        setRatio(feedListData[feedListData.length - 1].imageUrl[0]);
-      }
+      setRatio(feedListData[feedListData.length - 1].imageUrl[0]);
     })();
   }, []);
 
@@ -68,6 +65,7 @@ export default function Album() {
     setIsUploadModalOpen(true);
   };
 
+  console.log(imgRatio);
   return (
     <StyledAlbum>
       {clientWitch > 1024 && (
@@ -92,11 +90,12 @@ export default function Album() {
       )}
       <section>
         <h3 className="a11y-hidden">게시글 목록</h3>
-        {feedList.length > 0 && (
+        {feedList && (
           <StyledFeedList>
-            {feedList.map((v) => {
-              return <FeedItem key={v.id} feedData={v}></FeedItem>;
-            })}
+            {feedList.length > 0 &&
+              feedList.map((v) => {
+                return <FeedItem key={v.id} feedData={v}></FeedItem>;
+              })}
             {imgRatio.width && imgRatio.height && (
               <StyledAddFeedItem
                 $ratio={imgRatio.width / imgRatio.height}
