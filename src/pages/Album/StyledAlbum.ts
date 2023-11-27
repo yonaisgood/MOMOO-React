@@ -26,7 +26,7 @@ const StyledAlbum = styled.main`
 
 const StyledFeedList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: -8px -8px;
   grid-auto-rows: 1px;
   margin-top: 56px;
@@ -40,7 +40,7 @@ const StyledFeedList = styled.ul`
   }
 
   @media (max-width: 800px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (max-width: 430px) {
