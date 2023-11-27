@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
-  width: max-content;
+  width: 80rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -13,13 +13,6 @@ const UploadWrapper = styled.div`
   overflow: hidden;
 
   @media (max-width: 1024px) {
-    width: 52rem;
-    max-height: 93rem;
-    overflow: scroll;
-    scroll-behavior: hidden;
-  }
-
-  @media (max-width: 768px) {
     width: 49rem;
   }
 
@@ -105,14 +98,18 @@ const SelectPart = styled.section`
 
     textarea {
       width: 100%;
+      height: auto;
       padding: 1.3rem 1.6rem;
+      max-height: 11.4rem;
       outline: none;
       border: none;
       font-size: var(--text-m);
-      height: auto;
-      max-height: 11.4rem;
       resize: none;
     }
+  }
+
+  @media (max-width: 1024px) {
+    padding-bottom: 24px;
   }
 `;
 
@@ -132,15 +129,16 @@ const UploadContents = styled.div`
 
   @media (max-width: 1024px) {
     flex-direction: column;
+    overflow-y: scroll;
   }
 
   @media (max-width: 430px) {
     & > ${PicPart} {
-      flex: 1; /* 전체 너비의 60% */
+      flex: 1;
     }
 
     & > ${SelectPart} {
-      flex: 1; /* 전체 너비의 40% */
+      flex: 1;
     }
   }
 `;
