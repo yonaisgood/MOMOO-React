@@ -18,7 +18,6 @@ const ImgSlidePcSize = styled.div`
 const ImageGrid = styled.div`
   display: none;
   width: 100%;
-  height: 11.2rem;
   gap: 1px;
   overflow-x: auto;
 
@@ -31,7 +30,6 @@ const ImageGrid = styled.div`
 
   img {
     width: 100%;
-    height: auto;
     object-fit: contain;
   }
 
@@ -39,7 +37,7 @@ const ImageGrid = styled.div`
     display: flex;
 
     img {
-      width: 11.2rem;
+      width: calc(100% / 8 * 3 - 2px);
       aspect-ratio: 1/1;
       background-color: var(--gray-900);
     }
@@ -48,6 +46,7 @@ const ImageGrid = styled.div`
 
 const PreviewSection = styled.section`
   width: 100%;
+  min-height: 124px;
   aspect-ratio: 1/1;
   position: relative;
 
@@ -82,8 +81,8 @@ const PreviewSection = styled.section`
 
   @media (max-width: 430px) {
     visibility: visible;
-    width: 100%;
-    height: 11.2rem;
+    aspect-ratio: auto;
+    height: auto;
     display: flex;
     flex-direction: row;
 
