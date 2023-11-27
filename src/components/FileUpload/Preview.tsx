@@ -43,7 +43,7 @@ const Preview = ({
 
   const setImages = async (files: FileList) => {
     if (files) {
-      if (imageList && imageList.length + files.length <= 3) {
+      if (files.length <= 3) {
         const fileArray = Array.from(files);
         const newImages: string[] = [];
 
