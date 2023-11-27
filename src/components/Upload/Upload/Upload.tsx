@@ -65,8 +65,8 @@ function Upload() {
       if (user) {
         const result = await getAccordionData();
         console.log(result);
-        setAccordionData(result.accordionData);
-        setAlbumIdData(result.albumIdData);
+        setAccordionData(result.accordionData || []);
+        setAlbumIdData(result.albumIdData || []);
       }
     };
     fetchData();
