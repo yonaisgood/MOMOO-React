@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { appFireStore } from '../../../firebase/config';
 import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
 
@@ -8,12 +8,20 @@ import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
 import { useRemoveFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 
 import { AlertModalWrap, Header } from './StyledAlertModal';
+import { deleteImg } from '../../../SDKUtiles';
 
-const AlertModal = ({ onClose }: { onClose: () => void }) => {
+const AlertModal = ({
+  onClose,
+  imgUrlList,
+}: {
+  onClose: () => void;
+  imgUrlList: string[];
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const getSavedAlbumList = useGetSavedAlbumList();
   const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -66,7 +74,10 @@ const AlertModal = ({ onClose }: { onClose: () => void }) => {
             removeFeedIdFromFeedList(id, albumDoc.id);
           });
         }
-        onClose();
+
+        navigate(-1);
+
+        imgUrlList.forEach(async (url) => await deleteImg(url));
       } catch (error) {
         console.error('게시글 삭제 오류:', error);
       }
