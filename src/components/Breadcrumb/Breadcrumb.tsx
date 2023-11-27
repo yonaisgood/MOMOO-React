@@ -20,7 +20,7 @@ export default function Breadcrumb({ navList }: Props) {
       <ol>
         {navList.map((v, i) => {
           return (
-            <li className={i === navList.length - 1 ? 'current' : ''}>
+            <li key={i} className={i === navList.length - 1 ? 'current' : ''}>
               <Link to={`/${v.path}`}>{v.text}</Link>
             </li>
           );
