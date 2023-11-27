@@ -59,6 +59,5 @@ export default function useGetAlbumList() {
     fetchData();
   }, [collection]);
 
-  // fetchData 함수를 내보내기
-  return { albumDataList, albumIdList, oldestAlbumList, fetchData };
+  return { albumDataList, albumIdList, oldestAlbumList };
 }

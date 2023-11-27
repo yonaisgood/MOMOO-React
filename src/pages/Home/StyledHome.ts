@@ -62,7 +62,7 @@ const StyledHomeSection = styled.section`
     top: 22%;
   }
 
-  @media (max-width: 744px) {
+  @media (max-width: 1024px) {
     max-width: 100%;
     margin: 0;
     .album-title {
