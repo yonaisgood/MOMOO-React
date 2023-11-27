@@ -19,7 +19,7 @@ const ImageGrid = styled.div`
   display: none;
   width: 100%;
   height: 11.2rem;
-  gap: 1rem;
+  gap: 1px;
   overflow-x: auto;
 
   &::webkit-scrollbar-thumb {
