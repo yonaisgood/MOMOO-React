@@ -65,6 +65,9 @@ const StyledHomeSection = styled.section`
   @media (max-width: 744px) {
     max-width: 100%;
     margin: 0;
+    .album-title {
+      margin-top: 5.9rem;
+    }
     ul {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -72,6 +75,9 @@ const StyledHomeSection = styled.section`
     }
     li {
       flex-shrink: 0;
+    }
+    .btn-wrap {
+      margin: 3.6rem 0 1.1rem;
     }
     .btn-wrap button {
       width: 3rem;

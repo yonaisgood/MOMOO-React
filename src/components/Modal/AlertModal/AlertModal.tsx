@@ -8,6 +8,7 @@ import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
 import { useRemoveFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 
 import { AlertModalWrap, Header } from './StyledAlertModal';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 import { deleteImg } from '../../../SDKUtiles';
 
 const AlertModal = ({
@@ -88,7 +89,7 @@ const AlertModal = ({
 
   return (
     <AlertModalWrap role="dialog" aria-labelledby="modal-select">
-      <div className="modal-overlay">
+      <ModalOverlay>
         <div
           className="modalContent"
           role="document"
@@ -107,7 +108,7 @@ const AlertModal = ({
             </button>
           </div>
         </div>
-      </div>
+      </ModalOverlay>
     </AlertModalWrap>
   );
 };

@@ -2,15 +2,10 @@ import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
   width: 80rem;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
   z-index: 101;
-  overflow: hidden;
 
   @media (max-width: 1024px) {
     width: 49rem;

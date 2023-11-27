@@ -11,7 +11,7 @@ import useAuthContext from '../../../hooks/useAuthContext';
 import Accordion from '../../Accordion/Accordion';
 import GetAccordionData from '../GetAccordionData';
 import MultipleAccordion from '../../Accordion/MultipleAccordion';
-import StyledOverlay from '../StyledOverlay';
+import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 import Preview from '../../FileUpload/Preview';
 import uploadImageToStorage from '../UploadImageToStorage';
 import KakaoMap from '../../Map/KakaoMap';
@@ -153,7 +153,7 @@ function Upload() {
   };
 
   return (
-    <StyledOverlay>
+    <ModalOverlay>
       <Styled.UploadWrapper>
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
@@ -251,7 +251,7 @@ function Upload() {
       <Styled.CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
         <img src={CloseIcon} alt="닫기버튼" />
       </Styled.CloseBtn>
-    </StyledOverlay>
+    </ModalOverlay>
   );
 }
 

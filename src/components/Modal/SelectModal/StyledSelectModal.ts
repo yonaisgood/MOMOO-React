@@ -1,18 +1,6 @@
 import styled from 'styled-components';
 
 const SelectModal = styled.div`
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   .modal-content {
     background: var(--background-color);
     border-radius: 10px;
@@ -35,6 +23,9 @@ const SelectModal = styled.div`
     padding: 1.3rem 1.6rem;
     font-size: var(--text-m);
     transition: all 0.2s ease-in-out;
+  }
+  .modal-list button:last-child {
+    margin-bottom: 1rem;
   }
 
   .modal-list button:hover {

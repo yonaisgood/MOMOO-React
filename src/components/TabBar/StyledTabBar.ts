@@ -29,7 +29,7 @@ const StyledNav = styled.nav`
     align-items: center;
     flex-grow: 1;
   }
-  
+
   p {
     margin-top: 3px;
     font-size: 0.8rem;
@@ -39,16 +39,6 @@ const StyledNav = styled.nav`
   .navBtn button img {
     width: 2.2rem;
     height: 2.2rem;
-  }
-
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
   }
 `;
 
