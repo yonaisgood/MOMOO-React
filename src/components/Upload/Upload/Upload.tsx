@@ -108,6 +108,7 @@ function Upload() {
         const downloadURLs = await uploadImageToStorage(
           file,
           `feed/${user.uid}`,
+          id,
         );
 
         const uploadData = {

@@ -108,6 +108,11 @@ export default function EditFeed() {
     SetAccordionData();
   }, []);
 
+  if (!user) {
+    navigate('/');
+    return;
+  }
+
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
   };
@@ -135,7 +140,11 @@ export default function EditFeed() {
       let downloadURLs: string[] = imgUrlList;
 
       if (file !== null) {
-        downloadURLs = await uploadImageToStorage(file, 'feed');
+        downloadURLs = await uploadImageToStorage(
+          file,
+          `feed/${user.uid}`,
+          feedIdToEdit,
+        );
       }
 
       const editData = {
@@ -178,7 +187,7 @@ export default function EditFeed() {
         }
       });
 
-      // 이미지 삭제 실패 시, 게시글 수정이 중단되지 않도록 try 마지막에 위치
+      // 이미지 삭제 실패 시, 게시물 수정이 중단되지 않도록 try 마지막에 위치
       if (file !== null) {
         imgUrlList.forEach(async (url) => await deleteImg(url));
       }
