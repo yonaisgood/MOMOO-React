@@ -8,8 +8,15 @@ import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
 import { useRemoveFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 
 import { AlertModalWrap, Header } from './StyledAlertModal';
+import { deleteImg } from '../../../SDKUtiles';
 
-const AlertModal = ({ onClose }: { onClose: () => void }) => {
+const AlertModal = ({
+  onClose,
+  imgUrlList,
+}: {
+  onClose: () => void;
+  imgUrlList: string[];
+}) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const getSavedAlbumList = useGetSavedAlbumList();
@@ -67,6 +74,8 @@ const AlertModal = ({ onClose }: { onClose: () => void }) => {
           });
         }
         onClose();
+
+        imgUrlList.forEach(async (url) => await deleteImg(url));
       } catch (error) {
         console.error('게시글 삭제 오류:', error);
       }

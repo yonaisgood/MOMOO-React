@@ -138,7 +138,12 @@ export default function FeedItem() {
                 onClose={handleCloseModal}
               />
             )}
-            {deleteModalOpen && <AlertModal onClose={handleDeleteCloseModal} />}
+            {deleteModalOpen && (
+              <AlertModal
+                onClose={handleDeleteCloseModal}
+                imgUrlList={feedData.imageUrl}
+              />
+            )}
             {changeAlbumModalOpen && (
               <ChangeAlbumModal
                 answer={accordionData[0].answer.join(',')}
