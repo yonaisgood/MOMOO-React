@@ -19,6 +19,10 @@ export default function useGetAlbumFeedList() {
         query(albumRef, where('name', '==', albumName)),
       );
 
+      if (!querySnapshot.docs.length) {
+        return null;
+      }
+
       const feedList: string[] = [];
 
       querySnapshot.forEach((doc) => {
