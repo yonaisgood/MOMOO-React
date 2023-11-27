@@ -14,6 +14,7 @@ const StyledMy = styled.main`
       margin: 0 auto 8px;
       width: 70px;
       aspect-ratio: 1/1;
+      border-radius: 50%;
     }
 
     .displayName {
