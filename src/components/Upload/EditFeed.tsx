@@ -28,17 +28,17 @@ import CloseIcon from '../../asset/icon/X-White.svg';
 import LoadingIcon from '../../asset/icon/Loading.svg';
 import StyledLoadingImg from '../CommonStyled/StyledLodingImg';
 
+interface AccordionData {
+  question: string;
+  answer: string[];
+}
+
+interface AlbumIdData {
+  albumName: string;
+  docId: string;
+}
+
 export default function EditFeed() {
-  interface AccordionData {
-    question: string;
-    answer: string[];
-  }
-
-  interface AlbumIdData {
-    albumName: string;
-    docId: string;
-  }
-
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -158,7 +158,6 @@ export default function EditFeed() {
 
       await editFeed(editData);
 
-      // update feedList
       selectedAlbumList.forEach(async (selectedAlbumName) => {
         let selectedAlbumId = '';
 

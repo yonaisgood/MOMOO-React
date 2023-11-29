@@ -44,7 +44,7 @@ export default function FeedItem() {
     const fetchData = async () => {
       if (user) {
         const result = await getAccordionData();
-        setAccordionData(result.accordionData);
+        setAccordionData(result.accordionData || []);
       }
     };
     fetchData();
