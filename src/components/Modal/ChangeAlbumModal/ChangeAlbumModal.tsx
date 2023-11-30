@@ -26,10 +26,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     docId: string;
   }
 
-  interface AccordionData {
-    question: string;
-    answer: string[];
-  }
   const { user } = useAuthContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -37,10 +33,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [savedAlbumList, setSavedAlbumList] = useState<string[]>([]);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const [accordionData, setAccordionData] = useState<AccordionData[]>([]);
-  const [clientWitch, setClientWitch] = useState(
-    document.documentElement.clientWidth,
-  );
+
   const getAccordionData = GetAccordionData();
   const getSavedAlbumList = useGetSavedAlbumList();
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
@@ -53,13 +46,9 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
   }
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      setClientWitch(document.documentElement.clientWidth);
-    });
-
     const setSavedAlbumData = async () => {
       const data = await getSavedAlbumList(id);
-      console.log(id);
+
       if (data) {
         setSelectedAlbumList(data.map((v) => v.data().name));
         setSavedAlbumList(data.map((v) => v.id));
@@ -71,7 +60,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     const SetAcoordionData = async () => {
       if (user) {
         const result = await getAccordionData();
-        setAccordionData(result.accordionData || []);
         setAlbumIdData(result.albumIdData || []);
       }
     };
@@ -84,8 +72,6 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
     const fetchData = async () => {
       if (user) {
         const result = await getAccordionData();
-        console.log(result);
-        setAccordionData(result.accordionData || []);
         setAlbumIdData(result.albumIdData || []);
       }
     };
