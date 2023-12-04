@@ -11,6 +11,7 @@ import GetAccordionData from '../../../components/Upload/GetAccordionData';
 import AlertModal from '../../../components/Modal/AlertModal/AlertModal';
 import Modal from '../../../components/Modal/SelectModal/SelectModal';
 import Carousel from '../../../components/Carousel/Carousel';
+import LoadingComponent from '../../../components/Loading/LoadingComponent';
 import StyledFeedItem from './StyledFeedItem';
 
 import SeeMore from '../../../asset/icon/More.svg';
@@ -87,71 +88,68 @@ export default function FeedItem() {
     setIsModalOpen(false);
   };
 
+  if (InvalidId) {
+    return <div>존재하지 않는 게시물입니다</div>;
+  }
+
   return (
     <>
-      {InvalidId ? (
-        <div>존재하지 않는 게시물입니다</div>
-      ) : (
-        feedData && (
-          <StyledFeedItem>
-            <Carousel imgUrlList={feedData.imageUrl}></Carousel>
-            <section className="contentsSection">
-              {feedData.emotionImage && feedData.weatherImage && (
-                <div className="iconSection">
-                  {feedData.emotionImage && (
-                    <img
-                      className="emotion"
-                      src={feedData.emotionImage}
-                      alt="오늘의 기분"
-                    />
-                  )}
-                  {feedData.weatherImage && (
-                    <img
-                      className="weather"
-                      src={feedData.weatherImage}
-                      alt="오늘의 날씨"
-                    />
-                  )}
-                </div>
-              )}
-              <button
-                className="more"
-                type="button"
-                onClick={handleSeeMoreClick}
-              >
-                <img src={SeeMore} alt="더보기 버튼" />
-              </button>
-            </section>
-            <h3>{feedData.title}</h3>
-            {feedData.text && <p className="detailText">{feedData.text}</p>}
-            {feedData.selectedAddress && (
-              <p className="locationSection">{feedData.selectedAddress}</p>
+      {!feedData && <LoadingComponent />}
+      {feedData && (
+        <StyledFeedItem>
+          <Carousel imgUrlList={feedData.imageUrl}></Carousel>
+          <section className="contentsSection">
+            {feedData.emotionImage && feedData.weatherImage && (
+              <div className="iconSection">
+                {feedData.emotionImage && (
+                  <img
+                    className="emotion"
+                    src={feedData.emotionImage}
+                    alt="오늘의 기분"
+                  />
+                )}
+                {feedData.weatherImage && (
+                  <img
+                    className="weather"
+                    src={feedData.weatherImage}
+                    alt="오늘의 날씨"
+                  />
+                )}
+              </div>
             )}
-            <time dateTime={time} className="date">
-              {time.replace(/-/gi, '.')}
-            </time>
-            {isModalOpen && (
-              <Modal
-                setDeleteModalOpen={setDeleteModalOpen}
-                setChangeAlbumModalOpen={setChangeAlbumModalOpen}
-                feedId={id}
-                onClose={handleCloseModal}
-              />
-            )}
-            {deleteModalOpen && (
-              <AlertModal
-                onClose={handleDeleteCloseModal}
-                imgUrlList={feedData.imageUrl}
-              />
-            )}
-            {changeAlbumModalOpen && (
-              <ChangeAlbumModal
-                answer={accordionData[0].answer.join(',')}
-                onClose={handleChangeAlbumModal}
-              />
-            )}
-          </StyledFeedItem>
-        )
+            <button className="more" type="button" onClick={handleSeeMoreClick}>
+              <img src={SeeMore} alt="더보기 버튼" />
+            </button>
+          </section>
+          <h3>{feedData.title}</h3>
+          {feedData.text && <p className="detailText">{feedData.text}</p>}
+          {feedData.selectedAddress && (
+            <p className="locationSection">{feedData.selectedAddress}</p>
+          )}
+          <time dateTime={time} className="date">
+            {time.replace(/-/gi, '.')}
+          </time>
+          {isModalOpen && (
+            <Modal
+              setDeleteModalOpen={setDeleteModalOpen}
+              setChangeAlbumModalOpen={setChangeAlbumModalOpen}
+              feedId={id}
+              onClose={handleCloseModal}
+            />
+          )}
+          {deleteModalOpen && (
+            <AlertModal
+              onClose={handleDeleteCloseModal}
+              imgUrlList={feedData.imageUrl}
+            />
+          )}
+          {changeAlbumModalOpen && (
+            <ChangeAlbumModal
+              answer={accordionData[0].answer.join(',')}
+              onClose={handleChangeAlbumModal}
+            />
+          )}
+        </StyledFeedItem>
       )}
     </>
   );

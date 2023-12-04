@@ -9,6 +9,7 @@ import useSetFeedItemLayout from './useSetFeedItemLayout';
 
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
+import LoadingComponent from '../../components/Loading/LoadingComponent';
 import FeedItem from './FeedItem';
 import StyledH2 from '../../components/CommonStyled/StyledH2';
 import StyledAlbum, { StyledFeedList, StyledAddFeedItem } from './StyledAlbum';
@@ -57,6 +58,7 @@ export default function Album() {
       }
 
       const feedListData = await getFeedListData(albumFeedList);
+
       if (!feedListData?.length) {
         setFeedList([]);
         setRatio(null);
@@ -104,6 +106,7 @@ export default function Album() {
             )}
             <section>
               <h3 className="a11y-hidden">게시글 목록</h3>
+              {!feedList && <LoadingComponent />}
               {feedList && (
                 <StyledFeedList>
                   {feedList.length > 0 &&
