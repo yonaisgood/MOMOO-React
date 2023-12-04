@@ -8,11 +8,22 @@ import {
 } from 'firebase/firestore';
 import useAuthContext from '../../hooks/useAuthContext';
 
+import SunnyImg from '../../asset/image/Snowy.svg';
+import PartlySunnyImg from '../../asset/image/PartlySunny.svg';
+import CloudyImg from '../../asset/image/Cloudy.svg';
+import RainyImg from '../../asset/image/Rainy.svg';
+import SnowyImg from '../../asset/image/Snowy.svg';
+import ExcitedImg from '../../asset/image/Snowy.svg';
+import SmilingImg from '../../asset/image/Snowy.svg';
+import YummyImg from '../../asset/image/Snowy.svg';
+import FrowningImg from '../../asset/image/Snowy.svg';
+import SadImg from '../../asset/image/Snowy.svg';
+import AngryImg from '../../asset/image/Snowy.svg';
+
 const GetAccordionData = () => {
   const { user } = useAuthContext();
-  
+
   const getAccordionData = async () => {
-    
     const albumDataList: DocumentData[] = [];
     const albumIdList: string[] = [];
 
@@ -43,22 +54,22 @@ const GetAccordionData = () => {
       {
         question: '오늘의 날씨',
         answer: [
-          '/src/asset/image/Sunny.svg',
-          '/src/asset/image/PartlySunny.svg',
-          '/src/asset/image/Cloudy.svg',
-          '/src/asset/image/Rainy.svg',
-          '/src/asset/image/Snowy.svg',
+          SunnyImg,
+          PartlySunnyImg,
+          CloudyImg,
+          RainyImg,
+          SnowyImg
         ],
       },
       {
         question: '오늘의 기분',
         answer: [
-          '/src/asset/image/Excited.svg',
-          '/src/asset/image/Smiling.svg',
-          '/src/asset/image/Yummy.svg',
-          '/src/asset/image/Frowning.svg',
-          '/src/asset/image/Sad.svg',
-          '/src/asset/image/Angry.svg',
+          ExcitedImg,
+          SmilingImg,
+          YummyImg,
+          FrowningImg,
+          SadImg,
+          AngryImg
         ],
       },
     ];
