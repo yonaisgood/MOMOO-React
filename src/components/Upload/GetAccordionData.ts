@@ -13,12 +13,12 @@ import PartlySunnyImg from '../../asset/image/PartlySunny.svg';
 import CloudyImg from '../../asset/image/Cloudy.svg';
 import RainyImg from '../../asset/image/Rainy.svg';
 import SnowyImg from '../../asset/image/Snowy.svg';
-import ExcitedImg from '../../asset/image/Snowy.svg';
-import SmilingImg from '../../asset/image/Snowy.svg';
-import YummyImg from '../../asset/image/Snowy.svg';
-import FrowningImg from '../../asset/image/Snowy.svg';
-import SadImg from '../../asset/image/Snowy.svg';
-import AngryImg from '../../asset/image/Snowy.svg';
+import ExcitedImg from '../../asset/image/Excited.svg';
+import SmilingImg from '../../asset/image/Smiling.svg';
+import YummyImg from '../../asset/image/Yummy.svg';
+import FrowningImg from '../../asset/image/Frowning.svg';
+import SadImg from '../../asset/image/Sad.svg';
+import AngryImg from '../../asset/image/Angry.svg';
 
 const GetAccordionData = () => {
   const { user } = useAuthContext();
@@ -53,13 +53,7 @@ const GetAccordionData = () => {
       },
       {
         question: '오늘의 날씨',
-        answer: [
-          SunnyImg,
-          PartlySunnyImg,
-          CloudyImg,
-          RainyImg,
-          SnowyImg
-        ],
+        answer: [SunnyImg, PartlySunnyImg, CloudyImg, RainyImg, SnowyImg],
       },
       {
         question: '오늘의 기분',
@@ -69,7 +63,7 @@ const GetAccordionData = () => {
           YummyImg,
           FrowningImg,
           SadImg,
-          AngryImg
+          AngryImg,
         ],
       },
     ];
