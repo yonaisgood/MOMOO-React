@@ -50,6 +50,7 @@ const StyledSplash = styled.main`
   img {
     margin: auto;
     width: var(--width);
+    height: auto;
   }
 
   div {
