@@ -18,7 +18,7 @@ import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
 import ModalOverlay from '../CommonStyled/StyledModalOverlay';
 
-import { deleteImg } from '../../SDKUtiles';
+import { deleteImg } from '../../utils/SDKUtils';
 import GetAccordionData from './GetAccordionData';
 import uploadImageToStorage from './UploadImageToStorage';
 

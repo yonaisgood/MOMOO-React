@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useSignup from '../hooks/useSingup.ts';
-import useFileInp from '../hooks/useHandleFileInp.ts';
+import useSetProfileImage from '../hooks/useSetProfileImage.ts';
 
 import Button from '../components/Button/Button/Button.tsx';
 import StyledInput from '../components/CommonStyled/StyledInput.ts';
@@ -13,8 +13,6 @@ import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
 
 export default function Signup() {
-  const [file, setFile] = useState<File | null>(null);
-  const [src, setSrc] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -30,6 +28,7 @@ export default function Signup() {
     document.documentElement.clientWidth,
   );
   const { error, signup } = useSignup();
+  const { file, src, setProfileImage } = useSetProfileImage();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -158,7 +157,7 @@ export default function Signup() {
             id="profile-inp"
             type="file"
             className="a11y-hidden"
-            onChange={(e) => useFileInp(e, setFile, setSrc)}
+            onChange={setProfileImage}
           />
           <label htmlFor="displayName-inp" className="a11y-hidden">
             사용자 이름

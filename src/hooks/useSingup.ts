@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
 import useAuthContext from './useAuthContext';
-import useUploadImg from './useUploadImg.ts';
+import { uploadImg } from '../utils/SDKUtils.ts';
 import useAddAlbum from './useAddAlbum.ts';
 
 import { appAuth } from '../firebase/config';
@@ -44,7 +44,7 @@ export default function useSignup() {
       }
 
       if (file !== null) {
-        opt.photoURL = await useUploadImg(`profile/${user.uid}`, file);
+        opt.photoURL = await uploadImg(`profile/${user.uid}`, file);
       }
 
       if (opt.displayName || opt.photoURL) {
