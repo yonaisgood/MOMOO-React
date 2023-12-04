@@ -5,7 +5,7 @@ import { ref, listAll, deleteObject } from 'firebase/storage';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
 import { appAuth, appFireStore, storage } from '../firebase/config';
-import { deleteImg } from '../SDKUtiles';
+import { deleteImg } from '../utils/SDKUtils';
 
 export default function useDeleteId() {
   const [error, setError] = useState<null | string>(null);

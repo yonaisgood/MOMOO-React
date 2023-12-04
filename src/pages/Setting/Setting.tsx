@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 
 import useAuthContext from '../../hooks/useAuthContext';
-import useFileInp from '../../hooks/useHandleFileInp';
+import useSetProfileImage from '../../hooks/useSetProfileImage';
 import useReauthenticate from '../../hooks/useReauthenticate';
 import useDeleteId from '../../hooks/useDeleteId';
 import { useUpdateProfile } from '../../hooks/useUpdateProfile';
@@ -26,10 +26,8 @@ interface Profile {
 }
 
 export default function Setting() {
-  const [file, setFile] = useState<File | null>(null);
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
-  const [src, setSrc] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [emailErrMessage, setEmailErrMessage] = useState('');
@@ -50,6 +48,8 @@ export default function Setting() {
   const { deleteId, error: deleteIdError } = useDeleteId();
 
   const navigate = useNavigate();
+
+  const { file, setSrc, src, setProfileImage } = useSetProfileImage();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -303,7 +303,7 @@ export default function Setting() {
               id="profile-inp"
               type="file"
               className="a11y-hidden"
-              onChange={(e) => useFileInp(e, setFile, setSrc)}
+              onChange={setProfileImage}
             />
 
             <label htmlFor="username-inp" className="a11y-hidden">

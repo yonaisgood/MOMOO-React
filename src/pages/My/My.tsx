@@ -14,14 +14,7 @@ import LogoutIcon from '../../asset/icon/Logout.svg';
 
 export default function My() {
   const { user } = useAuthContext();
-
-  const logout = async () => {
-    try {
-      await useLogout();
-    } catch (error) {
-      alert('로그아웃에 실패했습니다');
-    }
-  };
+  const { logout } = useLogout();
 
   return (
     <>

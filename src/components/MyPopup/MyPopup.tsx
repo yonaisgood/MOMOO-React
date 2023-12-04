@@ -20,6 +20,7 @@ interface Props {
 
 export default function MyPopup({ setOpenPopup }: Props) {
   const { user } = useAuthContext();
+  const { logout } = useLogout();
 
   useEffect(() => {
     const closePopup = (e: KeyboardEvent) => {
@@ -31,14 +32,6 @@ export default function MyPopup({ setOpenPopup }: Props) {
 
     window.addEventListener('keydown', closePopup);
   }, []);
-
-  const logout = async () => {
-    try {
-      await useLogout();
-    } catch (error) {
-      alert('로그아웃에 실패했습니다');
-    }
-  };
 
   return (
     <StyledMyPopup role="dialog">

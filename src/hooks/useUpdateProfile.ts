@@ -3,7 +3,7 @@ import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
 import useAuthContext from './useAuthContext';
-import useUploadImg from './useUploadImg';
+import { uploadImg } from '../utils/SDKUtils';
 
 interface Profile {
   email: string | null;
@@ -44,7 +44,7 @@ export const useUpdateProfile = () => {
 
     try {
       if (file !== null) {
-        opt.photoURL = await useUploadImg(`profile/${user.uid}`, file);
+        opt.photoURL = await uploadImg(`profile/${user.uid}`, file);
       }
 
       if (opt.displayName || user.displayName !== null || opt.photoURL) {

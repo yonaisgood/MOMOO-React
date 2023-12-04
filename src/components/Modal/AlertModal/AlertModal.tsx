@@ -9,7 +9,7 @@ import { useRemoveFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 
 import { AlertModalWrap, Header } from './StyledAlertModal';
 import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
-import { deleteImg } from '../../../SDKUtiles';
+import { deleteImg } from '../../../utils/SDKUtils';
 
 const AlertModal = ({
   onClose,
