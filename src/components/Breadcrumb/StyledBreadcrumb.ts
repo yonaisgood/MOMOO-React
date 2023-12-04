@@ -54,7 +54,6 @@ const StyledBreadcrumb = styled.nav<Container>`
 
     li {
       white-space: nowrap;
-      display: flex;
     }
   }
 `;
