@@ -236,7 +236,6 @@ export default function Setting() {
 
   const handleDeleteIdBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.disabled = true;
-    console.log('test');
     setSelectedBtn('회원 탈퇴');
 
     const userConfirm = confirm('MOMOO를 떠나시겠습니까?');

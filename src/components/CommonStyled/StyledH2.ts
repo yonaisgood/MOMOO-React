@@ -8,7 +8,7 @@ const StyledH2 = styled.h2`
   align-items: center;
   justify-content: center;
   gap: 24px;
-  margin: auto;
+  margin: 0 auto;
 
   &::before,
   &::after {

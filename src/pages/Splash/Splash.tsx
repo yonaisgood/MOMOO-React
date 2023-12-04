@@ -1,18 +1,23 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useAuthContext from '../../hooks/useAuthContext';
+
 import StyledSplash from './StyledSplash';
 
 import SplashIcon from '../../asset/icon/SplashLogo.svg';
 
 export default function Splash() {
   const navigate = useNavigate();
+  const { isAuthReady } = useAuthContext();
 
   useEffect(() => {
     setTimeout(() => {
-      navigate('/login');
-    }, 2000);
-  }, []);
+      if (isAuthReady) {
+        navigate('/login');
+      }
+    }, 1700);
+  }, [isAuthReady]);
 
   return (
     <StyledSplash>

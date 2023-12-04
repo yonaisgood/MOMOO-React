@@ -26,7 +26,7 @@ import Arrow from '../../asset/icon/Arrow.svg';
 import CloseMobileIcon from '../../asset/icon/X-Small.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import LoadingIcon from '../../asset/icon/Loading.svg';
-import StyledLoadingImg from '../CommonStyled/StyledLodingImg';
+import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 interface AccordionData {
   question: string;

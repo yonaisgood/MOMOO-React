@@ -2,17 +2,23 @@ import styled from 'styled-components';
 
 const StyledAlbum = styled.main`
   width: 100%;
+  min-height: calc(100vh - var(--padding-top-pc));
+  display: flex;
+  flex-direction: column;
   padding: 0 var(--margin-pc) 56px;
   margin: var(--padding-top-pc) var(--right-padding-pc) 0 var(--nav-width-pc);
 
   section {
-    margin: auto;
+    position: relative;
+    margin: 0 auto;
+    flex-grow: 1;
     width: min(976px, 100%);
   }
 
   @media (max-width: 1024px) {
     padding: var(--nav-height-tablet) var(--margin-tablet) 0;
     margin: 0;
+    min-height: 100vh;
   }
 
   @media (max-width: 430px) {
