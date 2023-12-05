@@ -5,6 +5,7 @@ import { FirebaseError } from 'firebase/app';
 import { appAuth } from '../firebase/config';
 
 export default function useReauthenticate() {
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<null | string>(null);
   const user = appAuth.currentUser;
 
@@ -13,6 +14,8 @@ export default function useReauthenticate() {
       return false;
     }
 
+    setIsPending(true);
+
     const credential = EmailAuthProvider.credential(
       user.email,
       userProvidedPassword,
@@ -20,16 +23,17 @@ export default function useReauthenticate() {
 
     try {
       await reauthenticateWithCredential(user, credential);
-
+      setIsPending(false);
       return true;
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.code);
       }
 
+      setIsPending(false);
       return false;
     }
   };
 
-  return { reauthenticate, error };
+  return { reauthenticate, error, isPending };
 }
