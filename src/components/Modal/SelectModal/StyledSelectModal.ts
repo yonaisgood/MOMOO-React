@@ -25,7 +25,8 @@ const SelectModal = styled.div`
     transition: all 0.2s ease-in-out;
   }
   .modal-list button:last-child {
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
+    border: none;
   }
 
   .modal-list button:hover {
