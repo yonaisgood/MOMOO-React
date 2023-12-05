@@ -36,7 +36,7 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
     setIsModalOpen(false);
   };
   return (
-    <AlbumContainer imageUrl={imgUrl}>
+    <AlbumContainer $imageUrl={imgUrl}>
       <AlbumLink to={`/album/${albumData.name.replace(/\s+/g, '-')}`}>
         <div className="txtWrapper">
           <p className="albumTitle">{albumData.name}</p>

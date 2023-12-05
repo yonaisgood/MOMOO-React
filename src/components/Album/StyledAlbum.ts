@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import More from '../../asset/icon/more-white.svg';
 
 interface Props {
-  imageUrl?: string[];
+  $imageUrl?: string[];
 }
 const AlbumContainer = styled.article<Props>`
   position: relative;
@@ -12,8 +12,8 @@ const AlbumContainer = styled.article<Props>`
   height: 100%;
   border-radius: 1rem;
   background: ${(props) =>
-    props.imageUrl && props.imageUrl.length > 0
-      ? `linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), url(${props.imageUrl[0]}) no-repeat center / cover`
+    props.$imageUrl && props.$imageUrl.length > 0
+      ? `linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), url(${props.$imageUrl[0]}) no-repeat center / cover`
       : 'linear-gradient(0deg, #343434 5.58%, rgba(126, 126, 126, 0) 40.58%, rgba(225, 225, 225, 0) 105.15%), var(--gray-200)'};
   .txtWrapper {
     width: 100%;
