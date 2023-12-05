@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useSetProfileImage from '../../hooks/useSetProfileImage';
@@ -16,7 +17,7 @@ import StyledSetting from './StyledSetting';
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';
-import { useNavigate } from 'react-router-dom';
+import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
 
 interface Profile {
   file: File | null;
@@ -43,8 +44,16 @@ export default function Setting() {
     document.documentElement.clientWidth,
   );
   const { user } = useAuthContext();
-  const { setProfile, error: updateProfileError } = useUpdateProfile();
-  const { reauthenticate, error: reauthenticateError } = useReauthenticate();
+  const {
+    setProfile,
+    error: updateProfileError,
+    isPending: updateProfileIsPending,
+  } = useUpdateProfile();
+  const {
+    reauthenticate,
+    error: reauthenticateError,
+    isPending: reauthenticateIsPending,
+  } = useReauthenticate();
   const { deleteId, error: deleteIdError } = useDeleteId();
 
   const navigate = useNavigate();
@@ -365,7 +374,11 @@ export default function Setting() {
                 !emailValid || !passwordValid || !matchPassword || !changed
               }
             >
-              Save
+              {updateProfileIsPending || reauthenticateIsPending ? (
+                <img src={LoadingIcon} alt="저장 중" />
+              ) : (
+                'Save'
+              )}
             </Button>
           </form>
           {clientWitch <= 430 && (
