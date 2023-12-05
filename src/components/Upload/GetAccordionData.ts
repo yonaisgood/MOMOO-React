@@ -8,7 +8,7 @@ import {
 } from 'firebase/firestore';
 import useAuthContext from '../../hooks/useAuthContext';
 
-import SunnyImg from '../../asset/image/Snowy.svg';
+import SunnyImg from '../../asset/image/Sunny.svg';
 import PartlySunnyImg from '../../asset/image/PartlySunny.svg';
 import CloudyImg from '../../asset/image/Cloudy.svg';
 import RainyImg from '../../asset/image/Rainy.svg';
