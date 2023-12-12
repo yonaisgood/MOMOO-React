@@ -8,7 +8,7 @@ import useAuthContext from '../../../hooks/useAuthContext';
 
 import ChangeAlbumModal from '../../../components/Modal/ChangeAlbumModal/ChangeAlbumModal';
 import GetAccordionData from '../../../components/Upload/GetAccordionData';
-import AlertModal from '../../../components/Modal/AlertModal/AlertModal';
+import DeleteFeedModal from './DeleteFeedModal';
 import Modal from '../../../components/Modal/SelectModal/SelectModal';
 import Carousel from '../../../components/Carousel/Carousel';
 import LoadingComponent from '../../../components/Loading/LoadingComponent';
@@ -138,7 +138,7 @@ export default function FeedItem() {
             />
           )}
           {deleteModalOpen && (
-            <AlertModal
+            <DeleteFeedModal
               onClose={handleDeleteCloseModal}
               imgUrlList={feedData.imageUrl}
             />

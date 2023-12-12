@@ -9,17 +9,14 @@ export default function useReauthenticate() {
   const [error, setError] = useState<null | string>(null);
   const user = appAuth.currentUser;
 
-  const reauthenticate = async (userProvidedPassword: string) => {
+  const reauthenticate = async (password: string) => {
     if (user === null || user?.email === null) {
       return false;
     }
 
     setIsPending(true);
 
-    const credential = EmailAuthProvider.credential(
-      user.email,
-      userProvidedPassword,
-    );
+    const credential = EmailAuthProvider.credential(user.email, password);
 
     try {
       await reauthenticateWithCredential(user, credential);

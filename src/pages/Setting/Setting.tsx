@@ -1,10 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useSetProfileImage from '../../hooks/useSetProfileImage';
 import useReauthenticate from '../../hooks/useReauthenticate';
-import useDeleteId from '../../hooks/useDeleteId';
 import { useUpdateProfile } from '../../hooks/useUpdateProfile';
 
 import StyledInput from '../../components/CommonStyled/StyledInput';
@@ -12,6 +10,7 @@ import Button from '../../components/Button/Button/Button';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import DeleteIdModal from './DeleteIdModal';
 import StyledSetting from './StyledSetting';
 
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
@@ -40,6 +39,7 @@ export default function Setting() {
   const [matchPassword, setMatchPassword] = useState(true);
   const [changed, setChanged] = useState(false);
   const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
@@ -54,9 +54,6 @@ export default function Setting() {
     error: reauthenticateError,
     isPending: reauthenticateIsPending,
   } = useReauthenticate();
-  const { deleteId, error: deleteIdError } = useDeleteId();
-
-  const navigate = useNavigate();
 
   const { file, setSrc, src, setProfileImage } = useSetProfileImage();
 
@@ -157,21 +154,15 @@ export default function Setting() {
     setChanged(true);
   }, [updateProfileError]);
 
-  useEffect(() => {
-    if (deleteIdError) {
-      alert('회원 탈퇴에 실패했습니다');
-    }
-  }, [deleteIdError]);
+  const reconfirmPassword = async () => {
+    const password = prompt('현재 비밀번호를 입력해주세요');
 
-  const handleCurrPasswordInp = async () => {
-    const userPassword = prompt('현재 비밀번호를 입력해주세요');
-
-    if (userPassword === null) {
+    if (password === null) {
       alert('비밀번호가 누락되었습니다');
       return false;
     }
 
-    return await reauthenticate(userPassword);
+    return await reauthenticate(password);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -180,9 +171,10 @@ export default function Setting() {
 
     // 현재 비밀번호 입력받은 후, 재인증
     if (email !== user?.email || password) {
-      const success = await handleCurrPasswordInp();
+      const success = await reconfirmPassword();
 
       if (!success) {
+        alert('비밀번호가 일치하지 않습니다');
         return;
       }
     }
@@ -243,21 +235,15 @@ export default function Setting() {
     }
   };
 
-  const handleDeleteIdBtn = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.disabled = true;
+  const handleDeleteIdBtn = async () => {
     setSelectedBtn('회원 탈퇴');
 
-    const userConfirm = confirm('MOMOO를 떠나시겠습니까?');
+    const success = await reconfirmPassword();
 
-    if (userConfirm) {
-      const success = await handleCurrPasswordInp();
-
-      if (success) {
-        await deleteId();
-        navigate('/');
-      }
+    if (success) {
+      setIsModalOpen(true);
     } else {
-      setSelectedBtn('프로필 설정');
+      alert('비밀번호가 일치하지 않습니다');
     }
   };
 
@@ -392,6 +378,14 @@ export default function Setting() {
             </button>
           )}
         </div>
+        {isModalOpen && (
+          <DeleteIdModal
+            onClose={() => {
+              setIsModalOpen(false);
+              setSelectedBtn('프로필 설정');
+            }}
+          />
+        )}
       </StyledSetting>
     </>
   );
