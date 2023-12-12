@@ -1,28 +1,21 @@
 import { useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { appFireStore } from '../../../firebase/config';
-import { doc, deleteDoc, DocumentData } from 'firebase/firestore';
-
-import useAuthContext from '../../../hooks/useAuthContext';
-import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
-import { useRemoveFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 
 import { AlertModalWrap, Header } from './StyledAlertModal';
 import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
-import { deleteImg } from '../../../utils/SDKUtils';
 
-const AlertModal = ({
+export default function AlertModal({
   onClose,
-  imgUrlList,
+  handleAgreeBtn,
+  title,
+  btnNameList,
 }: {
   onClose: () => void;
-  imgUrlList: string[];
-}) => {
+  handleAgreeBtn: () => void;
+  title: string;
+  btnNameList: string[];
+}) {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const getSavedAlbumList = useGetSavedAlbumList();
-  const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -55,38 +48,6 @@ const AlertModal = ({
     };
   }, []);
 
-  const { id } = useParams();
-  const { user } = useAuthContext();
-
-  if (!id) {
-    return;
-  }
-
-  const handleDeletePost = async () => {
-    if (user) {
-      const postDocRef = doc(appFireStore, user.uid, user.uid, 'feed', id);
-
-      try {
-        await deleteDoc(postDocRef);
-        const getAlbumList = await getSavedAlbumList(id);
-
-        if (getAlbumList !== undefined) {
-          getAlbumList.forEach((albumDoc: DocumentData) => {
-            removeFeedIdFromFeedList(id, albumDoc.id);
-          });
-        }
-
-        navigate(-1);
-
-        imgUrlList.forEach(async (url) => await deleteImg(url));
-      } catch (error) {
-        console.error('게시글 삭제 오류:', error);
-      }
-    } else {
-      console.error('사용자가 로그인되지 않았습니다.');
-    }
-  };
-
   return (
     <AlertModalWrap role="dialog" aria-labelledby="modal-select">
       <ModalOverlay>
@@ -97,19 +58,18 @@ const AlertModal = ({
           ref={modalRef}
         >
           <Header className="modal-header" id="modal-select">
-            <h2 tabIndex={0}>이 게시물을 삭제하시겠어요?</h2>
+            <h2 tabIndex={0}>{title}</h2>
           </Header>
           <div className="modalList">
             <button type="button" onClick={onClose} ref={closeButtonRef}>
-              취소
+              {btnNameList[0]}
             </button>
-            <button type="button" onClick={handleDeletePost}>
-              삭제
+            <button type="button" onClick={handleAgreeBtn}>
+              {btnNameList[1]}
             </button>
           </div>
         </div>
       </ModalOverlay>
     </AlertModalWrap>
   );
-};
-export default AlertModal;
+}

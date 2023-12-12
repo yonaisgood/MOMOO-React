@@ -24,6 +24,10 @@ const AlertModalWrap = styled.div`
       border-right: 1px solid var(--gray-200);
     }
 
+    button:last-child {
+      color: var(--point-dark-400);
+    }
+
     button:hover {
       background-color: var(--point-color);
     }
