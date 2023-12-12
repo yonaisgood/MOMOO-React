@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 import useDeleteId from '../../hooks/useDeleteId';
 
 import AlertModal from '../../components/Modal/AlertModal/AlertModal';
+import LoadingModal from '../../components/Modal/Loading/Loading';
 
 export default function DeleteIdModal({ onClose }: { onClose: () => void }) {
-  const { deleteId, error } = useDeleteId();
+  const { deleteId, error, isPending } = useDeleteId();
 
   useEffect(() => {
     if (error) {
@@ -14,15 +15,20 @@ export default function DeleteIdModal({ onClose }: { onClose: () => void }) {
   }, [error]);
 
   return (
-    <AlertModal
-      onClose={onClose}
-      handleAgreeBtn={() => {
-        (async () => {
-          await deleteId();
-        })();
-      }}
-      title="모무를 떠나시겠습니까?"
-      btnNameList={['아니요', '예']}
-    />
+    <>
+      {!isPending && (
+        <AlertModal
+          onClose={onClose}
+          handleAgreeBtn={() => {
+            (async () => {
+              await deleteId();
+            })();
+          }}
+          title="모무를 떠나시겠습니까?"
+          btnNameList={['아니요', '예']}
+        />
+      )}
+      {isPending && <LoadingModal text="계정 삭제 중" />}
+    </>
   );
 }
