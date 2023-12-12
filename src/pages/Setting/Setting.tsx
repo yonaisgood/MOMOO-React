@@ -43,17 +43,10 @@ export default function Setting() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
+  const [updateProfileIsPending, setUpdateProfileIsPending] = useState(false);
   const { user } = useAuthContext();
-  const {
-    setProfile,
-    error: updateProfileError,
-    isPending: updateProfileIsPending,
-  } = useUpdateProfile();
-  const {
-    reauthenticate,
-    error: reauthenticateError,
-    isPending: reauthenticateIsPending,
-  } = useReauthenticate();
+  const { setProfile, error: updateProfileError } = useUpdateProfile();
+  const { reauthenticate, error: reauthenticateError } = useReauthenticate();
 
   const { file, setSrc, src, setProfileImage } = useSetProfileImage();
 
@@ -168,12 +161,14 @@ export default function Setting() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setChanged(false);
+    setUpdateProfileIsPending(true);
 
     // 현재 비밀번호 입력받은 후, 재인증
     if (email !== user?.email || password) {
       const success = await reconfirmPassword();
 
       if (!success) {
+        setUpdateProfileIsPending(false);
         return;
       }
     }
@@ -189,6 +184,7 @@ export default function Setting() {
     }
 
     await setProfile(profile);
+    setUpdateProfileIsPending(false);
   };
 
   const handlePasswordInp = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -359,7 +355,7 @@ export default function Setting() {
                 !emailValid || !passwordValid || !matchPassword || !changed
               }
             >
-              {updateProfileIsPending || reauthenticateIsPending ? (
+              {updateProfileIsPending ? (
                 <img src={LoadingIcon} alt="저장 중" />
               ) : (
                 'Save'

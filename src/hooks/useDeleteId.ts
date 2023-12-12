@@ -9,11 +9,14 @@ import { deleteImg } from '../utils/SDKUtils';
 
 export default function useDeleteId() {
   const [error, setError] = useState<null | string>(null);
+  const [isPending, setIsPending] = useState(false);
 
   const deleteId = async () => {
+    setIsPending(true);
     const user = appAuth.currentUser;
 
     if (!user) {
+      setIsPending(false);
       return;
     }
 
@@ -25,6 +28,7 @@ export default function useDeleteId() {
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.code);
+        setIsPending(false);
         return;
       }
     }
@@ -35,9 +39,10 @@ export default function useDeleteId() {
 
     await deleteFeedsImg(uid);
     await deleteUserDocs(uid);
+    setIsPending(false);
   };
 
-  return { deleteId, error };
+  return { deleteId, error, isPending };
 }
 
 async function deleteFeedsImg(uid: string) {
