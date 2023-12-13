@@ -105,7 +105,10 @@ export default function Setting() {
 
     switch (reauthenticateError) {
       case 'auth/wrong-password':
-        alert('비밀번호가 일치하지 않습니다');
+        alert('비밀번호를 다시 확인해 주세요');
+        break;
+      case 'auth/too-many-requests':
+        alert('잠시 후 다시 시도해 주세요');
         break;
       case 'auth/network-request-failed':
         alert('네트워크 연결에 실패했습니다');
@@ -231,14 +234,11 @@ export default function Setting() {
   };
 
   const handleDeleteIdBtn = async () => {
-    setSelectedBtn('회원 탈퇴');
-
     const success = await reconfirmPassword();
 
     if (success) {
+      setSelectedBtn('회원 탈퇴');
       setIsModalOpen(true);
-    } else {
-      alert('비밀번호가 일치하지 않습니다');
     }
   };
 
