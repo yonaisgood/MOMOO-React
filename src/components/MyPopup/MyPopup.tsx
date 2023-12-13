@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
-import useLogout from '../../hooks/useLogout';
 
 import StyledMyPopup from './StyledMyPopup';
+
+import { logout } from '../../utils/SDKUtils';
 
 import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import SettingIcon from '../../asset/icon/Setting.svg';
@@ -20,7 +21,6 @@ interface Props {
 
 export default function MyPopup({ setOpenPopup }: Props) {
   const { user } = useAuthContext();
-  const { logout } = useLogout();
 
   useEffect(() => {
     const closePopup = (e: KeyboardEvent) => {
