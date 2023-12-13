@@ -149,7 +149,7 @@ export default function Login() {
             size={clientWitch > 1024 ? 'l' : 's'}
             disabled={!emailValid || !passwordValid || isPending}
           >
-            {isPending ? <img src={LoadingIcon} alt="로그인 중" /> : 'Log In'}
+            {isPending ? <img src={LoadingIcon} alt="로그인 중" /> : 'Login'}
           </Button>
         </form>
       </div>
