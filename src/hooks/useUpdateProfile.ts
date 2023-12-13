@@ -14,7 +14,6 @@ interface Profile {
 
 export const useUpdateProfile = () => {
   const [error, setError] = useState<null | string>(null);
-  const [isPending, setPending] = useState(false);
   const { dispatch } = useAuthContext();
   const { user } = useAuthContext();
 
@@ -25,7 +24,6 @@ export const useUpdateProfile = () => {
     file,
   }: Profile) => {
     setError(null);
-    setPending(true);
 
     if (user === null) {
       return;
@@ -60,7 +58,6 @@ export const useUpdateProfile = () => {
       }
 
       setError(null);
-      setPending(false);
       dispatch({ type: 'login', payload: user });
     } catch (err) {
       if (err instanceof FirebaseError) {
@@ -68,10 +65,8 @@ export const useUpdateProfile = () => {
       } else {
         setError('프로필 변경에 실패했습니다');
       }
-
-      setPending(false);
     }
   };
 
-  return { error, isPending, setProfile };
+  return { error, setProfile };
 };
