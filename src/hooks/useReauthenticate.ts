@@ -9,6 +9,8 @@ export default function useReauthenticate() {
   const user = appAuth.currentUser;
 
   const reauthenticate = async (password: string) => {
+    setError(null);
+
     if (user === null || user?.email === null) {
       return false;
     }
