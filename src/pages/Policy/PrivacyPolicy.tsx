@@ -5,6 +5,8 @@ import TopBar from '../../components/Topbar/Topbar';
 import StyledPolicy from './StyledPolicy';
 
 import privacyPolicy from './privacyText';
+import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
+import StyledH2 from '../../components/CommonStyled/StyledH2';
 
 export default function PrivacyPolicy() {
   const [clientWitch, setClientWitch] = useState(
@@ -21,16 +23,27 @@ export default function PrivacyPolicy() {
     <>
       {clientWitch <= 430 && <TopBar tit="개인정보 처리방침" />}
       <StyledPolicy>
-        {clientWitch > 430 && (
-          <Breadcrumb
+        {clientWitch > 1024 && (
+          <>
+            <StyledH2>개인정보 처리방침</StyledH2>
+            <Breadcrumb
+              navList={[
+                { path: 'home', text: 'Home' },
+                { path: 'policy', text: 'Privacy policy' },
+              ]}
+            />
+          </>
+        )}
+        {clientWitch > 430 && clientWitch <= 1024 && (
+          <BreadcrumbWrap
             navList={[
               { path: 'home', text: 'Home' },
               { path: 'policy', text: 'Privacy policy' },
             ]}
+            title="개인정보 처리방침"
           />
         )}
         <section>
-          {clientWitch > 430 && <h2>개인정보 처리방침</h2>}
           {privacyPolicy.map((v) => {
             if (typeof v.list === 'string') {
               return (

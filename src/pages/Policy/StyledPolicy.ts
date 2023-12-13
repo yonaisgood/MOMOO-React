@@ -2,18 +2,12 @@ import styled from 'styled-components';
 
 const StyledPolicy = styled.main`
   max-width: 1024px;
-  margin: auto;
   box-sizing: content-box;
   color: var(--gray-900);
   font-size: var(--text-m);
 
   section {
-    margin-top: 8px;
-
-    h2 {
-      font-size: var(--title-s);
-      margin-bottom: 52px;
-    }
+    margin-top: 52px;
 
     strong:not(:first-child) {
       margin-top: 44px;
@@ -36,18 +30,25 @@ const StyledPolicy = styled.main`
     }
   }
 
-  padding: 0 16px;
+  margin: 0 var(--right-padding-pc) 0 var(--nav-width-pc);
+  padding: var(--padding-top-pc) var(--margin-pc) 52px;
+
+  @media (max-width: 1024px) {
+    margin: 0 auto;
+    padding: calc(var(--nav-height-tablet)) 24px 32px;
+
+    section {
+      margin-top: 32px;
+    }
+  }
 
   @media (max-width: 430px) {
-    padding: calc(var(--nav-height-mobile) + 24px) 16px;
-  }
+    margin: 0 auto;
+    padding: calc(var(--nav-height-mobile) + 32px) 16px;
 
-  @media (min-width: 431px) {
-    padding: calc(var(--nav-height-tablet) + 64px) 24px 44px;
-  }
-
-  @media (min-width: 1025px) {
-    padding: 116px var(--right-padding-pc) 52px 32px;
+    section {
+      margin-top: 0;
+    }
   }
 `;
 
