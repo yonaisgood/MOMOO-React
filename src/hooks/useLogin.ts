@@ -23,16 +23,15 @@ export const useLogin = () => {
       );
       dispatch({ type: 'login', payload: user });
       setError(null);
-      setPending(false);
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.code);
       } else if (err instanceof Error) {
         setError(err.message);
       }
-
-      setPending(false);
     }
+
+    setPending(false);
   };
   return { error, isPending, login };
 };
