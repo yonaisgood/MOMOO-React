@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
+  overflow: hidden;
   width: 80rem;
   border-radius: 10px;
   background-color: var(--background-color);
