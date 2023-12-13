@@ -53,8 +53,6 @@ export default function useSignup() {
 
       await addAlbum({ albumName: '전체 보기', user });
       setError(null);
-      setPending(false);
-
       dispatch({ type: 'login', payload: user });
     } catch (err) {
       if (err instanceof FirebaseError) {
@@ -62,9 +60,9 @@ export default function useSignup() {
       } else if (err instanceof Error) {
         setError(err.message);
       }
-
-      setPending(false);
     }
+
+    setPending(false);
   };
 
   return { error, isPending, signup };

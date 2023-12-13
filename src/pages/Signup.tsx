@@ -11,6 +11,7 @@ import StyledAuth from '../components/CommonStyled/StyledAuth.ts';
 import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
 import EditCircle from '../asset/icon/EditCircle.svg';
 import Logo from '../asset/icon/Logo.svg';
+import LoadingIcon from '../asset/icon/LoadingBlack.svg';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ export default function Signup() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const { error, signup } = useSignup();
+  const { error, signup, isPending } = useSignup();
   const { file, src, setProfileImage } = useSetProfileImage();
 
   useEffect(() => {
@@ -214,9 +215,15 @@ export default function Signup() {
           </strong>
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
-            disabled={!emailValid || !passwordValid || !matchPassword}
+            disabled={
+              !emailValid || !passwordValid || !matchPassword || isPending
+            }
           >
-            Signup
+            {isPending ? (
+              <img src={LoadingIcon} alt="계정 생성 중" />
+            ) : (
+              'Signup'
+            )}
           </Button>
         </form>
       </div>

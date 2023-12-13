@@ -1,3 +1,4 @@
+import { signOut } from 'firebase/auth';
 import {
   ref,
   deleteObject,
@@ -5,7 +6,15 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 
-import { storage } from '../firebase/config.ts';
+import { storage, appAuth } from '../firebase/config.ts';
+
+async function logout() {
+  try {
+    await signOut(appAuth);
+  } catch (error) {
+    alert('로그아웃에 실패했습니다');
+  }
+}
 
 async function deleteImg(url: string) {
   const imgRef = ref(storage, url);
@@ -21,4 +30,4 @@ async function uploadImg(path: string, file: File) {
   return downloadURL;
 }
 
-export { deleteImg, uploadImg };
+export { deleteImg, uploadImg, logout };

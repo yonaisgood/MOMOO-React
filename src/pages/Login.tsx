@@ -8,6 +8,7 @@ import StyledInput from '../components/CommonStyled/StyledInput';
 import StyledAuth from '../components/CommonStyled/StyledAuth';
 
 import Logo from '../asset/icon/Logo.svg';
+import LoadingIcon from '../asset/icon/LoadingBlack.svg';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ export default function Login() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const { login, error } = useLogin();
+  const { login, error, isPending } = useLogin();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -37,6 +38,13 @@ export default function Login() {
       case 'auth/invalid-login-credentials':
         setLoginErrMessage('아이디 혹은 비밀번호가 일치하지 않습니다');
         break;
+      case 'auth/user-not-found':
+        setLoginErrMessage('존재하지 않는 계정입니다');
+        break;
+      case 'auth/wrong-password':
+        setPasswordErrMessage('비밀번호를 다시 확인해주세요');
+        setPasswordValid(false);
+        break;
       case 'auth/network-request-failed':
         alert('네트워크 연결에 실패했습니다');
         break;
@@ -49,7 +57,7 @@ export default function Login() {
         );
         break;
       default:
-        alert('로그인에 실패했습니다');
+        setLoginErrMessage('아이디 혹은 비밀번호를 확인해주세요');
     }
   }, [error]);
 
@@ -76,6 +84,7 @@ export default function Login() {
 
   const handlePasswordInp = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    setLoginErrMessage('');
 
     if (e.target.validity.valueMissing) {
       setPasswordValid(false);
@@ -89,7 +98,7 @@ export default function Login() {
   return (
     <StyledAuth>
       <div className="container">
-        {clientWitch < 431 && (
+        {clientWitch <= 430 && (
           <>
             <h1>
               <img src={Logo} alt="로고" />
@@ -138,9 +147,9 @@ export default function Login() {
           </strong>
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
-            disabled={!emailValid || !passwordValid}
+            disabled={!emailValid || !passwordValid || isPending}
           >
-            Log In
+            {isPending ? <img src={LoadingIcon} alt="로그인 중" /> : 'Login'}
           </Button>
         </form>
       </div>

@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
-import useLogout from '../../hooks/useLogout';
 
 import StyledMy from './StyledMy';
+
+import { logout } from '../../utils/SDKUtils';
 
 import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import SettingIcon from '../../asset/icon/Setting.svg';
@@ -14,7 +15,6 @@ import LogoutIcon from '../../asset/icon/Logout.svg';
 
 export default function My() {
   const { user } = useAuthContext();
-  const { logout } = useLogout();
 
   const navigate = useNavigate();
 
