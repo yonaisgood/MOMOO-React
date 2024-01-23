@@ -57,7 +57,7 @@ export default function MyPopup({ setOpenPopup }: Props) {
                 </Link>
               </li>
               <li>
-                <Link to="/policy">
+                <Link to="/privacy">
                   <img src={PolicyIcon} alt="" />
                   Privacy policy
                 </Link>
