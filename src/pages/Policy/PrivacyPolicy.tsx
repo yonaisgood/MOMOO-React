@@ -96,15 +96,16 @@ export default function PrivacyPolicy() {
                 <li>
                   1. 회원 가입 시 회원님로부터 수집하는 개인정보
                   <ul>
-                    <li>- 필수 항목: 이메일 주소 및 비밀번호</li>
-                    <li>- 선택 항목: 프로필 사진 및 닉네임</li>
+                    <li>
+                      - 필수 항목: 이메일 주소, 비밀번호, 프로필 사진, 닉네임
+                    </li>
                   </ul>
                 </li>
                 <li>
-                  <em>
-                    2. 서비스 이용 과정에서 회원님로부터 수집하는 개인정보
-                  </em>
-                  - 선택 항목: 게시물 및 사진
+                  2. 서비스 이용 과정에서 회원님로부터 수집하는 개인정보
+                  <ul>
+                    <li>- 필수 항목: 게시물 및 사진</li>
+                  </ul>
                 </li>
               </ul>
             </li>
@@ -162,15 +163,16 @@ export default function PrivacyPolicy() {
               </p>
               <ul>
                 <li>
-                  <Link to="/setting">개인정보를 열람, 수정, 삭제</Link>
-                  {/* 수정하기 */}
+                  {'- '}
+                  <Link to="/setting">개인정보 열람, 수정, 삭제</Link>
                 </li>
                 <li>
+                  {'- '}
                   <Link to="/setting">
                     회원탈퇴 및 개인정보 수집, 이용 동의 철회
                   </Link>
                 </li>
-                <li>해당 게시물 &gt; 더보기 &gt; 수정하기/삭제하기</li>
+                <li>- 해당 게시물 &gt; 더보기 &gt; 수정하기/삭제하기</li>
               </ul>
             </li>
 
@@ -219,7 +221,7 @@ export default function PrivacyPolicy() {
               </p>
               <ul>
                 <li>
-                  - 개인정보분쟁조정위원회 : (국번없이){' '}
+                  - 개인정보분쟁조정위원회: (국번없이){' '}
                   <a href="tel:1833-6972">1833-6972</a>{' '}
                   <a
                     href="https://www.kopico.go.kr"
@@ -230,7 +232,7 @@ export default function PrivacyPolicy() {
                   </a>
                 </li>
                 <li>
-                  - 개인정보침해신고센터 : (국번없이) <a href="tel:118">118</a>{' '}
+                  - 개인정보침해신고센터: (국번없이) <a href="tel:118">118</a>{' '}
                   <a
                     href="https://privacy.kisa.or.kr"
                     rel="noopener"
@@ -240,7 +242,7 @@ export default function PrivacyPolicy() {
                   </a>
                 </li>
                 <li>
-                  - 대검찰청 사이버수사과 : (국번없이){' '}
+                  - 대검찰청 사이버수사과: (국번없이){' '}
                   <a href="tel:1301">1301</a>{' '}
                   <a
                     href="https://www.spo.go.kr"
@@ -251,7 +253,7 @@ export default function PrivacyPolicy() {
                   </a>
                 </li>
                 <li>
-                  - 경찰청 사이버수사국 : (국번없이) <a href="tel:182">182</a>{' '}
+                  - 경찰청 사이버수사국: (국번없이) <a href="tel:182">182</a>{' '}
                   <a
                     href="https://ecrm.cyber.go.kr"
                     rel="noopener"
