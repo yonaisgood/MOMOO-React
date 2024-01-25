@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useSignup from '../hooks/useSingup.ts';
@@ -28,6 +28,20 @@ export default function Signup() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [selectedDate, setSelectedDate] = useState(new Date().getDate());
+  const [ageVaile, setAgeVaild] = useState(false);
+  const today = useMemo(() => {
+    const date = new Date();
+
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      date: date.getDate(),
+    };
+  }, []);
+
   const { error, signup, isPending } = useSignup();
   const { file, src, setProfileImage } = useSetProfileImage();
 
@@ -130,6 +144,44 @@ export default function Signup() {
     }
   };
 
+  const checkAge = () => {
+    if (selectedYear + 14 > today.year) {
+      console.log('a');
+      setAgeVaild(false);
+      return;
+    }
+
+    if (selectedYear + 14 < today.year) {
+      console.log('b');
+      setAgeVaild(true);
+      return;
+    }
+
+    if (selectedMonth > today.month) {
+      console.log(today.month);
+      setAgeVaild(false);
+      return;
+    }
+
+    if (selectedMonth < today.month) {
+      console.log('d');
+      setAgeVaild(true);
+      return;
+    }
+
+    if (selectedDate > today.date) {
+      console.log('e');
+      setAgeVaild(false);
+      return;
+    }
+
+    setAgeVaild(true);
+  };
+
+  useEffect(() => {
+    checkAge();
+  }, [selectedYear, selectedMonth, selectedDate]);
+
   return (
     <StyledAuth>
       <div className="container">
@@ -213,10 +265,89 @@ export default function Signup() {
           <strong role="alert">
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
           </strong>
+
+          {/* 생년월일 select */}
+          <div>
+            <strong>생년월일</strong>
+            <p>만 14세 이상 가입 가능합니다.</p>
+            <span>
+              <select
+                title="연도"
+                onChange={(e) =>
+                  setSelectedYear(parseInt(e.currentTarget.value))
+                }
+              >
+                {Array.from({ length: 106 }, (_, i) => today.year - i).map(
+                  (v) => {
+                    return (
+                      <option title={`${v}`} value={v}>
+                        {v}
+                      </option>
+                    );
+                  },
+                )}
+              </select>
+            </span>
+            <span>
+              <select
+                title="월"
+                onChange={(e) =>
+                  setSelectedMonth(parseInt(e.currentTarget.value))
+                }
+              >
+                {Array.from(
+                  {
+                    length: selectedYear === today.year ? today.month : 12,
+                  },
+                  (_, i) => i + 1,
+                ).map((v) => {
+                  return (
+                    <option title={`${v}`} value={v}>
+                      {v}
+                    </option>
+                  );
+                })}
+              </select>
+            </span>
+            <span>
+              <select
+                title="일"
+                value={selectedDate}
+                onChange={(e) =>
+                  setSelectedDate(parseInt(e.currentTarget.value))
+                }
+              >
+                {Array.from(
+                  {
+                    length:
+                      selectedYear === today.year &&
+                      selectedMonth === today.month
+                        ? today.date
+                        : new Date(selectedYear, selectedMonth, 0).getDate(),
+                  },
+                  (_, i) => i + 1,
+                ).map((v) => {
+                  return (
+                    <option title={`${v}`} value={v}>
+                      {v}
+                    </option>
+                  );
+                })}
+              </select>
+            </span>
+          </div>
+
+          {/* 이용약관 동의*/}
+          {/* 개인정보 동의 */}
+
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
             disabled={
-              !emailValid || !passwordValid || !matchPassword || isPending
+              !emailValid ||
+              !passwordValid ||
+              !matchPassword ||
+              isPending ||
+              !ageVaile
             }
           >
             {isPending ? (
