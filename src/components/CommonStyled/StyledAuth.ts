@@ -32,6 +32,10 @@ const StyledAuth = styled.main`
     box-sizing: content-box;
     width: 100%;
 
+    label {
+      display: block;
+    }
+
     input + label + input:not(#profile-inp) {
       margin-top: 20px;
     }

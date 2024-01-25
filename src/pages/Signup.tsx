@@ -28,19 +28,10 @@ export default function Signup() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const [selectedDate, setSelectedDate] = useState(new Date().getDate());
-  const [ageVaile, setAgeVaild] = useState(false);
-  const today = useMemo(() => {
-    const date = new Date();
-
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      date: date.getDate(),
-    };
-  }, []);
+  const [allChecked, setAllChecked] = useState(false);
+  const [ageChecked, setAgeChecked] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [privacyChecked, setPrivacyChecked] = useState(false);
 
   const { error, signup, isPending } = useSignup();
   const { file, src, setProfileImage } = useSetProfileImage();
@@ -144,43 +135,13 @@ export default function Signup() {
     }
   };
 
-  const checkAge = () => {
-    if (selectedYear + 14 > today.year) {
-      console.log('a');
-      setAgeVaild(false);
-      return;
-    }
-
-    if (selectedYear + 14 < today.year) {
-      console.log('b');
-      setAgeVaild(true);
-      return;
-    }
-
-    if (selectedMonth > today.month) {
-      console.log(today.month);
-      setAgeVaild(false);
-      return;
-    }
-
-    if (selectedMonth < today.month) {
-      console.log('d');
-      setAgeVaild(true);
-      return;
-    }
-
-    if (selectedDate > today.date) {
-      console.log('e');
-      setAgeVaild(false);
-      return;
-    }
-
-    setAgeVaild(true);
-  };
-
   useEffect(() => {
-    checkAge();
-  }, [selectedYear, selectedMonth, selectedDate]);
+    if (ageChecked && termsChecked && privacyChecked) {
+      setAllChecked(true);
+    } else {
+      setAllChecked(false);
+    }
+  }, [ageChecked, termsChecked, privacyChecked]);
 
   return (
     <StyledAuth>
@@ -266,79 +227,50 @@ export default function Signup() {
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
           </strong>
 
-          {/* 생년월일 select */}
-          <div>
-            <strong>생년월일</strong>
-            <p>만 14세 이상 가입 가능합니다.</p>
-            <span>
-              <select
-                title="연도"
-                onChange={(e) =>
-                  setSelectedYear(parseInt(e.currentTarget.value))
-                }
-              >
-                {Array.from({ length: 106 }, (_, i) => today.year - i).map(
-                  (v) => {
-                    return (
-                      <option title={`${v}`} value={v}>
-                        {v}
-                      </option>
-                    );
-                  },
-                )}
-              </select>
-            </span>
-            <span>
-              <select
-                title="월"
-                onChange={(e) =>
-                  setSelectedMonth(parseInt(e.currentTarget.value))
-                }
-              >
-                {Array.from(
-                  {
-                    length: selectedYear === today.year ? today.month : 12,
-                  },
-                  (_, i) => i + 1,
-                ).map((v) => {
-                  return (
-                    <option title={`${v}`} value={v}>
-                      {v}
-                    </option>
-                  );
-                })}
-              </select>
-            </span>
-            <span>
-              <select
-                title="일"
-                value={selectedDate}
-                onChange={(e) =>
-                  setSelectedDate(parseInt(e.currentTarget.value))
-                }
-              >
-                {Array.from(
-                  {
-                    length:
-                      selectedYear === today.year &&
-                      selectedMonth === today.month
-                        ? today.date
-                        : new Date(selectedYear, selectedMonth, 0).getDate(),
-                  },
-                  (_, i) => i + 1,
-                ).map((v) => {
-                  return (
-                    <option title={`${v}`} value={v}>
-                      {v}
-                    </option>
-                  );
-                })}
-              </select>
-            </span>
-          </div>
+          <label htmlFor="">
+            모두 동의합니다.
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                setAllChecked(e.currentTarget.checked);
 
-          {/* 이용약관 동의*/}
-          {/* 개인정보 동의 */}
+                if (e.currentTarget.checked) {
+                  setAgeChecked(true);
+                  setTermsChecked(true);
+                  setPrivacyChecked(true);
+                } else {
+                  setAgeChecked(false);
+                  setTermsChecked(false);
+                  setPrivacyChecked(false);
+                }
+              }}
+              checked={allChecked}
+            />
+          </label>
+          <label htmlFor="">
+            [필수] 만 14세 이상입니다.
+            <input
+              type="checkbox"
+              onChange={(e) => setAgeChecked(e.currentTarget.checked)}
+              checked={ageChecked}
+            />
+          </label>
+          <label htmlFor="">
+            [필수] 이용약관
+            <input
+              type="checkbox"
+              onChange={(e) => setTermsChecked(e.currentTarget.checked)}
+              checked={termsChecked}
+            />
+          </label>
+          <label htmlFor="">
+            [필수] 데이터 정책
+            <input
+              type="checkbox"
+              onChange={(e) => setPrivacyChecked(e.currentTarget.checked)}
+              checked={privacyChecked}
+            />
+          </label>
 
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
@@ -347,7 +279,7 @@ export default function Signup() {
               !passwordValid ||
               !matchPassword ||
               isPending ||
-              !ageVaile
+              !allChecked
             }
           >
             {isPending ? (
