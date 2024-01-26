@@ -122,7 +122,22 @@ export default function FeedItem() {
             </button>
           </section>
           <h3>{feedData.title}</h3>
-          {feedData.text && <p className="detailText">{feedData.text}</p>}
+          {feedData.text && typeof feedData.text === 'string' && (
+            <p className="detailText">
+              {feedData.text.split('\n').map((v, i) => {
+                if (i === 0) {
+                  return v;
+                } else {
+                  return (
+                    <>
+                      <br />
+                      {v}
+                    </>
+                  );
+                }
+              })}
+            </p>
+          )}
           {feedData.selectedAddress && (
             <p className="locationSection">{feedData.selectedAddress}</p>
           )}
