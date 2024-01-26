@@ -44,40 +44,42 @@ export default function Terms() {
           />
         )}
         <section>
-          {terms.map((v) => {
-            if (v.list.length === 1 && typeof v.list[0] === 'string') {
+          <ol>
+            {terms.map((v) => {
+              if (typeof v.text === 'string') {
+                return (
+                  <li>
+                    <h4>{v.title}</h4>
+                    <p>{v.text}</p>
+                  </li>
+                );
+              }
+
               return (
-                <>
-                  <strong>{v.title}</strong>
-                  <p>{v.list[0]}</p>
-                </>
+                <li>
+                  <h4>{v.title}</h4>
+                  <ul>
+                    {v.text.map((v) => {
+                      if (typeof v === 'string') {
+                        return <li>{v}</li>;
+                      }
+
+                      return (
+                        <li>
+                          {v.subTitle}
+                          <ul>
+                            {v.text.map((item) => (
+                              <li>{item}</li>
+                            ))}
+                          </ul>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
               );
-            }
-
-            return (
-              <>
-                <strong>{v.title}</strong>
-                <ol>
-                  {v.list.map((v) => {
-                    if (typeof v === 'string') {
-                      return <li>{v}</li>;
-                    }
-
-                    return (
-                      <li>
-                        {v.subTitle}
-                        <ol>
-                          {v.list.map((text) => (
-                            <li>{text}</li>
-                          ))}
-                        </ol>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </>
-            );
-          })}
+            })}
+          </ol>
         </section>
       </StyledPolicy>
     </>

@@ -41,7 +41,7 @@ export default function Router() {
             <>
               <Route element={<NavRoute />}>
                 <Route path="/terms" element={<Terms />}></Route>
-                <Route path="/policy" element={<PrivacyPolicy />}></Route>
+                <Route path="/privacy" element={<PrivacyPolicy />}></Route>
               </Route>
 
               <Route element={<NonAuthRoute />}>

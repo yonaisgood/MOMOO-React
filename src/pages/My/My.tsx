@@ -46,7 +46,7 @@ export default function My() {
               </Link>
             </li>
             <li>
-              <Link to="/policy">
+              <Link to="/privacy">
                 <img src={PolicyIcon} alt="" />
                 Privacy policy
               </Link>

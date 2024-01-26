@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useSignup from '../hooks/useSingup.ts';
@@ -28,6 +28,11 @@ export default function Signup() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
+  const [allChecked, setAllChecked] = useState(false);
+  const [ageChecked, setAgeChecked] = useState(false);
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [privacyChecked, setPrivacyChecked] = useState(false);
+
   const { error, signup, isPending } = useSignup();
   const { file, src, setProfileImage } = useSetProfileImage();
 
@@ -130,6 +135,14 @@ export default function Signup() {
     }
   };
 
+  useEffect(() => {
+    if (ageChecked && termsChecked && privacyChecked) {
+      setAllChecked(true);
+    } else {
+      setAllChecked(false);
+    }
+  }, [ageChecked, termsChecked, privacyChecked]);
+
   return (
     <StyledAuth>
       <div className="container">
@@ -213,10 +226,60 @@ export default function Signup() {
           <strong role="alert">
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
           </strong>
+
+          <label htmlFor="">
+            모두 동의합니다.
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                setAllChecked(e.currentTarget.checked);
+
+                if (e.currentTarget.checked) {
+                  setAgeChecked(true);
+                  setTermsChecked(true);
+                  setPrivacyChecked(true);
+                } else {
+                  setAgeChecked(false);
+                  setTermsChecked(false);
+                  setPrivacyChecked(false);
+                }
+              }}
+              checked={allChecked}
+            />
+          </label>
+          <label htmlFor="">
+            [필수] 만 14세 이상입니다.
+            <input
+              type="checkbox"
+              onChange={(e) => setAgeChecked(e.currentTarget.checked)}
+              checked={ageChecked}
+            />
+          </label>
+          <label htmlFor="">
+            [필수] 이용약관
+            <input
+              type="checkbox"
+              onChange={(e) => setTermsChecked(e.currentTarget.checked)}
+              checked={termsChecked}
+            />
+          </label>
+          <label htmlFor="">
+            [필수] 데이터 정책
+            <input
+              type="checkbox"
+              onChange={(e) => setPrivacyChecked(e.currentTarget.checked)}
+              checked={privacyChecked}
+            />
+          </label>
+
           <Button
             size={clientWitch > 1024 ? 'l' : 's'}
             disabled={
-              !emailValid || !passwordValid || !matchPassword || isPending
+              !emailValid ||
+              !passwordValid ||
+              !matchPassword ||
+              isPending ||
+              !allChecked
             }
           >
             {isPending ? (
