@@ -149,7 +149,10 @@ export default function Signup() {
   }, [ageChecked, termsChecked, privacyChecked]);
 
   return (
-    <StyledSignup $checkboxImg={checkbox} $checkboxCheckedImg={checkboxChecked}>
+    <StyledSignup
+      $checkboxIcon={checkbox}
+      $checkboxCheckedIcon={checkboxChecked}
+    >
       <div className="container">
         {clientWitch < 431 && (
           <>

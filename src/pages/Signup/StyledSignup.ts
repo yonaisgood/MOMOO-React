@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import StyledAuth from '../../components/CommonStyled/StyledAuth';
 
 interface Props {
-  $checkboxImg: string;
-  $checkboxCheckedImg: string;
+  $checkboxIcon: string;
+  $checkboxCheckedIcon: string;
 }
 
 const StyledSignup = styled(StyledAuth)<Props>`
@@ -36,15 +36,16 @@ const StyledSignup = styled(StyledAuth)<Props>`
 
     &::after {
       content: '';
-      background: contain url(${({ $checkboxImg }) => $checkboxImg});
+      background: center / contain url(${(props) => props.$checkboxIcon})
+        no-repeat;
       margin: 1px 8px 0 0;
       width: 14px;
       aspect-ratio: 1/1;
     }
 
     &.checked::after {
-      background: contain
-        url(${({ $checkboxCheckedImg }) => $checkboxCheckedImg});
+      background-image: url(${(props) => props.$checkboxCheckedIcon});
+      margin: 1px 8px 0 0;
     }
   }
 
