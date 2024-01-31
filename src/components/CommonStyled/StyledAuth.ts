@@ -32,10 +32,6 @@ const StyledAuth = styled.main`
     box-sizing: content-box;
     width: 100%;
 
-    label {
-      display: block;
-    }
-
     input + label + input:not(#profile-inp) {
       margin-top: 20px;
     }
@@ -130,8 +126,57 @@ const StyledAuth = styled.main`
     }
   }
 
+  @media (max-width: 1024px) {
+    padding: var(--nav-height-tablet) var(--margin-tablet) 0;
+
+    form input:not(#profile-inp) {
+      padding: 14px 20px;
+    }
+  }
+
+  @media (min-width: 431px) and (max-width: 1024px) {
+    .container {
+      padding: 24px 0;
+      margin: auto;
+      max-width: 518px;
+    }
+
+    article {
+      padding-right: 34px;
+
+      h2,
+      a {
+        font-size: var(--title-l);
+      }
+
+      h2 + a,
+      a + h2 {
+        margin-top: 25px;
+      }
+
+      h2::after {
+        margin-top: -10px;
+      }
+    }
+
+    .profile {
+      margin-bottom: 30px;
+      width: 106px;
+
+      img:last-child {
+        margin-top: -28px;
+        width: 28px;
+      }
+    }
+
+    form {
+      flex-grow: 1;
+      margin-left: 24px;
+    }
+  }
+
   @media (max-width: 430px) {
-    padding: 124px 16px 80px; // 80 임의
+    padding: 124px var(--margin-mobile) 80px; // 80 임의
 
     h1 {
       width: 218px;
@@ -181,61 +226,6 @@ const StyledAuth = styled.main`
       strong + label + input {
         margin-top: 15px;
       }
-
-      button {
-        position: fixed;
-        bottom: 0;
-        width: calc(100% - 32px);
-      }
-    }
-  }
-
-  @media (max-width: 1024px) {
-    form input:not(#profile-inp) {
-      padding: 14px 20px;
-    }
-  }
-
-  @media (min-width: 431px) and (max-width: 1024px) {
-    padding: 0 var(--margin-tablet);
-
-    .container {
-      padding: 0;
-      margin: auto;
-      max-width: 518px;
-    }
-
-    article {
-      padding-right: 34px;
-
-      h2,
-      a {
-        font-size: var(--title-l);
-      }
-
-      h2 + a,
-      a + h2 {
-        margin-top: 25px;
-      }
-
-      h2::after {
-        margin-top: -10px;
-      }
-    }
-
-    .profile {
-      margin-bottom: 30px;
-      width: 106px;
-
-      img:last-child {
-        margin-top: -28px;
-        width: 28px;
-      }
-    }
-
-    form {
-      flex-grow: 1;
-      margin-left: 24px;
     }
   }
 `;

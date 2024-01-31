@@ -7,7 +7,7 @@ import Splash from '../pages/Splash/Splash';
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
 import Login from '../pages/Login';
-import Signup from '../pages/Signup';
+import Signup from '../pages/Signup/Signup';
 import Home from '../pages/Home/Home';
 import Album from '../pages/Album/Album';
 import Detail from '../pages/Detail/Detail';
