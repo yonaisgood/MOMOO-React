@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import StyledAuth from '../../components/CommonStyled/StyledAuth';
 
-const StyledSignup = styled(StyledAuth)`
+interface Props {
+  $checkboxImg: string;
+  $checkboxCheckedImg: string;
+}
+
+const StyledSignup = styled(StyledAuth)<Props>`
   // 동의
   .agree {
     margin: 20px 0 0;
@@ -23,14 +28,23 @@ const StyledSignup = styled(StyledAuth)`
 
   label.checkbox {
     display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
     align-items: center;
     font-size: var(--text-m);
     color: var(--gray-900);
 
-    & > img {
-      display: inline-block;
+    &::after {
+      content: '';
+      background: contain url(${({ $checkboxImg }) => $checkboxImg});
       margin: 1px 8px 0 0;
       width: 14px;
+      aspect-ratio: 1/1;
+    }
+
+    &.checked::after {
+      background: contain
+        url(${({ $checkboxCheckedImg }) => $checkboxCheckedImg});
     }
   }
 
