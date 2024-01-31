@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import useSignup from '../hooks/useSingup.ts';
-import useSetProfileImage from '../hooks/useSetProfileImage.ts';
+import useSignup from '../../hooks/useSingup.ts';
+import useSetProfileImage from '../../hooks/useSetProfileImage.ts';
 
-import Button from '../components/Button/Button/Button.tsx';
-import StyledInput from '../components/CommonStyled/StyledInput.ts';
-import StyledAuth from '../components/CommonStyled/StyledAuth.ts';
+import Button from '../../components/Button/Button/Button.tsx';
+import StyledInput from '../../components/CommonStyled/StyledInput.ts';
+import StyledSignup from './StyledSignup.ts';
 
-import ProfileBasicImg from '../asset/image/profile-basic-img.svg';
-import EditCircle from '../asset/icon/EditCircle.svg';
-import Logo from '../asset/icon/Logo.svg';
-import LoadingIcon from '../asset/icon/LoadingBlack.svg';
+import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
+import EditCircle from '../../asset/icon/EditCircle.svg';
+import Logo from '../../asset/icon/Logo.svg';
+import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
+import checkboxChecked from '../../asset/icon/CheckboxChecked.svg';
+import checkbox from '../../asset/icon/Checkbox.svg';
+import arrow from '../../asset/icon/ArrowRight.svg';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -35,6 +38,8 @@ export default function Signup() {
 
   const { error, signup, isPending } = useSignup();
   const { file, src, setProfileImage } = useSetProfileImage();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -144,7 +149,7 @@ export default function Signup() {
   }, [ageChecked, termsChecked, privacyChecked]);
 
   return (
-    <StyledAuth>
+    <StyledSignup>
       <div className="container">
         {clientWitch < 431 && (
           <>
@@ -227,69 +232,108 @@ export default function Signup() {
             {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
           </strong>
 
-          <label htmlFor="">
-            모두 동의합니다.
-            <input
-              type="checkbox"
-              onChange={(e) => {
-                setAllChecked(e.currentTarget.checked);
+          <div className="agree">
+            <h3>MOMOO 서비스 약관에 동의해 주세요.</h3>
+            <label className="checkbox">
+              <img src={allChecked ? checkboxChecked : checkbox} alt="" />
+              모두 동의합니다.
+              <input
+                type="checkbox"
+                className="a11y-hidden"
+                onChange={(e) => {
+                  setAllChecked(e.currentTarget.checked);
 
-                if (e.currentTarget.checked) {
-                  setAgeChecked(true);
-                  setTermsChecked(true);
-                  setPrivacyChecked(true);
-                } else {
-                  setAgeChecked(false);
-                  setTermsChecked(false);
-                  setPrivacyChecked(false);
-                }
-              }}
-              checked={allChecked}
-            />
-          </label>
-          <label htmlFor="">
-            [필수] 만 14세 이상입니다.
-            <input
-              type="checkbox"
-              onChange={(e) => setAgeChecked(e.currentTarget.checked)}
-              checked={ageChecked}
-            />
-          </label>
-          <label htmlFor="">
-            [필수] 이용약관
-            <input
-              type="checkbox"
-              onChange={(e) => setTermsChecked(e.currentTarget.checked)}
-              checked={termsChecked}
-            />
-          </label>
-          <label htmlFor="">
-            [필수] 데이터 정책
-            <input
-              type="checkbox"
-              onChange={(e) => setPrivacyChecked(e.currentTarget.checked)}
-              checked={privacyChecked}
-            />
-          </label>
+                  if (e.currentTarget.checked) {
+                    setAgeChecked(true);
+                    setTermsChecked(true);
+                    setPrivacyChecked(true);
+                  } else {
+                    setAgeChecked(false);
+                    setTermsChecked(false);
+                    setPrivacyChecked(false);
+                  }
+                }}
+                checked={allChecked}
+              />
+            </label>
+            <strong className="a11y-hidden">동의 항목</strong>
+            <ul>
+              <li>
+                <label className="checkbox">
+                  <img src={ageChecked ? checkboxChecked : checkbox} alt="" />
+                  [필수] 만 14세 이상입니다.
+                  <input
+                    type="checkbox"
+                    className="a11y-hidden"
+                    onChange={(e) => setAgeChecked(e.currentTarget.checked)}
+                    checked={ageChecked}
+                  />
+                </label>
+              </li>
+              <li>
+                <label className="checkbox">
+                  <img src={termsChecked ? checkboxChecked : checkbox} alt="" />
+                  [필수] 이용약관
+                  <input
+                    type="checkbox"
+                    className="a11y-hidden"
+                    onChange={(e) => setTermsChecked(e.currentTarget.checked)}
+                    checked={termsChecked}
+                  />
+                </label>
+                <button className="link" type="button">
+                  <img
+                    src={arrow}
+                    alt="자세히 보기"
+                    onClick={() => navigate('/terms')}
+                  />
+                </button>
+              </li>
+              <li>
+                <label className="checkbox">
+                  <img
+                    src={privacyChecked ? checkboxChecked : checkbox}
+                    alt=""
+                  />
+                  [필수] 데이터 정책
+                  <input
+                    type="checkbox"
+                    className="a11y-hidden"
+                    onChange={(e) => setPrivacyChecked(e.currentTarget.checked)}
+                    checked={privacyChecked}
+                  />
+                </label>
+                <button
+                  className="link"
+                  type="button"
+                  onClick={() => navigate('/privacy')}
+                >
+                  <img src={arrow} alt="자세히 보기" />
+                </button>
+              </li>
+            </ul>
+          </div>
 
-          <Button
-            size={clientWitch > 1024 ? 'l' : 's'}
-            disabled={
-              !emailValid ||
-              !passwordValid ||
-              !matchPassword ||
-              isPending ||
-              !allChecked
-            }
-          >
-            {isPending ? (
-              <img src={LoadingIcon} alt="계정 생성 중" />
-            ) : (
-              'Signup'
-            )}
-          </Button>
+          <div className="submit-btn-wrap">
+            <Button
+              size={clientWitch > 1024 ? 'l' : 's'}
+              disabled={
+                !emailValid ||
+                !passwordValid ||
+                !matchPassword ||
+                isPending ||
+                !allChecked
+              }
+            >
+              {isPending ? (
+                <img src={LoadingIcon} alt="계정 생성 중" />
+              ) : (
+                'Signup'
+              )}
+            </Button>
+          </div>
         </form>
       </div>
-    </StyledAuth>
+    </StyledSignup>
   );
 }

@@ -62,7 +62,7 @@ export default function Nav() {
             <h1 className="a11y-hidden">MoMoo</h1>
             <img
               className="logoImg"
-              src={clientWitch > 1007 ? LogoColImg : LogoImg}
+              src={clientWitch > 1024 ? LogoColImg : LogoImg}
               alt="로고이미지"
             />
           </Link>
