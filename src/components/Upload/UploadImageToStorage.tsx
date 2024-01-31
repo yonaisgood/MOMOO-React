@@ -11,9 +11,9 @@ const uploadImageToStorage = async (
   feedId: string,
 ) => {
   const storage = getStorage();
-  const downloadURLs: string[] = [];
-  const uploadPromises = Array.from(files).map((file) => {
-    const storageRef = ref(storage, `${folderName}/${feedId}${file.name}`);
+  const downloadURLs: (string | null)[] = [...files].map(() => null);
+  const uploadPromises = Array.from(files).map((file, i) => {
+    const storageRef = ref(storage, `${folderName}/${feedId}${i}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     return new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ const uploadImageToStorage = async (
         async () => {
           try {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            downloadURLs.push(downloadURL);
+            downloadURLs[i] = downloadURL;
 
             resolve(undefined);
           } catch (error) {
