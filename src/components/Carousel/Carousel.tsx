@@ -42,8 +42,8 @@ const Carousel = ({ imgUrlList }: { imgUrlList: string[] }) => {
       <Styled.SlideImgWrap>
         <ul ref={slideRef}>
           {imgUrlList.map((image, index) => (
-            <li>
-              <img key={index} src={image} alt="이미지" />
+            <li key={index}>
+              <img src={image} alt="이미지" />
             </li>
           ))}
         </ul>
