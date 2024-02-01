@@ -56,7 +56,9 @@ export default function Router() {
                   <Route path="/home" element={<Home />}></Route>
                   <Route path="/album/:id" element={<Album />}></Route>
                   <Route path="/feed/:id" element={<Detail />}></Route>
-                  <Route path="/my" element={<My />}></Route>
+                  {clientWitch <= 430 && (
+                    <Route path="/my" element={<My />}></Route>
+                  )}
                   <Route path="/setting" element={<Setting />}></Route>
                 </Route>
               </Route>
@@ -64,7 +66,7 @@ export default function Router() {
           )}
 
           <Route
-            path="/404"
+            path="/*"
             element={<div>존재하지 않는 페이지입니다</div>}
           ></Route>
         </Routes>
