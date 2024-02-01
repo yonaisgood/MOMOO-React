@@ -12,6 +12,7 @@ const DetailLayout = styled.main`
     position: relative;
     flex-grow: 1;
     max-width: 50rem;
+    width: 100%;
     margin: auto;
   }
 
