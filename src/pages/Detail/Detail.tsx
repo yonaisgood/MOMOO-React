@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import usePageContext from '../../hooks/usePageContext';
 
@@ -43,6 +44,10 @@ export default function Detail() {
 
   return (
     <>
+      <Helmet>
+        <title>게시물 | MOMOO</title>
+      </Helmet>
+
       {clientWitch <= 430 && <TopBar tit="게시물" />}
       <DetailLayout>
         {navList && clientWitch > 430 && <Breadcrumb navList={navList} />}

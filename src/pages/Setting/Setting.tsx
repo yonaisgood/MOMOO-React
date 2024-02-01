@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useSetProfileImage from '../../hooks/useSetProfileImage';
@@ -244,6 +245,10 @@ export default function Setting() {
 
   return (
     <>
+      <Helmet>
+        <title>Setting | MOMOO</title>
+      </Helmet>
+
       {clientWitch <= 430 && <TopBar tit="Setting" />}
       <StyledSetting>
         {clientWitch > 1024 && (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { DocumentData } from 'firebase/firestore';
 
 import useUploadContext from '../../hooks/useUploadContext';
@@ -80,6 +81,8 @@ export default function Album() {
 
   return (
     <>
+      <Helmet>{albumName && <title>{albumName} | MOMOO</title>}</Helmet>
+
       {albumName && (
         <>
           {clientWitch <= 430 && <TopBar tit={albumName} />}
