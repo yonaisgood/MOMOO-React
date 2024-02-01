@@ -11,7 +11,7 @@ const uploadImageToStorage = async (
   feedId: string,
 ) => {
   const storage = getStorage();
-  const downloadURLs: (string | null)[] = [...files].map(() => null);
+  const downloadURLs: string[] = [...files].map(() => '');
   const uploadPromises = Array.from(files).map((file, i) => {
     const storageRef = ref(storage, `${folderName}/${feedId}${i}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
