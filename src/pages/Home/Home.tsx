@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import useGetAlbumList from '../../hooks/useGetAlbumList';
 
@@ -46,6 +47,10 @@ export default function Home() {
 
   return (
     <>
+      <Helmet>
+        <title>홈 | MOMOO</title>
+      </Helmet>
+
       {clientWitch <= 430 && <MobileHeader />}
       <StyledMain>
         <StyledHomeSection>

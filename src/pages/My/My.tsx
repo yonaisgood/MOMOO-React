@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import useAuthContext from '../../hooks/useAuthContext';
 
@@ -25,6 +26,10 @@ export default function My() {
 
   return (
     <>
+      <Helmet>
+        <title>MY | MOMOO</title>
+      </Helmet>
+
       <StyledMy>
         <section className="profile">
           <img src={user.photoURL || BasicProfile} alt="프로필 사진" />

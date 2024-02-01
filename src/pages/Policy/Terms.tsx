@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
@@ -21,6 +22,10 @@ export default function Terms() {
 
   return (
     <>
+      <Helmet>
+        <title>Terms of use | MOMOO</title>
+      </Helmet>
+
       {clientWitch <= 430 && <TopBar tit="MOMOO 이용약관" />}
       <StyledPolicy>
         {clientWitch > 1024 && (

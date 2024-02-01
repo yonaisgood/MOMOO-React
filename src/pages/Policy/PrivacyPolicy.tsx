@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
@@ -21,6 +22,10 @@ export default function PrivacyPolicy() {
 
   return (
     <>
+      <Helmet>
+        <title>Privacy policy | MOMOO</title>
+      </Helmet>
+
       {clientWitch <= 430 && <TopBar tit="니즈랩 개인정보 처리방침" />}
       <StyledPolicy>
         {clientWitch > 1024 && (
