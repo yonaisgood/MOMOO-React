@@ -6,7 +6,7 @@ const UploadWrapper = styled.div`
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
-  z-index: 101;
+  z-index: 1001;
 
   @media (max-width: 1024px) {
     width: 49rem;

@@ -244,7 +244,7 @@ export default function Setting() {
 
   return (
     <>
-      {clientWitch <= 430 && <TopBar tit="프로필 수정" />}
+      {clientWitch <= 430 && <TopBar tit="Setting" />}
       <StyledSetting>
         {clientWitch > 1024 && (
           <Breadcrumb
