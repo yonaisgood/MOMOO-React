@@ -187,7 +187,6 @@ export default function EditFeed() {
       });
 
       // 이미지 삭제 실패 시, 게시물 수정이 중단되지 않도록 try 마지막에 위치
-      console.log(downloadURLs, imgUrlList);
       if (file !== null) {
         for (let i = downloadURLs.length; i < 3; i++)
           if (!downloadURLs.includes(imgUrlList[i])) {
