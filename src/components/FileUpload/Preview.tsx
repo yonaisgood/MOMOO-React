@@ -21,19 +21,28 @@ const Preview = ({
       const file = files[0];
       setImages(files);
       setFile(files);
-      if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
+      if (!/^image\/(jpg|svg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
         alert(
-          '이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.',
+          '이미지 파일 확장자는 jpg, svg, png, jpeg, bmp, tif, heic만 가능합니다.',
         );
         return;
       }
 
-      if (file.size > 2 * 1024 * 1024) {
-        alert('이미지 용량은 2MB 이내로 등록 가능합니다.');
+      if (file.size > 10 * 1024 * 1024) {
+        alert('이미지 용량은 10MB 이내로 등록 가능합니다.');
+
+        setFile(null);
+        setImageList([]);
         return;
       }
+
+      setImages(files);
+      setFile(files);
     } else {
       alert('이미지 파일을 선택해주세요.');
+
+      setFile(null);
+      setImageList([]);
     }
   };
 
