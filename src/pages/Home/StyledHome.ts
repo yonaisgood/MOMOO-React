@@ -84,10 +84,16 @@ const StyledHomeSection = styled.section`
       height: 3rem;
       background-color: inherit;
     }
+    .array-modal {
+      top: 26%;
+    }
   }
   @media (max-width: 430px) {
     ul {
       display: flex;
+    }
+    .array-modal {
+      top: 13%;
     }
   }
 `;
