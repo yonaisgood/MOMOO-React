@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledMain = styled.main`
-  padding: var(--nav-height-mobile) var(--margin-mobile);
+  padding: 28px var(--margin-mobile);
 
   @media (min-width: 431px) {
     padding: var(--nav-height-tablet) var(--margin-tablet) 0;
@@ -77,7 +77,7 @@ const StyledHomeSection = styled.section`
       flex-shrink: 0;
     }
     .btn-wrap {
-      margin: 3.6rem 0 1.1rem;
+      margin: 0 0 1.1rem;
     }
     .btn-wrap button {
       width: 3rem;
