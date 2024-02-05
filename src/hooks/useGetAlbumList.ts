@@ -14,13 +14,13 @@ export default function useGetAlbumList() {
   const { user } = useAuthContext();
   const [albumDataList, setAlbumDataList] = useState<DocumentData[]>([]);
   const [albumIdList, setAlbumIdList] = useState<string[]>([]);
-  const [oldestAlbumList, setOldestAlbumList] = useState<DocumentData[]>([]);
+  const [latestAlbumList, setLatestAlbumList] = useState<DocumentData[]>([]);
 
   const fetchData = async () => {
     if (user === null) {
       setAlbumDataList([]);
       setAlbumIdList([]);
-      setOldestAlbumList([]);
+      setLatestAlbumList([]);
       return;
     }
 
@@ -32,20 +32,20 @@ export default function useGetAlbumList() {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const updatedAlbumDataList: DocumentData[] = [];
       const updatedAlbumIdList: string[] = [];
-
       querySnapshot.forEach((doc) => {
         updatedAlbumDataList.push({ ...doc.data(), id: doc.id });
         updatedAlbumIdList.push(doc.id);
       });
+      console.log(updatedAlbumDataList);
 
-      const oldestAlbumListtoSet = [...updatedAlbumDataList].reverse();
-      const allFeedsAlbumData = oldestAlbumListtoSet.pop();
+      const latestAlbumListtoSet = [...updatedAlbumDataList].reverse();
+      const allFeedsAlbumData = latestAlbumListtoSet.pop();
 
       if (allFeedsAlbumData) {
-        oldestAlbumListtoSet.unshift(allFeedsAlbumData);
+        latestAlbumListtoSet.unshift(allFeedsAlbumData);
       }
 
-      setOldestAlbumList(oldestAlbumListtoSet);
+      setLatestAlbumList(latestAlbumListtoSet);
       setAlbumDataList(updatedAlbumDataList);
       setAlbumIdList(updatedAlbumIdList);
     });
@@ -59,5 +59,5 @@ export default function useGetAlbumList() {
     fetchData();
   }, [collection]);
 
-  return { albumDataList, albumIdList, oldestAlbumList };
+  return { albumDataList, albumIdList, latestAlbumList };
 }
