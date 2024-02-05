@@ -20,7 +20,7 @@ export default function Home() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const { albumDataList, oldestAlbumList } = useGetAlbumList();
+  const { albumDataList, latestAlbumList } = useGetAlbumList();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -65,8 +65,8 @@ export default function Home() {
           </div>
           <ul>
             {(selectedOption === 'oldest'
-              ? oldestAlbumList
-              : albumDataList
+              ? albumDataList
+              : latestAlbumList
             ).map((v) => {
               return (
                 <li key={v.createdTime}>
