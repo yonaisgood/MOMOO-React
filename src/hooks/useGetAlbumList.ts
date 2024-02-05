@@ -36,7 +36,6 @@ export default function useGetAlbumList() {
         updatedAlbumDataList.push({ ...doc.data(), id: doc.id });
         updatedAlbumIdList.push(doc.id);
       });
-      console.log(updatedAlbumDataList);
 
       const latestAlbumListtoSet = [...updatedAlbumDataList].reverse();
       const allFeedsAlbumData = latestAlbumListtoSet.pop();
