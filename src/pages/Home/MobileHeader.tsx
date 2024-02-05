@@ -12,7 +12,6 @@ export default function MobileHeader() {
 }
 
 const StyledH1 = styled.h1`
-  position: fixed;
   padding: 14px 0 16px;
   width: 100%;
   border-bottom: 1px solid var(--gray-200);

@@ -23,7 +23,8 @@ const UploadWrapper = styled.div`
 `;
 
 const UploadHeader = styled.header`
-  position: relative;
+  position: fixed;
+  width: 100%;
   height: 4.8rem;
   display: flex;
   align-items: center;
@@ -129,6 +130,7 @@ const UploadContents = styled.div`
   }
 
   @media (max-width: 430px) {
+    padding-top: var(--nav-height-mobile);
     & > ${PicPart} {
       flex: 1;
     }
