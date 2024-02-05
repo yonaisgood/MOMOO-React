@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledMain = styled.main`
-  padding: var(--margin-pc) var(--margin-mobile);
+  padding: 28px var(--margin-mobile);
 
   @media (min-width: 431px) {
     padding: var(--nav-height-tablet) var(--margin-tablet) 0;
