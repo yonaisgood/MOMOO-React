@@ -23,8 +23,7 @@ const UploadWrapper = styled.div`
 `;
 
 const UploadHeader = styled.header`
-  position: fixed;
-  width: 100%;
+  position: relative;
   height: 4.8rem;
   display: flex;
   align-items: center;
@@ -48,6 +47,10 @@ const UploadHeader = styled.header`
   }
 
   @media (max-width: 430px) {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--background-color);
     border-bottom: 1px solid var(--gray-200);
   }
 `;
