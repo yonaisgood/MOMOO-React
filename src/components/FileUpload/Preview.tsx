@@ -30,9 +30,6 @@ const Preview = ({
 
       if (file.size > 10 * 1024 * 1024) {
         alert('이미지 용량은 10MB 이내로 등록 가능합니다.');
-
-        setFile(null);
-        setImageList([]);
         return;
       }
 
@@ -40,9 +37,6 @@ const Preview = ({
       setFile(files);
     } else {
       alert('이미지 파일을 선택해주세요.');
-
-      setFile(null);
-      setImageList([]);
     }
   };
 
