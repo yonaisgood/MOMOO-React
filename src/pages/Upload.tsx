@@ -15,9 +15,11 @@ import Preview from '../components/FileUpload/Preview';
 import uploadImageToStorage from '../components/Upload/UploadImageToStorage';
 import KakaoMap from '../components/Map/KakaoMap';
 import * as Styled from '../components/Upload/Upload/StyledUpload';
+import { StyledLoadingImg } from '../components/Loading/StyledLodingImg';
 
 import Arrow from '../asset/icon/Arrow.svg';
 import CloseMobileIcon from '../asset/icon/X-Small.svg';
+import LoadingIcon from '../asset/icon/Loading.svg';
 
 interface Object {
   question: string;
@@ -44,6 +46,7 @@ export default function Upload() {
   const [file, setFile] = useState<FileList | null>(null);
   const [accordionData, setAccordionData] = useState<Object[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
+  const [isPending, setIsPending] = useState(false);
 
   const getAccordionData = GetAccordionData();
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
@@ -78,15 +81,17 @@ export default function Upload() {
       return;
     }
 
+    if (file === null) {
+      alert('사진을 선택해주세요');
+      return;
+    }
+
+    setIsPending(true);
+
     try {
       if (user) {
         const id = uuidv4();
         const userDocRef = doc(appFireStore, user.uid, user.uid, 'feed', id);
-
-        if (file === null) {
-          alert('사진을 선택해주세요');
-          return;
-        }
 
         const downloadURLs = await uploadImageToStorage(
           file,
@@ -132,6 +137,8 @@ export default function Upload() {
     } catch (error) {
       console.error(error);
     }
+    console.log('a');
+    setIsPending(false);
   };
 
   return (
@@ -148,84 +155,92 @@ export default function Upload() {
           </button>
         </Styled.UploadHeader>
         <Styled.UploadContents>
-          <Styled.PicPart>
-            <Preview setFile={setFile} />
-          </Styled.PicPart>
-          <Styled.SelectPart>
-            <div className="inputWrapper">
-              <input
-                type="text"
-                placeholder="제목을 입력해주세요"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                required
-              />
-            </div>
-            <form className="uploadInfo">
-              <textarea
-                id="uploadText"
-                maxLength={1000}
-                cols={30}
-                rows={10}
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value);
-                }}
-                placeholder="문구를 입력해주세요..."
-              ></textarea>
-            </form>
-            <Styled.LocationContents onClick={toggleKakaoMap}>
-              <div className="locationHead">
-                {selectedAddress ? (
-                  <p>선택한 주소: {selectedAddress}</p>
-                ) : (
-                  <h2>위치 추가</h2>
+          {isPending ? (
+            <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
+          ) : (
+            <>
+              <Styled.PicPart>
+                <Preview setFile={setFile} />
+              </Styled.PicPart>
+              <Styled.SelectPart>
+                <div className="inputWrapper">
+                  <input
+                    type="text"
+                    placeholder="제목을 입력해주세요"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                    required
+                  />
+                </div>
+                <form className="uploadInfo">
+                  <textarea
+                    id="uploadText"
+                    maxLength={1000}
+                    cols={30}
+                    rows={10}
+                    value={text}
+                    onChange={(e) => {
+                      setText(e.target.value);
+                    }}
+                    placeholder="문구를 입력해주세요..."
+                  ></textarea>
+                </form>
+                <Styled.LocationContents onClick={toggleKakaoMap}>
+                  <div className="locationHead">
+                    {selectedAddress ? (
+                      <p>선택한 주소: {selectedAddress}</p>
+                    ) : (
+                      <h2>위치 추가</h2>
+                    )}
+                    <img
+                      className={kakaoMapVisible ? 'rotate' : ''}
+                      src={Arrow}
+                      alt="위치토글아이콘"
+                    />
+                  </div>
+                </Styled.LocationContents>
+                {kakaoMapVisible && (
+                  <Styled.KakaoMapContainer>
+                    <KakaoMap
+                      onAddressSelect={(address) =>
+                        handleAddressSelect(address)
+                      }
+                    />
+                  </Styled.KakaoMapContainer>
                 )}
-                <img
-                  className={kakaoMapVisible ? 'rotate' : ''}
-                  src={Arrow}
-                  alt="위치토글아이콘"
-                />
-              </div>
-            </Styled.LocationContents>
-            {kakaoMapVisible && (
-              <Styled.KakaoMapContainer>
-                <KakaoMap
-                  onAddressSelect={(address) => handleAddressSelect(address)}
-                />
-              </Styled.KakaoMapContainer>
-            )}
-            <Styled.AccordionContents>
-              {accordionData.slice(1, 2).map(() => (
-                <MultipleAccordion
-                  key={0}
-                  question={accordionData[0].question}
-                  answer={accordionData[0].answer.join(',')}
-                  selectedAlbum={selectedAlbum}
-                  setSelectedAlbum={setSelectedAlbum}
-                />
-              ))}
-              {accordionData.slice(1, 3).map((data, index) => (
-                <Accordion
-                  key={index}
-                  question={data.question}
-                  answer={data.answer.join(',')}
-                  selectedImages={
-                    data.question === '오늘의 날씨'
-                      ? selectedWeatherImage
-                      : selectedEmotionImage
-                  }
-                  setSelectedImages={
-                    data.question === '오늘의 날씨'
-                      ? setSelectedWeatherImage
-                      : setSelectedEmotionImage
-                  }
-                />
-              ))}
-            </Styled.AccordionContents>
-          </Styled.SelectPart>
+                <Styled.AccordionContents>
+                  {accordionData.slice(1, 2).map(() => (
+                    <MultipleAccordion
+                      key={0}
+                      question={accordionData[0].question}
+                      answer={accordionData[0].answer.join(',')}
+                      selectedAlbum={selectedAlbum}
+                      setSelectedAlbum={setSelectedAlbum}
+                    />
+                  ))}
+                  {accordionData.slice(1, 3).map((data, index) => (
+                    <Accordion
+                      key={index}
+                      question={data.question}
+                      answer={data.answer.join(',')}
+                      selectedImages={
+                        data.question === '오늘의 날씨'
+                          ? selectedWeatherImage
+                          : selectedEmotionImage
+                      }
+                      setSelectedImages={
+                        data.question === '오늘의 날씨'
+                          ? setSelectedWeatherImage
+                          : setSelectedEmotionImage
+                      }
+                    />
+                  ))}
+                </Styled.AccordionContents>
+              </Styled.SelectPart>
+            </>
+          )}
         </Styled.UploadContents>
       </Styled.UploadWrapper>
     </>

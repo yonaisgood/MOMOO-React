@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const UploadWrapper = styled.div`
   position: relative;
   overflow: hidden;
-  width: 80rem;
+  max-width: 80rem;
+  width: 100%;
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
@@ -58,10 +59,6 @@ const PicPart = styled.section`
   width: 100%;
   background-color: var(--gray-900);
 
-  @media (min-width: 431px) {
-    min-width: 480px;
-  }
-
   @media (max-width: 430px) {
     width: calc(100% - 16px);
     margin-top: 1.2rem;
@@ -111,6 +108,10 @@ const UploadContents = styled.div`
   min-height: 48rem;
   display: flex;
   justify-content: space-between;
+
+  &.loading {
+    aspect-ratio: 1/1;
+  }
 
   & > ${PicPart} {
     flex: 6; /* 전체 너비의 60% */
