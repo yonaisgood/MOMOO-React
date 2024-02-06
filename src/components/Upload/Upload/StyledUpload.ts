@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
+  position: relative;
   overflow: hidden;
   width: 80rem;
   border-radius: 10px;
@@ -192,10 +193,6 @@ const CloseBtn = styled.button`
   right: 2rem;
   background-color: transparent;
   z-index: 101;
-
-  @media (max-width: 430px) {
-    visibility: hidden;
-  }
 `;
 
 export {
