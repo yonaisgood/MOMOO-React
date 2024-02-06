@@ -9,18 +9,21 @@ export default function useEditFeed() {
   const { user } = useAuthContext();
   const { feedIdToEdit } = useEditContext();
 
-  const editFeed = async (updateData: {}) => {
+  const editFeed = async (updateData: {}, id?: string) => {
     if (user === null) {
       return;
     }
 
-    const feedDocRef = doc(
-      appFireStore,
-      user.uid,
-      user.uid,
-      'feed',
-      feedIdToEdit,
-    );
+    let feedDocRef;
+
+    if (feedIdToEdit) {
+      feedDocRef = doc(appFireStore, user.uid, user.uid, 'feed', feedIdToEdit);
+    } else if (id) {
+      feedDocRef = doc(appFireStore, user.uid, user.uid, 'feed', id);
+    } else {
+      console.error('id 아규먼트가 누락되었습니다.');
+      return;
+    }
 
     await updateDoc(feedDocRef, updateData);
   };

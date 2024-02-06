@@ -1,31 +1,29 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import useAuthContext from '../../hooks/useAuthContext';
-import useEditContext from '../../hooks/useEditContext';
-import useGetFeedData from '../../hooks/useGetFeedData';
-import useEditFeed from '../../hooks/useEditFeed';
-import useGetSavedAlbumList from '../../hooks/useGetSavedAlbumList';
+import useAuthContext from '../hooks/useAuthContext';
+import useGetFeedData from '../hooks/useGetFeedData';
+import useEditFeed from '../hooks/useEditFeed';
+import useGetSavedAlbumList from '../hooks/useGetSavedAlbumList';
 import {
   useAddFeedIdFromFeedList,
   useRemoveFeedIdFromFeedList,
-} from '../../hooks/useUpdateFeedList';
+} from '../hooks/useUpdateFeedList';
 
-import KakaoMap from '../Map/KakaoMap';
-import Preview from '../FileUpload/Preview';
-import Accordion from '../Accordion/Accordion';
-import MultipleAccordion from '../Accordion/MultipleAccordion';
-import * as Styled from './Upload/StyledUpload';
-import ModalOverlay from '../CommonStyled/StyledModalOverlay';
+import KakaoMap from '../components/Map/KakaoMap';
+import Preview from '../components/FileUpload/Preview';
+import Accordion from '../components/Accordion/Accordion';
+import MultipleAccordion from '../components/Accordion/MultipleAccordion';
+import * as Styled from '../components/Upload/Upload/StyledUpload';
 
-import { deleteImg } from '../../utils/SDKUtils';
-import GetAccordionData from './GetAccordionData';
-import uploadImageToStorage from './UploadImageToStorage';
+import { deleteImg } from '../utils/SDKUtils';
+import GetAccordionData from '../components/Upload/GetAccordionData';
+import uploadImageToStorage from '../components/Upload/UploadImageToStorage';
 
-import Arrow from '../../asset/icon/Arrow.svg';
-import CloseIcon from '../../asset/icon/X-White.svg';
-import LoadingIcon from '../../asset/icon/Loading.svg';
-import { StyledLoadingImg } from '../Loading/StyledLodingImg';
+import Arrow from '../asset/icon/Arrow.svg';
+import CloseMobileIcon from '../asset/icon/X-Small.svg';
+import LoadingIcon from '../asset/icon/Loading.svg';
+import { StyledLoadingImg } from '../components/Loading/StyledLodingImg';
 
 interface AccordionData {
   question: string;
@@ -37,7 +35,7 @@ interface AlbumIdData {
   docId: string;
 }
 
-export default function EditFeed() {
+export default function Edit() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -54,9 +52,9 @@ export default function EditFeed() {
   const [isPending, setIsPending] = useState(false);
 
   const { user } = useAuthContext();
-  const { setIsEditModalOpen, feedIdToEdit, setFeedIdToEdit } =
-    useEditContext();
+
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
@@ -64,9 +62,14 @@ export default function EditFeed() {
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
   const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
 
+  if (!id) {
+    navigate('/404');
+    return;
+  }
+
   useEffect(() => {
     const setFeedData = async () => {
-      const data = await getFeedData(feedIdToEdit);
+      const data = await getFeedData(id);
 
       if (data) {
         setTitle(data.title);
@@ -79,7 +82,7 @@ export default function EditFeed() {
     };
 
     const setSavedAlbumData = async () => {
-      const data = await getSavedAlbumList(feedIdToEdit);
+      const data = await getSavedAlbumList(id);
 
       if (data) {
         setSelectedAlbumList(data.map((v) => v.data().name));
@@ -109,11 +112,6 @@ export default function EditFeed() {
     setKakaoMapVisible(!kakaoMapVisible);
   };
 
-  const closeEditFeedModal = () => {
-    setIsEditModalOpen(false);
-    setFeedIdToEdit('');
-  };
-
   const handleAddressSelect = (selectedAddress: string) => {
     setSelectedAddress(selectedAddress);
   };
@@ -132,11 +130,7 @@ export default function EditFeed() {
       let downloadURLs: string[] = imgUrlList;
 
       if (file !== null) {
-        downloadURLs = await uploadImageToStorage(
-          file,
-          `feed/${user.uid}`,
-          feedIdToEdit,
-        );
+        downloadURLs = await uploadImageToStorage(file, `feed/${user.uid}`, id);
       }
 
       const editData = {
@@ -148,7 +142,7 @@ export default function EditFeed() {
         imageUrl: downloadURLs,
       };
 
-      await editFeed(editData);
+      await editFeed(editData, id);
 
       selectedAlbumList.forEach(async (selectedAlbumName) => {
         let selectedAlbumId = '';
@@ -160,7 +154,7 @@ export default function EditFeed() {
         }
 
         if (!savedAlbumList.includes(selectedAlbumId)) {
-          await addFeedIdFromFeedList(feedIdToEdit, selectedAlbumId);
+          await addFeedIdFromFeedList(id, selectedAlbumId);
         }
       });
 
@@ -174,7 +168,7 @@ export default function EditFeed() {
         }
 
         if (!selectedAlbumList.includes(savedAlbumName)) {
-          await removeFeedIdFromFeedList(feedIdToEdit, savedAlbumId);
+          await removeFeedIdFromFeedList(id, savedAlbumId);
         }
       });
 
@@ -190,14 +184,16 @@ export default function EditFeed() {
     }
 
     setIsPending(false);
-    navigate(`/feed/${feedIdToEdit}`);
-    closeEditFeedModal();
+    navigate(`/feed/${id}`);
   };
 
   return (
-    <ModalOverlay>
+    <>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
+          <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
+            <img src={CloseMobileIcon} alt="닫기" />
+          </Styled.MobileCloseBtn>
           <h2>게시물 수정</h2>
           <button className="uploadBtn" type="submit" onClick={handleSubmit}>
             완료
@@ -292,9 +288,6 @@ export default function EditFeed() {
           )}
         </Styled.UploadContents>
       </Styled.UploadWrapper>
-      <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
-        <img src={CloseIcon} alt="닫기버튼" />
-      </Styled.CloseBtn>
-    </ModalOverlay>
+    </>
   );
 }

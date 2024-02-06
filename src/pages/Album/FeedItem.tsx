@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
 
 import useEditContext from '../../hooks/useEditContext';
@@ -11,13 +11,24 @@ import { StyledFeedItem } from './StyledAlbum';
 import EditIcon from '../../asset/icon/Edit.svg';
 
 export default function FeedItem({ feedData }: { feedData: DocumentData }) {
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth,
+  );
+
   const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
-  const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
   const { setPrevPath } = usePageContext();
+
+  const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
+
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     setRatio(feedData.imageUrl[0]);
+
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
   }, []);
 
   const setEditFeedContext = (feedId: string) => {
@@ -70,7 +81,12 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  setEditFeedContext(feedData.id);
+
+                  if (clientWitch > 430) {
+                    setEditFeedContext(feedData.id);
+                  } else {
+                    navigate(`/edit/${id}`);
+                  }
                 }}
               >
                 <img src={EditIcon} alt="수정하기" />

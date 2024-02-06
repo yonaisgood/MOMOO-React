@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const UploadWrapper = styled.div`
+  position: relative;
   overflow: hidden;
   width: 80rem;
   border-radius: 10px;
@@ -44,14 +45,6 @@ const UploadHeader = styled.header`
 
   .uploadBtn:hover {
     color: var(--point-dark-600);
-  }
-
-  @media (max-width: 430px) {
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    background-color: var(--background-color);
-    border-bottom: 1px solid var(--gray-200);
   }
 `;
 
@@ -133,7 +126,6 @@ const UploadContents = styled.div`
   }
 
   @media (max-width: 430px) {
-    padding-top: var(--nav-height-mobile);
     & > ${PicPart} {
       flex: 1;
     }
@@ -201,10 +193,6 @@ const CloseBtn = styled.button`
   right: 2rem;
   background-color: transparent;
   z-index: 101;
-
-  @media (max-width: 430px) {
-    visibility: hidden;
-  }
 `;
 
 export {

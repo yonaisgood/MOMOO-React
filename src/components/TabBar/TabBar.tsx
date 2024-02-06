@@ -5,17 +5,10 @@ import HomeActiveImg from '../../asset/icon/HomeMobile-Active.svg';
 import UploadImg from '../../asset/icon/UploadMobile.svg';
 import MypageImg from '../../asset/icon/ProfileMobile.svg';
 import MypageActiveImg from '../../asset/icon/ProfileMobile-Active.svg';
-import useUploadContext from '../../hooks/useUploadContext';
 
 export default function TabBar() {
   const location = useLocation();
-  const { setIsUploadModalOpen } = useUploadContext();
   const navigate = useNavigate();
-
-  const openUploadModalFunc = () => {
-    setIsUploadModalOpen(true);
-    document.body.classList.add('modal-open');
-  };
 
   return (
     <StyledNav>
@@ -38,7 +31,11 @@ export default function TabBar() {
             </p>
           </Link>
         </button>
-        <button type="button" className="upload" onClick={openUploadModalFunc}>
+        <button
+          type="button"
+          className="upload"
+          onClick={() => navigate('/upload')}
+        >
           <img src={UploadImg} alt="업로드 아이콘" />
           <p>Upload</p>
         </button>

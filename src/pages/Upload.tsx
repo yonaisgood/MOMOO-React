@@ -1,24 +1,23 @@
 import { SyntheticEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { appFireStore, Timestamp } from '../../../firebase/config';
+import { appFireStore, Timestamp } from '../firebase/config';
 import { doc, setDoc } from 'firebase/firestore';
 
-import { useAddFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
-import useUploadContext from '../../../hooks/useUploadContext';
-import useAuthContext from '../../../hooks/useAuthContext';
+import { useAddFeedIdFromFeedList } from '../hooks/useUpdateFeedList';
+import useUploadContext from '../hooks/useUploadContext';
+import useAuthContext from '../hooks/useAuthContext';
 
-import Accordion from '../../Accordion/Accordion';
-import GetAccordionData from '../GetAccordionData';
-import MultipleAccordion from '../../Accordion/MultipleAccordion';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
-import Preview from '../../FileUpload/Preview';
-import uploadImageToStorage from '../UploadImageToStorage';
-import KakaoMap from '../../Map/KakaoMap';
-import * as Styled from './StyledUpload';
+import Accordion from '../components/Accordion/Accordion';
+import GetAccordionData from '../components/Upload/GetAccordionData';
+import MultipleAccordion from '../components/Accordion/MultipleAccordion';
+import Preview from '../components/FileUpload/Preview';
+import uploadImageToStorage from '../components/Upload/UploadImageToStorage';
+import KakaoMap from '../components/Map/KakaoMap';
+import * as Styled from '../components/Upload/Upload/StyledUpload';
 
-import Arrow from '../../../asset/icon/Arrow.svg';
-import CloseIcon from '../../../asset/icon/X-White.svg';
+import Arrow from '../asset/icon/Arrow.svg';
+import CloseMobileIcon from '../asset/icon/X-Small.svg';
 
 interface Object {
   question: string;
@@ -30,10 +29,9 @@ interface AlbumIdData {
   docId: string;
 }
 
-function Upload() {
+export default function Upload() {
   const { user } = useAuthContext();
-  const { albumNameListToAdd, setIsUploadModalOpen, setAlbumNameListToAdd } =
-    useUploadContext();
+  const { albumNameListToAdd } = useUploadContext();
 
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
@@ -54,21 +52,16 @@ function Upload() {
     const fetchData = async () => {
       if (user) {
         const result = await getAccordionData();
-
         setAccordionData(result.accordionData || []);
         setAlbumIdData(result.albumIdData || []);
       }
     };
+
     fetchData();
   }, []);
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
-  };
-
-  const closeUploadModal = () => {
-    setIsUploadModalOpen(false);
-    setAlbumNameListToAdd(albumNameListToAdd.slice(0, 1));
   };
 
   const handleAddressSelect = (selectedAddress: string) => {
@@ -115,7 +108,6 @@ function Upload() {
 
         await setDoc(userDocRef, uploadData);
         navigate(`/feed/${id}`);
-        closeUploadModal();
 
         try {
           selectedAlbum.forEach(async (album) => {
@@ -143,10 +135,13 @@ function Upload() {
   };
 
   return (
-    <ModalOverlay>
+    <>
       <Styled.UploadWrapper>
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
+          <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
+            <img src={CloseMobileIcon} alt="닫기" />
+          </Styled.MobileCloseBtn>
           <h2>새 게시물</h2>
           <button className="uploadBtn" type="button" onClick={handleSubmit}>
             업로드
@@ -233,11 +228,6 @@ function Upload() {
           </Styled.SelectPart>
         </Styled.UploadContents>
       </Styled.UploadWrapper>
-      <Styled.CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
-        <img src={CloseIcon} alt="닫기버튼" />
-      </Styled.CloseBtn>
-    </ModalOverlay>
+    </>
   );
 }
-
-export default Upload;

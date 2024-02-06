@@ -148,7 +148,6 @@ export default function FeedItem() {
             <Modal
               setDeleteModalOpen={setDeleteModalOpen}
               setChangeAlbumModalOpen={setChangeAlbumModalOpen}
-              feedId={id}
               onClose={handleCloseModal}
             />
           )}
