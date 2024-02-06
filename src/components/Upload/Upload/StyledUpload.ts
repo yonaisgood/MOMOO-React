@@ -45,14 +45,6 @@ const UploadHeader = styled.header`
   .uploadBtn:hover {
     color: var(--point-dark-600);
   }
-
-  @media (max-width: 430px) {
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    background-color: var(--background-color);
-    border-bottom: 1px solid var(--gray-200);
-  }
 `;
 
 const MobileCloseBtn = styled.button`
@@ -133,7 +125,6 @@ const UploadContents = styled.div`
   }
 
   @media (max-width: 430px) {
-    padding-top: var(--nav-height-mobile);
     & > ${PicPart} {
       flex: 1;
     }
