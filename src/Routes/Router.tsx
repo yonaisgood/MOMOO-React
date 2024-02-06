@@ -16,6 +16,8 @@ import Setting from '../pages/Setting/Setting';
 import NavRoute from './NavRoute';
 import { AuthRoute, NonAuthRoute } from './AuthRoute';
 import StaticSplash from '../pages/Splash/StaticSplash';
+import Upload from '../pages/Upload';
+import Edit from '../pages/Edit';
 
 export default function Router() {
   const [clientWitch, setClientWitch] = useState(
@@ -58,6 +60,12 @@ export default function Router() {
                   <Route path="/feed/:id" element={<Detail />}></Route>
                   {clientWitch <= 430 && (
                     <Route path="/my" element={<My />}></Route>
+                  )}
+                  {clientWitch <= 430 && (
+                    <Route path="/upload" element={<Upload />}></Route>
+                  )}
+                  {clientWitch <= 430 && (
+                    <Route path="/edit/:id" element={<Edit />}></Route>
                   )}
                   <Route path="/setting" element={<Setting />}></Route>
                 </Route>
