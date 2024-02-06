@@ -37,7 +37,7 @@ interface AlbumIdData {
   docId: string;
 }
 
-export default function EditFeed() {
+export default function EditFeedModal() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
