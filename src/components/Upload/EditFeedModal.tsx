@@ -196,14 +196,14 @@ export default function EditFeedModal() {
 
   return (
     <ModalOverlay>
-      <Styled.UploadWrapper>
+      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
         <Styled.UploadHeader>
           <h2>게시물 수정</h2>
           <button className="uploadBtn" type="submit" onClick={handleSubmit}>
             완료
           </button>
         </Styled.UploadHeader>
-        <Styled.UploadContents className={isPending ? 'loading' : ''}>
+        <Styled.UploadContents>
           {isPending ? (
             <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
           ) : (

@@ -10,6 +10,10 @@ const UploadWrapper = styled.div`
   color: var(--gray-900);
   z-index: 1001;
 
+  &.loading {
+    width: auto;
+  }
+
   @media (max-width: 1024px) {
     width: 49rem;
   }
@@ -109,7 +113,7 @@ const UploadContents = styled.div`
   display: flex;
   justify-content: space-between;
 
-  &.loading {
+  .loading & {
     aspect-ratio: 1/1;
   }
 

@@ -151,7 +151,7 @@ function Upload() {
 
   return (
     <ModalOverlay>
-      <Styled.UploadWrapper>
+      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
           <h2>새 게시물</h2>
