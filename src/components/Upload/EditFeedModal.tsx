@@ -17,6 +17,7 @@ import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
 import ModalOverlay from '../CommonStyled/StyledModalOverlay';
+import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 import { deleteImg } from '../../utils/SDKUtils';
 import GetAccordionData from './GetAccordionData';
@@ -25,7 +26,6 @@ import uploadImageToStorage from './UploadImageToStorage';
 import Arrow from '../../asset/icon/Arrow.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import LoadingIcon from '../../asset/icon/Loading.svg';
-import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 interface AccordionData {
   question: string;
@@ -203,7 +203,7 @@ export default function EditFeedModal() {
             완료
           </button>
         </Styled.UploadHeader>
-        <Styled.UploadContents>
+        <Styled.UploadContents className={isPending ? 'loading' : ''}>
           {isPending ? (
             <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
           ) : (
