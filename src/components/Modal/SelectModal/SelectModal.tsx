@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 import useEditContext from '../../../hooks/useEditContext';
 
@@ -6,23 +6,41 @@ import { SelectModal, Header } from './StyledSelectModal';
 import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 import Close from '../../../asset/icon/X-Small.svg';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
   onClose: () => void;
-  feedId: string;
   setDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setChangeAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Modal = ({
   onClose,
-  feedId,
   setDeleteModalOpen,
   setChangeAlbumModalOpen,
 }: Props) => {
+  const [clientWitch, setClientWitch] = useState(
+    document.documentElement.clientWidth,
+  );
+
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  if (!id) {
+    navigate('/404');
+    return;
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setClientWitch(document.documentElement.clientWidth);
+    });
+  }, []);
 
   const handleDeleteFeed = () => {
     setDeleteModalOpen(true);
@@ -65,11 +83,16 @@ const Modal = ({
     };
   }, []);
 
-  const setEditFeedContext = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const goToEditFeed = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setFeedIdToEdit(feedId);
-    setIsEditModalOpen(true);
-    onClose();
+
+    if (clientWitch > 430) {
+      setFeedIdToEdit(id);
+      setIsEditModalOpen(true);
+      onClose();
+    } else {
+      navigate(`/edit/${id}`);
+    }
   };
 
   return (
@@ -88,7 +111,7 @@ const Modal = ({
             <button type="button" onClick={handleDeleteFeed}>
               삭제하기
             </button>
-            <button type="button" onClick={setEditFeedContext}>
+            <button type="button" onClick={goToEditFeed}>
               수정하기
             </button>
             <button type="button" onClick={handleChangeAlbumModal}>
