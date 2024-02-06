@@ -189,7 +189,7 @@ export default function Edit() {
 
   return (
     <>
-      <Styled.UploadWrapper>
+      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
         <Styled.UploadHeader>
           <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
             <img src={CloseMobileIcon} alt="닫기" />

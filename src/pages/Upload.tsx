@@ -143,7 +143,7 @@ export default function Upload() {
 
   return (
     <>
-      <Styled.UploadWrapper>
+      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
           <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
