@@ -23,7 +23,6 @@ import GetAccordionData from './GetAccordionData';
 import uploadImageToStorage from './UploadImageToStorage';
 
 import Arrow from '../../asset/icon/Arrow.svg';
-import CloseMobileIcon from '../../asset/icon/X-Small.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import LoadingIcon from '../../asset/icon/Loading.svg';
 import { StyledLoadingImg } from '../Loading/StyledLodingImg';
@@ -50,9 +49,6 @@ export default function EditFeed() {
   const [file, setFile] = useState<FileList | null>(null);
   const [imgUrlList, setImgUrlList] = useState([]);
   const getFeedData = useGetFeedData();
-  const [clientWitch, setClientWitch] = useState(
-    document.documentElement.clientWidth,
-  );
   const [accordionData, setAccordionData] = useState<AccordionData[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [isPending, setIsPending] = useState(false);
@@ -69,10 +65,6 @@ export default function EditFeed() {
   const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      setClientWitch(document.documentElement.clientWidth);
-    });
-
     const setFeedData = async () => {
       const data = await getFeedData(feedIdToEdit);
 
@@ -206,11 +198,6 @@ export default function EditFeed() {
     <ModalOverlay>
       <Styled.UploadWrapper>
         <Styled.UploadHeader>
-          {clientWitch <= 430 && (
-            <Styled.MobileCloseBtn onClick={closeEditFeedModal}>
-              <img src={CloseMobileIcon} alt="닫기" />
-            </Styled.MobileCloseBtn>
-          )}
           <h2>게시물 수정</h2>
           <button className="uploadBtn" type="submit" onClick={handleSubmit}>
             완료

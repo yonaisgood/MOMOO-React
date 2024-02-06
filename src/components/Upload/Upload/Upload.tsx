@@ -19,7 +19,16 @@ import * as Styled from './StyledUpload';
 
 import Arrow from '../../../asset/icon/Arrow.svg';
 import CloseIcon from '../../../asset/icon/X-White.svg';
-import CloseMobileIcon from '../../../asset/icon/X-Small.svg';
+
+interface Object {
+  question: string;
+  answer: string[];
+}
+
+interface AlbumIdData {
+  albumName: string;
+  docId: string;
+}
 
 function Upload() {
   const { user } = useAuthContext();
@@ -35,30 +44,11 @@ function Upload() {
   const [selectedAlbum, setSelectedAlbum] =
     useState<string[]>(albumNameListToAdd);
   const [file, setFile] = useState<FileList | null>(null);
-  const [clientWitch, setClientWitch] = useState(
-    document.documentElement.clientWidth,
-  );
+  const [accordionData, setAccordionData] = useState<Object[]>([]);
+  const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   const getAccordionData = GetAccordionData();
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
-
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      setClientWitch(document.documentElement.clientWidth);
-    });
-  }, []);
-
-  interface Object {
-    question: string;
-    answer: string[];
-  }
-  interface AlbumIdData {
-    albumName: string;
-    docId: string;
-  }
-
-  const [accordionData, setAccordionData] = useState<Object[]>([]);
-  const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -157,11 +147,6 @@ function Upload() {
       <Styled.UploadWrapper>
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
-          {clientWitch <= 430 && (
-            <Styled.MobileCloseBtn onClick={closeUploadModal}>
-              <img src={CloseMobileIcon} alt="닫기" />
-            </Styled.MobileCloseBtn>
-          )}
           <h2>새 게시물</h2>
           <button className="uploadBtn" type="button" onClick={handleSubmit}>
             업로드
@@ -254,10 +239,5 @@ function Upload() {
     </ModalOverlay>
   );
 }
-
-Upload.defaultProps = {
-  id: '',
-  album: '',
-};
 
 export default Upload;
