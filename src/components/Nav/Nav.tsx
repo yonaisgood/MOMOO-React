@@ -27,7 +27,6 @@ export default function Nav() {
 
   const openUploadModalFunc = () => {
     setIsUploadModalOpen(true);
-    document.body.classList.add('modal-open');
   };
 
   const openMyModalFunc = () => {
