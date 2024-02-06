@@ -18,7 +18,6 @@ const ImgSlidePcSize = styled.div`
 const ImageGrid = styled.div`
   display: none;
   width: 100%;
-  gap: 1px;
   overflow-x: auto;
 
   &::webkit-scrollbar-thumb {
@@ -35,9 +34,10 @@ const ImageGrid = styled.div`
 
   @media (max-width: 430px) {
     display: flex;
+    gap: 1px;
 
     img {
-      width: calc(100% / 8 * 3 - 2px);
+      width: calc(100% / 8 * 3);
       aspect-ratio: 1/1;
       background-color: var(--gray-900);
     }
@@ -46,7 +46,6 @@ const ImageGrid = styled.div`
 
 const PreviewSection = styled.section`
   width: 100%;
-  min-height: 124px;
   aspect-ratio: 1/1;
   position: relative;
 
@@ -85,6 +84,7 @@ const PreviewSection = styled.section`
     height: auto;
     display: flex;
     flex-direction: row;
+    min-height: calc((100vw - 16px) / 8 * 3);
 
     .btnUpload {
       left: 0;
@@ -95,8 +95,11 @@ const PreviewSection = styled.section`
 
 const PreviewSlider = styled.div`
   width: 100%;
-  height: calc(100% - 3rem);
   margin: 0 auto;
+
+  @media (min-width: 431px) {
+    aspect-ratio: 1/1;
+  }
 
   button {
     position: absolute;

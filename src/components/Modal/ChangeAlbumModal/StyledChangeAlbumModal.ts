@@ -61,8 +61,10 @@ const MultiAccordionWrapper = styled.div`
       border-radius: 4px;
     }
 
-    button:hover {
-      background-color: var(--point-color);
+    @media (min-width: 431px) {
+      button:hover {
+        background-color: var(--point-light-100);
+      }
     }
 
     button.selected {

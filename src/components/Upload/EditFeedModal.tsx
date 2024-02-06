@@ -17,6 +17,7 @@ import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
 import ModalOverlay from '../CommonStyled/StyledModalOverlay';
+import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 import { deleteImg } from '../../utils/SDKUtils';
 import GetAccordionData from './GetAccordionData';
@@ -25,7 +26,6 @@ import uploadImageToStorage from './UploadImageToStorage';
 import Arrow from '../../asset/icon/Arrow.svg';
 import CloseIcon from '../../asset/icon/X-White.svg';
 import LoadingIcon from '../../asset/icon/Loading.svg';
-import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 interface AccordionData {
   question: string;
@@ -37,7 +37,7 @@ interface AlbumIdData {
   docId: string;
 }
 
-export default function EditFeed() {
+export default function EditFeedModal() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
@@ -196,7 +196,7 @@ export default function EditFeed() {
 
   return (
     <ModalOverlay>
-      <Styled.UploadWrapper>
+      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
         <Styled.UploadHeader>
           <h2>게시물 수정</h2>
           <button className="uploadBtn" type="submit" onClick={handleSubmit}>

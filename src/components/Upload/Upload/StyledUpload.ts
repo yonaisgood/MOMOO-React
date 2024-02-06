@@ -3,23 +3,41 @@ import styled from 'styled-components';
 const UploadWrapper = styled.div`
   position: relative;
   overflow: hidden;
-  width: 80rem;
+  max-width: 80rem;
+  width: 100%;
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
   z-index: 1001;
 
+  @media (min-width: 1025px) {
+    &.loading {
+      width: auto;
+    }
+  }
+
   @media (max-width: 1024px) {
     width: 49rem;
+    max-height: calc(100vh - var(--margin-tablet) * 2);
+    height: 914px; /* 리팩토링 필요 */
+
+    &.loading {
+      height: auto;
+    }
   }
 
   @media (max-width: 430px) {
     width: 100%;
+    max-height: none;
     height: 100vh;
     top: 0;
     left: 0;
     transform: none;
     border-radius: 0px;
+
+    &.loading {
+      height: 100vh;
+    }
   }
 `;
 
@@ -57,10 +75,6 @@ const MobileCloseBtn = styled.button`
 const PicPart = styled.section`
   width: 100%;
   background-color: var(--gray-900);
-
-  @media (min-width: 431px) {
-    min-width: 480px;
-  }
 
   @media (max-width: 430px) {
     width: calc(100% - 16px);
@@ -108,31 +122,34 @@ const SelectPart = styled.section`
 
 const UploadContents = styled.div`
   width: 100%;
-  min-height: 48rem;
   display: flex;
-  justify-content: space-between;
 
-  & > ${PicPart} {
-    flex: 6; /* 전체 너비의 60% */
+  @media (min-width: 1025px) {
+    min-height: 48rem;
+
+    & > ${PicPart} {
+      flex: 6; /* 전체 너비의 60% */
+    }
+
+    & > ${SelectPart} {
+      flex: 4; /* 전체 너비의 40% */
+    }
   }
 
-  & > ${SelectPart} {
-    flex: 4; /* 전체 너비의 40% */
+  @media (min-width: 431px) {
+    .loading & {
+      aspect-ratio: 1/1;
+    }
   }
 
   @media (max-width: 1024px) {
+    height: calc(100% - 48px);
     flex-direction: column;
     overflow-y: scroll;
   }
 
   @media (max-width: 430px) {
-    & > ${PicPart} {
-      flex: 1;
-    }
-
-    & > ${SelectPart} {
-      flex: 1;
-    }
+    height: calc(100% - var(--nav-height-mobile));
   }
 `;
 

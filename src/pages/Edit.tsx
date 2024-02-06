@@ -19,11 +19,11 @@ import * as Styled from '../components/Upload/Upload/StyledUpload';
 import { deleteImg } from '../utils/SDKUtils';
 import GetAccordionData from '../components/Upload/GetAccordionData';
 import uploadImageToStorage from '../components/Upload/UploadImageToStorage';
+import { StyledLoadingImg } from '../components/Loading/StyledLodingImg';
 
 import Arrow from '../asset/icon/Arrow.svg';
 import CloseMobileIcon from '../asset/icon/X-Small.svg';
 import LoadingIcon from '../asset/icon/Loading.svg';
-import { StyledLoadingImg } from '../components/Loading/StyledLodingImg';
 
 interface AccordionData {
   question: string;
@@ -189,7 +189,7 @@ export default function Edit() {
 
   return (
     <>
-      <Styled.UploadWrapper>
+      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
         <Styled.UploadHeader>
           <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
             <img src={CloseMobileIcon} alt="닫기" />

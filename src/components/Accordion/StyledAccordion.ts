@@ -26,9 +26,11 @@ const AccordionWrapper = styled.div`
       transition: all 0.1s ease-in-out;
     }
 
-    button:hover {
-      background-color: var(--point-color);
-      border-radius: 50%;
+    @media (min-width: 431px) {
+      button:hover {
+        background-color: var(--point-light-100);
+        border-radius: 50%;
+      }
     }
 
     button.selected {
@@ -109,8 +111,10 @@ const MultiAccordionWrapper = styled.div`
       border-radius: 4px;
     }
 
-    button:hover {
-      background-color: var(--point-color);
+    @media (min-width: 431px) {
+      button:hover {
+        background-color: var(--point-light-100);
+      }
     }
 
     button.selected {

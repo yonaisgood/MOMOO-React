@@ -4,7 +4,7 @@ import useAuthContext from '../hooks/useAuthContext';
 import useEditContext from '../hooks/useEditContext';
 import useUploadContext from '../hooks/useUploadContext';
 
-import EditFeed from '../components/Upload/EditFeed';
+import EditFeedModal from '../components/Upload/EditFeedModal';
 import Upload from '../components/Upload/Upload/Upload';
 
 export function AuthRoute() {
@@ -19,7 +19,7 @@ export function AuthRoute() {
   return (
     <>
       <Outlet />
-      {isEditModalOpen && <EditFeed />}
+      {isEditModalOpen && <EditFeedModal />}
       {isUploadModalOpen && <Upload />}
     </>
   );

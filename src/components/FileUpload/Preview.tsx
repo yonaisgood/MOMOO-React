@@ -17,10 +17,10 @@ const Preview = ({
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+
     if (files && files.length > 0) {
       const file = files[0];
-      setImages(files);
-      setFile(files);
+
       if (!/^image\/(jpg|svg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
         alert(
           '이미지 파일 확장자는 jpg, svg, png, jpeg, bmp, tif, heic만 가능합니다.',
@@ -30,9 +30,6 @@ const Preview = ({
 
       if (file.size > 10 * 1024 * 1024) {
         alert('이미지 용량은 10MB 이내로 등록 가능합니다.');
-
-        setFile(null);
-        setImageList([]);
         return;
       }
 
@@ -40,9 +37,6 @@ const Preview = ({
       setFile(files);
     } else {
       alert('이미지 파일을 선택해주세요.');
-
-      setFile(null);
-      setImageList([]);
     }
   };
 
@@ -93,7 +87,8 @@ const Preview = ({
           multiple
           type="file"
           id="file"
-          onChange={(e) => handleImageUpload(e)}
+          onChange={handleImageUpload}
+          onClick={(e) => console.log('file', e.currentTarget.files)}
         />
         <Styled.PreviewSlider>
           {imageList.length > 0 && (
@@ -117,7 +112,11 @@ const Preview = ({
                   alt="이미지"
                 />
                 {imageList.length > 1 && (
-                  <button onClick={nextSlide} className="ArrowRight">
+                  <button
+                    type="button"
+                    onClick={nextSlide}
+                    className="ArrowRight"
+                  >
                     <img src={ArrowWhite} alt="앞으로가기 버튼" />
                   </button>
                 )}
