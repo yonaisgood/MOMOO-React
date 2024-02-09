@@ -53,7 +53,7 @@ const SelectModal = styled.div`
   .modal-list button:hover {
     background: var(--point-color);
   }
-  .slect-btn {
+  .save-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,7 +66,7 @@ const SelectModal = styled.div`
       height: 1.6rem;
     }
   }
-  .slect-btn:hover {
+  .save-btn:hover {
     background: var(--gray-300);
   }
 `;
