@@ -96,8 +96,8 @@ export default function Album() {
                 <StyledH2>{albumName}</StyledH2>
                 <Breadcrumb
                   navList={[
-                    { path: 'home', text: 'Home' },
-                    { path: `album/${albumName}`, text: albumName || '/' },
+                    { path: '/', text: 'Home' },
+                    { path: `/album/${albumName}`, text: albumName || '/' },
                   ]}
                 />
               </>
@@ -105,8 +105,8 @@ export default function Album() {
             {clientWitch > 430 && clientWitch <= 1024 && (
               <BreadcrumbWrap
                 navList={[
-                  { path: 'home', text: 'Home' },
-                  { path: `album/${albumName}`, text: albumName || '/' },
+                  { path: '/', text: 'Home' },
+                  { path: `/album/${albumName}`, text: albumName || '/' },
                 ]}
                 title={albumName || ''}
               />

@@ -29,7 +29,7 @@ export function NonAuthRoute() {
   const { user } = useAuthContext();
 
   if (user) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;

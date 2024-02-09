@@ -33,8 +33,8 @@ export default function Terms() {
             <StyledH2>MOMOO 이용약관</StyledH2>
             <Breadcrumb
               navList={[
-                { path: 'home', text: 'Home' },
-                { path: 'terms', text: 'Terms of use' },
+                { path: '/', text: 'Home' },
+                { path: '/terms', text: 'Terms of use' },
               ]}
             />
           </>
@@ -42,8 +42,8 @@ export default function Terms() {
         {clientWitch > 430 && clientWitch <= 1024 && (
           <BreadcrumbWrap
             navList={[
-              { path: 'home', text: 'Home' },
-              { path: 'terms', text: 'Terms of use' },
+              { path: '/', text: 'Home' },
+              { path: '/terms', text: 'Terms of use' },
             ]}
             title="MOMOO 이용약관"
           />

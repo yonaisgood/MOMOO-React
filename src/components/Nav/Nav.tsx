@@ -38,7 +38,7 @@ export default function Nav() {
       {clientWitch > 430 && (
         <StyledNav>
           <div className="navBtn">
-            <Link to="/home">
+            <Link to="/">
               <button type="button" className="home">
                 <img src={HomeImg} alt="홈 아이콘" />
                 <p>Home</p>
@@ -57,7 +57,7 @@ export default function Nav() {
               <p>Mypage</p>
             </button>
           </div>
-          <Link to="/home">
+          <Link to="/">
             <h1 className="a11y-hidden">MoMoo</h1>
             <img
               className="logoImg"

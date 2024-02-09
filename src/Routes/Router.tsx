@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import useAuthContext from '../hooks/useAuthContext';
 
-import Splash from '../pages/Splash/Splash';
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
 import Login from '../pages/Login';
@@ -36,7 +35,6 @@ export default function Router() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Splash />}></Route>
           {!isAuthReady ? (
             <Route path="*" element={<StaticSplash />}></Route>
           ) : (
@@ -55,7 +53,7 @@ export default function Router() {
 
               <Route element={<AuthRoute />}>
                 <Route element={<NavRoute />}>
-                  <Route path="/home" element={<Home />}></Route>
+                  <Route path="/" element={<Home />}></Route>
                   <Route path="/album/:id" element={<Album />}></Route>
                   <Route path="/feed/:id" element={<Detail />}></Route>
                   {clientWitch <= 430 && (
