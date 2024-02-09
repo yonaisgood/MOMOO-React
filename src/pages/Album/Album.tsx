@@ -71,12 +71,16 @@ export default function Album() {
     })();
   }, []);
 
-  const setUploadContext = () => {
-    if (albumName) {
+  const openUpload = () => {
+    if (albumName && albumName !== '전체 보기') {
       setAlbumNameListToAdd(['전체 보기', albumName]);
     }
 
-    setIsUploadModalOpen(true);
+    if (clientWitch > 430) {
+      setIsUploadModalOpen(true);
+    } else {
+      navigate('/upload');
+    }
   };
 
   return (
@@ -128,7 +132,7 @@ export default function Album() {
                       <button
                         type="button"
                         aria-label="새 게시물"
-                        onClick={setUploadContext}
+                        onClick={openUpload}
                       >
                         <img src={AddIcon} alt="추가하기" />
                       </button>
