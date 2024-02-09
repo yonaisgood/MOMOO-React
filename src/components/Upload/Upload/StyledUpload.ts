@@ -94,6 +94,10 @@ const SelectPart = styled.section`
     font-size: var(--text-m);
   }
 
+  ::placeholder {
+    color: var(--gray-600);
+  }
+
   input {
     width: 100%;
     outline: none;

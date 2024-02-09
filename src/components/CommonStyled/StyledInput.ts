@@ -7,7 +7,7 @@ const StyledInput = styled.input`
   color: var(--gray-900);
 
   &::placeholder {
-    color: var(--gray-300);
+    color: var(--gray-600);
   }
 
   &:focus {
