@@ -57,6 +57,8 @@ const StyledFeedList = styled.ul`
 const StyledFeedItem = styled.li`
   margin: 8px;
   position: relative;
+  box-sizing: content-box;
+  border: 1px solid var(--gray-100);
 
   .hover-wrap {
     position: absolute;
