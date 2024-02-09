@@ -5,7 +5,6 @@ const SelectModal = styled.div`
     background: var(--background-color);
     border-radius: 1rem;
     width: 23rem;
-    height: 20rem;
     font-size: var(--text-l);
     overflow: hidden;
     position: relative;
