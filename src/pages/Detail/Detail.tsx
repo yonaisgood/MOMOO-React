@@ -26,13 +26,13 @@ export default function Detail() {
     });
 
     const navListToSet = [
-      { path: 'home', text: 'Home' },
-      { path: '/', text: 'feed' },
+      { path: '/', text: 'Home' },
+      { path: '//', text: 'feed' },
     ];
 
     if (prevPath) {
       navListToSet.splice(1, 0, {
-        path: `album/${prevPath}`,
+        path: `/album/${prevPath}`,
         text: prevPath.replace(/-/gi, ' '),
       });
     }

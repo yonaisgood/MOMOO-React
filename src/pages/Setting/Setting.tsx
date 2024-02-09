@@ -254,16 +254,16 @@ export default function Setting() {
         {clientWitch > 1024 && (
           <Breadcrumb
             navList={[
-              { path: 'home', text: 'Home' },
-              { path: 'setting', text: 'Setting' },
+              { path: '/', text: 'Home' },
+              { path: '/setting', text: 'Setting' },
             ]}
           />
         )}
         {clientWitch > 430 && clientWitch <= 1024 && (
           <BreadcrumbWrap
             navList={[
-              { path: 'home', text: 'Home' },
-              { path: 'setting', text: 'Setting' },
+              { path: '/', text: 'Home' },
+              { path: '/setting', text: 'Setting' },
             ]}
             title="Setting"
           />

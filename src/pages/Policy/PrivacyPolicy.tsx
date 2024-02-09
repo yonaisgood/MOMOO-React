@@ -32,8 +32,8 @@ export default function PrivacyPolicy() {
           <>
             <Breadcrumb
               navList={[
-                { path: 'home', text: 'Home' },
-                { path: 'policy', text: 'Privacy policy' },
+                { path: '/', text: 'Home' },
+                { path: '/policy', text: 'Privacy policy' },
               ]}
             />
             <StyledH2>니즈랩 개인정보 처리방침</StyledH2>
@@ -42,8 +42,8 @@ export default function PrivacyPolicy() {
         {clientWitch > 430 && clientWitch <= 1024 && (
           <BreadcrumbWrap
             navList={[
-              { path: 'home', text: 'Home' },
-              { path: 'policy', text: 'Privacy policy' },
+              { path: '/', text: 'Home' },
+              { path: '/policy', text: 'Privacy policy' },
             ]}
             title="니즈랩 개인정보 처리방침"
           />

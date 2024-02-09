@@ -14,15 +14,15 @@ export default function TabBar() {
     <StyledNav>
       <div className="navBtn">
         <button type="button">
-          <Link to="/home" className="homeLink">
+          <Link to="/" className="homeLink">
             <img
-              src={location.pathname === '/home' ? HomeActiveImg : HomeImg}
+              src={location.pathname === '/' ? HomeActiveImg : HomeImg}
               alt="홈 아이콘"
             />
             <p
               style={{
                 color:
-                  location.pathname === '/home'
+                  location.pathname === '/'
                     ? 'var(--point-dark-400)'
                     : 'inherit',
               }}
