@@ -5,7 +5,6 @@ const AlertModalWrap = styled.div`
     background: var(--background-color);
     border-radius: 1rem;
     width: 25.2rem;
-    height: 11.2rem;
     font-size: var(--text-l);
     overflow: hidden;
     position: relative;

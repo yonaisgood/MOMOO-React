@@ -92,8 +92,8 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
               <img src={DeleteRedImg} alt="휴지통 아이콘" />
             </button>
           </div>
-          <button onClick={handleEditAlbum} className="slect-btn" type="submit">
-            <img src={SelectImg} alt="선택 아이콘" />
+          <button onClick={handleEditAlbum} className="edit-btn" type="submit">
+            <img src={SelectImg} alt="수정" />
           </button>
           <button
             className="close-button"
