@@ -137,7 +137,7 @@ export default function Upload() {
     } catch (error) {
       console.error(error);
     }
-    console.log('a');
+
     setIsPending(false);
   };
 
