@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import useAuthContext from '../hooks/useAuthContext';
 
-import Splash from '../pages/Splash/Splash';
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
 import Login from '../pages/Login';
