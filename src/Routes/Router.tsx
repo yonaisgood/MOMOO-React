@@ -36,7 +36,6 @@ export default function Router() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Splash />}></Route>
           {!isAuthReady ? (
             <Route path="*" element={<StaticSplash />}></Route>
           ) : (
@@ -55,7 +54,7 @@ export default function Router() {
 
               <Route element={<AuthRoute />}>
                 <Route element={<NavRoute />}>
-                  <Route path="/home" element={<Home />}></Route>
+                  <Route path="/" element={<Home />}></Route>
                   <Route path="/album/:id" element={<Album />}></Route>
                   <Route path="/feed/:id" element={<Detail />}></Route>
                   {clientWitch <= 430 && (
