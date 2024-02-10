@@ -24,7 +24,7 @@ const StyledAuth = styled.main`
 
     a {
       display: block;
-      color: var(--gray-300);
+      color: var(--gray-500);
     }
   }
 
