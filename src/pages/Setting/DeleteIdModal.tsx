@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import useDeleteId from '../../hooks/useDeleteId';
 
-import AlertModal from '../../components/Modal/AlertModal/AlertModal';
+import ConfirmModal from '../../components/Modal/ConfirmModal/ConfirmModal';
 import LoadingModal from '../../components/Modal/Loading/Loading';
 
 export default function DeleteIdModal({ onClose }: { onClose: () => void }) {
@@ -17,7 +17,7 @@ export default function DeleteIdModal({ onClose }: { onClose: () => void }) {
   return (
     <>
       {!isPending && (
-        <AlertModal
+        <ConfirmModal
           onClose={onClose}
           handleAgreeBtn={() => {
             (async () => {

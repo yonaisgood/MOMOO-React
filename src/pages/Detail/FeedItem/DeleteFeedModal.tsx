@@ -7,7 +7,7 @@ import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
 import { useRemoveFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 
 import { deleteImg } from '../../../utils/SDKUtils';
-import AlertModal from '../../../components/Modal/AlertModal/AlertModal';
+import ConfirmModal from '../../../components/Modal/ConfirmModal/ConfirmModal';
 
 export default function DeleteFeedModal({
   onClose,
@@ -53,7 +53,7 @@ export default function DeleteFeedModal({
   };
 
   return (
-    <AlertModal
+    <ConfirmModal
       onClose={onClose}
       handleAgreeBtn={() => {
         (async () => {
