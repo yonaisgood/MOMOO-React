@@ -35,39 +35,37 @@ export default function Nav() {
 
   return (
     <>
-      {clientWitch > 430 && (
-        <StyledNav>
-          <div className="navBtn">
-            <Link to="/">
-              <button type="button" className="home">
-                <img src={HomeImg} alt="홈 아이콘" />
-                <p>Home</p>
-              </button>
-            </Link>
-            <button
-              type="button"
-              className="upload"
-              onClick={openUploadModalFunc}
-            >
-              <img src={UploadImg} alt="업로드 아이콘" />
-              <p>Upload</p>
-            </button>
-            <button type="button" className="my" onClick={openMyModalFunc}>
-              <img src={MypageImg} alt="마이페이지 아이콘" />
-              <p>Mypage</p>
-            </button>
-          </div>
+      <StyledNav>
+        <div className="navBtn">
           <Link to="/">
-            <h1 className="a11y-hidden">MoMoo</h1>
-            <img
-              className="logoImg"
-              src={clientWitch > 1024 ? LogoColImg : LogoImg}
-              alt="로고이미지"
-            />
+            <button type="button" className="home">
+              <img src={HomeImg} alt="홈 아이콘" />
+              <p>Home</p>
+            </button>
           </Link>
-          {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
-        </StyledNav>
-      )}
+          <button
+            type="button"
+            className="upload"
+            onClick={openUploadModalFunc}
+          >
+            <img src={UploadImg} alt="업로드 아이콘" />
+            <p>Upload</p>
+          </button>
+          <button type="button" className="my" onClick={openMyModalFunc}>
+            <img src={MypageImg} alt="마이페이지 아이콘" />
+            <p>Mypage</p>
+          </button>
+        </div>
+        <Link to="/">
+          <h1 className="a11y-hidden">MoMoo</h1>
+          <img
+            className="logoImg"
+            src={clientWitch > 1024 ? LogoColImg : LogoImg}
+            alt="로고이미지"
+          />
+        </Link>
+        {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
+      </StyledNav>
     </>
   );
 }

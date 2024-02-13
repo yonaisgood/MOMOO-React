@@ -17,6 +17,7 @@ import { AuthRoute, NonAuthRoute } from './AuthRoute';
 import StaticSplash from '../pages/Splash/StaticSplash';
 import Upload from '../pages/Upload';
 import Edit from '../pages/Edit';
+import Error from '../pages/Error/Error';
 
 export default function Router() {
   const [clientWitch, setClientWitch] = useState(
@@ -39,11 +40,6 @@ export default function Router() {
             <Route path="*" element={<StaticSplash />}></Route>
           ) : (
             <>
-              <Route element={<NavRoute />}>
-                <Route path="/terms" element={<Terms />}></Route>
-                <Route path="/privacy" element={<PrivacyPolicy />}></Route>
-              </Route>
-
               <Route element={<NonAuthRoute />}>
                 <Route element={clientWitch > 430 ? <NavRoute /> : <Outlet />}>
                   <Route path="/login" element={<Login />}></Route>
@@ -68,13 +64,14 @@ export default function Router() {
                   <Route path="/setting" element={<Setting />}></Route>
                 </Route>
               </Route>
+
+              <Route element={<NavRoute />}>
+                <Route path="/terms" element={<Terms />}></Route>
+                <Route path="/privacy" element={<PrivacyPolicy />}></Route>
+                <Route path="/*" element={<Error />}></Route>
+              </Route>
             </>
           )}
-
-          <Route
-            path="/*"
-            element={<div>존재하지 않는 페이지입니다</div>}
-          ></Route>
         </Routes>
       </BrowserRouter>
     </>
