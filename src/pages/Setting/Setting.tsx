@@ -18,6 +18,7 @@ import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
 import ReauthModal from './ReauthModal';
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 
 interface Profile {
   file: File | null;
@@ -35,6 +36,7 @@ export default function Setting() {
   const [passwordErrMessage, setPasswordErrMessage] = useState('');
   const [passwordConfirmErrMessage, setPasswordConfirmErrMessage] =
     useState('');
+  const [submitErrMessage, setsubmitErrMessage] = useState('');
   const [disabledEditButton, setDisabledEditButton] = useState(true);
   const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
   const [isDeleteIdModalOpen, setIsDeleteIdModalOpen] = useState(false);
@@ -62,6 +64,8 @@ export default function Setting() {
   }, []);
 
   useEffect(() => {
+    setsubmitErrMessage('');
+
     if (emailErrMessage || passwordErrMessage || passwordConfirmErrMessage) {
       setDisabledEditButton(true);
       return;
@@ -141,16 +145,16 @@ export default function Setting() {
         setEmailErrMessage('이미 사용 중인 이메일입니다');
         break;
       case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다');
+        setsubmitErrMessage('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
         break;
       case 'auth/internal-error':
-        alert('잘못된 요청입니다');
+        setsubmitErrMessage('잘못된 요청입니다');
         break;
       default:
-        alert('프로필 변경에 실패했습니다');
+        setsubmitErrMessage('프로필 변경에 실패했습니다');
     }
   }, [updateProfileError]);
 
@@ -367,6 +371,12 @@ export default function Setting() {
               setIsReauthForDeleteIdModalOpen(false);
               setSelectedBtn('프로필 설정');
             }}
+          />
+        )}
+        {submitErrMessage && (
+          <AlertModal
+            title={submitErrMessage}
+            onClose={() => setsubmitErrMessage('')}
           />
         )}
       </StyledSetting>
