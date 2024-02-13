@@ -10,6 +10,8 @@ import Button from '../../components/Button/Button/Button';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
+import ReauthModal from './ReauthModal';
 import DeleteIdModal from './DeleteIdModal';
 import StyledSetting from './StyledSetting';
 
@@ -17,8 +19,6 @@ import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
-import ReauthModal from './ReauthModal';
-import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 
 interface Profile {
   file: File | null;
