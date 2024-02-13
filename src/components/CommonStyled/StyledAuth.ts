@@ -182,7 +182,7 @@ const StyledAuth = styled.main`
       width: 218px;
     }
 
-    p {
+    div > p {
       margin: 24px 0 66px;
       font-size: var(--title-s);
       line-height: 1.3;

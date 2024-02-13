@@ -2,7 +2,6 @@ import { FormEvent, useEffect, useState } from 'react';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useSetProfileImage from '../../hooks/useSetProfileImage';
-import useReauthenticate from '../../hooks/useReauthenticate';
 import { useUpdateProfile } from '../../hooks/useUpdateProfile';
 
 import StyledInput from '../../components/CommonStyled/StyledInput';
@@ -17,6 +16,7 @@ import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
+import ReauthModal from './ReauthModal';
 
 interface Profile {
   file: File | null;
@@ -34,19 +34,23 @@ export default function Setting() {
   const [passwordErrMessage, setPasswordErrMessage] = useState('');
   const [passwordConfirmErrMessage, setPasswordConfirmErrMessage] =
     useState('');
-  const [emailValid, setEmailValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
-  const [matchPassword, setMatchPassword] = useState(true);
-  const [changed, setChanged] = useState(false);
+  const [disabledEditButton, setDisabledEditButton] = useState(true);
   const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteIdModalOpen, setIsDeleteIdModalOpen] = useState(false);
+  const [isReauthForDeleteIdModalOpen, setIsReauthForDeleteIdModalOpen] =
+    useState(false);
+  const [
+    isReauthForUpdateProfileModalOpen,
+    setIsReauthForUpdateProfileModalOpen,
+  ] = useState(false);
+  const [readyToUpdateProfile, setReadyToUpdateProfile] = useState(false);
+  const [readyToDeleteId, setReadyToDeleteId] = useState(false);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
   const [updateProfileIsPending, setUpdateProfileIsPending] = useState(false);
   const { user } = useAuthContext();
   const { setProfile, error: updateProfileError } = useUpdateProfile();
-  const { reauthenticate, error: reauthenticateError } = useReauthenticate();
 
   const { file, setSrc, src, setProfileImage } = useSetProfileImage();
 
@@ -57,19 +61,23 @@ export default function Setting() {
   }, []);
 
   useEffect(() => {
+    if (emailErrMessage || passwordErrMessage || passwordConfirmErrMessage) {
+      setDisabledEditButton(true);
+      return;
+    }
+
     const userDisplayName = user?.displayName || '';
     const userPhotoURL = user?.photoURL || '';
 
     if (
       user?.email !== email ||
       userPhotoURL !== src ||
-      userDisplayName !== displayName
+      userDisplayName !== displayName ||
+      password
     ) {
-      setChanged(true);
-    } else if (!!password) {
-      setChanged(true);
+      setDisabledEditButton(false);
     } else {
-      setChanged(false);
+      setDisabledEditButton(true);
     }
   }, [email, src, displayName, password]);
 
@@ -88,40 +96,39 @@ export default function Setting() {
     if (user.photoURL) {
       setSrc(user.photoURL);
     }
-
-    // 초기화
-    setEmailValid(true);
-    setPasswordValid(true);
-    setMatchPassword(true);
-    setChanged(false);
-    setPassword('');
-    setPasswordConfirm('');
   }, [user]);
 
   useEffect(() => {
-    if (!reauthenticateError) {
+    if (!readyToUpdateProfile) {
       return;
     }
 
-    switch (reauthenticateError) {
-      case 'auth/wrong-password':
-        alert('비밀번호를 다시 확인해 주세요');
-        break;
-      case 'auth/too-many-requests':
-        alert('잠시 후 다시 시도해 주세요');
-        break;
-      case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다');
-        break;
-      case 'auth/internal-error':
-        alert('잘못된 요청입니다');
-        break;
-      default:
-        alert('계정 인증에 실패했습니다');
-    }
+    (async () => {
+      setUpdateProfileIsPending(true);
 
-    setChanged(true);
-  }, [reauthenticateError]);
+      const profile: Profile = {
+        file,
+        displayName: null,
+        email: null,
+        password,
+      };
+
+      if (displayName !== user?.displayName) {
+        profile.displayName = displayName;
+      }
+
+      if (email !== user?.email) {
+        profile.email = email;
+      }
+
+      await setProfile(profile);
+      // 초기화
+      setUpdateProfileIsPending(false);
+      setReadyToUpdateProfile(false);
+      setPassword('');
+      setPasswordConfirm('');
+    })();
+  }, [readyToUpdateProfile]);
 
   useEffect(() => {
     if (!updateProfileError) {
@@ -131,14 +138,12 @@ export default function Setting() {
     switch (updateProfileError) {
       case 'auth/email-already-in-use':
         setEmailErrMessage('이미 사용 중인 이메일입니다');
-        setEmailValid(false);
         break;
       case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다.');
+        alert('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
-        setEmailValid(false);
         break;
       case 'auth/internal-error':
         alert('잘못된 요청입니다');
@@ -146,65 +151,41 @@ export default function Setting() {
       default:
         alert('프로필 변경에 실패했습니다');
     }
-
-    setChanged(true);
   }, [updateProfileError]);
 
-  const reconfirmPassword = async () => {
-    const password = prompt('현재 비밀번호를 입력해주세요');
-
-    if (password === null) {
-      alert('비밀번호가 누락되었습니다');
-      return false;
+  useEffect(() => {
+    if (readyToDeleteId) {
+      setIsDeleteIdModalOpen(true);
+      setReadyToDeleteId(false);
     }
+  }, [readyToDeleteId]);
 
-    return await reauthenticate(password);
+  const deleteId = async () => {
+    setIsReauthForDeleteIdModalOpen(true);
+    setSelectedBtn('회원 탈퇴');
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const updateProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setChanged(false);
-    setUpdateProfileIsPending(true);
+    setDisabledEditButton(true);
 
-    // 현재 비밀번호 입력받은 후, 재인증
     if (email !== user?.email || password) {
-      const success = await reconfirmPassword();
-
-      if (!success) {
-        setUpdateProfileIsPending(false);
-        return;
-      }
+      setIsReauthForUpdateProfileModalOpen(true);
+    } else {
+      setReadyToUpdateProfile(true);
     }
-
-    const profile: Profile = { file, displayName: null, email: null, password };
-
-    if (displayName !== user?.displayName) {
-      profile.displayName = displayName;
-    }
-
-    if (email !== user?.email) {
-      profile.email = email;
-    }
-
-    await setProfile(profile);
-    setUpdateProfileIsPending(false);
   };
 
   const handlePasswordInp = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
 
     if (e.target.validity.tooShort) {
-      setPasswordValid(false);
       setPasswordErrMessage('6자 이상 입력해주세요');
     } else {
-      setPasswordValid(true);
       setPasswordErrMessage('');
     }
 
-    if (e.target.value !== passwordConfirm) {
-      setMatchPassword(false);
-    } else {
-      setMatchPassword(true);
+    if (e.target.value === passwordConfirm) {
       setPasswordConfirmErrMessage('');
     }
   };
@@ -213,10 +194,8 @@ export default function Setting() {
     setPasswordConfirm(e.target.value);
 
     if (e.target.value !== password) {
-      setMatchPassword(false);
       setPasswordConfirmErrMessage('비밀번호가 일치하지 않습니다');
     } else {
-      setMatchPassword(true);
       setPasswordConfirmErrMessage('');
     }
   };
@@ -226,19 +205,8 @@ export default function Setting() {
 
     if (e.target.validity.valueMissing) {
       setEmailErrMessage('필수 항목입니다');
-      setEmailValid(false);
     } else {
       setEmailErrMessage('');
-      setEmailValid(true);
-    }
-  };
-
-  const handleDeleteIdBtn = async () => {
-    const success = await reconfirmPassword();
-
-    if (success) {
-      setSelectedBtn('회원 탈퇴');
-      setIsModalOpen(true);
     }
   };
 
@@ -277,13 +245,13 @@ export default function Setting() {
               <button
                 type="button"
                 className={selectedBtn === '회원 탈퇴' ? 'selected' : ''}
-                onClick={handleDeleteIdBtn}
+                onClick={deleteId}
               >
                 회원 탈퇴
               </button>
             </article>
           )}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={updateProfile}>
             <label htmlFor="profile-inp" className="profile">
               <img src={src || ProfileBasicImg} alt="프로필 사진" />
               <img src={EditCircle} alt="변경하기" />
@@ -351,9 +319,7 @@ export default function Setting() {
             </strong>
             <Button
               size={clientWitch > 1024 ? 'l' : 's'}
-              disabled={
-                !emailValid || !passwordValid || !matchPassword || !changed
-              }
+              disabled={disabledEditButton}
             >
               {updateProfileIsPending ? (
                 <img src={LoadingIcon} alt="저장 중" />
@@ -363,20 +329,37 @@ export default function Setting() {
             </Button>
           </form>
           {clientWitch <= 430 && (
-            <button
-              type="button"
-              className="delete-btn"
-              onClick={handleDeleteIdBtn}
-            >
+            <button type="button" className="delete-btn" onClick={deleteId}>
               Delete account
               <img src={DeleteIcon} alt="" />
             </button>
           )}
         </div>
-        {isModalOpen && (
+
+        {isDeleteIdModalOpen && (
           <DeleteIdModal
             onClose={() => {
-              setIsModalOpen(false);
+              setIsDeleteIdModalOpen(false);
+              setSelectedBtn('프로필 설정');
+            }}
+          />
+        )}
+        {isReauthForUpdateProfileModalOpen && (
+          <ReauthModal
+            setIsModalOpen={setIsReauthForUpdateProfileModalOpen}
+            setIsReauthSuccess={setReadyToUpdateProfile}
+            cancel={() => {
+              setIsReauthForUpdateProfileModalOpen(false);
+              setDisabledEditButton(false);
+            }}
+          />
+        )}
+        {isReauthForDeleteIdModalOpen && (
+          <ReauthModal
+            setIsModalOpen={setIsReauthForDeleteIdModalOpen}
+            setIsReauthSuccess={setReadyToDeleteId}
+            cancel={() => {
+              setIsReauthForDeleteIdModalOpen(false);
               setSelectedBtn('프로필 설정');
             }}
           />
