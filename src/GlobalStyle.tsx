@@ -108,6 +108,15 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+
+  dialog {
+    padding: 0;
+    border: none;
+  }
+  
+  dialog::backdrop {
+    display: none;
+  }
 `;
 
 export default GlobalStyle;

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 const StyledInputModal = styled.dialog`
-  position: relative;
-  border: none;
   width: 230px;
   padding: 20px 16px 0;
   border-radius: 10px;
@@ -70,10 +68,6 @@ const StyledInputModal = styled.dialog`
     width: 16px;
     height: 16px;
     margin: auto;
-  }
-
-  &::backdrop {
-    display: none;
   }
 `;
 
