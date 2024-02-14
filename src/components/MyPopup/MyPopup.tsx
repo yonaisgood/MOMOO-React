@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
+import useLogout from '../../hooks/useLogout';
 
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 import StyledMyPopup from './StyledMyPopup';
-
-import { logout } from '../../utils/SDKUtils';
 
 import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import SettingIcon from '../../asset/icon/Setting.svg';
@@ -21,6 +21,8 @@ interface Props {
 
 export default function MyPopup({ setOpenPopup }: Props) {
   const { user } = useAuthContext();
+  const [submitErrMessage, setSubmitErrMessage] = useState('');
+  const { logout, error } = useLogout();
 
   useEffect(() => {
     const closePopup = (e: KeyboardEvent) => {
@@ -32,6 +34,12 @@ export default function MyPopup({ setOpenPopup }: Props) {
 
     window.addEventListener('keydown', closePopup);
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      setSubmitErrMessage(error);
+    }
+  }, [error]);
 
   return (
     <StyledMyPopup role="dialog">
@@ -89,6 +97,12 @@ export default function MyPopup({ setOpenPopup }: Props) {
             <img src={XIcon} alt="닫기" />
           </button>
         </>
+      )}
+      {submitErrMessage && (
+        <AlertModal
+          title={submitErrMessage}
+          onClose={() => setSubmitErrMessage('')}
+        />
       )}
     </StyledMyPopup>
   );

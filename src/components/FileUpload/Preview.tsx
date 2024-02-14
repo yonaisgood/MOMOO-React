@@ -1,5 +1,6 @@
 import { useState, SetStateAction, Dispatch, useEffect } from 'react';
 
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 import * as Styled from './StyledPreview';
 
 import ImgUpload from '../../asset/icon/ImgUpload.svg';
@@ -14,6 +15,7 @@ const Preview = ({
 }) => {
   const [imageList, setImageList] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [submitErrMessage, setSubmitErrMessage] = useState('');
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -22,21 +24,21 @@ const Preview = ({
       const file = files[0];
 
       if (!/^image\/(jpg|svg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-        alert(
+        setSubmitErrMessage(
           '이미지 파일 확장자는 jpg, svg, png, jpeg, bmp, tif, heic만 가능합니다.',
         );
         return;
       }
 
       if (file.size > 10 * 1024 * 1024) {
-        alert('이미지 용량은 10MB 이내로 등록 가능합니다.');
+        setSubmitErrMessage('이미지 용량은 10MB 이내로 등록 가능합니다.');
         return;
       }
 
       setImages(files);
       setFile(files);
     } else {
-      alert('이미지 파일을 선택해주세요.');
+      setSubmitErrMessage('이미지 파일을 선택해주세요.');
     }
   };
 
@@ -57,7 +59,7 @@ const Preview = ({
 
         setImageList(newImages);
       } else {
-        alert('최대 3장의 이미지까지만 선택할 수 있습니다.');
+        setSubmitErrMessage('최대 3장의 이미지까지만 선택할 수 있습니다.');
       }
     }
   };
@@ -138,6 +140,13 @@ const Preview = ({
           )}
         </Styled.IndicatorBasicBox>
       </Styled.PreviewSection>
+
+      {submitErrMessage && (
+        <AlertModal
+          title={submitErrMessage}
+          onClose={() => setSubmitErrMessage('')}
+        />
+      )}
     </>
   );
 };

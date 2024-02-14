@@ -6,6 +6,7 @@ import useSignup from '../../hooks/useSingup.ts';
 import useSetProfileImage from '../../hooks/useSetProfileImage.ts';
 
 import Button from '../../components/Button/Button/Button.tsx';
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 import StyledInput from '../../components/CommonStyled/StyledInput.ts';
 import StyledSignup from './StyledSignup.ts';
 
@@ -26,6 +27,8 @@ export default function Signup() {
   const [passwordErrMessage, setPasswordErrMessage] = useState('');
   const [passwordConfirmErrMessage, setPasswordConfirmErrMessage] =
     useState('');
+  const [submitErrMessage, setSubmitErrMessage] = useState('');
+
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [matchPassword, setMatchPassword] = useState(false);
@@ -58,19 +61,19 @@ export default function Signup() {
         setEmailErrMessage('이미 사용 중인 이메일입니다');
         break;
       case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다');
+        setSubmitErrMessage('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
         break;
       case 'auth/internal-error':
-        alert('잘못된 요청입니다');
+        setSubmitErrMessage('잘못된 요청입니다');
         break;
       case 'auth/weak-password':
         setPasswordErrMessage('6자 이상 입력해주세요');
         break;
       default:
-        alert('회원가입에 실패했습니다');
+        setSubmitErrMessage('회원가입에 실패했습니다');
     }
   }, [error]);
 
@@ -126,6 +129,8 @@ export default function Signup() {
   };
 
   const handleInp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSubmitErrMessage('');
+
     switch (e.target.id) {
       case 'email-inp':
         handleEmailInp(e.target);
@@ -347,6 +352,13 @@ export default function Signup() {
             </div>
           </form>
         </div>
+
+        {submitErrMessage && (
+          <AlertModal
+            title={submitErrMessage}
+            onClose={() => setSubmitErrMessage('')}
+          />
+        )}
       </StyledSignup>
     </>
   );

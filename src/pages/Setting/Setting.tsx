@@ -10,6 +10,8 @@ import Button from '../../components/Button/Button/Button';
 import BreadcrumbWrap from '../../components/Breadcrumb/BreadcrumbWrap';
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
+import ReauthModal from './ReauthModal';
 import DeleteIdModal from './DeleteIdModal';
 import StyledSetting from './StyledSetting';
 
@@ -17,7 +19,6 @@ import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
 import DeleteIcon from '../../asset/icon/DeleteRed.svg';
 import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
-import ReauthModal from './ReauthModal';
 
 interface Profile {
   file: File | null;
@@ -35,6 +36,7 @@ export default function Setting() {
   const [passwordErrMessage, setPasswordErrMessage] = useState('');
   const [passwordConfirmErrMessage, setPasswordConfirmErrMessage] =
     useState('');
+  const [submitErrMessage, setSubmitErrMessage] = useState('');
   const [disabledEditButton, setDisabledEditButton] = useState(true);
   const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
   const [isDeleteIdModalOpen, setIsDeleteIdModalOpen] = useState(false);
@@ -53,7 +55,13 @@ export default function Setting() {
   const { user } = useAuthContext();
   const { setProfile, error: updateProfileError } = useUpdateProfile();
 
-  const { file, setSrc, src, setProfileImage } = useSetProfileImage();
+  const {
+    file,
+    setSrc,
+    src,
+    setProfileImage,
+    error: selectImgError,
+  } = useSetProfileImage();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -62,6 +70,14 @@ export default function Setting() {
   }, []);
 
   useEffect(() => {
+    if (selectImgError) {
+      setSubmitErrMessage(selectImgError);
+    }
+  }, [selectImgError]);
+
+  useEffect(() => {
+    setSubmitErrMessage('');
+
     if (emailErrMessage || passwordErrMessage || passwordConfirmErrMessage) {
       setDisabledEditButton(true);
       return;
@@ -135,22 +151,23 @@ export default function Setting() {
     if (!updateProfileError) {
       return;
     }
+    console.log('a');
 
     switch (updateProfileError) {
       case 'auth/email-already-in-use':
         setEmailErrMessage('이미 사용 중인 이메일입니다');
         break;
       case 'auth/network-request-failed':
-        alert('네트워크 연결에 실패했습니다');
+        setSubmitErrMessage('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
         break;
       case 'auth/internal-error':
-        alert('잘못된 요청입니다');
+        setSubmitErrMessage('잘못된 요청입니다');
         break;
       default:
-        alert('프로필 변경에 실패했습니다');
+        setSubmitErrMessage('프로필 변경에 실패했습니다');
     }
   }, [updateProfileError]);
 
@@ -347,6 +364,8 @@ export default function Setting() {
               setIsDeleteIdModalOpen(false);
               setSelectedBtn('프로필 설정');
             }}
+            setIsModalOpen={setIsDeleteIdModalOpen}
+            setSubmitErrMessage={setSubmitErrMessage}
           />
         )}
         {isReauthForUpdateProfileModalOpen && (
@@ -365,6 +384,15 @@ export default function Setting() {
             setIsReauthSuccess={setReadyToDeleteId}
             cancel={() => {
               setIsReauthForDeleteIdModalOpen(false);
+              setSelectedBtn('프로필 설정');
+            }}
+          />
+        )}
+        {submitErrMessage && (
+          <AlertModal
+            title={submitErrMessage}
+            onClose={() => {
+              setSubmitErrMessage('');
               setSelectedBtn('프로필 설정');
             }}
           />

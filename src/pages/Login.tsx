@@ -7,6 +7,7 @@ import { useLogin } from '../hooks/useLogin';
 import Button from '../components/Button/Button/Button';
 import StyledInput from '../components/CommonStyled/StyledInput';
 import StyledAuth from '../components/CommonStyled/StyledAuth';
+import AlertModal from '../components/Modal/AlertModal/AlertModal';
 
 import Logo from '../asset/icon/Logo.svg';
 import LoadingIcon from '../asset/icon/LoadingBlack.svg';
@@ -18,7 +19,7 @@ export default function Login() {
   const [passwordValid, setPasswordValid] = useState(false);
   const [emailErrMessage, setEmailErrMessage] = useState('');
   const [passwordErrMessage, setPasswordErrMessage] = useState('');
-  const [loginErrMessage, setLoginErrMessage] = useState('');
+  const [submitErrMessage, setSubmitErrMessage] = useState('');
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
@@ -37,10 +38,10 @@ export default function Login() {
 
     switch (error) {
       case 'auth/invalid-login-credentials':
-        setLoginErrMessage('아이디 혹은 비밀번호가 일치하지 않습니다');
+        setSubmitErrMessage('아이디 혹은 비밀번호가 일치하지 않습니다');
         break;
       case 'auth/user-not-found':
-        setLoginErrMessage('존재하지 않는 계정입니다');
+        setSubmitErrMessage('존재하지 않는 계정입니다');
         break;
       case 'auth/wrong-password':
         setPasswordErrMessage('비밀번호를 다시 확인해주세요');
@@ -53,12 +54,12 @@ export default function Login() {
         alert('잘못된 요청입니다');
         break;
       case 'auth/too-many-requests':
-        setLoginErrMessage(
+        setSubmitErrMessage(
           '여러 번 로그인에 실패하여 해당 계정에 대한 로그인이 비활성화되었습니다. 나중에 다시 시도해 주세요',
         );
         break;
       default:
-        setLoginErrMessage('아이디 혹은 비밀번호를 확인해주세요');
+        setSubmitErrMessage('아이디 혹은 비밀번호를 확인해주세요');
     }
   }, [error]);
 
@@ -69,7 +70,7 @@ export default function Login() {
 
   const handleEmailInp = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    setLoginErrMessage('');
+    setSubmitErrMessage('');
 
     if (e.target.validity.valueMissing) {
       setEmailValid(false);
@@ -85,7 +86,7 @@ export default function Login() {
 
   const handlePasswordInp = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    setLoginErrMessage('');
+    setSubmitErrMessage('');
 
     if (e.target.validity.valueMissing) {
       setPasswordValid(false);
@@ -145,11 +146,7 @@ export default function Login() {
               required
             />
             <strong role="alert">
-              {passwordErrMessage
-                ? `*${passwordErrMessage}`
-                : loginErrMessage
-                ? `*${loginErrMessage}`
-                : ''}
+              {passwordErrMessage ? `*${passwordErrMessage}` : ''}
             </strong>
             <Button
               size={clientWitch > 1024 ? 'l' : 's'}
@@ -159,6 +156,13 @@ export default function Login() {
             </Button>
           </form>
         </div>
+
+        {submitErrMessage && (
+          <AlertModal
+            title={submitErrMessage}
+            onClose={() => setSubmitErrMessage('')}
+          />
+        )}
       </StyledAuth>
     </>
   );

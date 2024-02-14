@@ -3,6 +3,7 @@ import { useState } from 'react';
 export default function useSetProfileImage() {
   const [file, setFile] = useState<File | null>(null);
   const [src, setSrc] = useState('');
+  const [error, setError] = useState('');
 
   const setProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
@@ -12,14 +13,14 @@ export default function useSetProfileImage() {
     const file = e.target.files[0];
 
     if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-      alert(
+      setError(
         '이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.',
       );
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      alert('이미지 용량은 2MB 이내로 등록 가능합니다.');
+    if (file.size > 1 * 1024 * 1024) {
+      setError('이미지 용량은 10MB 이내로 등록 가능합니다.');
       return;
     }
 
@@ -39,5 +40,5 @@ export default function useSetProfileImage() {
     });
   };
 
-  return { setProfileImage, file, setFile, src, setSrc };
+  return { setProfileImage, file, setFile, src, setSrc, error };
 }
