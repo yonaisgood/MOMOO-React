@@ -9,6 +9,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [albumName, setAlbumName] = useState('');
+  const [errMessage, setErrMessage] = useState('');
   const addAlbum = useAddAlbum();
 
   useEffect(() => {
@@ -43,7 +44,17 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   const handleAlbum = async () => {
-    await addAlbum({ albumName });
+    if (albumName.trim() === '') {
+      setErrMessage('제목을 입력해 주세요');
+      return;
+    }
+    const result = await addAlbum({ albumName });
+
+    if (!result.success) {
+      setErrMessage(result.error!);
+      return;
+    }
+
     onClose();
   };
 
@@ -64,6 +75,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
               placeholder="이름을 입력해주세요"
               onChange={(e) => setAlbumName(e.target.value)}
             />
+            <strong role="alert">{errMessage && `*${errMessage}`}</strong>
           </Header>
           <div className="modal-list">
             <button type="submit" onClick={onClose} ref={closeButtonRef}>

@@ -51,6 +51,13 @@ const Header = styled.header`
       margin-left: 1rem;
     }
   }
+  strong {
+    display: block;
+    margin-top: 8px;
+    font-size: var(--text-s);
+    line-height: 1;
+    color: var(--error-color);
+  }
 `;
 
 export { SelectModal, Header };
