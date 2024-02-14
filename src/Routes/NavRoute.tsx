@@ -17,8 +17,7 @@ export default function NavRoute() {
 
   return (
     <>
-      <Nav />
-      {clientWitch <= 430 ? <TabBar /> : null}
+      {clientWitch <= 430 ? <TabBar /> : <Nav />}
       <Outlet />
     </>
   );
