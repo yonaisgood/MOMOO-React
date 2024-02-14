@@ -1,16 +1,25 @@
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
 import useDeleteId from '../../hooks/useDeleteId';
 
 import ConfirmModal from '../../components/Modal/ConfirmModal/ConfirmModal';
 import LoadingModal from '../../components/Modal/Loading/Loading';
 
-export default function DeleteIdModal({ onClose }: { onClose: () => void }) {
+export default function DeleteIdModal({
+  onClose,
+  setSubmitErrMessage,
+  setIsModalOpen,
+}: {
+  onClose: () => void;
+  setSubmitErrMessage: Dispatch<SetStateAction<string>>;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const { deleteId, error, isPending } = useDeleteId();
 
   useEffect(() => {
     if (error) {
-      alert('회원 탈퇴에 실패했습니다');
+      setSubmitErrMessage('회원 탈퇴에 실패했습니다');
+      setIsModalOpen(false);
     }
   }, [error]);
 

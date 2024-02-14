@@ -36,7 +36,7 @@ export default function Setting() {
   const [passwordErrMessage, setPasswordErrMessage] = useState('');
   const [passwordConfirmErrMessage, setPasswordConfirmErrMessage] =
     useState('');
-  const [submitErrMessage, setsubmitErrMessage] = useState('');
+  const [submitErrMessage, setSubmitErrMessage] = useState('');
   const [disabledEditButton, setDisabledEditButton] = useState(true);
   const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
   const [isDeleteIdModalOpen, setIsDeleteIdModalOpen] = useState(false);
@@ -55,7 +55,13 @@ export default function Setting() {
   const { user } = useAuthContext();
   const { setProfile, error: updateProfileError } = useUpdateProfile();
 
-  const { file, setSrc, src, setProfileImage } = useSetProfileImage();
+  const {
+    file,
+    setSrc,
+    src,
+    setProfileImage,
+    error: selectImgError,
+  } = useSetProfileImage();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -64,7 +70,13 @@ export default function Setting() {
   }, []);
 
   useEffect(() => {
-    setsubmitErrMessage('');
+    if (selectImgError) {
+      setSubmitErrMessage(selectImgError);
+    }
+  }, [selectImgError]);
+
+  useEffect(() => {
+    setSubmitErrMessage('');
 
     if (emailErrMessage || passwordErrMessage || passwordConfirmErrMessage) {
       setDisabledEditButton(true);
@@ -139,22 +151,23 @@ export default function Setting() {
     if (!updateProfileError) {
       return;
     }
+    console.log('a');
 
     switch (updateProfileError) {
       case 'auth/email-already-in-use':
         setEmailErrMessage('이미 사용 중인 이메일입니다');
         break;
       case 'auth/network-request-failed':
-        setsubmitErrMessage('네트워크 연결에 실패했습니다');
+        setSubmitErrMessage('네트워크 연결에 실패했습니다');
         break;
       case 'auth/invalid-email':
         setEmailErrMessage('잘못된 이메일 형식입니다');
         break;
       case 'auth/internal-error':
-        setsubmitErrMessage('잘못된 요청입니다');
+        setSubmitErrMessage('잘못된 요청입니다');
         break;
       default:
-        setsubmitErrMessage('프로필 변경에 실패했습니다');
+        setSubmitErrMessage('프로필 변경에 실패했습니다');
     }
   }, [updateProfileError]);
 
@@ -351,6 +364,8 @@ export default function Setting() {
               setIsDeleteIdModalOpen(false);
               setSelectedBtn('프로필 설정');
             }}
+            setIsModalOpen={setIsDeleteIdModalOpen}
+            setSubmitErrMessage={setSubmitErrMessage}
           />
         )}
         {isReauthForUpdateProfileModalOpen && (
@@ -376,7 +391,10 @@ export default function Setting() {
         {submitErrMessage && (
           <AlertModal
             title={submitErrMessage}
-            onClose={() => setsubmitErrMessage('')}
+            onClose={() => {
+              setSubmitErrMessage('');
+              setSelectedBtn('프로필 설정');
+            }}
           />
         )}
       </StyledSetting>

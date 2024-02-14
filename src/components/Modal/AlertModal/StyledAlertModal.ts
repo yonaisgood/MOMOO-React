@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledAlertModal = styled.dialog`
-  max-width: min(300px, calc(100% - var(--margin-mobile) * 2));
+  max-width: min(280px, calc(100% - var(--margin-mobile) * 2));
   text-align: center;
   border-radius: 1rem;
   background: var(--background-color);
