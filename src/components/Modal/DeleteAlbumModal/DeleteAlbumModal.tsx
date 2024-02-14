@@ -23,6 +23,7 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [editAlbumName, setEditAlbumName] = useState(albumName);
+  const [errMessage, setErrMessage] = useState('');
   const editAlbum = useEditAlbum();
   const deleteAlbum = useDeleteAlbum();
 
@@ -58,7 +59,15 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
   }, []);
 
   const handleEditAlbum = async () => {
-    await editAlbum({ editAlbumName, albumId });
+    if (editAlbumName.trim() === '') {
+      setErrMessage('제목을 입력해 주세요');
+      return;
+    }
+    const result = await editAlbum({ editAlbumName, albumId });
+    if (!result.success) {
+      setErrMessage(result.error!);
+      return;
+    }
     onClose();
   };
   const handleDeleteAlbum = async () => {
@@ -87,6 +96,7 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
               }}
               placeholder="새로운 앨범명을 입력해주세요"
             />
+            <strong role="alert">{errMessage && `*${errMessage}`}</strong>
             <button type="submit" onClick={handleDeleteAlbum}>
               Delete
               <img src={DeleteRedImg} alt="휴지통 아이콘" />

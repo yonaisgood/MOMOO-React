@@ -45,6 +45,13 @@ const SelectModal = styled.div`
     font-size: var(--text-l);
     transition: all 0.2s ease-in-out;
   }
+  .modal-list strong {
+    display: block;
+    margin-bottom: 16px;
+    font-size: var(--text-s);
+    line-height: 1;
+    color: var(--error-color);
+  }
   .modal-list button img {
     width: 2rem;
     height: 2rem;
@@ -53,6 +60,7 @@ const SelectModal = styled.div`
   .modal-list button:hover {
     background: var(--point-color);
   }
+
   .edit-btn {
     display: flex;
     justify-content: center;
