@@ -21,8 +21,7 @@ const StyledNav = styled.nav`
     padding: 0.7rem 1.6rem;
   }
 
-  .navBtn button,
-  .navBtn button .homeLink {
+  .navBtn a {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +35,7 @@ const StyledNav = styled.nav`
     line-height: 1;
   }
 
-  .navBtn button img {
+  .navBtn a img {
     width: 2.2rem;
     height: 2.2rem;
   }

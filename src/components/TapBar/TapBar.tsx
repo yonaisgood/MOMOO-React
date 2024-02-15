@@ -12,7 +12,7 @@ export default function TabBar() {
   return (
     <StyledNav>
       <div className="navBtn">
-        <Link to="/" className="homeLink">
+        <Link to="/">
           <img
             src={location.pathname === '/' ? HomeActiveImg : HomeImg}
             alt="홈 아이콘"
@@ -30,7 +30,7 @@ export default function TabBar() {
           <img src={UploadImg} alt="업로드 아이콘" />
           <p>Upload</p>
         </Link>
-        <Link className="my" to="/my">
+        <Link to="/my">
           <img
             src={location.pathname === '/my' ? MypageActiveImg : MypageImg}
             alt="마이페이지 아이콘"
