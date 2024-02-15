@@ -17,21 +17,21 @@ export default function TabBar() {
             src={location.pathname === '/' ? HomeActiveImg : HomeImg}
             alt="홈 아이콘"
           />
-          <p>Home</p>
+          Home
         </Link>
         <Link
           to="/upload"
           className={location.pathname === '/upload' ? 'curr' : ''}
         >
           <img src={UploadImg} alt="업로드 아이콘" />
-          <p>Upload</p>
+          Upload
         </Link>
         <Link to="/my" className={location.pathname === '/my' ? 'curr' : ''}>
           <img
             src={location.pathname === '/my' ? MypageActiveImg : MypageImg}
             alt="마이페이지 아이콘"
           />
-          <p>Mypage</p>
+          Mypage
         </Link>
       </div>
     </StyledNav>

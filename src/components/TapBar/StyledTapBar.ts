@@ -27,15 +27,12 @@ const StyledNav = styled.nav`
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-  }
-
-  p {
     margin-top: 3px;
     font-size: 0.8rem;
     line-height: 1;
   }
 
-  .curr p {
+  a.curr {
     color: var(--point-dark-400);
   }
 
