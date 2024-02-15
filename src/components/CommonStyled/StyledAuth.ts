@@ -61,6 +61,7 @@ const StyledAuth = styled.main`
     display: block;
     width: 171px;
     margin: 0 auto 35px;
+    cursor: pointer;
 
     img:first-child {
       border-radius: 50%;
