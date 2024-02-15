@@ -1,5 +1,5 @@
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import StyledNav from './StyledTabBar';
+import StyledNav from './StyledTapBar';
 import HomeImg from '../../asset/icon/HomeMobile.svg';
 import HomeActiveImg from '../../asset/icon/HomeMobile-Active.svg';
 import UploadImg from '../../asset/icon/UploadMobile.svg';
