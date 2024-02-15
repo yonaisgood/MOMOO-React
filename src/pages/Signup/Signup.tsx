@@ -39,6 +39,7 @@ export default function Signup() {
   const [ageChecked, setAgeChecked] = useState(false);
   const [termsChecked, setTermsChecked] = useState(false);
   const [privacyChecked, setPrivacyChecked] = useState(false);
+  const [imgHasFocus, setImgHasFocus] = useState(false);
 
   const { error, signup, isPending } = useSignup();
   const { file, src, setProfileImage } = useSetProfileImage();
@@ -175,7 +176,10 @@ export default function Signup() {
             <h2>Signup</h2>
           </article>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="profile-inp" className="profile">
+            <label
+              htmlFor="profile-inp"
+              className={imgHasFocus ? 'profile focus' : 'profile'}
+            >
               <img src={src || ProfileBasicImg} alt="프로필 사진" />
               <img src={EditCircle} alt="변경하기" />
             </label>
@@ -184,6 +188,8 @@ export default function Signup() {
               type="file"
               className="a11y-hidden"
               onChange={setProfileImage}
+              onFocus={() => setImgHasFocus(true)}
+              onBlur={() => setImgHasFocus(false)}
             />
             <label htmlFor="displayName-inp" className="a11y-hidden">
               사용자 이름

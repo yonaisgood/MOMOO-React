@@ -52,6 +52,8 @@ export default function EditProfile() {
     document.documentElement.clientWidth,
   );
   const [updateProfileIsPending, setUpdateProfileIsPending] = useState(false);
+  const [imgHasFocus, setImgHasFocus] = useState(false);
+
   const { user } = useAuthContext();
   const { setProfile, error: updateProfileError } = useUpdateProfile();
 
@@ -274,7 +276,10 @@ export default function EditProfile() {
             </article>
           )}
           <form onSubmit={updateProfile}>
-            <label htmlFor="profile-inp" className="profile">
+            <label
+              htmlFor="profile-inp"
+              className={imgHasFocus ? 'profile focus' : 'profile'}
+            >
               <img src={src || ProfileBasicImg} alt="프로필 사진" />
               <img src={EditCircle} alt="변경하기" />
             </label>
@@ -283,6 +288,8 @@ export default function EditProfile() {
               type="file"
               className="a11y-hidden"
               onChange={setProfileImage}
+              onFocus={() => setImgHasFocus(true)}
+              onBlur={() => setImgHasFocus(false)}
             />
 
             <label htmlFor="username-inp" className="a11y-hidden">

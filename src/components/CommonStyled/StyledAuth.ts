@@ -67,6 +67,7 @@ const StyledAuth = styled.main`
       border-radius: 50%;
       aspect-ratio: 1/1;
       object-fit: cover;
+      border: 3px solid white;
     }
 
     img:last-child {
@@ -76,6 +77,11 @@ const StyledAuth = styled.main`
       aspect-ratio: 1/1;
       object-fit: contain;
     }
+  }
+
+  .profile.focus {
+    outline: 2px solid var(--gray-900);
+    border-radius: 4px;
   }
 
   @media (min-width: 431px) {
