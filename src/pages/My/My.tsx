@@ -48,9 +48,9 @@ export default function My() {
         <section className="menu">
           <ul>
             <li>
-              <Link to="/setting">
+              <Link to="/edit-profile">
                 <img src={SettingIcon} alt="" />
-                Setting
+                Edit profile
               </Link>
             </li>
             <li>
