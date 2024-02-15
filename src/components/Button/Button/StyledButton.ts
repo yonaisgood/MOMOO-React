@@ -4,7 +4,6 @@ const sizeStyles = {
   l: css`
     width: 48rem;
     padding: 1rem 0;
-    line-height: 4.8rem;
     font-size: var(--title-m);
 
     img {
@@ -13,9 +12,8 @@ const sizeStyles = {
     }
   `,
   m: css`
-    width: 35.8rem;
+    width: 100%;
     padding: 1rem 0;
-    line-height: 3.58rem;
     font-size: var(--title-s);
 
     img {
@@ -26,7 +24,6 @@ const sizeStyles = {
   s: css`
     width: 100%;
     padding: 1rem 0;
-    line-height: 2.88rem;
     font-size: var(--text-l);
 
     img {
@@ -38,7 +35,6 @@ const sizeStyles = {
     width: 10rem;
     height: 4rem;
     padding: 1rem 0;
-    line-height: 10rem;
     font-size: var(--text-m);
   `,
 };
