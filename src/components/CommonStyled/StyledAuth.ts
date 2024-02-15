@@ -176,16 +176,11 @@ const StyledAuth = styled.main`
   }
 
   @media (max-width: 430px) {
-    padding: 124px var(--margin-mobile) 80px; // 80 임의
+    padding: 124px var(--margin-mobile) 0;
 
     h1 {
       width: 218px;
-    }
-
-    div > p {
-      margin: 24px 0 66px;
-      font-size: var(--title-s);
-      line-height: 1.3;
+      margin-bottom: 64px;
     }
 
     article {

@@ -166,16 +166,9 @@ export default function Signup() {
       >
         <div className="container">
           {clientWitch < 431 && (
-            <>
-              <h1>
-                <img src={Logo} alt="로고" />
-              </h1>
-              <p>
-                안녕하세요.
-                <br />
-                MOMOO 입니다.
-              </p>
-            </>
+            <h1>
+              <img src={Logo} alt="로고" />
+            </h1>
           )}
           <article>
             <Link to="/login">Login</Link>
@@ -334,7 +327,7 @@ export default function Signup() {
 
             <div className="submit-btn-wrap">
               <Button
-                size={clientWitch > 1024 ? 'l' : 's'}
+                size={clientWitch > 1024 ? 'l' : 'm'}
                 disabled={
                   !emailValid ||
                   !passwordValid ||
