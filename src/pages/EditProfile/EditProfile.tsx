@@ -340,7 +340,7 @@ export default function EditProfile() {
               {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
             </strong>
             <Button
-              size={clientWitch > 1024 ? 'l' : 's'}
+              size={clientWitch > 1024 ? 'l' : 'm'}
               disabled={disabledEditButton}
             >
               {updateProfileIsPending ? (
