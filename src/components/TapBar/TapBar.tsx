@@ -12,39 +12,26 @@ export default function TabBar() {
   return (
     <StyledNav>
       <div className="navBtn">
-        <Link to="/">
+        <Link to="/" className={location.pathname === '/' ? 'curr' : ''}>
           <img
             src={location.pathname === '/' ? HomeActiveImg : HomeImg}
             alt="홈 아이콘"
           />
-          <p
-            style={{
-              color:
-                location.pathname === '/' ? 'var(--point-dark-400)' : 'inherit',
-            }}
-          >
-            Home
-          </p>
+          <p>Home</p>
         </Link>
-        <Link className="upload" to="/upload">
+        <Link
+          to="/upload"
+          className={location.pathname === '/upload' ? 'curr' : ''}
+        >
           <img src={UploadImg} alt="업로드 아이콘" />
           <p>Upload</p>
         </Link>
-        <Link to="/my">
+        <Link to="/my" className={location.pathname === '/my' ? 'curr' : ''}>
           <img
             src={location.pathname === '/my' ? MypageActiveImg : MypageImg}
             alt="마이페이지 아이콘"
           />
-          <p
-            style={{
-              color:
-                location.pathname === '/my'
-                  ? 'var(--point-dark-400)'
-                  : 'inherit',
-            }}
-          >
-            Mypage
-          </p>
+          <p>Mypage</p>
         </Link>
       </div>
     </StyledNav>

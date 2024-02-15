@@ -35,6 +35,10 @@ const StyledNav = styled.nav`
     line-height: 1;
   }
 
+  .curr p {
+    color: var(--point-dark-400);
+  }
+
   .navBtn a img {
     width: 2.2rem;
     height: 2.2rem;
