@@ -77,43 +77,54 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
       <ModalOverlay>
-        <div
-          className="modal-content"
-          role="document"
-          tabIndex={-1}
-          ref={modalRef}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleEditAlbum();
+          }}
         >
-          <Header className="modal-header" id="modal-select">
-            <h2 tabIndex={0}>Edit Album</h2>
-          </Header>
-          <div className="modal-list">
-            <p>이름</p>
-            <input
-              type="text"
-              value={editAlbumName}
-              onChange={(e) => {
-                setEditAlbumName(e.target.value);
-              }}
-              placeholder="새로운 앨범명을 입력해주세요"
-            />
-            <strong role="alert">{errMessage && `*${errMessage}`}</strong>
-            <button type="submit" onClick={handleDeleteAlbum}>
-              Delete
-              <img src={DeleteRedImg} alt="휴지통 아이콘" />
+          <div
+            className="modal-content"
+            role="document"
+            tabIndex={-1}
+            ref={modalRef}
+          >
+            <Header className="modal-header" id="modal-select">
+              <h2 tabIndex={0}>Edit Album</h2>
+            </Header>
+            <div className="modal-list">
+              <p>이름</p>
+              <input
+                type="text"
+                value={editAlbumName}
+                onChange={(e) => {
+                  setEditAlbumName(e.target.value);
+                }}
+                placeholder="새로운 앨범명을 입력해주세요"
+              />
+              <strong role="alert">{errMessage && `*${errMessage}`}</strong>
+              <button type="button" onClick={handleDeleteAlbum}>
+                Delete
+                <img src={DeleteRedImg} alt="휴지통 아이콘" />
+              </button>
+            </div>
+            <button
+              onClick={handleEditAlbum}
+              className="edit-btn"
+              type="submit"
+            >
+              <img src={SelectImg} alt="수정" />
+            </button>
+            <button
+              className="close-button"
+              onClick={onClose}
+              tabIndex={0}
+              ref={closeButtonRef}
+            >
+              <img src={Close} alt="모달 닫기 버튼" />
             </button>
           </div>
-          <button onClick={handleEditAlbum} className="edit-btn" type="submit">
-            <img src={SelectImg} alt="수정" />
-          </button>
-          <button
-            className="close-button"
-            onClick={onClose}
-            tabIndex={0}
-            ref={closeButtonRef}
-          >
-            <img src={Close} alt="모달 닫기 버튼" />
-          </button>
-        </div>
+        </form>
       </ModalOverlay>
     </SelectModal>
   );

@@ -61,31 +61,39 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   return (
     <SelectModal role="dialog" aria-labelledby="modal-select">
       <ModalOverlay>
-        <div
-          className="modal-content"
-          role="document"
-          tabIndex={-1}
-          ref={modalRef}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAlbum();
+          }}
         >
-          <Header className="modal-header" id="modal-select">
-            <h2 tabIndex={0}>새로운 앨범</h2>
-            <p>이 앨범의 이름을 입력해주세요</p>
-            <input
-              type="text"
-              placeholder="이름을 입력해주세요"
-              onChange={(e) => setAlbumName(e.target.value)}
-            />
-            <strong role="alert">{errMessage && `*${errMessage}`}</strong>
-          </Header>
-          <div className="modal-list">
-            <button type="submit" onClick={onClose} ref={closeButtonRef}>
-              취소
-            </button>
-            <button type="submit" onClick={handleAlbum} ref={closeButtonRef}>
-              저장
-            </button>
+          <div
+            className="modal-content"
+            role="document"
+            tabIndex={-1}
+            ref={modalRef}
+          >
+            <Header className="modal-header" id="modal-select">
+              <h2 tabIndex={0}>새로운 앨범</h2>
+              <p>이 앨범의 이름을 입력해주세요</p>
+              <input
+                type="text"
+                placeholder="이름을 입력해주세요"
+                value={albumName}
+                onChange={(e) => setAlbumName(e.target.value)}
+              />
+              <strong role="alert">{errMessage && `*${errMessage}`}</strong>
+            </Header>
+            <div className="modal-list">
+              <button type="button" onClick={onClose} ref={closeButtonRef}>
+                취소
+              </button>
+              <button type="submit" onClick={handleAlbum} ref={closeButtonRef}>
+                저장
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </ModalOverlay>
     </SelectModal>
   );
