@@ -10,6 +10,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [albumName, setAlbumName] = useState('');
   const [errMessage, setErrMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const addAlbum = useAddAlbum();
 
   useEffect(() => {
@@ -61,18 +62,29 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   }, [onClose]);
 
   const handleAlbum = async () => {
-    if (albumName.trim() === '') {
-      setErrMessage('제목을 입력해 주세요');
-      return;
-    }
-    const result = await addAlbum({ albumName });
-
-    if (!result.success) {
-      setErrMessage(result.error!);
+    if (isSubmitting) {
       return;
     }
 
-    onClose();
+    setIsSubmitting(true);
+
+    try {
+      if (albumName.trim() === '') {
+        setErrMessage('제목을 입력해 주세요');
+        return;
+      }
+
+      const result = await addAlbum({ albumName });
+
+      if (!result.success) {
+        setErrMessage(result.error!);
+        return;
+      }
+
+      onClose();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -105,7 +117,12 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
               <button type="button" onClick={onClose} ref={closeButtonRef}>
                 취소
               </button>
-              <button type="submit" onClick={handleAlbum} ref={closeButtonRef}>
+              <button
+                type="submit"
+                onClick={handleAlbum}
+                ref={closeButtonRef}
+                disabled={isSubmitting}
+              >
                 저장
               </button>
             </div>
