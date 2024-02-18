@@ -17,8 +17,9 @@ const StyledH2 = styled.h2`
     width: 32px;
     background: var(--gray-800);
   }
-  @media (max-width: 744px) {
+  @media (max-width: 1024px) {
     justify-content: start;
+    margin-bottom: 40px;
     &::before,
     &::after {
       display: none;
