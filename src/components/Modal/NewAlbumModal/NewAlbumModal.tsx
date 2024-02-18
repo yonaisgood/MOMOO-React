@@ -43,6 +43,23 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   const handleAlbum = async () => {
     if (albumName.trim() === '') {
       setErrMessage('제목을 입력해 주세요');
