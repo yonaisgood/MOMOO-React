@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Nav from '../components/Nav/Nav';
-import TabBar from '../components/TabBar/TabBar';
+import TabBar from '../components/TapBar/TapBar';
 
 export default function NavRoute() {
   const [clientWitch, setClientWitch] = useState(

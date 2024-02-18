@@ -21,22 +21,22 @@ const StyledNav = styled.nav`
     padding: 0.7rem 1.6rem;
   }
 
-  .navBtn button,
-  .navBtn button .homeLink {
+  .navBtn a {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-  }
-
-  p {
     margin-top: 3px;
     font-size: 0.8rem;
     line-height: 1;
   }
 
-  .navBtn button img {
+  a.curr {
+    color: var(--point-dark-400);
+  }
+
+  .navBtn a img {
     width: 2.2rem;
     height: 2.2rem;
   }
