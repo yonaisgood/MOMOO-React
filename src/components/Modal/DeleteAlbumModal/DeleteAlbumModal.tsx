@@ -119,7 +119,7 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
                 }}
                 placeholder="새로운 앨범명을 입력해주세요"
               />
-              <strong role="alert">{errMessage && `*${errMessage}`}</strong>
+              {errMessage !== '' && <strong role="alert">*{errMessage}</strong>}
               <button type="button" onClick={handleDeleteAlbum}>
                 Delete
                 <img src={DeleteRedImg} alt="휴지통 아이콘" />

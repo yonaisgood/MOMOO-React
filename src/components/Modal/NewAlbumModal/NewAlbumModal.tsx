@@ -111,7 +111,7 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
                 value={albumName}
                 onChange={(e) => setAlbumName(e.target.value)}
               />
-              <strong role="alert">{errMessage && `*${errMessage}`}</strong>
+              {errMessage !== '' && <strong role="alert">*{errMessage}</strong>}
             </Header>
             <div className="modal-list">
               <button type="button" onClick={onClose} ref={closeButtonRef}>
