@@ -69,8 +69,8 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
     setIsSubmitting(true);
 
     try {
-      if (albumName.trim() === '') {
-        setErrMessage('제목을 입력해 주세요');
+      if (albumName.trim().length < 1 || albumName.trim().length > 20) {
+        setErrMessage('1자에서 20자 사이로 입력해 주세요');
         return;
       }
 
