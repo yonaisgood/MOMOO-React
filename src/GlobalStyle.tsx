@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
     --serif : 'Prata', serif;
     --title-font-family : 'Prata', 'Noto Sans', sans-serif;
 
-    font-size: 10px;
+    font-size: 62.5%;
     --title-xl: 5rem;
     --title-l: 3.2rem;
     --title-m: 2.4rem;
