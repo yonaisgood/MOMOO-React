@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useLogout from '../../hooks/useLogout';
+import useEscDialog from '../../hooks/dialog/useEscDialog';
 
 import AlertModal from '../Modal/AlertModal/AlertModal';
 import StyledMyNonModal from './StyledMyNonModal';
@@ -14,7 +15,6 @@ import PolicyIcon from '../../asset/icon/Policy.svg';
 import Github from '../../asset/icon/Github.svg';
 import LogoutIcon from '../../asset/icon/Logout.svg';
 import XIcon from '../../asset/icon/X.svg';
-import { handleEscKey } from '../../utils/dialog';
 
 interface Props {
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,9 +28,7 @@ export default function MyNonModal({ setIsDialogOpen }: Props) {
   const dialogRef = useRef<HTMLDialogElement>();
   const menuFirstItemRef = useRef<HTMLAnchorElement>();
 
-  useEffect(() => {
-    handleEscKey(setIsDialogOpen);
-  }, []);
+  useEscDialog(setIsDialogOpen);
 
   useEffect(() => {
     if (error) {
