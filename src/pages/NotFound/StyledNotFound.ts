@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledError = styled.main`
+const StyledNotFound = styled.main`
   width: 100%;
 
   @media (min-width: 431px) {
@@ -13,4 +13,4 @@ const StyledError = styled.main`
   }
 `;
 
-export default StyledError;
+export default StyledNotFound;
