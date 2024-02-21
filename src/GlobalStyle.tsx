@@ -109,13 +109,9 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
-  dialog {
-    padding: 0;
-    border: none;
-  }
-  
-  dialog::backdrop {
-    display: none;
+   dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   }
 `;
 
