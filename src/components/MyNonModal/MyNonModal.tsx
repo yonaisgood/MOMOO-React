@@ -115,7 +115,7 @@ export default function MyNonModal({ setIsDialogOpen }: Props) {
       )}
       {submitErrMessage && (
         <AlertModal
-          title={submitErrMessage}
+          message={submitErrMessage}
           onClose={() => setSubmitErrMessage('')}
         />
       )}

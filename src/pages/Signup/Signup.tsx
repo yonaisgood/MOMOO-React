@@ -429,13 +429,13 @@ export default function Signup() {
 
         {submitErrMessage && (
           <AlertModal
-            title={submitErrMessage}
+            message={submitErrMessage}
             onClose={() => setSubmitErrMessage('')}
           />
         )}
         {imgErrMessage && (
           <AlertModal
-            title={imgErrMessage}
+            message={imgErrMessage}
             onClose={() => setImgErrMessage('')}
           />
         )}

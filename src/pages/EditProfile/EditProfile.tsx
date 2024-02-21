@@ -395,7 +395,7 @@ export default function EditProfile() {
         )}
         {submitErrMessage && (
           <AlertModal
-            title={submitErrMessage}
+            message={submitErrMessage}
             onClose={() => {
               setSubmitErrMessage('');
               setSelectedBtn('프로필 수정');
@@ -404,7 +404,7 @@ export default function EditProfile() {
         )}
         {imgErrMessage && (
           <AlertModal
-            title={imgErrMessage}
+            message={imgErrMessage}
             onClose={() => setImgErrMessage('')}
           />
         )}
