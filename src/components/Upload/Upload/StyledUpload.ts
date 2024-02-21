@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
-const UploadWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
+const StyledDialog = styled.dialog`
   max-width: 80rem;
   width: 100%;
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
+  border: none;
+  padding: 0;
+  overflow: hidden;
   z-index: 1001;
 
   @media (min-width: 1025px) {
@@ -213,11 +214,12 @@ const CloseBtn = styled.button`
   top: 2rem;
   right: 2rem;
   background-color: transparent;
-  z-index: 101;
+  z-index: 1010;
+  cursor: pointer;
 `;
 
 export {
-  UploadWrapper,
+  StyledDialog,
   MobileCloseBtn,
   UploadHeader,
   UploadContents,

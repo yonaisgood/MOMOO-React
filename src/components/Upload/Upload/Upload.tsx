@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState, useEffect } from 'react';
+import { SyntheticEvent, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { appFireStore, Timestamp } from '../../../firebase/config';
@@ -11,7 +11,6 @@ import useAuthContext from '../../../hooks/useAuthContext';
 import Accordion from '../../Accordion/Accordion';
 import GetAccordionData from '../GetAccordionData';
 import MultipleAccordion from '../../Accordion/MultipleAccordion';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 import Preview from '../../FileUpload/Preview';
 import uploadImageToStorage from '../UploadImageToStorage';
 import KakaoMap from '../../Map/KakaoMap';
@@ -33,9 +32,15 @@ interface AlbumIdData {
 }
 
 function Upload() {
+  const navigate = useNavigate();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const { user } = useAuthContext();
-  const { albumNameListToAdd, setIsUploadModalOpen, setAlbumNameListToAdd } =
-    useUploadContext();
+  const {
+    albumNameListToAdd,
+    isUploadModalOpen,
+    setIsUploadModalOpen,
+    setAlbumNameListToAdd,
+  } = useUploadContext();
 
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
@@ -69,16 +74,37 @@ function Upload() {
     setKakaoMapVisible(!kakaoMapVisible);
   };
 
+  useEffect(() => {
+    if (isUploadModalOpen && dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+  }, [isUploadModalOpen]);
+
   const closeUploadModal = () => {
+    if (dialogRef.current) {
+      dialogRef.current.close();
+    }
     setIsUploadModalOpen(false);
     setAlbumNameListToAdd(albumNameListToAdd.slice(0, 1));
   };
 
+  // 'ESC' 키 이벤트와 `close` 이벤트 리스너를 추가하여 모달 상태를 동기화
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    const handleClose = () => {
+      setIsUploadModalOpen(false);
+    };
+
+    dialog?.addEventListener('close', handleClose);
+
+    return () => {
+      dialog?.removeEventListener('close', handleClose);
+    };
+  }, [setIsUploadModalOpen]);
+
   const handleAddressSelect = (selectedAddress: string) => {
     setSelectedAddress(selectedAddress);
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -150,8 +176,12 @@ function Upload() {
   };
 
   return (
-    <ModalOverlay>
-      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
+    <>
+      <Styled.StyledDialog
+        className={isPending ? 'loading' : ''}
+        ref={dialogRef}
+        aria-labelledby="dialog-label"
+      >
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
           <h2>새 게시물</h2>
@@ -247,11 +277,14 @@ function Upload() {
             </>
           )}
         </Styled.UploadContents>
-      </Styled.UploadWrapper>
-      <Styled.CloseBtn className="closeBtn" onClick={() => closeUploadModal()}>
-        <img src={CloseIcon} alt="닫기버튼" />
-      </Styled.CloseBtn>
-    </ModalOverlay>
+        <Styled.CloseBtn
+          className="closeBtn"
+          onClick={() => closeUploadModal()}
+        >
+          <img src={CloseIcon} alt="닫기버튼" />
+        </Styled.CloseBtn>
+      </Styled.StyledDialog>
+    </>
   );
 }
 
