@@ -14,7 +14,6 @@ interface Profile {
 
 export const useUpdateProfile = () => {
   const [error, setError] = useState<null | string>(null);
-  const { dispatch } = useAuthContext();
   const { user } = useAuthContext();
 
   const setProfile = async ({
@@ -58,7 +57,6 @@ export const useUpdateProfile = () => {
       }
 
       setError(null);
-      dispatch({ type: 'login', payload: user });
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.code);
