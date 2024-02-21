@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
-const StyledMyPopup = styled.div`
-  background: var(--gray-100);
+const StyledMyNonModal = styled.dialog`
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+
+  & > div {
+    position: relative;
+    width: var(--nav-width-pc);
+    background: var(--gray-100);
+  }
 
   .profile {
     padding: 20px 0;
@@ -69,16 +79,16 @@ const StyledMyPopup = styled.div`
   }
 
   @media (min-width: 1025px) {
-    position: absolute;
-    top: 218px;
-    width: 100%;
+    & > div {
+      margin-top: 218px;
+    }
   }
 
   @media (max-width: 1024px) {
-    position: fixed;
-    top: var(--nav-height-tablet);
-    right: 0;
-    width: 252px;
+    & > div {
+      margin: var(--nav-height-tablet) 0 0 auto;
+      width: 252px;
+    }
 
     .profile {
       padding: 15px 0;
@@ -91,4 +101,4 @@ const StyledMyPopup = styled.div`
   }
 `;
 
-export default StyledMyPopup;
+export default StyledMyNonModal;
