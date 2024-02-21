@@ -47,7 +47,13 @@ export default function Signup() {
   const [imgHasFocus, setImgHasFocus] = useState(false);
 
   const { error, signup, isPending } = useSignup();
-  const { file, src, setProfileImage } = useSetProfileImage();
+  const {
+    file,
+    src,
+    setProfileImage,
+    error: imgErrMessage,
+    setError: setImgErrMessage,
+  } = useSetProfileImage();
 
   const prevPath = useSelector(
     (state: RootState) => state.pageReducer.prevPath,
@@ -250,6 +256,9 @@ export default function Signup() {
               id="profile-inp"
               type="file"
               className="a11y-hidden"
+              onClick={(e) =>
+                ((e.currentTarget as HTMLInputElement).value = '')
+              }
               onChange={(e) => {
                 setProfileImage(e.target.files);
                 setProfileImgFiles(e.target.files);
@@ -420,8 +429,14 @@ export default function Signup() {
 
         {submitErrMessage && (
           <AlertModal
-            title={submitErrMessage}
+            message={submitErrMessage}
             onClose={() => setSubmitErrMessage('')}
+          />
+        )}
+        {imgErrMessage && (
+          <AlertModal
+            message={imgErrMessage}
+            onClose={() => setImgErrMessage('')}
           />
         )}
       </StyledSignup>

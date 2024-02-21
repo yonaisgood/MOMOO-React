@@ -62,7 +62,8 @@ export default function EditProfile() {
     setSrc,
     src,
     setProfileImage,
-    error: selectImgError,
+    error: imgErrMessage,
+    setError: setImgErrMessage,
   } = useSetProfileImage();
 
   useEffect(() => {
@@ -70,12 +71,6 @@ export default function EditProfile() {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
-
-  useEffect(() => {
-    if (selectImgError) {
-      setSubmitErrMessage(selectImgError);
-    }
-  }, [selectImgError]);
 
   useEffect(() => {
     setSubmitErrMessage('');
@@ -287,7 +282,10 @@ export default function EditProfile() {
               id="profile-inp"
               type="file"
               className="a11y-hidden"
-              onChange={setProfileImage}
+              onClick={(e) =>
+                ((e.currentTarget as HTMLInputElement).value = '')
+              }
+              onChange={(e) => setProfileImage(e.target.files)}
               onFocus={() => setImgHasFocus(true)}
               onBlur={() => setImgHasFocus(false)}
             />
@@ -397,11 +395,17 @@ export default function EditProfile() {
         )}
         {submitErrMessage && (
           <AlertModal
-            title={submitErrMessage}
+            message={submitErrMessage}
             onClose={() => {
               setSubmitErrMessage('');
               setSelectedBtn('프로필 수정');
             }}
+          />
+        )}
+        {imgErrMessage && (
+          <AlertModal
+            message={imgErrMessage}
+            onClose={() => setImgErrMessage('')}
           />
         )}
       </StyledEditProfile>

@@ -87,7 +87,7 @@ export default function My() {
 
         {submitErrMessage && (
           <AlertModal
-            title={submitErrMessage}
+            message={submitErrMessage}
             onClose={() => setSubmitErrMessage('')}
           />
         )}

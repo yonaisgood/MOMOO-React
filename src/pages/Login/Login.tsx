@@ -152,7 +152,7 @@ export default function Login() {
 
         {submitErrMessage && (
           <AlertModal
-            title={submitErrMessage}
+            message={submitErrMessage}
             onClose={() => setSubmitErrMessage('')}
           />
         )}
