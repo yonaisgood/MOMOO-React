@@ -5,13 +5,13 @@ import useAuthContext from '../hooks/useAuthContext';
 
 import Terms from '../pages/Policy/Terms';
 import PrivacyPolicy from '../pages/Policy/PrivacyPolicy';
-import Login from '../pages/Login';
+import Login from '../pages/Login/Login';
 import Signup from '../pages/Signup/Signup';
 import Home from '../pages/Home/Home';
 import Album from '../pages/Album/Album';
 import Detail from '../pages/Detail/Detail';
 import My from '../pages/My/My';
-import Setting from '../pages/Setting/Setting';
+import EditProfile from '../pages/EditProfile/EditProfile';
 import NavRoute from './NavRoute';
 import { AuthRoute, NonAuthRoute } from './AuthRoute';
 import StaticSplash from '../pages/Splash/StaticSplash';
@@ -61,7 +61,7 @@ export default function Router() {
                   {clientWitch <= 430 && (
                     <Route path="/edit/:id" element={<Edit />}></Route>
                   )}
-                  <Route path="/setting" element={<Setting />}></Route>
+                  <Route path="/edit-profile" element={<EditProfile />}></Route>
                 </Route>
               </Route>
 

@@ -201,7 +201,7 @@ function Upload() {
                 <div className="inputWrapper">
                   <input
                     type="text"
-                    placeholder="제목을 입력해주세요"
+                    placeholder="제목을 입력해 주세요 (필수)"
                     value={title}
                     onChange={(e) => {
                       setTitle(e.target.value);
@@ -219,7 +219,7 @@ function Upload() {
                     onChange={(e) => {
                       setText(e.target.value);
                     }}
-                    placeholder="문구를 입력해주세요..."
+                    placeholder="문구를 입력해 주세요"
                   ></textarea>
                 </form>
                 <Styled.LocationContents onClick={toggleKakaoMap}>

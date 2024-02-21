@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { RootState } from '../../modules/index.ts';
+import { setPrevPath } from '../../modules/pageReducer.ts';
 
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
@@ -14,11 +18,25 @@ export default function Terms() {
     document.documentElement.clientWidth,
   );
 
+  const prevPath = useSelector(
+    (state: RootState) => state.pageReducer.prevPath,
+  );
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
+
+  useEffect(() => {
+    if (prevPath === 'signup') {
+      window.onpopstate = function () {
+        dispatch(setPrevPath('terms'));
+      };
+    }
+  }, [prevPath]);
 
   return (
     <>
@@ -50,10 +68,10 @@ export default function Terms() {
         )}
         <section>
           <ol>
-            {terms.map((v) => {
+            {terms.map((v, i) => {
               if (typeof v.text === 'string') {
                 return (
-                  <li>
+                  <li key={i}>
                     <h4>{v.title}</h4>
                     <p>{v.text}</p>
                   </li>
