@@ -35,8 +35,12 @@ function Upload() {
   const navigate = useNavigate();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const { user } = useAuthContext();
-  const { albumNameListToAdd, isUploadModalOpen, setIsUploadModalOpen } =
-    useUploadContext();
+  const {
+    albumNameListToAdd,
+    isUploadModalOpen,
+    setIsUploadModalOpen,
+    setAlbumNameListToAdd,
+  } = useUploadContext();
 
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
@@ -81,6 +85,7 @@ function Upload() {
       dialogRef.current.close();
     }
     setIsUploadModalOpen(false);
+    setAlbumNameListToAdd(albumNameListToAdd.slice(0, 1));
   };
 
   // 'ESC' 키 이벤트와 `close` 이벤트 리스너를 추가하여 모달 상태를 동기화
