@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 
-import useAuthContext from '../../hooks/useAuthContext';
-
 import StyledSplash from './StyledSplash';
 
 import SplashIcon from '../../asset/icon/SplashLogo.svg';
@@ -11,15 +9,11 @@ export default function Splash({
 }: {
   setSplashRended: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { isAuthReady } = useAuthContext();
-
   useEffect(() => {
     setTimeout(() => {
-      if (isAuthReady) {
-        setSplashRended(true);
-      }
+      setSplashRended(true);
     }, 1700);
-  }, [isAuthReady]);
+  }, []);
 
   return (
     <StyledSplash>
