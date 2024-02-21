@@ -111,7 +111,6 @@ const GlobalStyle = createGlobalStyle`
 
    dialog::backdrop {
   background: rgba(0, 0, 0, 0.5);
-  /* backdrop-filter: blur(5px); */
   }
 `;
 
