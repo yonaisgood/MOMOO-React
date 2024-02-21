@@ -105,8 +105,8 @@ const SelectPart = styled.section`
   }
 
   .uploadInfo {
-    border-bottom: 1px solid var(--gray-200);
     height: 11.4rem;
+    position: relative;
 
     textarea {
       width: 100%;
@@ -117,6 +117,15 @@ const SelectPart = styled.section`
       border: none;
       font-size: var(--text-m);
       resize: none;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .countText {
+      width: calc(100% - 1.6rem);
+      background-color: var(--background-color);
+      text-align: right;
+      position: absolute;
+      bottom: 0.1rem;
     }
   }
 

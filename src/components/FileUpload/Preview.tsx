@@ -3,7 +3,7 @@ import { useState, SetStateAction, Dispatch, useEffect } from 'react';
 import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 import * as Styled from './StyledPreview';
 
-import ImgUpload from '../../asset/icon/ImgUpload.svg';
+import ImgUpload from '../../asset/icon/Add-L-White.svg';
 import ArrowWhite from '../../asset/icon/Arrow-White.svg';
 
 const Preview = ({
@@ -79,11 +79,19 @@ const Preview = ({
   return (
     <>
       <Styled.PreviewSection>
-        <label htmlFor="file">
-          <div className="btnUpload">
-            <img src={ImgUpload} alt="사진 업로드 버튼" />
-          </div>
-        </label>
+        {imageList.length === 0 && (
+          <label htmlFor="file">
+            <div className="uploadText">
+              <p>사진을 선택해 주세요(필수)</p>
+              <span>*3장까지 업로드 가능</span>
+              <img
+                src={ImgUpload}
+                alt="사진 업로드 버튼"
+                className="btnUpload"
+              />
+            </div>
+          </label>
+        )}
         <input
           accept="image/*"
           multiple

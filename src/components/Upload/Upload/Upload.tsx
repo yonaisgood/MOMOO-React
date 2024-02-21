@@ -46,6 +46,7 @@ function Upload() {
   const [kakaoMapVisible, setKakaoMapVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
+  let [inputCount, setInputCount] = useState(0);
   const [selectedAddress, setSelectedAddress] = useState('');
   const [selectedWeatherImage, setSelectedWeatherImage] = useState<string>('');
   const [selectedEmotionImage, setSelectedEmotionImage] = useState<string>('');
@@ -73,6 +74,10 @@ function Upload() {
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
+  };
+
+  const onInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputCount(e.target.value.length);
   };
 
   useEffect(() => {
@@ -205,7 +210,7 @@ function Upload() {
                   <div className="inputWrapper">
                     <input
                       type="text"
-                      placeholder="제목을 입력해주세요"
+                      placeholder="제목을 입력해주세요 (필수)"
                       value={title}
                       onChange={(e) => {
                         setTitle(e.target.value);
@@ -222,9 +227,13 @@ function Upload() {
                       value={text}
                       onChange={(e) => {
                         setText(e.target.value);
+                        onInputHandler(e);
                       }}
-                      placeholder="문구를 입력해주세요..."
+                      placeholder="문구를 입력해주세요"
                     ></textarea>
+                    <div className="countText">
+                      <span>{inputCount}</span> / 1000 자
+                    </div>
                   </form>
                   <Styled.LocationContents onClick={toggleKakaoMap}>
                     <div className="locationHead">
