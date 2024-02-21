@@ -39,7 +39,7 @@ const GlobalStyle = createGlobalStyle`
     --gray-800:#393939;
     --gray-900:#1F1F1F;
 
-    --error-color: #DE3F35;
+--error-color: #DE3F35;
 
     --serif : 'Prata', serif;
     --title-font-family : 'Prata', 'Noto Sans', sans-serif;
@@ -100,9 +100,14 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+  
+  dialog {
+    padding: 0;
+    border: none;
+  }
 
-   dialog::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
   }
 `;
 
