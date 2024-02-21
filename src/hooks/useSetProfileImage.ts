@@ -19,7 +19,7 @@ export default function useSetProfileImage() {
       return;
     }
 
-    if (fileToChange.size > 1 * 1024 * 1024) {
+    if (fileToChange.size > 10 * 1024 * 1024) {
       setError('이미지 용량은 10MB 이내로 등록 가능합니다.');
       return;
     }
