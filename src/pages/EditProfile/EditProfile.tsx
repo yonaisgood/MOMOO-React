@@ -282,6 +282,9 @@ export default function EditProfile() {
               id="profile-inp"
               type="file"
               className="a11y-hidden"
+              onClick={(e) =>
+                ((e.currentTarget as HTMLInputElement).value = '')
+              }
               onChange={(e) => setProfileImage(e.target.files)}
               onFocus={() => setImgHasFocus(true)}
               onBlur={() => setImgHasFocus(false)}

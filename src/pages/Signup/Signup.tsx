@@ -256,6 +256,9 @@ export default function Signup() {
               id="profile-inp"
               type="file"
               className="a11y-hidden"
+              onClick={(e) =>
+                ((e.currentTarget as HTMLInputElement).value = '')
+              }
               onChange={(e) => {
                 setProfileImage(e.target.files);
                 setProfileImgFiles(e.target.files);
