@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import StyledAuth from '../../components/CommonStyled/StyledAuth';
 
-const StyledSetting = styled(StyledAuth)`
+const StyledEditProfile = styled(StyledAuth)`
   article {
     justify-content: flex-start;
 
@@ -88,4 +88,4 @@ const StyledSetting = styled(StyledAuth)`
   }
 `;
 
-export default StyledSetting;
+export default StyledEditProfile;

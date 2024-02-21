@@ -3,10 +3,10 @@ import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 import { useRef } from 'react';
 
 export default function AlertModal({
-  title,
+  message,
   onClose,
 }: {
-  title: string;
+  message: string;
   onClose: () => void;
 }) {
   const dialogRef = useRef<HTMLDialogElement>();
@@ -22,7 +22,7 @@ export default function AlertModal({
         }}
         aria-labelledby="dialog-label"
       >
-        <h3 id="dialog-label">{title}</h3>
+        <p id="dialog-label">{message}</p>
         <button type="button" onClick={onClose}>
           확인
         </button>

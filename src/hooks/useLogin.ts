@@ -2,26 +2,18 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-import useAuthContext from './useAuthContext';
-
 import { appAuth } from '../firebase/config';
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, setPending] = useState(false);
-  const { dispatch } = useAuthContext();
 
   const login = async (email: string, password: string) => {
     setError(null);
     setPending(true);
 
     try {
-      const { user } = await signInWithEmailAndPassword(
-        appAuth,
-        email,
-        password,
-      );
-      dispatch({ type: 'login', payload: user });
+      await signInWithEmailAndPassword(appAuth, email, password);
       setError(null);
     } catch (err) {
       if (err instanceof FirebaseError) {

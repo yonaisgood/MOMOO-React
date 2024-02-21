@@ -143,7 +143,7 @@ const Preview = ({
 
       {submitErrMessage && (
         <AlertModal
-          title={submitErrMessage}
+          message={submitErrMessage}
           onClose={() => setSubmitErrMessage('')}
         />
       )}

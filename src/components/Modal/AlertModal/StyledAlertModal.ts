@@ -6,7 +6,7 @@ const StyledAlertModal = styled.dialog`
   border-radius: 1rem;
   background: var(--background-color);
 
-  h3 {
+  p {
     padding: 22px 30px;
     font-size: var(--text-l);
     word-break: keep-all;
