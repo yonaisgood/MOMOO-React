@@ -47,7 +47,13 @@ export default function Signup() {
   const [imgHasFocus, setImgHasFocus] = useState(false);
 
   const { error, signup, isPending } = useSignup();
-  const { file, src, setProfileImage } = useSetProfileImage();
+  const {
+    file,
+    src,
+    setProfileImage,
+    error: imgErrMessage,
+    setError: setImgErrMessage,
+  } = useSetProfileImage();
 
   const prevPath = useSelector(
     (state: RootState) => state.pageReducer.prevPath,
@@ -422,6 +428,12 @@ export default function Signup() {
           <AlertModal
             title={submitErrMessage}
             onClose={() => setSubmitErrMessage('')}
+          />
+        )}
+        {imgErrMessage && (
+          <AlertModal
+            title={imgErrMessage}
+            onClose={() => setImgErrMessage('')}
           />
         )}
       </StyledSignup>

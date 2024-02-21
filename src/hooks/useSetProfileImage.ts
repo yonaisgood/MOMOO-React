@@ -40,5 +40,5 @@ export default function useSetProfileImage() {
     });
   };
 
-  return { setProfileImage, file, setFile, src, setSrc, error };
+  return { setProfileImage, file, setFile, src, setSrc, error, setError };
 }
