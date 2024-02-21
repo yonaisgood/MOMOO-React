@@ -19,15 +19,15 @@ const GlobalStyle = createGlobalStyle`
     --background-color:#F8F8F8;
 
     --point-light-100:#ddedf0;
---point-color:#A9D3D9;
---point-dark-100:#6eb7c0;
---point-dark-200:#249ca7;
---point-dark-300:#008893;
---point-dark-400:#00757e;
---point-dark-500:#006a71;
---point-dark-600:#005b61;
---point-dark-700:#004c51;
---point-dark-800:#003233;
+    --point-color:#A9D3D9;
+    --point-dark-100:#6eb7c0;
+    --point-dark-200:#249ca7;
+    --point-dark-300:#008893;
+    --point-dark-400:#00757e;
+    --point-dark-500:#006a71;
+    --point-dark-600:#005b61;
+    --point-dark-700:#004c51;
+    --point-dark-800:#003233;
 
     --gray-100:#EBEBEB;
     --gray-200:#D2D2D2;
