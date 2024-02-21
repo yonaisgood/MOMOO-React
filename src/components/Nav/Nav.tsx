@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import useUploadContext from '../../hooks/useUploadContext';
 
-import MyPopup from '../MyPopup/MyPopup';
+import MyNonModal from '../MyNonModal/MyNonModal';
 import StyledNav from './StyledNav';
 
 import HomeImg from '../../asset/icon/HomePc.svg';
@@ -13,7 +13,7 @@ import UploadImg from '../../asset/icon/UploadPc.svg';
 import MypageImg from '../../asset/icon/ProfilePc.svg';
 
 export default function Nav() {
-  const [openMyModal, setOpenMyModal] = useState(false);
+  const [openMyDialog, setIsOpenMyDialog] = useState(false);
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
@@ -29,8 +29,8 @@ export default function Nav() {
     setIsUploadModalOpen(true);
   };
 
-  const openMyModalFunc = () => {
-    setOpenMyModal(true);
+  const openMyDialogFunc = () => {
+    setIsOpenMyDialog(true);
   };
 
   return (
@@ -51,7 +51,7 @@ export default function Nav() {
             <img src={UploadImg} alt="업로드 아이콘" />
             <p>Upload</p>
           </button>
-          <button type="button" className="my" onClick={openMyModalFunc}>
+          <button type="button" className="my" onClick={openMyDialogFunc}>
             <img src={MypageImg} alt="마이페이지 아이콘" />
             <p>Mypage</p>
           </button>
@@ -64,7 +64,7 @@ export default function Nav() {
             alt="로고이미지"
           />
         </Link>
-        {openMyModal && <MyPopup setOpenPopup={setOpenMyModal} />}
+        {openMyDialog && <MyNonModal setIsDialogOpen={setIsOpenMyDialog} />}
       </StyledNav>
     </>
   );

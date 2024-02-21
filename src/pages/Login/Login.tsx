@@ -2,15 +2,15 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import { useLogin } from '../hooks/useLogin';
+import { useLogin } from '../../hooks/useLogin';
 
-import Button from '../components/Button/Button/Button';
-import StyledInput from '../components/CommonStyled/StyledInput';
-import StyledAuth from '../components/CommonStyled/StyledAuth';
-import AlertModal from '../components/Modal/AlertModal/AlertModal';
+import Button from '../../components/Button/Button/Button';
+import StyledInput from '../../components/CommonStyled/StyledInput';
+import StyledLogin from './StyledLogin';
+import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 
-import Logo from '../asset/icon/Logo.svg';
-import LoadingIcon from '../asset/icon/LoadingBlack.svg';
+import Logo from '../../asset/icon/Logo.svg';
+import LoadingIcon from '../../asset/icon/LoadingBlack.svg';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -103,19 +103,12 @@ export default function Login() {
         <title>Login | MOMOO</title>
       </Helmet>
 
-      <StyledAuth>
+      <StyledLogin>
         <div className="container">
           {clientWitch <= 430 && (
-            <>
-              <h1>
-                <img src={Logo} alt="로고" />
-              </h1>
-              <p>
-                안녕하세요.
-                <br />
-                MOMOO 입니다.
-              </p>
-            </>
+            <h1>
+              <img src={Logo} alt="로고" />
+            </h1>
           )}
           <article>
             <h2>Login</h2>
@@ -149,7 +142,7 @@ export default function Login() {
               {passwordErrMessage ? `*${passwordErrMessage}` : ''}
             </strong>
             <Button
-              size={clientWitch > 1024 ? 'l' : 's'}
+              size={clientWitch > 1024 ? 'l' : 'm'}
               disabled={!emailValid || !passwordValid || isPending}
             >
               {isPending ? <img src={LoadingIcon} alt="로그인 중" /> : 'Login'}
@@ -163,7 +156,7 @@ export default function Login() {
             onClose={() => setSubmitErrMessage('')}
           />
         )}
-      </StyledAuth>
+      </StyledLogin>
     </>
   );
 }

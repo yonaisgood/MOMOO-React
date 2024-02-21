@@ -13,7 +13,7 @@ import TopBar from '../../components/Topbar/Topbar';
 import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 import ReauthModal from './ReauthModal';
 import DeleteIdModal from './DeleteIdModal';
-import StyledSetting from './StyledSetting';
+import StyledEditProfile from './StyledEditProfile';
 
 import ProfileBasicImg from '../../asset/image/profile-basic-img.svg';
 import EditCircle from '../../asset/icon/EditCircle.svg';
@@ -27,7 +27,7 @@ interface Profile {
   password: string | null;
 }
 
-export default function Setting() {
+export default function EditProfile() {
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,7 +38,7 @@ export default function Setting() {
     useState('');
   const [submitErrMessage, setSubmitErrMessage] = useState('');
   const [disabledEditButton, setDisabledEditButton] = useState(true);
-  const [selectedBtn, setSelectedBtn] = useState('프로필 설정');
+  const [selectedBtn, setSelectedBtn] = useState('프로필 수정');
   const [isDeleteIdModalOpen, setIsDeleteIdModalOpen] = useState(false);
   const [isReauthForDeleteIdModalOpen, setIsReauthForDeleteIdModalOpen] =
     useState(false);
@@ -52,6 +52,8 @@ export default function Setting() {
     document.documentElement.clientWidth,
   );
   const [updateProfileIsPending, setUpdateProfileIsPending] = useState(false);
+  const [imgHasFocus, setImgHasFocus] = useState(false);
+
   const { user } = useAuthContext();
   const { setProfile, error: updateProfileError } = useUpdateProfile();
 
@@ -231,16 +233,16 @@ export default function Setting() {
   return (
     <>
       <Helmet>
-        <title>Setting | MOMOO</title>
+        <title>Edit profile | MOMOO</title>
       </Helmet>
 
-      {clientWitch <= 430 && <TopBar tit="Setting" />}
-      <StyledSetting>
+      {clientWitch <= 430 && <TopBar tit="Edit profile" />}
+      <StyledEditProfile>
         {clientWitch > 1024 && (
           <Breadcrumb
             navList={[
               { path: '/', text: 'Home' },
-              { path: '/setting', text: 'Setting' },
+              { path: '/edit-profile', text: 'Edit profile' },
             ]}
           />
         )}
@@ -248,21 +250,21 @@ export default function Setting() {
           <BreadcrumbWrap
             navList={[
               { path: '/', text: 'Home' },
-              { path: '/setting', text: 'Setting' },
+              { path: '/edit-profile', text: 'Edit profile' },
             ]}
-            title="Setting"
+            title="Edit profile"
           />
         )}
         <div className="container">
           {clientWitch > 430 && (
             <article>
-              {clientWitch > 1024 && <h2>Setting</h2>}
+              {clientWitch > 1024 && <h2>Edit profile</h2>}
               <button
                 type="button"
-                className={selectedBtn === '프로필 설정' ? 'selected' : ''}
-                onClick={() => setSelectedBtn('프로필 설정')}
+                className={selectedBtn === '프로필 수정' ? 'selected' : ''}
+                onClick={() => setSelectedBtn('프로필 수정')}
               >
-                프로필 설정
+                프로필 수정
               </button>
               <button
                 type="button"
@@ -274,7 +276,10 @@ export default function Setting() {
             </article>
           )}
           <form onSubmit={updateProfile}>
-            <label htmlFor="profile-inp" className="profile">
+            <label
+              htmlFor="profile-inp"
+              className={imgHasFocus ? 'profile focus' : 'profile'}
+            >
               <img src={src || ProfileBasicImg} alt="프로필 사진" />
               <img src={EditCircle} alt="변경하기" />
             </label>
@@ -283,6 +288,8 @@ export default function Setting() {
               type="file"
               className="a11y-hidden"
               onChange={setProfileImage}
+              onFocus={() => setImgHasFocus(true)}
+              onBlur={() => setImgHasFocus(false)}
             />
 
             <label htmlFor="username-inp" className="a11y-hidden">
@@ -340,7 +347,7 @@ export default function Setting() {
               {passwordConfirmErrMessage && `*${passwordConfirmErrMessage}`}
             </strong>
             <Button
-              size={clientWitch > 1024 ? 'l' : 's'}
+              size={clientWitch > 1024 ? 'l' : 'm'}
               disabled={disabledEditButton}
             >
               {updateProfileIsPending ? (
@@ -362,7 +369,7 @@ export default function Setting() {
           <DeleteIdModal
             onClose={() => {
               setIsDeleteIdModalOpen(false);
-              setSelectedBtn('프로필 설정');
+              setSelectedBtn('프로필 수정');
             }}
             setIsModalOpen={setIsDeleteIdModalOpen}
             setSubmitErrMessage={setSubmitErrMessage}
@@ -384,7 +391,7 @@ export default function Setting() {
             setIsReauthSuccess={setReadyToDeleteId}
             cancel={() => {
               setIsReauthForDeleteIdModalOpen(false);
-              setSelectedBtn('프로필 설정');
+              setSelectedBtn('프로필 수정');
             }}
           />
         )}
@@ -393,11 +400,11 @@ export default function Setting() {
             title={submitErrMessage}
             onClose={() => {
               setSubmitErrMessage('');
-              setSelectedBtn('프로필 설정');
+              setSelectedBtn('프로필 수정');
             }}
           />
         )}
-      </StyledSetting>
+      </StyledEditProfile>
     </>
   );
 }

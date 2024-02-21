@@ -56,6 +56,8 @@ const StyledSignup = styled(StyledAuth)<Props>`
   }
 
   @media (max-width: 430px) {
+    padding-bottom: calc(57px + 15px); // 57px - signup button
+
     .agree {
       margin-top: 15px;
       padding: 14px 20px;
