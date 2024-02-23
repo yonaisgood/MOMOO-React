@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const SelectModal = styled.div`
+const SelectModal = styled.dialog`
+  border-radius: 10px;
+  overflow: hidden;
+
   .modal-content {
     background: var(--background-color);
-    border-radius: 10px;
     width: 30rem;
     font-size: var(--text-l);
-    overflow: hidden;
     position: relative;
   }
 
