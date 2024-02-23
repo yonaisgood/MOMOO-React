@@ -17,20 +17,27 @@ const StyledDialog = styled.dialog`
     right: 1.6rem;
   }
 
+  .modal-list {
+    margin-bottom: 0.6rem;
+  }
+
   .modal-list button {
     text-align: start;
     width: 100%;
-    border-bottom: 1px solid var(--gray-200);
     padding: 1.3rem 1.6rem;
     font-size: var(--text-m);
     transition: all 0.2s ease-in-out;
   }
-  .modal-list button:last-child {
-    margin-bottom: 0.6rem;
-    border: none;
+
+  .modal-list li + li {
+    border-top: 1px solid var(--gray-200);
   }
 
   .modal-list button:hover {
+    background: var(--point-light-100);
+  }
+
+  .modal-list button:active {
     background: var(--point-color);
   }
 `;

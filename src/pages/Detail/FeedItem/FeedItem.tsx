@@ -9,7 +9,7 @@ import useAuthContext from '../../../hooks/useAuthContext';
 import ChangeAlbumModal from '../../../components/Modal/ChangeAlbumModal/ChangeAlbumModal';
 import GetAccordionData from '../../../components/Upload/GetAccordionData';
 import DeleteFeedModal from './DeleteFeedModal';
-import MoreModal from './MoreModal';
+import FeedMoreModal from './FeedMoreModal';
 import Carousel from '../../../components/Carousel/Carousel';
 import LoadingComponent from '../../../components/Loading/LoadingComponent';
 import StyledFeedItem from './StyledFeedItem';
@@ -145,7 +145,7 @@ export default function FeedItem() {
             {time.replace(/-/gi, '.')}
           </time>
           {isModalOpen && (
-            <MoreModal
+            <FeedMoreModal
               setDeleteModalOpen={setDeleteModalOpen}
               setChangeAlbumModalOpen={setChangeAlbumModalOpen}
               closeModal={closeMoreModal}
