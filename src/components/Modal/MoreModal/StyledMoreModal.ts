@@ -3,10 +3,10 @@ import styled from 'styled-components';
 const StyledDialog = styled.dialog`
   border-radius: 10px;
   overflow: hidden;
+  background: var(--background-color);
 
   .modal-content {
-    background: var(--background-color);
-    width: 30rem;
+    width: 28rem;
     font-size: var(--text-l);
     position: relative;
   }
