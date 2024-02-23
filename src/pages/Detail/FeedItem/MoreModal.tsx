@@ -5,9 +5,9 @@ import useEscDialog from '../../../hooks/dialog/useEscDialog';
 import useShowModal from '../../../hooks/dialog/useShowModal';
 
 import {
-  SelectModal,
+  StyledDialog,
   Header,
-} from '../../../components/Modal/StyledSelectModal';
+} from '../../../components/Modal/StyledMoreModal';
 
 import Close from '../../../asset/icon/X-Small.svg';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,11 +19,11 @@ interface Props {
   setChangeAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Modal = ({
+export default function MoreModal({
   closeModal,
   setDeleteModalOpen,
   setChangeAlbumModalOpen,
-}: Props) => {
+}: Props) {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
@@ -69,7 +69,7 @@ const Modal = ({
   };
 
   return (
-    <SelectModal
+    <StyledDialog
       aria-labelledby="modal-select"
       ref={showModal}
       onClick={(e) => closeDialogOnClick(e, closeModal)}
@@ -93,8 +93,6 @@ const Modal = ({
           <img src={Close} alt="모달 닫기 버튼" />
         </button>
       </div>
-    </SelectModal>
+    </StyledDialog>
   );
-};
-
-export default Modal;
+}

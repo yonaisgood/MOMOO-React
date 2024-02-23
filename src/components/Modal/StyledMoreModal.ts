@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SelectModal = styled.dialog`
+const StyledDialog = styled.dialog`
   border-radius: 10px;
   overflow: hidden;
 
@@ -41,4 +41,4 @@ const Header = styled.header`
   text-align: center;
 `;
 
-export { SelectModal, Header };
+export { StyledDialog, Header };
