@@ -48,15 +48,18 @@ const StyledHomeSection = styled.section`
         brightness(113%) contrast(84%);
     }
   }
-  ul {
+
+  & > ul {
     display: flex;
     flex-direction: column;
     gap: 5.5rem;
+
+    & > li {
+      width: 100%;
+      aspect-ratio: 3/4;
+    }
   }
-  li {
-    width: 100%;
-    aspect-ratio: 3/4;
-  }
+
   .array-modal {
     position: absolute;
     top: 22%;
@@ -68,14 +71,17 @@ const StyledHomeSection = styled.section`
     .album-title {
       margin-top: 5.9rem;
     }
-    ul {
+
+    & > ul {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 4rem 1.6rem;
+
+      & > li {
+        flex-shrink: 0;
+      }
     }
-    li {
-      flex-shrink: 0;
-    }
+
     .btn-wrap {
       margin: 0 0 1.1rem;
     }
@@ -89,7 +95,7 @@ const StyledHomeSection = styled.section`
     }
   }
   @media (max-width: 430px) {
-    ul {
+    & > ul {
       display: flex;
     }
     .array-modal {
