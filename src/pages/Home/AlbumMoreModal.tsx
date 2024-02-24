@@ -2,22 +2,22 @@ import MoreModal from '../../components/Modal/MoreModal/MoreModal';
 
 interface Props {
   closeModal: () => void;
-  setEditAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSharingModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEditAlbumModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSharingModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function AlbumMoreModal({
   closeModal,
-  setEditAlbumModalOpen,
-  setSharingModalOpen,
+  setIsEditAlbumModalOpen,
+  setIsSharingModalOpen,
 }: Props) {
   const openEditAlbumModal = () => {
-    setEditAlbumModalOpen(true);
+    setIsEditAlbumModalOpen(true);
     closeModal();
   };
 
   const openSharingModalOpen = () => {
-    setSharingModalOpen(true);
+    setIsSharingModalOpen(true);
     closeModal();
   };
 

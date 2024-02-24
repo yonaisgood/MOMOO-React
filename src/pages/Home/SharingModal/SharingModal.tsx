@@ -1,32 +1,25 @@
-// import useEscDialog from '../../../hooks/dialog/useEscDialog';
-// import useShowModal from '../../../hooks/dialog/useShowModal';
+import useEscDialog from '../../../hooks/dialog/useEscDialog';
+import useShowModal from '../../../hooks/dialog/useShowModal';
 
 import { StyledSharingModal, DialogTitle } from './StyledSharingModal';
 
-// import { closeDialogOnClick } from '../../../utils/dialog';
+import { closeDialogOnClick } from '../../../utils/dialog';
 
 import Close from '../../../asset/icon/X-Small.svg';
-import { useRef } from 'react';
 
 interface Props {
   closeModal: () => void;
 }
 
 export default function SharingModal({ closeModal }: Props) {
-  // const { showModal } = useShowModal();
-  // useEscDialog(closeModal);
-  const ref = useRef<HTMLDialogElement | null>(null);
+  const { showModal } = useShowModal();
+  useEscDialog(closeModal);
+
   return (
     <StyledSharingModal
       aria-labelledby="modal"
-      ref={(node) => {
-        if (node && !ref.current) {
-          ref.current = node;
-          node.showModal();
-        }
-      }}
-      // ref={showModal}
-      // onClick={(e) => closeDialogOnClick(e, closeModal)}
+      onClick={(e) => closeDialogOnClick(e, closeModal)}
+      ref={showModal}
     >
       <div>
         <DialogTitle>공유</DialogTitle>
