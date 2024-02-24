@@ -88,7 +88,7 @@ const StyledHomeSection = styled.section`
     .btn-wrap button {
       width: 3rem;
       height: 3rem;
-      background-color: inherit;
+      /* background-color: inherit; */
     }
     .array-modal {
       top: 26%;
