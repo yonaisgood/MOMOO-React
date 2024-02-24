@@ -57,6 +57,7 @@ const Header = styled.header`
     font-size: var(--text-s);
     line-height: 1;
     color: var(--error-color);
+    text-align: start;
   }
 `;
 

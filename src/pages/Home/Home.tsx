@@ -67,10 +67,10 @@ export default function Home() {
             {(selectedOption === 'oldest'
               ? albumDataList
               : latestAlbumList
-            ).map((v) => {
+            ).map((v, index) => {
               return (
                 <li key={v.createdTime}>
-                  <Album albumData={v} />
+                  <Album albumData={v} showDeleteButton={index !== 0} />
                 </li>
               );
             })}

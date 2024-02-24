@@ -9,9 +9,10 @@ import { AlbumContainer, AlbumLink } from './StyledAlbum';
 
 interface AlbumProps {
   albumData: DocumentData;
+  showDeleteButton: Boolean;
 }
 
-const Album: React.FC<AlbumProps> = ({ albumData }) => {
+const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isEditAlbumModalOpen, setIsEditAlbumModalOpen] = useState(false);
   // const [isSharingModalOpen, setIsSharingModalOpen] = useState(false);
@@ -45,7 +46,7 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
             <p className="albumCount">{albumData.feedList.length}</p>
-            <button type="button" onClick={HandleModal} />
+            {showDeleteButton && <button type="button" onClick={HandleModal} />}
           </div>
         </div>
       </AlbumLink>
