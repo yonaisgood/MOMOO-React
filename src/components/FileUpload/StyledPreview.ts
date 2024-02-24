@@ -49,12 +49,28 @@ const PreviewSection = styled.section`
   aspect-ratio: 1/1;
   position: relative;
 
-  .btnUpload {
-    width: 3.4rem;
-    height: 3.4rem;
+  .uploadText {
     position: absolute;
-    bottom: 5.4rem;
-    right: 2.4rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+
+    p {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .btnUpload {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: 24px auto 0;
     cursor: pointer;
   }
 

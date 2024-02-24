@@ -18,24 +18,16 @@ const GlobalStyle = createGlobalStyle`
     --primary-color:#121212;
     --background-color:#F8F8F8;
 
-    --point-light-200:#F0F7F8;
-    --point-light-100:#CCE5E9;
+    --point-light-100:#ddedf0;
     --point-color:#A9D3D9;
-    --point-dark-100:#86C1C9;
-    --point-dark-200:#62AFBA;
-    --point-dark-300:#4796A2;
-    --point-dark-400:#38757E;
-    --point-dark-500:#28545B;
-    --point-dark-600:#193437;
-
-    --point-desaturate-100:#E3E9EA;
-    --point-desaturate-200:#C6D2D4;
-    --point-desaturate-300:#A9BBBE;
-    --point-desaturate-400:#8CA4A8;
-    --point-desaturate-500:#6F8D92;
-    --point-desaturate-600:#597175;
-    --point-desaturate-700:#435558;
-    --point-desaturate-800:#2D393B;
+    --point-dark-100:#6eb7c0;
+    --point-dark-200:#249ca7;
+    --point-dark-300:#008893;
+    --point-dark-400:#00757e;
+    --point-dark-500:#006a71;
+    --point-dark-600:#005b61;
+    --point-dark-700:#004c51;
+    --point-dark-800:#003233;
 
     --gray-100:#EBEBEB;
     --gray-200:#D2D2D2;
@@ -47,12 +39,12 @@ const GlobalStyle = createGlobalStyle`
     --gray-800:#393939;
     --gray-900:#1F1F1F;
 
-    --error-color: #DE3F35;
+--error-color: #DE3F35;
 
     --serif : 'Prata', serif;
     --title-font-family : 'Prata', 'Noto Sans', sans-serif;
 
-    font-size: 10px;
+    font-size: 62.5%;
     --title-xl: 5rem;
     --title-l: 3.2rem;
     --title-m: 2.4rem;
@@ -108,14 +100,14 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
-
+  
   dialog {
     padding: 0;
     border: none;
   }
-  
+
   dialog::backdrop {
-    display: none;
+    background: rgba(0, 0, 0, 0.5);
   }
 `;
 

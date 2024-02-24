@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const SelectModal = styled.div`
+const StyledDialog = styled.dialog`
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--background-color);
+
   .modal-content {
-    background: var(--background-color);
-    border-radius: 10px;
-    width: 30rem;
+    width: 28rem;
     font-size: var(--text-l);
-    overflow: hidden;
     position: relative;
   }
 
@@ -16,20 +17,27 @@ const SelectModal = styled.div`
     right: 1.6rem;
   }
 
+  .modal-list {
+    margin-bottom: 0.6rem;
+  }
+
   .modal-list button {
     text-align: start;
     width: 100%;
-    border-bottom: 1px solid var(--gray-200);
     padding: 1.3rem 1.6rem;
     font-size: var(--text-m);
     transition: all 0.2s ease-in-out;
   }
-  .modal-list button:last-child {
-    margin-bottom: 0.6rem;
-    border: none;
+
+  .modal-list li + li {
+    border-top: 1px solid var(--gray-200);
   }
 
   .modal-list button:hover {
+    background: var(--point-light-100);
+  }
+
+  .modal-list button:active {
     background: var(--point-color);
   }
 `;
@@ -40,4 +48,4 @@ const Header = styled.header`
   text-align: center;
 `;
 
-export { SelectModal, Header };
+export { StyledDialog, Header };

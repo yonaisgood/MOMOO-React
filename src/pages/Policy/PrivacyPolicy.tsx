@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { RootState } from '../../modules';
+import { setPrevPath } from '../../modules/pageReducer';
 
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import TopBar from '../../components/Topbar/Topbar';
@@ -14,11 +18,25 @@ export default function PrivacyPolicy() {
     document.documentElement.clientWidth,
   );
 
+  const prevPath = useSelector(
+    (state: RootState) => state.pageReducer.prevPath,
+  );
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
   }, []);
+
+  useEffect(() => {
+    if (prevPath === 'signup') {
+      window.onpopstate = function () {
+        dispatch(setPrevPath('privacy'));
+      };
+    }
+  }, [prevPath]);
 
   return (
     <>

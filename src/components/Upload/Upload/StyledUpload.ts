@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
-const UploadWrapper = styled.div`
-  position: relative;
-  overflow: hidden;
+const StyledDialog = styled.dialog`
   max-width: 80rem;
   width: 100%;
   border-radius: 10px;
   background-color: var(--background-color);
   color: var(--gray-900);
+  border: none;
+  padding: 0;
+  overflow: hidden;
   z-index: 1001;
 
   @media (min-width: 1025px) {
@@ -104,8 +105,8 @@ const SelectPart = styled.section`
   }
 
   .uploadInfo {
-    border-bottom: 1px solid var(--gray-200);
     height: 11.4rem;
+    position: relative;
 
     textarea {
       width: 100%;
@@ -116,6 +117,15 @@ const SelectPart = styled.section`
       border: none;
       font-size: var(--text-m);
       resize: none;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .countText {
+      width: calc(100% - 1.6rem);
+      background-color: var(--background-color);
+      text-align: right;
+      position: absolute;
+      bottom: 0.1rem;
     }
   }
 
@@ -213,11 +223,12 @@ const CloseBtn = styled.button`
   top: 2rem;
   right: 2rem;
   background-color: transparent;
-  z-index: 101;
+  z-index: 1010;
+  cursor: pointer;
 `;
 
 export {
-  UploadWrapper,
+  StyledDialog,
   MobileCloseBtn,
   UploadHeader,
   UploadContents,

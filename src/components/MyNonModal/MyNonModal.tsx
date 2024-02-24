@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useLogout from '../../hooks/useLogout';
+import useEscDialog from '../../hooks/dialog/useEscDialog';
 
-import AlertModal from '../../components/Modal/AlertModal/AlertModal';
-import StyledMyPopup from './StyledMyPopup';
+import AlertModal from '../Modal/AlertModal/AlertModal';
+import StyledMyNonModal from './StyledMyNonModal';
 
 import BasicProfile from '../../asset/image/profile-basic-img.svg';
 import SettingIcon from '../../asset/icon/Setting.svg';
@@ -14,26 +15,25 @@ import PolicyIcon from '../../asset/icon/Policy.svg';
 import Github from '../../asset/icon/Github.svg';
 import LogoutIcon from '../../asset/icon/Logout.svg';
 import XIcon from '../../asset/icon/X.svg';
+import { closeDialogOnClick } from '../../utils/dialog';
 
 interface Props {
-  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function MyPopup({ setOpenPopup }: Props) {
+export default function MyNonModal({ setIsDialogOpen }: Props) {
   const { user } = useAuthContext();
   const [submitErrMessage, setSubmitErrMessage] = useState('');
   const { logout, error } = useLogout();
 
-  useEffect(() => {
-    const closePopup = (e: KeyboardEvent) => {
-      // esc
-      if (e.keyCode === 27) {
-        setOpenPopup(false);
-      }
-    };
+  const dialogRef = useRef<HTMLDialogElement>();
+  const menuFirstItemRef = useRef<HTMLAnchorElement>();
 
-    window.addEventListener('keydown', closePopup);
-  }, []);
+  const closeMyNonModal = () => {
+    setIsDialogOpen(false);
+  };
+
+  useEscDialog(closeMyNonModal);
 
   useEffect(() => {
     if (error) {
@@ -41,10 +41,28 @@ export default function MyPopup({ setOpenPopup }: Props) {
     }
   }, [error]);
 
+  const showNonModal = (node: HTMLDialogElement) => {
+    if (node && !dialogRef.current) {
+      node.show();
+      dialogRef.current = node;
+    }
+  };
+
+  const focusOnFirstItem = (node: HTMLAnchorElement) => {
+    if (node && !menuFirstItemRef.current) {
+      node.focus();
+      menuFirstItemRef.current = node;
+    }
+  };
+
   return (
-    <StyledMyPopup role="dialog">
+    <StyledMyNonModal
+      role="dialog"
+      onClick={(e) => closeDialogOnClick(e, closeMyNonModal)}
+      ref={showNonModal}
+    >
       {user && (
-        <>
+        <div>
           <section className="profile">
             <img src={user.photoURL || BasicProfile} alt="프로필 사진" />
             <div className="displayName">{user.displayName}</div>
@@ -53,9 +71,9 @@ export default function MyPopup({ setOpenPopup }: Props) {
           <section className="menu">
             <ul>
               <li>
-                <Link to="/setting">
+                <Link to="/edit-profile" ref={focusOnFirstItem}>
                   <img src={SettingIcon} alt="" />
-                  Setting
+                  Edit profile
                 </Link>
               </li>
               <li>
@@ -92,18 +110,18 @@ export default function MyPopup({ setOpenPopup }: Props) {
           <button
             className="close"
             type="button"
-            onClick={() => setOpenPopup(false)}
+            onClick={() => setIsDialogOpen(false)}
           >
             <img src={XIcon} alt="닫기" />
           </button>
-        </>
+        </div>
       )}
       {submitErrMessage && (
         <AlertModal
-          title={submitErrMessage}
+          message={submitErrMessage}
           onClose={() => setSubmitErrMessage('')}
         />
       )}
-    </StyledMyPopup>
+    </StyledMyNonModal>
   );
 }

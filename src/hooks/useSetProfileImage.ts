@@ -5,29 +5,29 @@ export default function useSetProfileImage() {
   const [src, setSrc] = useState('');
   const [error, setError] = useState('');
 
-  const setProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
+  const setProfileImage = (files: FileList | null) => {
+    if (!files) {
       return;
     }
 
-    const file = e.target.files[0];
+    const fileToChange = files[0];
 
-    if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
+    if (!/^image\/(jpg|png|jpeg|bmp|tif|heic)$/.test(fileToChange.type)) {
       setError(
         '이미지 파일 확장자는 jpg, png, jpeg, bmp, tif, heic만 가능합니다.',
       );
       return;
     }
 
-    if (file.size > 1 * 1024 * 1024) {
+    if (fileToChange.size > 10 * 1024 * 1024) {
       setError('이미지 용량은 10MB 이내로 등록 가능합니다.');
       return;
     }
 
     const reader = new FileReader();
 
-    reader.readAsDataURL(file);
-    setFile(file);
+    reader.readAsDataURL(fileToChange);
+    setFile(fileToChange);
 
     reader.addEventListener('load', ({ target }) => {
       if (typeof target?.result !== 'string') {
@@ -40,5 +40,5 @@ export default function useSetProfileImage() {
     });
   };
 
-  return { setProfileImage, file, setFile, src, setSrc, error };
+  return { setProfileImage, file, setFile, src, setSrc, error, setError };
 }
