@@ -5,13 +5,17 @@ import useGetFeedData from '../../hooks/useGetFeedData';
 
 import DeleteAlbumModal from '../Modal/DeleteAlbumModal/DeleteAlbumModal';
 import { AlbumContainer, AlbumLink } from './StyledAlbum';
+// import AlbumMoreModal from '../../pages/Home/AlbumMoreModal';
 
 interface AlbumProps {
   albumData: DocumentData;
+  showDeleteButton: Boolean;
 }
 
-const Album: React.FC<AlbumProps> = ({ albumData }) => {
+const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isEditAlbumModalOpen, setIsEditAlbumModalOpen] = useState(false);
+  // const [isSharingModalOpen, setIsSharingModalOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState([]);
   const getFeedData = useGetFeedData();
   useEffect(() => {
@@ -42,7 +46,7 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
             <p className="albumCount">{albumData.feedList.length}</p>
-            <button type="button" onClick={HandleModal} />
+            {showDeleteButton && <button type="button" onClick={HandleModal} />}
           </div>
         </div>
       </AlbumLink>
@@ -53,6 +57,20 @@ const Album: React.FC<AlbumProps> = ({ albumData }) => {
           onClose={HandleCloseModal}
         />
       )}
+      {/* {isModalOpen && (
+        <AlbumMoreModal
+          closeModal={HandleCloseModal}
+          setEditAlbumModalOpen={setIsEditModalOpen}
+          setSharingModalOpen={}
+        />
+      )}
+      {isEditModalOpen && (
+        <DeleteAlbumModal
+          albumId={albumData.id}
+          albumName={albumData.name}
+          onClose={() => setIsEditModalOpen(false)}
+        />
+      )} */}
     </AlbumContainer>
   );
 };

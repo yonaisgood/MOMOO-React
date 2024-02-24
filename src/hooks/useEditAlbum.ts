@@ -40,15 +40,6 @@ export default function useEditAlbum() {
     );
 
     try {
-      const albumDoc = await getDoc(userAlbumDocRef);
-      if (albumDoc.exists() && albumDoc.data().name === '전체 보기') {
-        return {
-          success: false,
-          error: '전체 보기 앨범명은 변경 할 수 없습니다.',
-        };
-      }
-
-      // 유효성 검사 코드 추가
       const duplicateAlbumQuery = query(
         collection(appFireStore, user.uid, user.uid, 'album'),
         where('name', '==', editAlbumName),
