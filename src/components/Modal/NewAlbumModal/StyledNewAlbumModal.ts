@@ -35,7 +35,7 @@ const Header = styled.header`
   }
   p {
     font-size: 1.2rem;
-    margin-bottom: 3.3rem;
+    margin-bottom: 1.6rem;
     color: var(--gray-600);
   }
   input {
