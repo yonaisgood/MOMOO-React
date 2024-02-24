@@ -15,6 +15,7 @@ import PolicyIcon from '../../asset/icon/Policy.svg';
 import Github from '../../asset/icon/Github.svg';
 import LogoutIcon from '../../asset/icon/Logout.svg';
 import XIcon from '../../asset/icon/X.svg';
+import { closeDialogOnClick } from '../../utils/dialog';
 
 interface Props {
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,19 +29,17 @@ export default function MyNonModal({ setIsDialogOpen }: Props) {
   const dialogRef = useRef<HTMLDialogElement>();
   const menuFirstItemRef = useRef<HTMLAnchorElement>();
 
-  useEscDialog(setIsDialogOpen);
+  const closeMyNonModal = () => {
+    setIsDialogOpen(false);
+  };
+
+  useEscDialog(closeMyNonModal);
 
   useEffect(() => {
     if (error) {
       setSubmitErrMessage(error);
     }
   }, [error]);
-
-  const closeOnClick = (e: React.MouseEvent<HTMLDialogElement>) => {
-    if (e.target === e.currentTarget) {
-      setIsDialogOpen(false);
-    }
-  };
 
   const showNonModal = (node: HTMLDialogElement) => {
     if (node && !dialogRef.current) {
@@ -57,7 +56,11 @@ export default function MyNonModal({ setIsDialogOpen }: Props) {
   };
 
   return (
-    <StyledMyNonModal role="dialog" onClick={closeOnClick} ref={showNonModal}>
+    <StyledMyNonModal
+      role="dialog"
+      onClick={(e) => closeDialogOnClick(e, closeMyNonModal)}
+      ref={showNonModal}
+    >
       {user && (
         <div>
           <section className="profile">
