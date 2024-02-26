@@ -18,15 +18,11 @@ export default function Nav() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { setIsUploadModalOpen } = useUploadContext();
   const navigate = useNavigate();
   const { user } = useAuthContext();
 
   useEffect(() => {
-    if (!user) {
-      setIsAuthenticated(false);
-    }
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
@@ -51,7 +47,7 @@ export default function Nav() {
             type="button"
             className="home"
             onClick={handleHomeNavigate}
-            disabled={!isAuthenticated}
+            disabled={!user}
           >
             <img src={HomeImg} alt="홈 아이콘" />
             <p>Home</p>
@@ -61,7 +57,7 @@ export default function Nav() {
             type="button"
             className="upload"
             onClick={openUploadModalFunc}
-            disabled={!isAuthenticated}
+            disabled={!user}
           >
             <img src={UploadImg} alt="업로드 아이콘" />
             <p>Upload</p>
@@ -70,13 +66,13 @@ export default function Nav() {
             type="button"
             className="my"
             onClick={openMyDialogFunc}
-            disabled={!isAuthenticated}
+            disabled={!user}
           >
             <img src={MypageImg} alt="마이페이지 아이콘" />
             <p>Mypage</p>
           </button>
         </div>
-        {isAuthenticated ? (
+        {user ? (
           <Link to="/">
             <h1 className="a11y-hidden">MoMoo</h1>
             <img
