@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import useEscDialog from '../../../hooks/dialog/useEscDialog';
 import useShowModal from '../../../hooks/dialog/useShowModal';
 
@@ -12,8 +14,17 @@ interface Props {
 }
 
 export default function SharingModal({ closeModal }: Props) {
+  const urlInputRef = useRef<HTMLInputElement | null>(null);
   const { showModal } = useShowModal();
   useEscDialog(closeModal);
+
+  const copyUrl = () => {
+    if (urlInputRef.current) {
+      urlInputRef.current.select();
+      document.execCommand('copy');
+      alert('URL이 복사되었습니다.'); // 토스트 팝업으로 변경
+    }
+  };
 
   return (
     <StyledSharingModal
@@ -27,8 +38,13 @@ export default function SharingModal({ closeModal }: Props) {
           <label htmlFor="sharing" className="a11y-hidden">
             공유 링크
           </label>
-          <input id="sharing" type="url" value="https://momoo.kr" />
-          <button type="button" className="copy-btn">
+          <input
+            id="sharing"
+            type="url"
+            value="https://momoo.kr"
+            ref={urlInputRef}
+          />
+          <button type="button" className="copy-btn" onClick={copyUrl}>
             복사
           </button>
         </div>
