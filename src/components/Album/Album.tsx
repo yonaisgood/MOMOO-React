@@ -5,7 +5,8 @@ import useGetFeedData from '../../hooks/useGetFeedData';
 
 import DeleteAlbumModal from '../Modal/DeleteAlbumModal/DeleteAlbumModal';
 import { AlbumContainer, AlbumLink } from './StyledAlbum';
-// import AlbumMoreModal from '../../pages/Home/AlbumMoreModal';
+import AlbumMoreModal from '../../pages/Home/AlbumMoreModal';
+import SharingModal from '../../pages/Home/SharingModal/SharingModal';
 
 interface AlbumProps {
   albumData: DocumentData;
@@ -14,8 +15,8 @@ interface AlbumProps {
 
 const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isEditAlbumModalOpen, setIsEditAlbumModalOpen] = useState(false);
-  // const [isSharingModalOpen, setIsSharingModalOpen] = useState(false);
+  const [isEditAlbumModalOpen, setIsEditAlbumModalOpen] = useState(false);
+  const [isSharingModalOpen, setIsSharingModalOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState([]);
   const getFeedData = useGetFeedData();
   useEffect(() => {
@@ -36,7 +37,7 @@ const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
     event.preventDefault();
     setIsModalOpen(true);
   };
-  const HandleCloseModal = () => {
+  const closeMoreModal = () => {
     setIsModalOpen(false);
   };
   return (
@@ -46,31 +47,30 @@ const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
             <p className="albumCount">{albumData.feedList.length}</p>
-            {showDeleteButton && <button type="button" onClick={HandleModal} />}
+            {showDeleteButton && (
+              <button type="button" onClick={HandleModal} aria-label="더보기" />
+            )}
           </div>
         </div>
       </AlbumLink>
+
       {isModalOpen && (
-        <DeleteAlbumModal
-          albumId={albumData.id}
-          albumName={albumData.name}
-          onClose={HandleCloseModal}
-        />
-      )}
-      {/* {isModalOpen && (
         <AlbumMoreModal
-          closeModal={HandleCloseModal}
-          setEditAlbumModalOpen={setIsEditModalOpen}
-          setSharingModalOpen={}
+          closeModal={closeMoreModal}
+          setIsEditAlbumModalOpen={setIsEditAlbumModalOpen}
+          setIsSharingModalOpen={setIsSharingModalOpen}
         />
       )}
-      {isEditModalOpen && (
+      {isEditAlbumModalOpen && (
         <DeleteAlbumModal
           albumId={albumData.id}
           albumName={albumData.name}
-          onClose={() => setIsEditModalOpen(false)}
+          onClose={() => setIsEditAlbumModalOpen(false)}
         />
-      )} */}
+      )}
+      {isSharingModalOpen && (
+        <SharingModal closeModal={() => setIsSharingModalOpen(false)} />
+      )}
     </AlbumContainer>
   );
 };
