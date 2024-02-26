@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { User } from '@firebase/auth';
-import { doc, deleteDoc, getDoc } from 'firebase/firestore';
+import { doc, deleteDoc } from 'firebase/firestore';
 
 import useAuthContext from './useAuthContext';
 
