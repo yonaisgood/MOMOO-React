@@ -2,7 +2,6 @@ import { User } from '@firebase/auth';
 import {
   doc,
   updateDoc,
-  getDoc,
   collection,
   query,
   where,
