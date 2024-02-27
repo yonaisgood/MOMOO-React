@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
 
 import useEditContext from '../../hooks/useEditContext';
-import usePageContext from '../../hooks/usePageContext';
 import useSetFeedItemLayout from './useSetFeedItemLayout';
 
 import { StyledFeedItem } from './StyledAlbum';
@@ -18,14 +17,12 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
 
   const { user } = useAuthContext();
   const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
-  const { setPrevPath } = usePageContext();
 
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
 
   const navigate = useNavigate();
   const { uid, album } = useParams();
 
-  // 존재하지 않는 앨범입니다로 변경 고려
   if (!uid || !album) {
     navigate('404');
     return;
@@ -81,7 +78,6 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
             onFocus={showHoverStyle}
             onMouseLeave={hiddenHoverStyle}
             onBlur={hiddenHoverStyle}
-            onClick={() => setPrevPath(album)}
           >
             <div className="a11y-hidden">
               <strong>{feedData.title}</strong>

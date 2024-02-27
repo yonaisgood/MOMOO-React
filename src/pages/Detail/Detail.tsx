@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-
-import usePageContext from '../../hooks/usePageContext';
+import { useParams } from 'react-router-dom';
 
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import FeedItem from './FeedItem/FeedItem';
@@ -18,28 +17,27 @@ export default function Detail() {
     document.documentElement.clientWidth,
   );
   const [navList, setNavList] = useState<null | NavItem[]>(null);
-  const { setPrevPath, prevPath } = usePageContext();
+
+  const { album } = useParams();
+
+  if (!album) {
+    return; // 404로 라우팅 됨
+  }
 
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
 
+    const albumName = album.replace(/-/gi, ' ');
+
     const navListToSet = [
       { path: '/', text: 'Home' },
-      { path: '//', text: 'feed' },
+      { path: `/${album}`, text: albumName },
+      { path: '', text: 'feed' },
     ];
 
-    if (prevPath) {
-      navListToSet.splice(1, 0, {
-        path: `/album/${prevPath}`,
-        text: prevPath.replace(/-/gi, ' '),
-      });
-    }
-
     setNavList(navListToSet);
-
-    return () => setPrevPath(null);
   }, []);
 
   return (
