@@ -7,7 +7,6 @@ import useEditContext from '../../../hooks/useEditContext';
 import useAuthContext from '../../../hooks/useAuthContext';
 
 import ChangeAlbumModal from '../../../components/Modal/ChangeAlbumModal/ChangeAlbumModal';
-import GetAccordionData from '../../../components/Upload/GetAccordionData';
 import DeleteFeedModal from './DeleteFeedModal';
 import FeedMoreModal from './FeedMoreModal';
 import Carousel from '../../../components/Carousel/Carousel';
@@ -16,11 +15,6 @@ import StyledFeedItem from './StyledFeedItem';
 
 import SeeMore from '../../../asset/icon/More.svg';
 
-interface AccordionItemData {
-  question: string;
-  answer: string[];
-}
-
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -28,15 +22,12 @@ export default function FeedItem() {
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
-  const [accordionData, setAccordionData] = useState<AccordionItemData[]>([]);
-
   const { uid, album, id } = useParams(); // uid, album -> 엑세스 권한 검증
 
   const { isEditModalOpen } = useEditContext();
   const { user } = useAuthContext();
   const getFeedData = useGetFeedData();
   const navigate = useNavigate();
-  const getAccordionData = GetAccordionData();
 
   if (!user) {
     return;
@@ -49,12 +40,6 @@ export default function FeedItem() {
 
   useEffect(() => {
     // 엑세스 권한 없을 경우 로직 추가하기
-
-    const fetchData = async () => {
-      const result = await getAccordionData();
-      setAccordionData(result.accordionData || []);
-    };
-    fetchData();
   }, []);
 
   useEffect(() => {
@@ -178,10 +163,7 @@ export default function FeedItem() {
             />
           )}
           {changeAlbumModalOpen && (
-            <ChangeAlbumModal
-              answer={accordionData[0].answer.join(',')}
-              onClose={handleChangeAlbumModal}
-            />
+            <ChangeAlbumModal onClose={handleChangeAlbumModal} />
           )}
         </StyledFeedItem>
       )}
