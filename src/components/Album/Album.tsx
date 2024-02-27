@@ -7,6 +7,7 @@ import DeleteAlbumModal from '../Modal/DeleteAlbumModal/DeleteAlbumModal';
 import { AlbumContainer, AlbumLink } from './StyledAlbum';
 import AlbumMoreModal from '../../pages/Home/AlbumMoreModal';
 import SharingModal from '../../pages/Home/SharingModal/SharingModal';
+import useAuthContext from '../../hooks/useAuthContext';
 
 interface AlbumProps {
   albumData: DocumentData;
@@ -18,13 +19,23 @@ const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
   const [isEditAlbumModalOpen, setIsEditAlbumModalOpen] = useState(false);
   const [isSharingModalOpen, setIsSharingModalOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState([]);
+
+  const { user } = useAuthContext();
   const getFeedData = useGetFeedData();
+
+  if (!user) {
+    return;
+  }
+
   useEffect(() => {
     const lastFeedId = albumData.feedList[albumData.feedList.length - 1];
 
     const getData = async () => {
       if (lastFeedId !== undefined) {
-        const data = await getFeedData(lastFeedId);
+        const data = albumData.uid
+          ? await getFeedData(lastFeedId, albumData.uid)
+          : await getFeedData(lastFeedId);
+
         setImgUrl(data?.imageUrl);
       } else {
         return;
@@ -40,9 +51,10 @@ const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
   const closeMoreModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <AlbumContainer $imageUrl={imgUrl}>
-      <AlbumLink to={`/album/${albumData.name.replace(/\s+/g, '-')}`}>
+      <AlbumLink to={`/${user.uid}/${albumData.name.replace(/\s+/g, '-')}`}>
         <div className="txtWrapper">
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
@@ -69,7 +81,10 @@ const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
         />
       )}
       {isSharingModalOpen && (
-        <SharingModal closeModal={() => setIsSharingModalOpen(false)} />
+        <SharingModal
+          albumId={albumData.id}
+          closeModal={() => setIsSharingModalOpen(false)}
+        />
       )}
     </AlbumContainer>
   );

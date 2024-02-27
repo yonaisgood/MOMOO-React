@@ -15,13 +15,18 @@ import { appFireStore } from '../firebase/config';
 export default function useGetFeedListData() {
   const { user } = useAuthContext();
 
-  const getFeedListData = async (feedList: string[]) => {
+  const getFeedListData = async (feedList: string[], uid: string) => {
     if (user === null) {
       return;
     }
 
     try {
-      const feedRef = collection(appFireStore, user.uid, user.uid, 'feed');
+      const feedRef = collection(
+        appFireStore,
+        uid || user.uid,
+        uid || user.uid,
+        'feed',
+      );
       const searchList = feedList.map((feedId) => where('id', '==', feedId));
       const q = query(feedRef, or(...searchList), orderBy('timestamp', 'desc'));
       const querySnapshot = await getDocs(q);
