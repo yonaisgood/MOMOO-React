@@ -23,27 +23,30 @@ export default function Album() {
     document.documentElement.clientWidth,
   );
   const [feedList, setFeedList] = useState<DocumentData[] | null>(null);
-  const { id } = useParams();
-  const navigate = useNavigate();
   const [albumName, setAlbumName] = useState<null | string>(null);
+  const { uid, album } = useParams();
+  const navigate = useNavigate();
+
   const getAlbumFeedList = useGetAlbumFeedList();
   const getFeedListData = useGetFeedListData();
   const { setAlbumNameListToAdd, setIsUploadModalOpen } = useUploadContext();
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
 
   useEffect(() => {
-    if (!id) {
+    if (!uid || !album) {
       navigate('/404');
       return;
     }
+
+    // 엑세스 권한 없을 경우 로직 추가하기
 
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
 
-    (async () => {
-      const albumNameToSet = id.replace(/-/gi, ' ');
-      const albumFeedList = await getAlbumFeedList(albumNameToSet);
+    const setAlbumData = async () => {
+      const albumNameToSet = album.replace(/-/gi, ' ');
+      const albumFeedList = await getAlbumFeedList(albumNameToSet, uid);
 
       if (!albumFeedList) {
         navigate('/404');
@@ -58,7 +61,7 @@ export default function Album() {
         return;
       }
 
-      const feedListData = await getFeedListData(albumFeedList);
+      const feedListData = await getFeedListData(albumFeedList, uid);
 
       if (!feedListData?.length) {
         setFeedList([]);
@@ -68,6 +71,10 @@ export default function Album() {
 
       setFeedList(feedListData);
       setRatio(feedListData[feedListData.length - 1].imageUrl[0]);
+    };
+
+    (async () => {
+      setAlbumData();
     })();
   }, []);
 
@@ -97,7 +104,7 @@ export default function Album() {
                 <Breadcrumb
                   navList={[
                     { path: '/', text: 'Home' },
-                    { path: `/album/${albumName}`, text: albumName || '/' },
+                    { path: '', text: albumName },
                   ]}
                 />
               </>
@@ -106,7 +113,7 @@ export default function Album() {
               <BreadcrumbWrap
                 navList={[
                   { path: '/', text: 'Home' },
-                  { path: `/album/${albumName}`, text: albumName || '/' },
+                  { path: '', text: albumName },
                 ]}
                 title={albumName || ''}
               />
@@ -120,6 +127,7 @@ export default function Album() {
                     feedList.map((v) => {
                       return <FeedItem key={v.id} feedData={v}></FeedItem>;
                     })}
+                  {/* 현재 앨범에 사진 추가 UI 변경 예정 */}
                   {imgRatio.width && imgRatio.height && (
                     <StyledAddFeedItem
                       $ratio={imgRatio.width / imgRatio.height}

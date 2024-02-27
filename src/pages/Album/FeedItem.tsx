@@ -9,19 +9,27 @@ import useSetFeedItemLayout from './useSetFeedItemLayout';
 import { StyledFeedItem } from './StyledAlbum';
 
 import EditIcon from '../../asset/icon/Edit.svg';
+import useAuthContext from '../../hooks/useAuthContext';
 
 export default function FeedItem({ feedData }: { feedData: DocumentData }) {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
 
+  const { user } = useAuthContext();
   const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
   const { setPrevPath } = usePageContext();
 
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
 
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { uid, album } = useParams();
+
+  // 존재하지 않는 앨범입니다로 변경 고려
+  if (!uid || !album) {
+    navigate('404');
+    return;
+  }
 
   useEffect(() => {
     setRatio(feedData.imageUrl[0]);
@@ -68,29 +76,31 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
           }}
         >
           <Link
-            to={`/feed/${feedData.id}`}
+            to={`/${uid}/${album}/p/${feedData.id}`}
             onMouseOver={showHoverStyle}
             onFocus={showHoverStyle}
             onMouseLeave={hiddenHoverStyle}
             onBlur={hiddenHoverStyle}
-            onClick={() => setPrevPath(id || null)}
+            onClick={() => setPrevPath(album)}
           >
             <div className="a11y-hidden">
               <strong>{feedData.title}</strong>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
+              {uid === user?.uid && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
 
-                  if (clientWitch > 430) {
-                    setEditFeedContext(feedData.id);
-                  } else {
-                    navigate(`/edit/${id}`);
-                  }
-                }}
-              >
-                <img src={EditIcon} alt="수정하기" />
-              </button>
+                    if (clientWitch > 430) {
+                      setEditFeedContext(feedData.id);
+                    } else {
+                      navigate(`/edit/${album}`);
+                    }
+                  }}
+                >
+                  <img src={EditIcon} alt="수정하기" />
+                </button>
+              )}
             </div>
             <img src={feedData.imageUrl[0]} alt="" />
           </Link>

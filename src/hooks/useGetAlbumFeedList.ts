@@ -7,13 +7,18 @@ import { appFireStore } from '../firebase/config';
 export default function useGetAlbumFeedList() {
   const { user } = useAuthContext();
 
-  const getAlbumFeedList = async (albumName: string) => {
+  const getAlbumFeedList = async (albumName: string, uid: string) => {
     if (user === null) {
       return;
     }
 
     try {
-      const albumRef = collection(appFireStore, user.uid, user.uid, 'album');
+      const albumRef = collection(
+        appFireStore,
+        uid || user.uid,
+        uid || user.uid,
+        'album',
+      );
 
       const querySnapshot = await getDocs(
         query(albumRef, where('name', '==', albumName)),
