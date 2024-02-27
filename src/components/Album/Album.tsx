@@ -54,7 +54,12 @@ const Album: React.FC<AlbumProps> = ({ albumData, showDeleteButton }) => {
 
   return (
     <AlbumContainer $imageUrl={imgUrl}>
-      <AlbumLink to={`/${user.uid}/${albumData.name.replace(/\s+/g, '-')}`}>
+      <AlbumLink
+        to={`/${albumData.uid || user.uid}/${albumData.name.replace(
+          /\s+/g,
+          '-',
+        )}`}
+      >
         <div className="txtWrapper">
           <p className="albumTitle">{albumData.name}</p>
           <div className="CountWrapper">
