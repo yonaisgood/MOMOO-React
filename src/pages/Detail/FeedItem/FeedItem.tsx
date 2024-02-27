@@ -29,31 +29,41 @@ export default function FeedItem() {
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
   const [accordionData, setAccordionData] = useState<AccordionItemData[]>([]);
+
+  const { uid, album, id } = useParams(); // uid, album -> 엑세스 권한 검증
+
   const { isEditModalOpen } = useEditContext();
   const { user } = useAuthContext();
-  const { id } = useParams();
   const getFeedData = useGetFeedData();
   const navigate = useNavigate();
   const getAccordionData = GetAccordionData();
 
-  if (!id) {
+  if (!user) {
+    return;
+  }
+
+  if (!id || !uid) {
     navigate('/404');
     return;
   }
 
   useEffect(() => {
+    // 엑세스 권한 없을 경우 로직 추가하기
+
     const fetchData = async () => {
-      if (user) {
-        const result = await getAccordionData();
-        setAccordionData(result.accordionData || []);
-      }
+      const result = await getAccordionData();
+      setAccordionData(result.accordionData || []);
     };
     fetchData();
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const feedData = await getFeedData(id);
+    if (isEditModalOpen) {
+      return;
+    }
+
+    const setData = async () => {
+      const feedData = await getFeedData(id, uid);
 
       if (feedData) {
         setFeedData(feedData);
@@ -67,7 +77,9 @@ export default function FeedItem() {
       } else {
         setInvalidId(true);
       }
-    })();
+    };
+
+    setData();
   }, [isEditModalOpen]);
 
   const handleSeeMoreClick = () => {
@@ -88,14 +100,16 @@ export default function FeedItem() {
     setIsModalOpen(false);
   };
 
+  // design 추가하기
   if (InvalidId) {
     return <div>존재하지 않는 게시물입니다</div>;
   }
 
   return (
     <>
-      {!feedData && <LoadingComponent />}
-      {feedData && (
+      {!feedData ? (
+        <LoadingComponent />
+      ) : (
         <StyledFeedItem>
           <Carousel imgUrlList={feedData.imageUrl}></Carousel>
           <section className="contentsSection">
@@ -117,9 +131,15 @@ export default function FeedItem() {
                 )}
               </div>
             )}
-            <button className="more" type="button" onClick={handleSeeMoreClick}>
-              <img src={SeeMore} alt="더보기 버튼" />
-            </button>
+            {uid === user.uid && (
+              <button
+                className="more"
+                type="button"
+                onClick={handleSeeMoreClick}
+              >
+                <img src={SeeMore} alt="더보기 버튼" />
+              </button>
+            )}
           </section>
           <h3>{feedData.title}</h3>
           {feedData.text && typeof feedData.text === 'string' && (
