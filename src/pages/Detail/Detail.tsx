@@ -7,16 +7,10 @@ import FeedItem from './FeedItem/FeedItem';
 import TopBar from '../../components/Topbar/Topbar';
 import DetailLayout from './StyledDetail';
 
-interface NavItem {
-  path: string;
-  text: string;
-}
-
 export default function Detail() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const [navList, setNavList] = useState<null | NavItem[]>(null);
 
   const { album } = useParams();
 
@@ -28,16 +22,6 @@ export default function Detail() {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
-
-    const albumName = album.replace(/-/gi, ' ');
-
-    const navListToSet = [
-      { path: '/', text: 'Home' },
-      { path: `/${album}`, text: albumName },
-      { path: '', text: 'feed' },
-    ];
-
-    setNavList(navListToSet);
   }, []);
 
   return (
@@ -48,7 +32,15 @@ export default function Detail() {
 
       {clientWitch <= 430 && <TopBar tit="게시물" />}
       <DetailLayout>
-        {navList && clientWitch > 430 && <Breadcrumb navList={navList} />}
+        {clientWitch > 430 && (
+          <Breadcrumb
+            navList={[
+              { path: '/', text: 'Home' },
+              { path: `/${album}`, text: album },
+              { path: '', text: 'feed' },
+            ]}
+          />
+        )}
         <section>
           <FeedItem />
         </section>
