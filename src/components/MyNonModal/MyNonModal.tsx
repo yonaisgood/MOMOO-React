@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
-import useLogout from '../../hooks/useLogout';
+import useLogout from '../../hooks/auth/useLogout';
 import useEscDialog from '../../hooks/dialog/useEscDialog';
 
 import AlertModal from '../Modal/AlertModal/AlertModal';

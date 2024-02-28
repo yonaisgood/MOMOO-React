@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../modules/index.ts';
 import { resetSignupData, setSignupForm } from '../../modules/signupReducer.ts';
 import { resetPageData, setPrevPath } from '../../modules/pageReducer.ts';
-import useSignup from '../../hooks/useSingup.ts';
+import useSignup from '../../hooks/auth/useSingup.ts';
 import useSetProfileImage from '../../hooks/useSetProfileImage.ts';
 
 import Button from '../../components/Button/Button/Button.tsx';

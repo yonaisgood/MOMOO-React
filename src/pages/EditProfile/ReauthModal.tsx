@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import useReauthenticate from '../../hooks/useReauthenticate';
+import useReauthenticate from '../../hooks/auth/useReauthenticate';
 
 import StyledInputModal from '../../components/Modal/StyledInputModal';
 import ModalOverlay from '../../components/CommonStyled/StyledModalOverlay';
