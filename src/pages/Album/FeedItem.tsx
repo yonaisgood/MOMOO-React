@@ -17,7 +17,6 @@ export default function FeedItem({ feedData }: { feedData: DocumentData }) {
 
   const { user } = useAuthContext();
   const { setFeedIdToEdit, setIsEditModalOpen } = useEditContext();
-
   const { imgRatio, setRatio, setGridRowEnd } = useSetFeedItemLayout();
 
   const navigate = useNavigate();

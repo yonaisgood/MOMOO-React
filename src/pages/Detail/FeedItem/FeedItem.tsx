@@ -22,6 +22,7 @@ export default function FeedItem() {
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
+
   const { uid, album, id } = useParams(); // uid, album -> 엑세스 권한 검증
 
   const { isEditModalOpen } = useEditContext();
