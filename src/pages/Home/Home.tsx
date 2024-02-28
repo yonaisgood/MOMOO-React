@@ -12,7 +12,7 @@ import { StyledMain, StyledHomeSection } from './StyledHome';
 
 import AddImg from '../../asset/icon/Add.svg';
 import ArrayImg from '../../asset/icon/Array.svg';
-import useGetSharedAlbumList from '../../hooks/useGetSharedAlbumList';
+import useGetSharedAlbumsData from '../../hooks/useGetSharedAlbumsData';
 
 export default function Home() {
   const [selectedAlbumType, setSelectedAlbumType] = useState<
@@ -25,7 +25,7 @@ export default function Home() {
     document.documentElement.clientWidth,
   );
   const { albumDataList, latestAlbumList } = useGetAlbumList();
-  const { sharedAlbumList } = useGetSharedAlbumList();
+  const { sharedAlbumsData } = useGetSharedAlbumsData();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -106,8 +106,8 @@ export default function Home() {
           ) : (
             <ul>
               {(selectedOption === 'oldest'
-                ? sharedAlbumList
-                : sharedAlbumList.reverse()
+                ? sharedAlbumsData
+                : sharedAlbumsData.reverse()
               ).map((v, index) => {
                 return (
                   <li key={v.createdTime}>
