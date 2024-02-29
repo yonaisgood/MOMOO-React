@@ -1,6 +1,9 @@
+import useEscDialog from '../../../hooks/dialog/useEscDialog';
+import useShowModal from '../../../hooks/dialog/useShowModal';
+
 import StyledAlertModal from './StyledAlertModal';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
-import { useRef } from 'react';
+
+import { closeDialogOnClick } from '../../../utils/dialog';
 
 export default function AlertModal({
   message,
@@ -9,24 +12,20 @@ export default function AlertModal({
   message: string;
   onClose: () => void;
 }) {
-  const dialogRef = useRef<HTMLDialogElement>();
+  const { showModal } = useShowModal();
+  useEscDialog(onClose);
 
   return (
-    <ModalOverlay>
-      <StyledAlertModal
-        ref={(node) => {
-          if (node && !dialogRef.current) {
-            dialogRef.current = node;
-            node.showModal();
-          }
-        }}
-        aria-labelledby="dialog-label"
-      >
-        <p id="dialog-label">{message}</p>
-        <button type="button" onClick={onClose}>
-          확인
-        </button>
-      </StyledAlertModal>
-    </ModalOverlay>
+    <StyledAlertModal
+      role="dialog"
+      aria-labelledby="modal-select"
+      ref={showModal}
+      onClick={(e) => closeDialogOnClick(e, onClose)}
+    >
+      <p id="dialog-label">{message}</p>
+      <button type="button" onClick={onClose}>
+        확인
+      </button>
+    </StyledAlertModal>
   );
 }
