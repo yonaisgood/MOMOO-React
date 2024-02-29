@@ -61,17 +61,11 @@ const StyledDlelteAlbumDialog = styled.dialog`
   }
 
   .edit-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     float: right;
     width: 8.2rem;
     height: 3.2rem;
     background: var(--gray-200);
-    img {
-      width: 1.64rem;
-      height: 1.6rem;
-    }
+    font-size: var(--text-s);
   }
   .edit-btn:hover {
     background: var(--gray-300);
