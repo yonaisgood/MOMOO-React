@@ -16,29 +16,33 @@ import {
 import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 interface AccordionProps {
-  answer: string;
   onClose: () => void;
 }
 
-export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
-  interface AlbumIdData {
-    albumName: string;
-    docId: string;
-  }
+interface AccordionItemData {
+  question: string;
+  answer: string[];
+}
 
+interface AlbumIdData {
+  albumName: string;
+  docId: string;
+}
+
+export default function ChangeAlbumModal({ onClose }: AccordionProps) {
   const { user } = useAuthContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const [selectedAlbumList, setSelectedAlbumList] = useState<string[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [savedAlbumList, setSavedAlbumList] = useState<string[]>([]);
+  const [answerArray, setAnswerArray] = useState<string[] | null>();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const getAccordionData = GetAccordionData();
   const getSavedAlbumList = useGetSavedAlbumList();
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
   const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
-  const answerArray = answer.split(',');
 
   const { id } = useParams();
   if (!id) {
@@ -70,9 +74,17 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (user) {
-        const result = await getAccordionData();
-        setAlbumIdData(result.albumIdData || []);
+      if (!user) {
+        return;
+      }
+
+      const result = await getAccordionData();
+      setAlbumIdData(result.albumIdData || []);
+      const accordionData: AccordionItemData[] | null =
+        result.accordionData || null;
+
+      if (accordionData) {
+        setAnswerArray(accordionData[0].answer);
       }
     };
     fetchData();
@@ -173,7 +185,7 @@ export default function ChangeAlbumModal({ onClose, answer }: AccordionProps) {
 
           <MultiAccordionWrapper>
             <div className="anw" id="multiAnswer">
-              {answerArray.map((item, index) => {
+              {answerArray?.map((item, index) => {
                 return (
                   <button
                     type="button"

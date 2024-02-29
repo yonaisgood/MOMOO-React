@@ -1,6 +1,6 @@
 import { signOut } from 'firebase/auth';
 
-import { appAuth } from '../firebase/config.ts';
+import { appAuth } from '../../firebase/config.ts';
 import { useState } from 'react';
 
 export default function useLogout() {

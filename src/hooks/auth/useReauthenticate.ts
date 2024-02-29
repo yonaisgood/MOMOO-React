@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-import { appAuth } from '../firebase/config';
+import { appAuth } from '../../firebase/config';
 
 export default function useReauthenticate() {
   const [error, setError] = useState<null | string>(null);

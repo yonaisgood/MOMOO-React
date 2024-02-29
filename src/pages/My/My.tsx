@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import useAuthContext from '../../hooks/useAuthContext';
-import useLogout from '../../hooks/useLogout';
+import useLogout from '../../hooks/auth/useLogout';
 
 import AlertModal from '../../components/Modal/AlertModal/AlertModal';
 import StyledMy from './StyledMy';

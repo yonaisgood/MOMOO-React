@@ -1,5 +1,5 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useEditContext from '../../hooks/useEditContext';
@@ -16,7 +16,6 @@ import Preview from '../FileUpload/Preview';
 import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
-import ModalOverlay from '../CommonStyled/StyledModalOverlay';
 import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 import { deleteImg } from '../../utils/SDKUtils';
@@ -53,10 +52,13 @@ export default function EditFeedModal() {
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [isPending, setIsPending] = useState(false);
 
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const navigate = useNavigate();
+  const { album } = useParams();
+
   const { user } = useAuthContext();
   const { setIsEditModalOpen, feedIdToEdit, setFeedIdToEdit } =
     useEditContext();
-  const navigate = useNavigate();
 
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
@@ -190,13 +192,23 @@ export default function EditFeedModal() {
     }
 
     setIsPending(false);
-    navigate(`/feed/${feedIdToEdit}`);
+    const albumName =
+      album && selectedAlbumList.includes(album) ? album : selectedAlbumList[0];
+    navigate(`/${user.uid}/${albumName}/p/${feedIdToEdit}`);
     closeEditFeedModal();
   };
 
   return (
-    <ModalOverlay>
-      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
+    <>
+      <Styled.StyledDialog
+        className={isPending ? 'loading' : ''}
+        ref={(node) => {
+          if (node && !dialogRef.current) {
+            node.showModal();
+            dialogRef.current = node;
+          }
+        }}
+      >
         <Styled.UploadHeader>
           <h2>게시물 수정</h2>
           <button className="uploadBtn" type="submit" onClick={handleSubmit}>
@@ -291,10 +303,10 @@ export default function EditFeedModal() {
             </>
           )}
         </Styled.UploadContents>
-      </Styled.UploadWrapper>
-      <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
-        <img src={CloseIcon} alt="닫기버튼" />
-      </Styled.CloseBtn>
-    </ModalOverlay>
+        <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
+          <img src={CloseIcon} alt="닫기버튼" />
+        </Styled.CloseBtn>
+      </Styled.StyledDialog>
+    </>
   );
 }

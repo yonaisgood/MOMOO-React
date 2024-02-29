@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { updateProfile, updateEmail, updatePassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-import useAuthContext from './useAuthContext';
-import { uploadImg } from '../utils/SDKUtils';
+import useAuthContext from '../useAuthContext';
+import { uploadImg } from '../../utils/SDKUtils';
 
 interface Profile {
   email: string | null;
