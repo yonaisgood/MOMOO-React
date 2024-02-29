@@ -56,11 +56,11 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
         }}
       >
         <Header className="modal-header" id="modal-select">
-          <h2 tabIndex={0}>새로운 앨범</h2>
+          <h2>새로운 앨범</h2>
           <p>이 앨범의 이름을 입력해주세요</p>
           <input
             type="text"
-            placeholder="이름을 입력해주세요"
+            placeholder="이름을 입력해 주세요"
             value={albumName}
             onChange={(e) => setAlbumName(e.target.value)}
           />
