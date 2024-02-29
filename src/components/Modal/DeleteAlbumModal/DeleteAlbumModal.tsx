@@ -1,13 +1,16 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import useEditAlbum from '../../../hooks/useEditAlbum';
 import useDeleteAlbum from '../../../hooks/useDeleteAlbum';
+import useEscDialog from '../../../hooks/dialog/useEscDialog';
+import useShowModal from '../../../hooks/dialog/useShowModal';
 
 import LoadingComponent from '../../Loading/LoadingComponent';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import AlertModal from '../AlertModal/AlertModal';
-import { SelectModal, Header } from './StyledDeleteAlbumModal';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
+import { StyledDlelteAlbumDialog, Header } from './StyledDeleteAlbumModal';
+
+import { closeDialogOnClick } from '../../../utils/dialog';
 
 import Close from '../../../asset/icon/X.svg';
 import SelectImg from '../../../asset/icon/Select.svg';
@@ -23,44 +26,13 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
   albumName,
   albumId,
 }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [editAlbumName, setEditAlbumName] = useState(albumName);
   const [errMessage, setErrMessage] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const editAlbum = useEditAlbum();
   const { deleteAlbum, isPending, error } = useDeleteAlbum();
-
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Tab') {
-        const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        if (focusableElements) {
-          const firstElement = focusableElements[0] as HTMLElement;
-          const lastElement = focusableElements[
-            focusableElements.length - 1
-          ] as HTMLElement;
-          if (event.shiftKey && document.activeElement === firstElement) {
-            lastElement.focus();
-            event.preventDefault();
-          } else if (
-            !event.shiftKey &&
-            document.activeElement === lastElement
-          ) {
-            firstElement.focus();
-            event.preventDefault();
-          }
-        }
-      }
-    };
-    document.addEventListener('keydown', handleKeydown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
-  }, []);
+  const { showModal } = useShowModal();
+  useEscDialog(onClose);
 
   const handleEditAlbum = async () => {
     if (editAlbumName.trim() === '') {
@@ -90,60 +62,45 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
 
   return (
     <>
-      <SelectModal role="dialog" aria-labelledby="modal-select">
-        <ModalOverlay>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleEditAlbum();
-            }}
-          >
-            <div
-              className="modal-content"
-              role="document"
-              tabIndex={-1}
-              ref={modalRef}
-            >
-              <Header className="modal-header" id="modal-select">
-                <h2 tabIndex={0}>Edit Album</h2>
-              </Header>
-              <div className="modal-list">
-                <p>이름</p>
-                <input
-                  type="text"
-                  value={editAlbumName}
-                  onChange={(e) => {
-                    setEditAlbumName(e.target.value);
-                  }}
-                  placeholder="새로운 앨범명을 입력해주세요"
-                />
-                {errMessage !== '' && (
-                  <strong role="alert">*{errMessage}</strong>
-                )}
-                <button type="button" onClick={handleDeleteAlbum}>
-                  Delete
-                  <img src={DeleteRedImg} alt="휴지통 아이콘" />
-                </button>
-              </div>
-              <button
-                onClick={handleEditAlbum}
-                className="edit-btn"
-                type="submit"
-              >
-                <img src={SelectImg} alt="수정" />
-              </button>
-              <button
-                className="close-button"
-                onClick={onClose}
-                tabIndex={0}
-                ref={closeButtonRef}
-              >
-                <img src={Close} alt="모달 닫기 버튼" />
-              </button>
-            </div>
-          </form>
-        </ModalOverlay>
-      </SelectModal>
+      <StyledDlelteAlbumDialog
+        role="dialog"
+        aria-labelledby="modal-select"
+        ref={showModal}
+        onClick={(e) => closeDialogOnClick(e, onClose)}
+      >
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleEditAlbum();
+          }}
+        >
+          <Header className="modal-header" id="modal-select">
+            <h2>Edit Album</h2>
+          </Header>
+          <div className="modal-list">
+            <p>이름</p>
+            <input
+              type="text"
+              value={editAlbumName}
+              onChange={(e) => {
+                setEditAlbumName(e.target.value);
+              }}
+              placeholder="새로운 앨범명을 입력해주세요"
+            />
+            {errMessage !== '' && <strong role="alert">*{errMessage}</strong>}
+            <button type="button" onClick={handleDeleteAlbum}>
+              Delete
+              <img src={DeleteRedImg} alt="휴지통 아이콘" />
+            </button>
+          </div>
+          <button onClick={handleEditAlbum} className="edit-btn" type="submit">
+            <img src={SelectImg} alt="수정" />
+          </button>
+          <button className="close-button" onClick={onClose}>
+            <img src={Close} alt="모달 닫기 버튼" />
+          </button>
+        </form>
+      </StyledDlelteAlbumDialog>
       {showConfirmModal && (
         <ConfirmModal
           onClose={() => setShowConfirmModal(false)}

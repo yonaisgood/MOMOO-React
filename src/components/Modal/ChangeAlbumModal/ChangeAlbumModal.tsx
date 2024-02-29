@@ -1,4 +1,4 @@
-import { SyntheticEvent, useRef, useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useAuthContext from '../../../hooks/useAuthContext';
@@ -7,13 +7,16 @@ import {
   useRemoveFeedIdFromFeedList,
 } from '../../../hooks/useUpdateFeedList';
 import useGetSavedAlbumList from '../../../hooks/useGetSavedAlbumList';
+import useEscDialog from '../../../hooks/dialog/useEscDialog';
+import useShowModal from '../../../hooks/dialog/useShowModal';
 
 import GetAccordionData from '../../Upload/GetAccordionData';
 import {
-  ChangeModalWrap,
+  ChangeModalDialog,
   MultiAccordionWrapper,
 } from './StyledChangeAlbumModal';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
+
+import { closeDialogOnClick } from '../../../utils/dialog';
 
 interface AccordionProps {
   onClose: () => void;
@@ -31,13 +34,13 @@ interface AlbumIdData {
 
 export default function ChangeAlbumModal({ onClose }: AccordionProps) {
   const { user } = useAuthContext();
-  const modalRef = useRef<HTMLDivElement>(null);
+  const { showModal } = useShowModal();
+  useEscDialog(onClose);
 
   const [selectedAlbumList, setSelectedAlbumList] = useState<string[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [savedAlbumList, setSavedAlbumList] = useState<string[]>([]);
   const [answerArray, setAnswerArray] = useState<string[] | null>();
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const getAccordionData = GetAccordionData();
   const getSavedAlbumList = useGetSavedAlbumList();
@@ -90,37 +93,6 @@ export default function ChangeAlbumModal({ onClose }: AccordionProps) {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Tab') {
-        const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        if (focusableElements) {
-          const firstElement = focusableElements[0] as HTMLElement;
-          const lastElement = focusableElements[
-            focusableElements.length - 1
-          ] as HTMLElement;
-          if (event.shiftKey && document.activeElement === firstElement) {
-            lastElement.focus();
-            event.preventDefault();
-          } else if (
-            !event.shiftKey &&
-            document.activeElement === lastElement
-          ) {
-            firstElement.focus();
-            event.preventDefault();
-          }
-        }
-      }
-    };
-    document.addEventListener('keydown', handleKeydown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
-  }, []);
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -170,48 +142,42 @@ export default function ChangeAlbumModal({ onClose }: AccordionProps) {
   };
 
   return (
-    <ChangeModalWrap role="dialog" aria-labelledby="modal-select">
-      <ModalOverlay>
-        <div
-          className="modalContent"
-          role="document"
-          tabIndex={-1}
-          ref={modalRef}
-        >
-          <header className="modal-header" id="modal-select">
-            <h2 tabIndex={0}>앨범 변경하기</h2>
-            <p> 저장할 앨범을 선택해주세요.</p>
-          </header>
+    <ChangeModalDialog
+      role="dialog"
+      aria-labelledby="modal-select"
+      ref={showModal}
+      onClick={(e) => closeDialogOnClick(e, onClose)}
+    >
+      <header className="modal-header" id="modal-select">
+        <h2>앨범 변경하기</h2>
+        <p> 저장할 앨범을 선택해주세요.</p>
+      </header>
 
-          <MultiAccordionWrapper>
-            <div className="anw" id="multiAnswer">
-              {answerArray?.map((item, index) => {
-                return (
-                  <button
-                    type="button"
-                    disabled={item === '전체 보기' ? true : false}
-                    key={index}
-                    onClick={() => MultiAnswerClick(item)}
-                    className={
-                      selectedAlbumList.includes(item) ? 'selected' : ''
-                    }
-                  >
-                    {item}
-                  </button>
-                );
-              })}
-            </div>
-          </MultiAccordionWrapper>
-          <div className="modalList">
-            <button type="button" onClick={onClose} ref={closeButtonRef}>
-              취소
-            </button>
-            <button type="submit" onClick={handleSubmit}>
-              확인
-            </button>
-          </div>
+      <MultiAccordionWrapper>
+        <div className="anw" id="multiAnswer">
+          {answerArray?.map((item, index) => {
+            return (
+              <button
+                type="button"
+                disabled={item === '전체 보기' ? true : false}
+                key={index}
+                onClick={() => MultiAnswerClick(item)}
+                className={selectedAlbumList.includes(item) ? 'selected' : ''}
+              >
+                {item}
+              </button>
+            );
+          })}
         </div>
-      </ModalOverlay>
-    </ChangeModalWrap>
+      </MultiAccordionWrapper>
+      <div className="modalList">
+        <button type="button" onClick={onClose}>
+          취소
+        </button>
+        <button type="submit" onClick={handleSubmit}>
+          확인
+        </button>
+      </div>
+    </ChangeModalDialog>
   );
 }
