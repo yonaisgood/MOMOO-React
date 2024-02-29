@@ -7,7 +7,6 @@ import useEditContext from '../../../hooks/useEditContext';
 import useAuthContext from '../../../hooks/useAuthContext';
 
 import ChangeAlbumModal from '../../../components/Modal/ChangeAlbumModal/ChangeAlbumModal';
-import GetAccordionData from '../../../components/Upload/GetAccordionData';
 import DeleteFeedModal from './DeleteFeedModal';
 import FeedMoreModal from './FeedMoreModal';
 import Carousel from '../../../components/Carousel/Carousel';
@@ -16,11 +15,6 @@ import StyledFeedItem from './StyledFeedItem';
 
 import SeeMore from '../../../asset/icon/More.svg';
 
-interface AccordionItemData {
-  question: string;
-  answer: string[];
-}
-
 export default function FeedItem() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -28,32 +22,34 @@ export default function FeedItem() {
   const [feedData, setFeedData] = useState<DocumentData | null>(null);
   const [time, setTime] = useState('');
   const [InvalidId, setInvalidId] = useState(false);
-  const [accordionData, setAccordionData] = useState<AccordionItemData[]>([]);
+
+  const { uid, album, id } = useParams(); // uid, album -> 엑세스 권한 검증
+
   const { isEditModalOpen } = useEditContext();
   const { user } = useAuthContext();
-  const { id } = useParams();
   const getFeedData = useGetFeedData();
   const navigate = useNavigate();
-  const getAccordionData = GetAccordionData();
 
-  if (!id) {
+  if (!user) {
+    return;
+  }
+
+  if (!id || !uid) {
     navigate('/404');
     return;
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (user) {
-        const result = await getAccordionData();
-        setAccordionData(result.accordionData || []);
-      }
-    };
-    fetchData();
+    // 엑세스 권한 없을 경우 로직 추가하기
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const feedData = await getFeedData(id);
+    if (isEditModalOpen) {
+      return;
+    }
+
+    const setData = async () => {
+      const feedData = await getFeedData(id, uid);
 
       if (feedData) {
         setFeedData(feedData);
@@ -67,7 +63,9 @@ export default function FeedItem() {
       } else {
         setInvalidId(true);
       }
-    })();
+    };
+
+    setData();
   }, [isEditModalOpen]);
 
   const handleSeeMoreClick = () => {
@@ -88,14 +86,16 @@ export default function FeedItem() {
     setIsModalOpen(false);
   };
 
+  // design 추가하기
   if (InvalidId) {
     return <div>존재하지 않는 게시물입니다</div>;
   }
 
   return (
     <>
-      {!feedData && <LoadingComponent />}
-      {feedData && (
+      {!feedData ? (
+        <LoadingComponent />
+      ) : (
         <StyledFeedItem>
           <Carousel imgUrlList={feedData.imageUrl}></Carousel>
           <section className="contentsSection">
@@ -117,9 +117,15 @@ export default function FeedItem() {
                 )}
               </div>
             )}
-            <button className="more" type="button" onClick={handleSeeMoreClick}>
-              <img src={SeeMore} alt="더보기 버튼" />
-            </button>
+            {uid === user.uid && (
+              <button
+                className="more"
+                type="button"
+                onClick={handleSeeMoreClick}
+              >
+                <img src={SeeMore} alt="더보기 버튼" />
+              </button>
+            )}
           </section>
           <h3>{feedData.title}</h3>
           {feedData.text && typeof feedData.text === 'string' && (
@@ -158,10 +164,7 @@ export default function FeedItem() {
             />
           )}
           {changeAlbumModalOpen && (
-            <ChangeAlbumModal
-              answer={accordionData[0].answer.join(',')}
-              onClose={handleChangeAlbumModal}
-            />
+            <ChangeAlbumModal onClose={handleChangeAlbumModal} />
           )}
         </StyledFeedItem>
       )}

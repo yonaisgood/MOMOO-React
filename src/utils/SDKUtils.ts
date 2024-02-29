@@ -4,8 +4,15 @@ import {
   getDownloadURL,
   uploadBytes,
 } from 'firebase/storage';
+import {
+  getDocs,
+  collection,
+  query,
+  where,
+  DocumentData,
+} from 'firebase/firestore';
 
-import { storage } from '../firebase/config.ts';
+import { storage, appFireStore } from '../firebase/config';
 
 async function deleteImg(url: string) {
   const imgRef = ref(storage, url);
@@ -20,4 +27,18 @@ async function uploadImg(path: string, file: File) {
   return downloadURL;
 }
 
-export { deleteImg, uploadImg };
+async function getAlbumByName(uid: string, name: string) {
+  const albumRef = collection(appFireStore, uid, uid, 'album');
+
+  const querySnapshot: DocumentData = await getDocs(
+    query(albumRef, where('name', '==', name)),
+  );
+
+  if (!querySnapshot.docs.length) {
+    return null;
+  }
+
+  return querySnapshot.docs[0];
+}
+
+export { deleteImg, uploadImg, getAlbumByName };

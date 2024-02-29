@@ -7,14 +7,14 @@ import { appFireStore } from '../firebase/config';
 export default function useGetFeedData() {
   const { user } = useAuthContext();
 
-  const getFeedData = async (feedId: string) => {
+  const getFeedData = async (feedId: string, uid?: string) => {
     if (user === null) {
       return;
     }
 
     try {
       const docSnap = await getDoc(
-        doc(appFireStore, user.uid, user.uid, 'feed', feedId),
+        doc(appFireStore, uid || user.uid, uid || user.uid, 'feed', feedId),
       );
 
       return docSnap.data();

@@ -12,8 +12,12 @@ import { StyledMain, StyledHomeSection } from './StyledHome';
 
 import AddImg from '../../asset/icon/Add.svg';
 import ArrayImg from '../../asset/icon/Array.svg';
+import useGetSharedAlbumsData from '../../hooks/useGetSharedAlbumsData';
 
 export default function Home() {
+  const [selectedAlbumType, setSelectedAlbumType] = useState<
+    '나의 앨범' | '공유 앨범'
+  >('나의 앨범');
   const [isArrayModalOpen, setIsArrayModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -21,6 +25,7 @@ export default function Home() {
     document.documentElement.clientWidth,
   );
   const { albumDataList, latestAlbumList } = useGetAlbumList();
+  const { sharedAlbumsData } = useGetSharedAlbumsData();
 
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -45,6 +50,14 @@ export default function Home() {
     setSelectedOption(option);
   };
 
+  const changeSelectedAlbumType = () => {
+    if (selectedAlbumType === '나의 앨범') {
+      setSelectedAlbumType('공유 앨범');
+    } else {
+      setSelectedAlbumType('나의 앨범');
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -56,6 +69,20 @@ export default function Home() {
         <StyledHomeSection>
           <StyledH2 className="album-title">Album</StyledH2>
           <div className="btn-wrap">
+            <button
+              type="button"
+              disabled={selectedAlbumType === '나의 앨범'}
+              onClick={changeSelectedAlbumType}
+            >
+              나의 앨범
+            </button>
+            <button
+              type="button"
+              disabled={selectedAlbumType === '공유 앨범'}
+              onClick={changeSelectedAlbumType}
+            >
+              공유 앨범
+            </button>
             <button type="button" onClick={HandleArrayModal}>
               <img src={ArrayImg} alt="정렬방식 아이콘" />
             </button>
@@ -63,18 +90,33 @@ export default function Home() {
               <img src={AddImg} alt="이미지 추가 아이콘" />
             </button>
           </div>
-          <ul>
-            {(selectedOption === 'oldest'
-              ? albumDataList
-              : latestAlbumList
-            ).map((v, index) => {
-              return (
-                <li key={v.createdTime}>
-                  <Album albumData={v} showDeleteButton={index !== 0} />
-                </li>
-              );
-            })}
-          </ul>
+          {selectedAlbumType === '나의 앨범' ? (
+            <ul>
+              {(selectedOption === 'oldest'
+                ? albumDataList
+                : latestAlbumList
+              ).map((v, index) => {
+                return (
+                  <li key={v.createdTime}>
+                    <Album albumData={v} showDeleteButton={index !== 0} />
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <ul>
+              {(selectedOption === 'oldest'
+                ? sharedAlbumsData
+                : sharedAlbumsData.reverse()
+              ).map((v, index) => {
+                return (
+                  <li key={v.createdTime}>
+                    <Album albumData={v} showDeleteButton={index !== 0} />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
           {isAddModalOpen && <NewAlbumModal onClose={HandleAddCloseModal} />}
           {isArrayModalOpen && (
             <ArrayModal

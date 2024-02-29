@@ -10,11 +10,13 @@ import { closeDialogOnClick } from '../../../utils/dialog';
 import Close from '../../../asset/icon/X-Small.svg';
 
 interface Props {
+  albumId: string;
   closeModal: () => void;
 }
 
-export default function SharingModal({ closeModal }: Props) {
+export default function SharingModal({ albumId, closeModal }: Props) {
   const urlInputRef = useRef<HTMLInputElement | null>(null);
+
   const { showModal } = useShowModal();
   useEscDialog(closeModal);
 
