@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
-const SelectModal = styled.div`
-  .modal-content {
-    background: var(--background-color);
-    border-radius: 1rem;
-    width: 23rem;
-    font-size: var(--text-l);
-    overflow: hidden;
-    position: relative;
-  }
+const NewAlbumDialog = styled.dialog`
+  background: var(--background-color);
+  border-radius: 1rem;
+  width: 23rem;
+  font-size: var(--text-l);
+  overflow: hidden;
+  position: fixed;
 
   .modal-list button {
     width: 50%;
@@ -61,4 +59,4 @@ const Header = styled.header`
   }
 `;
 
-export { SelectModal, Header };
+export { NewAlbumDialog, Header };
