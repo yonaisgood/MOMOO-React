@@ -17,9 +17,12 @@ const NewAlbumDialog = styled.dialog`
   .modal-list button:first-child {
     border-right: 1px solid var(--gray-200);
   }
+  .modal-list button:last-child {
+    color: var(--point-dark-400);
+  }
 
   .modal-list button:hover {
-    color: var(--point-color);
+    background-color: var(--point-color);
   }
 `;
 

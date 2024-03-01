@@ -13,7 +13,6 @@ import { StyledDlelteAlbumDialog, Header } from './StyledDeleteAlbumModal';
 import { closeDialogOnClick } from '../../../utils/dialog';
 
 import Close from '../../../asset/icon/X.svg';
-import SelectImg from '../../../asset/icon/Select.svg';
 import DeleteRedImg from '../../../asset/icon/DeleteRed.svg';
 
 interface DeleteAlbumModalProps {
@@ -94,7 +93,7 @@ const DeleteAlbumModal: React.FC<DeleteAlbumModalProps> = ({
             </button>
           </div>
           <button onClick={handleEditAlbum} className="edit-btn" type="submit">
-            <img src={SelectImg} alt="수정" />
+            저장
           </button>
           <button className="close-button" onClick={onClose}>
             <img src={Close} alt="모달 닫기 버튼" />
