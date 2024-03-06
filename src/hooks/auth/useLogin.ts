@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-import { appAuth } from '../firebase/config';
+import { appAuth } from '../../firebase/config';
 
 export const useLogin = () => {
   const [error, setError] = useState<string | null>(null);

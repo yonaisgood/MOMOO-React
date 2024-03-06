@@ -43,8 +43,8 @@ export default function Router() {
             <Route element={<AuthRoute />}>
               <Route element={<NavRoute />}>
                 <Route path="/" element={<Home />}></Route>
-                <Route path="/album/:id" element={<Album />}></Route>
-                <Route path="/feed/:id" element={<Detail />}></Route>
+                <Route path="/:uid/:album" element={<Album />}></Route>
+                <Route path="/:uid/:album/p/:id" element={<Detail />}></Route>
                 {clientWitch <= 430 && (
                   <>
                     <Route path="/my" element={<My />}></Route>

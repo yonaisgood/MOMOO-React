@@ -10,6 +10,7 @@ export default function useSetFeedItemLayout() {
     width: null,
     height: null,
   });
+
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
@@ -20,16 +21,12 @@ export default function useSetFeedItemLayout() {
     });
   }, []);
 
-  const setRatio = async (imgUrl: string | null) => {
-    if (imgUrl) {
-      const img = new Image();
-      img.src = imgUrl;
-      img.onload = () => {
-        setImgRatio({ width: img.width, height: img.height });
-      };
-    } else {
-      setImgRatio({ width: 3, height: 4 });
-    }
+  const setRatio = async (imgUrl: string) => {
+    const img = new Image();
+    img.src = imgUrl;
+    img.onload = () => {
+      setImgRatio({ width: img.width, height: img.height });
+    };
   };
 
   const setGridRowEnd = async (node: HTMLLIElement) => {

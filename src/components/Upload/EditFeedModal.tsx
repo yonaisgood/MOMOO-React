@@ -1,5 +1,5 @@
-import { SyntheticEvent, useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useEditContext from '../../hooks/useEditContext';
@@ -16,7 +16,7 @@ import Preview from '../FileUpload/Preview';
 import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
-// import ModalOverlay from '../CommonStyled/StyledModalOverlay';
+
 import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 import { deleteImg } from '../../utils/SDKUtils';
@@ -53,11 +53,14 @@ export default function EditFeedModal() {
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [isPending, setIsPending] = useState(false);
 
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const navigate = useNavigate();
+  const { album } = useParams();
+
   const { user } = useAuthContext();
   const { setIsEditModalOpen, feedIdToEdit, setFeedIdToEdit } =
     useEditContext();
-  const navigate = useNavigate();
-  const dialogRef = useRef<HTMLDialogElement>(null);
+
   const getAccordionData = GetAccordionData();
   const editFeed = useEditFeed();
   const getSavedAlbumList = useGetSavedAlbumList();
@@ -190,7 +193,9 @@ export default function EditFeedModal() {
     }
 
     setIsPending(false);
-    navigate(`/feed/${feedIdToEdit}`);
+    const albumName =
+      album && selectedAlbumList.includes(album) ? album : selectedAlbumList[0];
+    navigate(`/${user.uid}/${albumName}/p/${feedIdToEdit}`);
     closeEditFeedModal();
   };
 
@@ -198,115 +203,111 @@ export default function EditFeedModal() {
     <>
       <Styled.StyledDialog
         className={isPending ? 'loading' : ''}
-        ref={dialogRef}
-        aria-labelledby="dialog-label"
+        ref={(node) => {
+          if (node && !dialogRef.current) {
+            node.showModal();
+            dialogRef.current = node;
+          }
+        }}
       >
-        <div>
-          <h2 className="a11y-hidden">게시물 수정</h2>
-          <Styled.UploadHeader>
-            <h2>게시물 수정</h2>
-            <button
-              className="uploadBtn"
-              type="submit"
-              onClick={handleSubmit}
-              disabled={isPending}
-            >
-              완료
-            </button>
-          </Styled.UploadHeader>
-          <Styled.UploadContents>
-            {isPending ? (
-              <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
-            ) : (
-              <>
-                <Styled.PicPart>
-                  <Preview setFile={setFile} imgUrlList={imgUrlList} />
-                </Styled.PicPart>
-                <Styled.SelectPart>
-                  <div className="inputWrapper">
-                    <input
-                      type="text"
-                      placeholder="제목을 입력해 주세요 (필수)"
-                      value={title}
-                      onChange={(e) => {
-                        setTitle(e.target.value);
-                      }}
-                      required
+        <Styled.UploadHeader>
+          <h2>게시물 수정</h2>
+          <button className="uploadBtn" type="submit" onClick={handleSubmit}>
+            완료
+          </button>
+        </Styled.UploadHeader>
+        <Styled.UploadContents>
+          {isPending ? (
+            <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
+          ) : (
+            <>
+              <Styled.PicPart>
+                <Preview setFile={setFile} imgUrlList={imgUrlList} />
+              </Styled.PicPart>
+              <Styled.SelectPart>
+                <div className="inputWrapper">
+                  <input
+                    type="text"
+                    placeholder="제목을 입력해 주세요 (필수)"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                    required
+                  />
+                </div>
+                <form className="uploadInfo">
+                  <textarea
+                    id="uploadText"
+                    maxLength={1000}
+                    cols={30}
+                    rows={10}
+                    value={text}
+                    onChange={(e) => {
+                      setText(e.target.value);
+                    }}
+                    placeholder="문구를 입력해 주세요"
+                  ></textarea>
+                </form>
+                <Styled.LocationContents onClick={toggleKakaoMap}>
+                  <div className="locationHead">
+                    {selectedAddress ? (
+                      <p>선택한 주소: {selectedAddress}</p>
+                    ) : (
+                      <h2>위치 추가</h2>
+                    )}
+                    <img
+                      className={kakaoMapVisible ? 'rotate' : ''}
+                      src={Arrow}
+                      alt="위치토글아이콘"
                     />
                   </div>
-                  <form className="uploadInfo">
-                    <textarea
-                      id="uploadText"
-                      maxLength={1000}
-                      cols={30}
-                      rows={10}
-                      value={text}
-                      onChange={(e) => {
-                        setText(e.target.value);
-                      }}
-                      placeholder="문구를 입력해 주세요"
-                    ></textarea>
-                  </form>
-                  <Styled.LocationContents onClick={toggleKakaoMap}>
-                    <div className="locationHead">
-                      {selectedAddress ? (
-                        <p>선택한 주소: {selectedAddress}</p>
-                      ) : (
-                        <h2>사진관 위치</h2>
-                      )}
-                      <img
-                        className={kakaoMapVisible ? 'rotate' : ''}
-                        src={Arrow}
-                        alt="위치토글아이콘"
-                      />
-                    </div>
-                  </Styled.LocationContents>
-                  {kakaoMapVisible && (
-                    <Styled.KakaoMapContainer>
-                      <KakaoMap
-                        onAddressSelect={(address) =>
-                          handleAddressSelect(address)
-                        }
-                      />
-                    </Styled.KakaoMapContainer>
-                  )}
-                  <Styled.AccordionContents>
-                    {accordionData.slice(1, 2).map(() => (
-                      <MultipleAccordion
-                        key={0}
-                        question={accordionData[0].question}
-                        answer={accordionData[0].answer.join(',')}
-                        selectedAlbum={selectedAlbumList}
-                        setSelectedAlbum={setSelectedAlbumList}
-                      />
-                    ))}
-                    {accordionData.slice(1, 3).map((data, index) => (
-                      <Accordion
-                        key={index}
-                        question={data.question}
-                        answer={data.answer.join(',')}
-                        selectedImages={
-                          data.question === '오늘의 날씨'
-                            ? selectedWeatherImage
-                            : selectedEmotionImage
-                        }
-                        setSelectedImages={
-                          data.question === '오늘의 날씨'
-                            ? setSelectedWeatherImage
-                            : setSelectedEmotionImage
-                        }
-                      />
-                    ))}
-                  </Styled.AccordionContents>
-                </Styled.SelectPart>
-              </>
-            )}
-          </Styled.UploadContents>
-        </div>
+                </Styled.LocationContents>
+                {kakaoMapVisible && (
+                  <Styled.KakaoMapContainer>
+                    <KakaoMap
+                      onAddressSelect={(address) =>
+                        handleAddressSelect(address)
+                      }
+                    />
+                  </Styled.KakaoMapContainer>
+                )}
+                <Styled.AccordionContents>
+                  {accordionData.slice(1, 2).map(() => (
+                    <MultipleAccordion
+                      key={0}
+                      question={accordionData[0].question}
+                      answer={accordionData[0].answer.join(',')}
+                      selectedAlbum={selectedAlbumList}
+                      setSelectedAlbum={setSelectedAlbumList}
+                    />
+                  ))}
+                  {accordionData.slice(1, 3).map((data, index) => (
+                    <Accordion
+                      key={index}
+                      question={data.question}
+                      answer={data.answer.join(',')}
+                      selectedImages={
+                        data.question === '오늘의 날씨'
+                          ? selectedWeatherImage
+                          : selectedEmotionImage
+                      }
+                      setSelectedImages={
+                        data.question === '오늘의 날씨'
+                          ? setSelectedWeatherImage
+                          : setSelectedEmotionImage
+                      }
+                    />
+                  ))}
+                </Styled.AccordionContents>
+              </Styled.SelectPart>
+            </>
+          )}
+        </Styled.UploadContents>
+        <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
+          <img src={CloseIcon} alt="닫기버튼" />
+        </Styled.CloseBtn>
       </Styled.StyledDialog>
-      <Styled.CloseBtn className="closeBtn" onClick={closeEditFeedModal}>
-        <img src={CloseIcon} alt="닫기버튼" />
-      </Styled.CloseBtn>
     </>
   );
 }

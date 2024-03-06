@@ -1,9 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
-import useReauthenticate from '../../hooks/useReauthenticate';
+import useReauthenticate from '../../hooks/auth/useReauthenticate';
+import useEscDialog from '../../hooks/dialog/useEscDialog';
+import useShowModal from '../../hooks/dialog/useShowModal';
 
 import StyledInputModal from '../../components/Modal/StyledInputModal';
-import ModalOverlay from '../../components/CommonStyled/StyledModalOverlay';
+
+import { closeDialogOnClick } from '../../utils/dialog';
 
 import LoadingIcon from '../../asset/icon/Loading.svg';
 export default function ReauthModal({
@@ -15,12 +18,12 @@ export default function ReauthModal({
   setIsReauthSuccess: Dispatch<SetStateAction<boolean>>;
   cancel: () => void;
 }) {
-  const modalRef = useRef<HTMLDialogElement | null>(null);
-
   const [value, setValue] = useState('');
   const [errMessage, setErrMessage] = useState('');
   const [isPending, setIsPending] = useState(false);
   const { reauthenticate, error } = useReauthenticate();
+  const { showModal } = useShowModal();
+  useEscDialog(cancel);
 
   useEffect(() => {
     if (!error) {
@@ -66,28 +69,24 @@ export default function ReauthModal({
   };
 
   return (
-    <ModalOverlay>
-      <StyledInputModal
-        ref={(node) => {
-          if (node && !modalRef.current) {
-            modalRef.current = node;
-            node.showModal();
-          }
-        }}
-      >
-        <h3>계정 확인</h3>
-        <p>현재 비밀번호를 입력해 주세요</p>
-        <input type="password" placeholder="password" onChange={changeValue} />
-        <strong role="alert">{errMessage ? `*${errMessage}` : ''}</strong>
-        <div className="btn-wrap">
-          <button type="button" onClick={cancel}>
-            취소
-          </button>
-          <button type="button" onClick={handleReauth} disabled={!value}>
-            {isPending ? <img src={LoadingIcon} alt="로딩중" /> : '확인'}
-          </button>
-        </div>
-      </StyledInputModal>
-    </ModalOverlay>
+    <StyledInputModal
+      role="dialog"
+      aria-labelledby="modal-select"
+      ref={showModal}
+      onClick={(e) => closeDialogOnClick(e, cancel)}
+    >
+      <h3>계정 확인</h3>
+      <p>현재 비밀번호를 입력해 주세요</p>
+      <input type="password" placeholder="password" onChange={changeValue} />
+      <strong role="alert">{errMessage ? `*${errMessage}` : ''}</strong>
+      <div className="btn-wrap">
+        <button type="button" onClick={cancel}>
+          취소
+        </button>
+        <button type="button" onClick={handleReauth} disabled={!value}>
+          {isPending ? <img src={LoadingIcon} alt="로딩중" /> : '확인'}
+        </button>
+      </div>
+    </StyledInputModal>
   );
 }

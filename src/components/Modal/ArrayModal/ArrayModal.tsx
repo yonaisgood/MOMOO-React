@@ -1,6 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import { SelectModal, Header } from './StyledArrayModal';
+import useEscDialog from '../../../hooks/dialog/useEscDialog';
+import useShowModal from '../../../hooks/dialog/useShowModal';
+
+import { StyledArrayModal, Header } from './StyledArrayModal';
+
+import { closeDialogOnClick } from '../../../utils/dialog';
 
 import Select from '../../../asset/icon/Select.svg';
 
@@ -15,101 +20,50 @@ const ArrayModal: React.FC<ArrayModalProps> = ({
   selectedOption,
   onOptionClick,
 }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
+  const { showModal } = useShowModal();
+  useEscDialog(onClose);
 
   useEffect(() => {
     if (selectedOption === null) {
       onOptionClick('latest');
     }
-
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Tab') {
-        const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        if (focusableElements) {
-          const firstElement = focusableElements[0] as HTMLElement;
-          const lastElement = focusableElements[
-            focusableElements.length - 1
-          ] as HTMLElement;
-          if (event.shiftKey && document.activeElement === firstElement) {
-            lastElement.focus();
-            event.preventDefault();
-          } else if (
-            !event.shiftKey &&
-            document.activeElement === lastElement
-          ) {
-            firstElement.focus();
-            event.preventDefault();
-          }
-        }
-      }
-    };
-    document.addEventListener('keydown', handleKeydown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
   }, [selectedOption, onOptionClick]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [onClose]);
-
   return (
-    <SelectModal
-      className="array-modal"
+    <StyledArrayModal
       role="dialog"
       aria-labelledby="modal-select"
+      ref={showModal}
+      onClick={(e) => closeDialogOnClick(e, onClose)}
     >
-      <div
-        className="modal-content"
-        role="document"
-        tabIndex={-1}
-        ref={modalRef}
-      >
-        <Header className="modal-header" id="modal-select">
-          <h2 tabIndex={0}>정렬기준</h2>
-        </Header>
-        <div className="modal-list">
-          <button
-            type="submit"
-            onClick={() => {
-              onOptionClick('latest');
-              onClose();
-            }}
-            className={selectedOption === 'latest' ? 'selected' : ''}
-          >
-            최신순
-            {selectedOption === 'latest' && <img src={Select} alt="선택" />}
-          </button>
-          <button
-            type="submit"
-            onClick={() => {
-              onOptionClick('oldest');
-              onClose();
-            }}
-            className={selectedOption === 'oldest' ? 'selected' : ''}
-          >
-            오래된순
-            {selectedOption === 'oldest' && <img src={Select} alt="선택" />}
-          </button>
-        </div>
+      <Header className="modal-header" id="modal-select">
+        <h2>정렬기준</h2>
+      </Header>
+      <div className="modal-list">
+        <button
+          type="submit"
+          onClick={() => {
+            onOptionClick('latest');
+            onClose();
+          }}
+          className={selectedOption === 'latest' ? 'selected' : ''}
+        >
+          최신순
+          {selectedOption === 'latest' && <img src={Select} alt="선택" />}
+        </button>
+        <button
+          type="submit"
+          onClick={() => {
+            onOptionClick('oldest');
+            onClose();
+          }}
+          className={selectedOption === 'oldest' ? 'selected' : ''}
+        >
+          오래된순
+          {selectedOption === 'oldest' && <img src={Select} alt="선택" />}
+        </button>
       </div>
-    </SelectModal>
+    </StyledArrayModal>
   );
 };
 export default ArrayModal;

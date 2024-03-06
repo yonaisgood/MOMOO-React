@@ -1,65 +1,20 @@
-import { useRef, useEffect, useState } from 'react';
+import { useState } from 'react';
 
+import useEscDialog from '../../../hooks/dialog/useEscDialog';
+import useShowModal from '../../../hooks/dialog/useShowModal';
 import useAddAlbum from '../../../hooks/useAddAlbum';
 
-import { SelectModal, Header } from './StyledNewAlbumModal';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
+import { NewAlbumDialog, Header } from './StyledNewAlbumModal';
+
+import { closeDialogOnClick } from '../../../utils/dialog';
 
 const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [albumName, setAlbumName] = useState('');
   const [errMessage, setErrMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const addAlbum = useAddAlbum();
-
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Tab') {
-        const focusableElements = modalRef.current?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        if (focusableElements) {
-          const firstElement = focusableElements[0] as HTMLElement;
-          const lastElement = focusableElements[
-            focusableElements.length - 1
-          ] as HTMLElement;
-          if (event.shiftKey && document.activeElement === firstElement) {
-            lastElement.focus();
-            event.preventDefault();
-          } else if (
-            !event.shiftKey &&
-            document.activeElement === lastElement
-          ) {
-            firstElement.focus();
-            event.preventDefault();
-          }
-        }
-      }
-    };
-    document.addEventListener('keydown', handleKeydown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [onClose]);
+  const { showModal } = useShowModal();
+  useEscDialog(onClose);
 
   const handleAlbum = async () => {
     if (isSubmitting) {
@@ -88,48 +43,39 @@ const NewAlbumModal = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <SelectModal role="dialog" aria-labelledby="modal-select">
-      <ModalOverlay>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleAlbum();
-          }}
-        >
-          <div
-            className="modal-content"
-            role="document"
-            tabIndex={-1}
-            ref={modalRef}
-          >
-            <Header className="modal-header" id="modal-select">
-              <h2 tabIndex={0}>새로운 앨범</h2>
-              <p>이 앨범의 이름을 입력해주세요</p>
-              <input
-                type="text"
-                placeholder="이름을 입력해주세요"
-                value={albumName}
-                onChange={(e) => setAlbumName(e.target.value)}
-              />
-              {errMessage !== '' && <strong role="alert">*{errMessage}</strong>}
-            </Header>
-            <div className="modal-list">
-              <button type="button" onClick={onClose} ref={closeButtonRef}>
-                취소
-              </button>
-              <button
-                type="submit"
-                onClick={handleAlbum}
-                ref={closeButtonRef}
-                disabled={isSubmitting}
-              >
-                저장
-              </button>
-            </div>
-          </div>
-        </form>
-      </ModalOverlay>
-    </SelectModal>
+    <NewAlbumDialog
+      role="dialog"
+      aria-labelledby="modal-select"
+      ref={showModal}
+      onClick={(e) => closeDialogOnClick(e, onClose)}
+    >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleAlbum();
+        }}
+      >
+        <Header className="modal-header" id="modal-select">
+          <h2>새로운 앨범</h2>
+          <p>이 앨범의 이름을 입력해주세요</p>
+          <input
+            type="text"
+            placeholder="이름을 입력해 주세요"
+            value={albumName}
+            onChange={(e) => setAlbumName(e.target.value)}
+          />
+          {errMessage !== '' && <strong role="alert">*{errMessage}</strong>}
+        </Header>
+        <div className="modal-list">
+          <button type="button" onClick={onClose}>
+            취소
+          </button>
+          <button type="submit" onClick={handleAlbum} disabled={isSubmitting}>
+            저장
+          </button>
+        </div>
+      </form>
+    </NewAlbumDialog>
   );
 };
 export default NewAlbumModal;

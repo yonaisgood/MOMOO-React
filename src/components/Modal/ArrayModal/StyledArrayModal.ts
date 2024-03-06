@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
-const SelectModal = styled.div`
-  .modal-content {
-    background-color: var(--background-color);
-    border-radius: 1rem;
-    border: 1px solid var(--gray-200);
-    width: 19.6rem;
-    font-size: var(--text-s);
-  }
+const StyledArrayModal = styled.dialog`
+  border-radius: 1rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--gray-200);
+  width: 19.6rem;
+  font-size: var(--text-s);
 
   .modal-list button {
     display: flex;
@@ -39,4 +37,4 @@ const Header = styled.header`
   padding: 1rem;
   border-bottom: 0.25rem solid var(--gray-200);
 `;
-export { SelectModal, Header };
+export { StyledArrayModal, Header };

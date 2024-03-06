@@ -7,7 +7,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { useAddFeedIdFromFeedList } from '../../../hooks/useUpdateFeedList';
 import useUploadContext from '../../../hooks/useUploadContext';
 import useAuthContext from '../../../hooks/useAuthContext';
-import useOverlayClose from '../../../hooks/useOverlayClose';
+import useOverlayClose from '../../../hooks/dialog/useOverlayClose';
 
 import Accordion from '../../Accordion/Accordion';
 import GetAccordionData from '../GetAccordionData';
@@ -153,7 +153,13 @@ function Upload() {
         };
 
         await setDoc(userDocRef, uploadData);
-        navigate(`/feed/${id}`);
+        navigate(
+          `${user.uid}/${
+            selectedAlbum.includes(albumNameListToAdd[1])
+              ? albumNameListToAdd[1]
+              : albumNameListToAdd[0]
+          }/p/${id}`,
+        );
         closeUploadModal();
 
         try {

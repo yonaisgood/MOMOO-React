@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
-const ConfirmModalWrap = styled.div`
-  .modalContent {
-    background: var(--background-color);
-    border-radius: 1rem;
-    width: 25.2rem;
-    font-size: var(--text-l);
-    overflow: hidden;
-    position: relative;
-  }
+const ConfirmModalDialog = styled.dialog`
+  background: var(--background-color);
+  border-radius: 1rem;
+  width: 25.2rem;
+  font-size: var(--text-l);
+  overflow: hidden;
+  position: fixed;
 
   .modalList {
     button {
@@ -39,4 +37,4 @@ const Header = styled.header`
   text-align: center;
 `;
 
-export { ConfirmModalWrap, Header };
+export { ConfirmModalDialog, Header };

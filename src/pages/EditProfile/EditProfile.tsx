@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import useSetProfileImage from '../../hooks/useSetProfileImage';
-import { useUpdateProfile } from '../../hooks/useUpdateProfile';
+import { useUpdateProfile } from '../../hooks/auth/useUpdateProfile';
 
 import StyledInput from '../../components/CommonStyled/StyledInput';
 import Button from '../../components/Button/Button/Button';

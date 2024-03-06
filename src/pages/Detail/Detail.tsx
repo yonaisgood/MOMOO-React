@@ -1,45 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-
-import usePageContext from '../../hooks/usePageContext';
+import { useParams } from 'react-router-dom';
 
 import Breadcrumb from '../../components/Breadcrumb/Breadcrumb';
 import FeedItem from './FeedItem/FeedItem';
 import TopBar from '../../components/Topbar/Topbar';
 import DetailLayout from './StyledDetail';
 
-interface NavItem {
-  path: string;
-  text: string;
-}
-
 export default function Detail() {
   const [clientWitch, setClientWitch] = useState(
     document.documentElement.clientWidth,
   );
-  const [navList, setNavList] = useState<null | NavItem[]>(null);
-  const { setPrevPath, prevPath } = usePageContext();
+
+  const { album } = useParams();
+
+  if (!album) {
+    return; // 404로 라우팅 됨
+  }
 
   useEffect(() => {
     window.addEventListener('resize', () => {
       setClientWitch(document.documentElement.clientWidth);
     });
-
-    const navListToSet = [
-      { path: '/', text: 'Home' },
-      { path: '//', text: 'feed' },
-    ];
-
-    if (prevPath) {
-      navListToSet.splice(1, 0, {
-        path: `/album/${prevPath}`,
-        text: prevPath.replace(/-/gi, ' '),
-      });
-    }
-
-    setNavList(navListToSet);
-
-    return () => setPrevPath(null);
   }, []);
 
   return (
@@ -50,7 +32,15 @@ export default function Detail() {
 
       {clientWitch <= 430 && <TopBar tit="게시물" />}
       <DetailLayout>
-        {navList && clientWitch > 430 && <Breadcrumb navList={navList} />}
+        {clientWitch > 430 && (
+          <Breadcrumb
+            navList={[
+              { path: '/', text: 'Home' },
+              { path: `/${album}`, text: album },
+              { path: '', text: 'feed' },
+            ]}
+          />
+        )}
         <section>
           <FeedItem />
         </section>

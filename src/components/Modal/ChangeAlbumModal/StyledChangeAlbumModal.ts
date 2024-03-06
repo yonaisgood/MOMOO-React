@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-const ChangeModalWrap = styled.div`
+const ChangeModalDialog = styled.dialog`
+  overflow: hidden;
+  background: var(--background-color);
+  border-radius: 10px;
+  width: 32rem;
+  font-size: var(--text-l);
+  position: fixed;
   header {
     padding: 2rem 0 1.8rem;
     text-align: center;
@@ -10,15 +16,6 @@ const ChangeModalWrap = styled.div`
       font-size: var(--text-s);
       color: var(--gray-600);
     }
-  }
-
-  .modalContent {
-    overflow: hidden;
-    background: var(--background-color);
-    border-radius: 10px;
-    width: 32rem;
-    font-size: var(--text-l);
-    position: relative;
   }
 
   .modalList {
@@ -73,4 +70,4 @@ const MultiAccordionWrapper = styled.div`
   }
 `;
 
-export { ChangeModalWrap, MultiAccordionWrapper };
+export { ChangeModalDialog, MultiAccordionWrapper };

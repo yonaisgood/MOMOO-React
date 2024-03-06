@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-import { uploadImg } from '../utils/SDKUtils.ts';
-import useAddAlbum from './useAddAlbum.ts';
+import { uploadImg } from '../../utils/SDKUtils.ts';
+import useAddAlbum from '../useAddAlbum.ts';
 
-import { appAuth } from '../firebase/config';
+import { appAuth } from '../../firebase/config.ts';
 
 interface Props {
   email: string;

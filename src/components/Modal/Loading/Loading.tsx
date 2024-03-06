@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react';
 
 import StyledLoadingModal from './StyledLoadingModal';
-import ModalOverlay from '../../CommonStyled/StyledModalOverlay';
 
 import LoadingIcon from '../../../asset/icon/Loading.svg';
 
@@ -18,19 +17,17 @@ export default function LoadingModal({ text }: { text: string }) {
   };
 
   return (
-    <ModalOverlay>
-      <StyledLoadingModal
-        role="dialog"
-        aria-labelledby="modal-select"
-        ref={(node) => {
-          if (node) {
-            setModalRef(node);
-          }
-        }}
-      >
-        {text}
-        <img src={LoadingIcon} alt="" />
-      </StyledLoadingModal>
-    </ModalOverlay>
+    <StyledLoadingModal
+      role="dialog"
+      aria-labelledby="modal-select"
+      ref={(node) => {
+        if (node) {
+          setModalRef(node);
+        }
+      }}
+    >
+      {text}
+      <img src={LoadingIcon} alt="" />
+    </StyledLoadingModal>
   );
 }

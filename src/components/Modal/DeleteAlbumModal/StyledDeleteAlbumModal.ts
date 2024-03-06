@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 
-const SelectModal = styled.div`
-  position: absolute;
+const StyledDlelteAlbumDialog = styled.dialog`
+  background: var(--background-color);
+  border-radius: 10px;
+  width: 31.8rem;
+  font-size: var(--text-l);
+  overflow: hidden;
+  position: fixed;
+  padding: 2.5rem 1.6rem 2.8rem;
 
   .modal-content {
-    background: var(--background-color);
-    border-radius: 10px;
-    width: 31.8rem;
-    font-size: var(--text-l);
-    overflow: hidden;
-    position: relative;
-    padding: 2.5rem 1.6rem 2.8rem;
   }
 
   .close-button {
@@ -62,17 +61,11 @@ const SelectModal = styled.div`
   }
 
   .edit-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     float: right;
     width: 8.2rem;
     height: 3.2rem;
     background: var(--gray-200);
-    img {
-      width: 1.64rem;
-      height: 1.6rem;
-    }
+    font-size: var(--text-s);
   }
   .edit-btn:hover {
     background: var(--gray-300);
@@ -88,4 +81,4 @@ const Header = styled.header`
   }
 `;
 
-export { SelectModal, Header };
+export { StyledDlelteAlbumDialog, Header };
