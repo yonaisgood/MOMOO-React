@@ -16,6 +16,7 @@ import Preview from '../FileUpload/Preview';
 import Accordion from '../Accordion/Accordion';
 import MultipleAccordion from '../Accordion/MultipleAccordion';
 import * as Styled from './Upload/StyledUpload';
+
 import { StyledLoadingImg } from '../Loading/StyledLodingImg';
 
 import { deleteImg } from '../../utils/SDKUtils';

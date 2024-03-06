@@ -143,14 +143,19 @@ export default function Upload() {
 
   return (
     <>
-      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
+      <div className={isPending ? 'loading' : ''}>
         <h2 className="a11y-hidden">새 게시물 업로드</h2>
         <Styled.UploadHeader>
           <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
             <img src={CloseMobileIcon} alt="닫기" />
           </Styled.MobileCloseBtn>
           <h2>새 게시물</h2>
-          <button className="uploadBtn" type="button" onClick={handleSubmit}>
+          <button
+            className="uploadBtn"
+            type="button"
+            onClick={handleSubmit}
+            disabled={isPending}
+          >
             업로드
           </button>
         </Styled.UploadHeader>
@@ -242,7 +247,7 @@ export default function Upload() {
             </>
           )}
         </Styled.UploadContents>
-      </Styled.UploadWrapper>
+      </div>
     </>
   );
 }

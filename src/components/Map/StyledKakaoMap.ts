@@ -21,7 +21,11 @@ const SearchHead = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: var(--background-color);
-  padding: 1.3rem 1.6rem;
+  padding-left: 1.6rem;
+
+  .saveBtn {
+    padding: 1.6rem 1.6rem;
+  }
 
   .saveBtn:hover img {
     background-color: var(--point-color);
