@@ -194,7 +194,12 @@ function Upload() {
           <h2 className="a11y-hidden">새 게시물 업로드</h2>
           <Styled.UploadHeader>
             <h2>새 게시물</h2>
-            <button className="uploadBtn" type="button" onClick={handleSubmit}>
+            <button
+              className="uploadBtn"
+              type="button"
+              onClick={handleSubmit}
+              disabled={isPending}
+            >
               업로드
             </button>
           </Styled.UploadHeader>
@@ -210,6 +215,7 @@ function Upload() {
                   <div className="inputWrapper">
                     <input
                       type="text"
+                      maxLength={50}
                       placeholder="제목을 입력해주세요 (필수)"
                       value={title}
                       onChange={(e) => {
@@ -240,7 +246,7 @@ function Upload() {
                       {selectedAddress ? (
                         <p>선택한 주소: {selectedAddress}</p>
                       ) : (
-                        <h2>위치 추가</h2>
+                        <h2>사진관 위치</h2>
                       )}
                       <img
                         className={kakaoMapVisible ? 'rotate' : ''}
