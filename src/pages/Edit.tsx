@@ -189,7 +189,7 @@ export default function Edit() {
 
   return (
     <>
-      <Styled.UploadWrapper className={isPending ? 'loading' : ''}>
+      <div className={isPending ? 'loading' : ''}>
         <Styled.UploadHeader>
           <Styled.MobileCloseBtn onClick={() => navigate(-1)}>
             <img src={CloseMobileIcon} alt="닫기" />
@@ -204,9 +204,9 @@ export default function Edit() {
             <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
           ) : (
             <>
-              <Styled.PicPart>
+              <Styled.PicSelectPart>
                 <Preview setFile={setFile} imgUrlList={imgUrlList} />
-              </Styled.PicPart>
+              </Styled.PicSelectPart>
               <Styled.SelectPart>
                 <div className="inputWrapper">
                   <input
@@ -287,7 +287,7 @@ export default function Edit() {
             </>
           )}
         </Styled.UploadContents>
-      </Styled.UploadWrapper>
+      </div>
     </>
   );
 }
