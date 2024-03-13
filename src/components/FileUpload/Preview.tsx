@@ -7,40 +7,35 @@ import ImgUpload from '../../asset/icon/Add-L-White.svg';
 import DeleteImg from '../../asset/icon/X-Small.svg';
 
 const Preview = ({
+  setFile,
   imgUrlList,
 }: {
   setFile: Dispatch<SetStateAction<FileList | null>>;
   imgUrlList: string[];
 }) => {
   const [imageList, setImageList] = useState<string[]>([]);
-
   const [submitErrMessage, setSubmitErrMessage] = useState('');
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
     if (files && files.length > 0) {
-      const validFiles = Array.from(files).filter((file) => {
-        const isValidType = /^image\/(jpg|svg|png|jpeg|bmp|tif|heic)$/.test(
-          file.type,
+      const file = files[0];
+
+      if (!/^image\/(jpg|svg|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
+        setSubmitErrMessage(
+          '이미지 파일 확장자는 jpg, svg, png, jpeg, bmp, tif, heic만 가능합니다.',
         );
-        const isValidSize = file.size <= MAX_IMAGE_SIZE;
+        return;
+      }
 
-        if (!isValidType || !isValidSize) {
-          setSubmitErrMessage(
-            !isValidType
-              ? '이미지 파일 확장자는 jpg, svg, png, jpeg, bmp, tif, heic만 가능합니다.'
-              : '이미지 용량은 10MB 이내로 등록 가능합니다.',
-          );
-          return false;
-        }
-        return true;
-      });
+      if (file.size > 10 * 1024 * 1024) {
+        setSubmitErrMessage('이미지 용량은 10MB 이내로 등록 가능합니다.');
+        return;
+      }
 
-      const newImages = validFiles.map((file) => URL.createObjectURL(file));
-
-      setImageList((prevImages) => [...prevImages, ...newImages]);
+      setImages(files);
+      setFile(files);
     } else {
       setSubmitErrMessage('이미지 파일을 선택해주세요.');
     }
@@ -49,6 +44,24 @@ const Preview = ({
   useEffect(() => {
     setImageList(imgUrlList);
   }, [imgUrlList]);
+
+  const setImages = async (files: FileList) => {
+    if (files) {
+      if (files.length <= 3) {
+        const fileArray = Array.from(files);
+        const newImages: string[] = [];
+
+        for (const file of fileArray) {
+          const imageUrl = URL.createObjectURL(file);
+          newImages.push(imageUrl);
+        }
+
+        setImageList(newImages);
+      } else {
+        setSubmitErrMessage('최대 3장의 이미지까지만 선택할 수 있습니다.');
+      }
+    }
+  };
 
   const handleRemoveImage = (indexToRemove: number) => {
     setImageList((currentImgList) =>

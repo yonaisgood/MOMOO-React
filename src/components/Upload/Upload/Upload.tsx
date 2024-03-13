@@ -214,9 +214,13 @@ function Upload() {
               <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
             ) : (
               <>
-                <Styled.PicPart>
+                <div className="todayPhoto">
+                  <h3>오늘의 사진(필수)</h3>
+                  <p>*3장까지 업로드 가능</p>
+                </div>
+                <Styled.PicSelectPart>
                   <Preview setFile={setFile} />
-                </Styled.PicPart>
+                </Styled.PicSelectPart>
                 <Styled.SelectPart>
                   <div className="inputWrapper">
                     <input
@@ -247,6 +251,7 @@ function Upload() {
                       <span>{inputCount}</span> / 1000 자
                     </div>
                   </form>
+
                   <Styled.LocationContents onClick={toggleKakaoMap}>
                     <div className="locationHead">
                       {selectedAddress ? (

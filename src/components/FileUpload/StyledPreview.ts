@@ -10,10 +10,6 @@ const ImageGrid = styled.div`
   gap: 1px;
   overflow-x: auto;
 
-  /* &::-webkit-scrollbar {
-    display: none;
-  } */
-
   .selectedImgList {
     display: inline-block;
     position: relative;
@@ -45,6 +41,7 @@ const PreviewSection = styled.div`
   aspect-ratio: 1/1;
   position: relative;
   background-color: var(--gray-900);
+  cursor: pointer;
 
   .btnUpload {
     width: 2.4rem;
@@ -58,6 +55,10 @@ const PreviewSection = styled.div`
 
   #file {
     display: none;
+  }
+
+  @media (max-width: 430px) {
+    width: 11.2rem;
   }
 `;
 
