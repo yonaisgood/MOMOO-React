@@ -47,6 +47,7 @@ export default function Upload() {
   const [accordionData, setAccordionData] = useState<Object[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [isPending, setIsPending] = useState(false);
+  let [inputCount, setInputCount] = useState(0);
 
   const getAccordionData = GetAccordionData();
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
@@ -64,14 +65,20 @@ export default function Upload() {
   }, []);
 
   const toggleKakaoMap = () => {
+    console.log('hi');
     setKakaoMapVisible(!kakaoMapVisible);
   };
 
   const handleAddressSelect = (selectedAddress: string) => {
     setSelectedAddress(selectedAddress);
+    setKakaoMapVisible(false);
   };
 
   const navigate = useNavigate();
+
+  const onInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputCount(e.target.value.length);
+  };
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -164,13 +171,18 @@ export default function Upload() {
             <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
           ) : (
             <>
-              <Styled.PicPart>
+              <div className="todayPhoto">
+                <h3>오늘의 사진(필수)</h3>
+                <p>*3장까지 업로드 가능</p>
+              </div>
+              <Styled.PicSelectPart>
                 <Preview setFile={setFile} />
-              </Styled.PicPart>
+              </Styled.PicSelectPart>
               <Styled.SelectPart>
                 <div className="inputWrapper">
                   <input
                     type="text"
+                    maxLength={50}
                     placeholder="제목을 입력해 주세요 (필수)"
                     value={title}
                     onChange={(e) => {
@@ -188,16 +200,20 @@ export default function Upload() {
                     value={text}
                     onChange={(e) => {
                       setText(e.target.value);
+                      onInputHandler(e);
                     }}
                     placeholder="문구를 입력해 주세요"
                   ></textarea>
+                  <div className="countText">
+                    <span>{inputCount}</span> / 1000 자
+                  </div>
                 </form>
                 <Styled.LocationContents onClick={toggleKakaoMap}>
                   <div className="locationHead">
                     {selectedAddress ? (
                       <p>선택한 주소: {selectedAddress}</p>
                     ) : (
-                      <h2>위치 추가</h2>
+                      <h2>사진관 선택</h2>
                     )}
                     <img
                       className={kakaoMapVisible ? 'rotate' : ''}
