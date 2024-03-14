@@ -98,7 +98,13 @@ const SelectPart = styled.section`
       background-color: var(--background-color);
       text-align: right;
       position: absolute;
-      bottom: 0.1rem;
+      bottom: 1.2rem;
+
+      @media (max-width: 430px) {
+        bottom: 0rem;
+        height: 2rem;
+        border-bottom: 1px solid var(--gray-200);
+      }
     }
   }
 `;

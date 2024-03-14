@@ -61,6 +61,7 @@ export default function Edit() {
   const getSavedAlbumList = useGetSavedAlbumList();
   const addFeedIdFromFeedList = useAddFeedIdFromFeedList();
   const removeFeedIdFromFeedList = useRemoveFeedIdFromFeedList();
+  let [inputCount, setInputCount] = useState(0);
 
   if (!id) {
     navigate('/404');
@@ -103,10 +104,9 @@ export default function Edit() {
     SetAccordionData();
   }, []);
 
-  if (!user) {
-    navigate('/');
-    return;
-  }
+  const onInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputCount(e.target.value.length);
+  };
 
   const toggleKakaoMap = () => {
     setKakaoMapVisible(!kakaoMapVisible);
@@ -130,7 +130,11 @@ export default function Edit() {
       let downloadURLs: string[] = imgUrlList;
 
       if (file !== null) {
-        downloadURLs = await uploadImageToStorage(file, `feed/${user.uid}`, id);
+        downloadURLs = await uploadImageToStorage(
+          file,
+          `feed/${user?.uid}`,
+          id,
+        );
       }
 
       const editData = {
@@ -172,7 +176,6 @@ export default function Edit() {
         }
       });
 
-      // 이미지 삭제 실패 시, 게시물 수정이 중단되지 않도록 try 마지막에 위치
       if (file !== null) {
         for (let i = downloadURLs.length; i < 3; i++)
           if (!downloadURLs.includes(imgUrlList[i])) {
@@ -204,6 +207,10 @@ export default function Edit() {
             <StyledLoadingImg src={LoadingIcon} alt="로딩중" />
           ) : (
             <>
+              <div className="todayPhoto">
+                <h3>오늘의 사진(필수)</h3>
+                <p>*3장까지 업로드 가능</p>
+              </div>
               <Styled.PicSelectPart>
                 <Preview setFile={setFile} imgUrlList={imgUrlList} />
               </Styled.PicSelectPart>
@@ -212,6 +219,7 @@ export default function Edit() {
                   <input
                     type="text"
                     placeholder="제목을 입력해 주세요 (필수)"
+                    maxLength={50}
                     value={title}
                     onChange={(e) => {
                       setTitle(e.target.value);
@@ -228,9 +236,13 @@ export default function Edit() {
                     value={text}
                     onChange={(e) => {
                       setText(e.target.value);
+                      onInputHandler(e);
                     }}
                     placeholder="문구를 입력해 주세요"
                   ></textarea>
+                  <div className="countText">
+                    <span>{inputCount}</span> / 1000 자
+                  </div>
                 </form>
                 <Styled.LocationContents onClick={toggleKakaoMap}>
                   <div className="locationHead">

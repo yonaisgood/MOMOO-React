@@ -76,10 +76,6 @@ function Upload() {
     setKakaoMapVisible(!kakaoMapVisible);
   };
 
-  const onInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputCount(e.target.value.length);
-  };
-
   useEffect(() => {
     if (isUploadModalOpen && dialogRef.current) {
       dialogRef.current.showModal();
@@ -187,6 +183,10 @@ function Upload() {
     }
 
     setIsPending(false);
+  };
+
+  const onInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputCount(e.target.value.length);
   };
 
   return (

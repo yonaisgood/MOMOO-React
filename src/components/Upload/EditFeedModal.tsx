@@ -52,7 +52,7 @@ export default function EditFeedModal() {
   const [accordionData, setAccordionData] = useState<AccordionData[]>([]);
   const [albumIdData, setAlbumIdData] = useState<AlbumIdData[]>([]);
   const [isPending, setIsPending] = useState(false);
-
+  let [inputCount, setInputCount] = useState(0);
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const navigate = useNavigate();
   const { album } = useParams();
@@ -199,6 +199,10 @@ export default function EditFeedModal() {
     closeEditFeedModal();
   };
 
+  const onInputHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputCount(e.target.value.length);
+  };
+
   return (
     <>
       <Styled.StyledDialog
@@ -232,6 +236,7 @@ export default function EditFeedModal() {
                 <div className="inputWrapper">
                   <input
                     type="text"
+                    maxLength={50}
                     placeholder="제목을 입력해 주세요 (필수)"
                     value={title}
                     onChange={(e) => {
@@ -249,9 +254,13 @@ export default function EditFeedModal() {
                     value={text}
                     onChange={(e) => {
                       setText(e.target.value);
+                      onInputHandler(e);
                     }}
                     placeholder="문구를 입력해 주세요"
                   ></textarea>
+                  <div className="countText">
+                    <span>{inputCount}</span> / 1000 자
+                  </div>
                 </form>
                 <Styled.LocationContents onClick={toggleKakaoMap}>
                   <div className="locationHead">

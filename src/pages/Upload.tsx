@@ -65,7 +65,6 @@ export default function Upload() {
   }, []);
 
   const toggleKakaoMap = () => {
-    console.log('hi');
     setKakaoMapVisible(!kakaoMapVisible);
   };
 
