@@ -82,7 +82,6 @@ const GetAccordionData = () => {
         docId: albumIdList[i],
       });
     });
-    console.log(accordionData[0]);
 
     return { accordionData, albumIdData };
   };

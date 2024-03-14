@@ -80,16 +80,6 @@ const AccordionWrapper = styled.div`
     .que {
       padding: 1.3rem 0rem;
     }
-
-    button {
-      width: 3rem;
-      height: 3rem;
-    }
-
-    .btnImg {
-      width: 2.6rem;
-      height: 2.6rem;
-    }
   }
 `;
 

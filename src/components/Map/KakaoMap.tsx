@@ -41,7 +41,6 @@ function KakaoMap({
         center: newPosition,
       }));
       setSearchedLocation(newSearch);
-      console.log('검색된 위치 정보:', newPosition);
     }
   };
 
@@ -67,11 +66,7 @@ function KakaoMap({
         {searchedLocation && <div></div>}
         <button
           className="saveBtn"
-          onClick={() =>
-            onAddressSelect(
-              searchedLocation?.place_name ? searchedLocation.place_name : '',
-            )
-          }
+          onClick={() => onAddressSelect(searchedLocation?.place_name || '')}
         >
           <img src={Select} alt="선택버튼" />
         </button>

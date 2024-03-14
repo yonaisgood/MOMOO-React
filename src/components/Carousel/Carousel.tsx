@@ -7,6 +7,24 @@ import ArrowWhite from '../../asset/icon/Arrow-White.svg';
 const Carousel = ({ imgUrlList }: { imgUrlList: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const slideRef = useRef<HTMLUListElement | null>(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLUListElement>) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLUListElement>) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current - touchEndX.current > 50) {
+      nextSlide();
+    } else if (touchStartX.current - touchEndX.current < -50) {
+      prevSlide();
+    }
+  };
 
   const nextSlide = () => {
     if (!slideRef.current) {
@@ -40,7 +58,12 @@ const Carousel = ({ imgUrlList }: { imgUrlList: string[] }) => {
   return (
     <>
       <Styled.SlideImgWrap>
-        <ul ref={slideRef}>
+        <ul
+          ref={slideRef}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {imgUrlList.map((image, index) => (
             <li key={index}>
               <img src={image} alt="이미지" />
