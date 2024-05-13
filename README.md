@@ -15,6 +15,8 @@
 |:--:|:--|
 |리팩토링 기간|2023.11.20 ~|
 |**프로젝트 링크**|**[MoMoo 바로가기] 👉 https://momoo.kr/**|
+|**플레이스토어**|**[바로가기] 👉 https://play.google.com/store/apps/details?id=com.momoo&hl=en-KR**|
+|Next.js 마이그레이션|[Repository](https://github.com/NeedsLap/MOMOO-Nextjs)|
 |체험계정|ID: momoo@gmail.com / PW: 123qwe|
 
 
